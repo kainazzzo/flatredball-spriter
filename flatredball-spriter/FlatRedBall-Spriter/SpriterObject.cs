@@ -13,8 +13,11 @@ namespace FlatRedBall_Spriter
         public SpriterObject()
         {
             SpriteList = new PositionedObjectList<Sprite>();
+            SpriteInstructions = new Dictionary<Sprite, InstructionList>();
         }
 
         public PositionedObjectList<Sprite> SpriteList { get; private set; }
+
+        public Dictionary<Sprite, InstructionList> SpriteInstructions { get; private set; }
     }
 }

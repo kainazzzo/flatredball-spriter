@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>3c8751c9-3a24-4b56-95fd-bd4e78374de1</ProjectGuid>
+    <ProjectGuid>{1A1A158C-5EDE-4750-8BD0-62FAEB1C21DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FlatRedBall_Spriter</RootNamespace>
-    <AssemblyName>FlatRedBall_Spriter</AssemblyName>
+    <AssemblyName>FlatRedBall-Spriter</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FlatRedBall">
+      <HintPath>..\..\spritertestgame\spritertestgame\spritertestgame\Libraries\Xna4Pc\FlatRedBall.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="SpriterObject.cs" />
+    <Compile Include="SpriterObjectSave.conversion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpriterObjectSave.serialization.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -116,11 +116,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="TileGraphics\AnimationChainContainer.cs" />
-    <Compile Include="TileGraphics\LayeredTileMap.cs" />
-    <Compile Include="TileGraphics\MapDrawableBatch.cs" />
-    <Compile Include="TileGraphics\ReducedTileMapInfo.cs" />
-    <Compile Include="TileGraphics\Tileset.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

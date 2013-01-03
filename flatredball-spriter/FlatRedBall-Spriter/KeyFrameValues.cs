@@ -7,7 +7,9 @@ namespace FlatRedBall_Spriter
     {
         public Vector3 Rotation { get; set; }
         public Vector3 Position { get; set; }
-        public float Scale { get; set; }
+        public float ScaleX { get; set; }
+        public float ScaleY { get; set; }
         public Texture2D Texture { get; set; }
+        public double Time { get; set; }
     }
 }

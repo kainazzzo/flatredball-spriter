@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KeyFrame.cs" />
     <Compile Include="KeyFrameValues.cs" />
     <Compile Include="SpriterObject.cs" />
     <Compile Include="SpriterObjectSave.conversion.cs" />

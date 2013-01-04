@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlatRedBall;
 using FlatRedBall.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace FlatRedBall_Spriter
 {
@@ -12,6 +14,14 @@ namespace FlatRedBall_Spriter
         {
             var spriterObject = new SpriterObject();
 
+            foreach (var folder in this.Folder)
+            {
+                foreach (var file in folder.File)
+                {
+                    var sprite = new Sprite();
+                    
+                }
+            }
             
             return spriterObject;
         }

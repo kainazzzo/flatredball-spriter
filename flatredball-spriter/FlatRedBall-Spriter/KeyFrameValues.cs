@@ -10,6 +10,5 @@ namespace FlatRedBall_Spriter
         public float ScaleX { get; set; }
         public float ScaleY { get; set; }
         public Texture2D Texture { get; set; }
-        public double Time { get; set; }
     }
 }

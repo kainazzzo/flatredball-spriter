@@ -1,4 +1,5 @@
-﻿using FlatRedBall_Spriter;
+﻿using FlatRedBall;
+using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace flatredball_spriter_test
@@ -55,11 +56,33 @@ namespace flatredball_spriter_test
         [TestMethod]
         public void ToRuntimeTest()
         {
-            var target = new SpriterObjectSave(); // TODO: Initialize to an appropriate value
-            SpriterObject expected = null; // TODO: Initialize to an appropriate value
-            SpriterObject actual;
-            actual = target.ToRuntime();
-            Assert.AreEqual(expected, actual);
+            var sos =
+                SpriterObjectSave.FromFile(
+                    @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\simpleballanimation.scml");
+
+            var so = sos.ToRuntime();
+            Assert.IsNotNull(so.ObjectList);
+            Assert.AreEqual(1, so.ObjectList.Count);
+            Assert.AreEqual(5, so.KeyFrameList.Count);
+            
+            Assert.AreEqual(0.0, so.KeyFrameList[0].Time);
+            Assert.AreEqual(0.2, so.KeyFrameList[1].Time);
+            Assert.AreEqual(0.4, so.KeyFrameList[2].Time);
+            Assert.AreEqual(0.6, so.KeyFrameList[3].Time);
+            Assert.AreEqual(0.8, so.KeyFrameList[4].Time);
+
+            PositionedObject positionedObject = so.ObjectList[0];
+
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Position.X);
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Position.Y);
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Position.Z);
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.X);
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.Y);
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.Z);
+            Assert.AreEqual(1.0f, so.KeyFrameList[0].Values[positionedObject].ScaleX);
+            Assert.AreEqual(1.0f, so.KeyFrameList[0].Values[positionedObject].ScaleY);
+            Assert.AreEqual("ball.png", so.KeyFrameList[0].Values[positionedObject].Texture.Name);
+
             Assert.Inconclusive("Verify the correctness of this test method.");
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace FlatRedBall_Spriter
 {
@@ -8,19 +9,19 @@ namespace FlatRedBall_Spriter
     {
         /// <remarks/>
         [XmlElement("bone_ref", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KeyBoneRef[] BoneRef { get; set; }
+        public List<KeyBoneRef> BoneRef { get; set; }
 
         /// <remarks/>
         [XmlElement("object_ref", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KeyObjectRef[] ObjectRef { get; set; }
+        public List<KeyObjectRef> ObjectRef { get; set; }
 
         /// <remarks/>
         [XmlElement("object", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KeyObject[] Object { get; set; }
+        public List<KeyObject> Object { get; set; }
 
         /// <remarks/>
         [XmlElement("bone", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public KeyBone[] Bone { get; set; }
+        public List<KeyBone> Bone { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "id")]
@@ -134,11 +135,11 @@ namespace FlatRedBall_Spriter
     {
         /// <remarks/>
         [XmlElement("folder", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public SpriterDataFolder[] Folder { get; set; }
+        public List<SpriterDataFolder> Folder { get; set; }
 
         /// <remarks/>
         [XmlElement("entity", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public SpriterDataEntity[] Entity { get; set; }
+        public List<SpriterDataEntity> Entity { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "scml_version")]
@@ -162,7 +163,7 @@ namespace FlatRedBall_Spriter
     {
         /// <remarks/>
         [XmlElement("file", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public SpriterDataFolderFile[] File { get; set; }
+        public List<SpriterDataFolderFile> File { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "id")]
@@ -230,7 +231,7 @@ namespace FlatRedBall_Spriter
     {
         /// <remarks/>
         [XmlElement("animation", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public SpriterDataEntityAnimation[] Animation { get; set; }
+        public List<SpriterDataEntityAnimation> Animation { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "id")]
@@ -244,18 +245,18 @@ namespace FlatRedBall_Spriter
     public partial class SpriterDataEntityAnimationMainline
     {
         [XmlElement("key", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public Key[] Keys { get; set; } 
+        public List<Key> Keys { get; set; } 
     }
 
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class SpriterDataEntityAnimation
     {
         [XmlElement("mainline", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public SpriterDataEntityAnimationMainline[] Mainline { get; set; }
+        public SpriterDataEntityAnimationMainline Mainline { get; set; }
 
         /// <remarks/>
         [XmlElement("timeline", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public SpriterDataEntityAnimationTimeline[] Timeline { get; set; }
+        public List<SpriterDataEntityAnimationTimeline> Timeline { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "id")]
@@ -279,7 +280,7 @@ namespace FlatRedBall_Spriter
     {
         /// <remarks/>
         [XmlElement(ElementName = "key", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public Key[] Key { get; set; }
+        public List<Key> Key { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "id")]
@@ -296,7 +297,7 @@ namespace FlatRedBall_Spriter
     {
         /// <remarks/>
         [XmlElementAttribute("spriter_data")]
-        public SpriterObjectSave[] Items { get; set; }
+        public SpriterObjectSave Item { get; set; }
 
     }
 }

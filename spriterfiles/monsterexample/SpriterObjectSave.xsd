@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="key">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="bone_ref" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="id" type="xs:int" />
+            <xs:attribute name="timeline" type="xs:int" />
+            <xs:attribute name="key" type="xs:int" />
+            <xs:attribute name="parent" type="xs:int" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="object_ref" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="id" type="xs:int" />
+            <xs:attribute name="parent" type="xs:int" />
+            <xs:attribute name="timeline" type="xs:int" />
+            <xs:attribute name="key" type="xs:int" />
+            <xs:attribute name="z_index" type="xs:int" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="object" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="folder" type="xs:int" />
+            <xs:attribute name="file" type="xs:int" />
+            <xs:attribute name="x" type="xs:float" />
+            <xs:attribute name="y" type="xs:float" />
+            <xs:attribute name="angle" type="xs:float" />
+            <xs:attribute name="scale_x" type="xs:float" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="bone" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="x" type="xs:float" />
+            <xs:attribute name="y" type="xs:float" />
+            <xs:attribute name="angle" type="xs:float" />
+            <xs:attribute name="scale_x" type="xs:float" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:int" />
+      <xs:attribute name="time" type="xs:int" />
+      <xs:attribute name="spin" type="xs:int" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="spriter_data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="folder" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="file" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="id" type="xs:int" />
+                  <xs:attribute name="name" type="xs:string" />
+                  <xs:attribute name="width" type="xs:int" />
+                  <xs:attribute name="height" type="xs:int" />
+				  <xs:attribute name="pivot_x" type="xs:float" />
+				  <xs:attribute name="pivot_y" type="xs:float" />
+				  <xs:attribute name="atlas_x" type="xs:int" />
+				  <xs:attribute name="atlas_y" type="xs:int" />
+				  <xs:attribute name="offset_x" type="xs:int" />
+				  <xs:attribute name="offset_y" type="xs:int" />
+				  <xs:attribute name="original_width" type="xs:int" />
+				  <xs:attribute name="original_height" type="xs:int" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:int" />
+            <xs:attribute name="name" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="entity" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="animation" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="mainline" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="key" minOccurs="0" maxOccurs="unbounded" />
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="timeline" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="key" minOccurs="0" maxOccurs="unbounded" />
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:int" />
+                        <xs:attribute name="name" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:int" />
+                  <xs:attribute name="name" type="xs:string" />
+                  <xs:attribute name="length" type="xs:int" />
+                  <xs:attribute name="looping" type="xs:boolean" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:int" />
+            <xs:attribute name="name" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="scml_version" type="xs:string" />
+      <xs:attribute name="generator" type="xs:string" />
+      <xs:attribute name="generator_version" type="xs:string" />
+	  <xs:attribute name="pixel_art_mode" type="xs:boolean" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="key" />
+        <xs:element ref="spriter_data" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

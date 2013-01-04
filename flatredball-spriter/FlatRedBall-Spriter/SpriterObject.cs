@@ -12,11 +12,11 @@ namespace FlatRedBall_Spriter
     {
         public SpriterObject()
         {
-            SpriteList = new PositionedObjectList<Sprite>();
+            SpriteList = new PositionedObjectList<PositionedObject>();
             SpriteInstructions = new Dictionary<Sprite, KeyFrameValues>();
         }
 
-        public PositionedObjectList<Sprite> SpriteList { get; private set; }
+        public PositionedObjectList<PositionedObject> SpriteList { get; private set; }
 
         public Dictionary<Sprite, KeyFrameValues> SpriteInstructions { get; private set; }
     }

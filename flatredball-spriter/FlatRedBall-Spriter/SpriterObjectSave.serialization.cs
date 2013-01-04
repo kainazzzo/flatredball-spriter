@@ -52,21 +52,41 @@ namespace FlatRedBall_Spriter
         [XmlAttribute(AttributeName = "key")]
         public int Key { get; set; }
 
+        [XmlIgnore]
+        public int? Parent { get; set; }
+
         /// <remarks/>
         [XmlAttribute(AttributeName = "parent")]
-        public int Parent { get; set; }
+        // ReSharper disable InconsistentNaming
+        public int _donotuseParent
+        {
+            get { return -1; }
+            set { this.Parent = value; }
+        }
+
+// ReSharper restore InconsistentNaming
     }
 
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class KeyObjectRef
     {
+
         /// <remarks/>
         [XmlAttribute(AttributeName = "id")]
         public int Id { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "parent")]
-        public int Parent { get; set; }
+// ReSharper disable InconsistentNaming
+        public int _donotuseParent
+// ReSharper restore InconsistentNaming
+        {
+            get { return -1; }
+            set { this.Parent = value; }
+        }
+
+        [XmlIgnore]
+        public int? Parent { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "timeline")]

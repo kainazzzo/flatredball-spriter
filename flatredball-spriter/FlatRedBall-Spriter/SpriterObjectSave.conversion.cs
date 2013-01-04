@@ -12,8 +12,7 @@ namespace FlatRedBall_Spriter
         {
             var spriterObject = new SpriterObject();
 
-            // TODO: Add conversion from save to runtime object
-
+            
             return spriterObject;
         }
 

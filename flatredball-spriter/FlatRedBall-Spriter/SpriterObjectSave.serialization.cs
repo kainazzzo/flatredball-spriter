@@ -17,7 +17,7 @@ namespace FlatRedBall_Spriter
 
         /// <remarks/>
         [XmlElement("object", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public List<KeyObject> Object { get; set; }
+        public KeyObject Object { get; set; }
 
         /// <remarks/>
         [XmlElement("bone", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
@@ -104,6 +104,9 @@ namespace FlatRedBall_Spriter
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class KeyObject
     {
+        private float _scalex = 1.0f;
+        
+
         /// <remarks/>
         [XmlAttribute(AttributeName = "folder")]
         public int Folder { get; set; }
@@ -126,12 +129,18 @@ namespace FlatRedBall_Spriter
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "scale_x")]
-        public float ScaleX { get; set; }
+        public float ScaleX
+        {
+            get { return _scalex; }
+            set { _scalex = value; }
+        }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class KeyBone
     {
+        private float _scaleX = 1.0f;
+
         /// <remarks/>
         [XmlAttribute(AttributeName = "x")]
         public float X { get; set; }
@@ -146,7 +155,11 @@ namespace FlatRedBall_Spriter
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "scale_x")]
-        public float ScaleX { get; set; }
+        public float ScaleX
+        {
+            get { return _scaleX; }
+            set { _scaleX = value; }
+        }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]

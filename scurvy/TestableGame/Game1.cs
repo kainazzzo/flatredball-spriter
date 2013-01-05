@@ -41,8 +41,8 @@ namespace TestableGame
             base.Initialize();
 
             this.runner = new TestRunner<Game1>(this.Services);
-            //this.reporter = new XnaTestReporter();
-            //this.runner.Reporter(this.reporter);
+            this.reporter = new XnaTestReporter();
+            this.runner.Reporter(this.reporter);
 
             this.font = this.Content.Load<SpriteFont>("font");
         }

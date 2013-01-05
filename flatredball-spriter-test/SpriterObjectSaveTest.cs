@@ -751,13 +751,12 @@ namespace flatredball_spriter_test
 
             key = timeline.Key[0];
             Assert.AreEqual(0, key.Bone.Count);
-            Assert.AreEqual(1, key.Object.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(0, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[5].key[0].object[0]
 
-            var @object = key.Object[0];
+            var @object = key.Object;
             Assert.AreEqual(40.784198f, @object.X);
             Assert.AreEqual(-135.952228f, @object.Y);
             Assert.AreEqual(112.219344f, @object.Angle);
@@ -771,13 +770,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[5].key[1]
             key = timeline.Key[1];
             Assert.AreEqual(0, key.Bone.Count);
-            Assert.AreEqual(1, key.Object.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(0, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[5].key[0].object[0]
 
-            @object = key.Object[0];
+            @object = key.Object;
             Assert.AreEqual(40.784198f, @object.X);
             Assert.AreEqual(-135.952228f, @object.Y);
             Assert.AreEqual(112.219344f, @object.Angle);
@@ -790,13 +788,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[5].key[2]
             key = timeline.Key[2];
             Assert.AreEqual(0, key.Bone.Count);
-            Assert.AreEqual(1, key.Object.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(0, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[5].key[0].object[0]
 
-            @object = key.Object[0];
+            @object = key.Object;
             Assert.AreEqual(40.784198f, @object.X);
             Assert.AreEqual(-135.952228f, @object.Y);
             Assert.AreEqual(112.219344f, @object.Angle);
@@ -877,13 +874,12 @@ namespace flatredball_spriter_test
 
             key = timeline.Key[0];
             Assert.AreEqual(0, key.Bone.Count);
-            Assert.AreEqual(1, key.Object.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(0, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[7].key[0].object[0]
 
-            @object = key.Object[0];
+            @object = key.Object;
             Assert.AreEqual(-57.230045f, @object.X);
             Assert.AreEqual(-16.956701f, @object.Y);
             Assert.AreEqual(68.506582f, @object.Angle);
@@ -897,13 +893,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[7].key[1]
             key = timeline.Key[1];
             Assert.AreEqual(0, key.Bone.Count);
-            Assert.AreEqual(1, key.Object.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(0, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[7].key[0].object[0]
 
-            @object = key.Object[0];
+            @object = key.Object;
             Assert.AreEqual(-57.230045f, @object.X);
             Assert.AreEqual(-16.956701f, @object.Y);
             Assert.AreEqual(68.506582f, @object.Angle);
@@ -916,13 +911,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[7].key[2]
             key = timeline.Key[2];
             Assert.AreEqual(0, key.Bone.Count);
-            Assert.AreEqual(1, key.Object.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(0, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[5].key[0].object[0]
 
-            @object = key.Object[0];
+            @object = key.Object;
             Assert.AreEqual(-57.230045f, @object.X);
             Assert.AreEqual(-16.956701f, @object.Y);
             Assert.AreEqual(68.506582f, @object.Angle);
@@ -944,13 +938,12 @@ namespace flatredball_spriter_test
 
             key = timeline.Key[0];
             Assert.AreEqual(0, key.Bone.Count);
-            Assert.AreEqual(1, key.Object.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(0, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[8].key[0].object[0]
 
-            @object = key.Object[0];
+            @object = key.Object;
             Assert.AreEqual(-94.666417f, @object.X);
             Assert.AreEqual(40.900994f, @object.Y);
             Assert.AreEqual(358.756205f, @object.Angle);
@@ -964,13 +957,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[8].key[1]
             key = timeline.Key[1];
             Assert.AreEqual(0, key.Bone.Count);
-            Assert.AreEqual(1, key.Object.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(0, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[8].key[1].object[0]
 
-            @object = key.Object[0];
+            @object = key.Object;
             Assert.AreEqual(-94.666417f, @object.X);
             Assert.AreEqual(40.900994f, @object.Y);
             Assert.AreEqual(358.756205f, @object.Angle);

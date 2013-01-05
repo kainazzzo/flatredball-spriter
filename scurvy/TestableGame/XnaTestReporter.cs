@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Scurvy.Test;
@@ -19,7 +20,9 @@ namespace TestableGame
         public override void Fail(string errorMessage)
         {
             failed = true;
-            this.Statuses.Add(string.Format("Failed - {0}.{1}: {2}", this.ClassName, this.MethodName, errorMessage));
+            var status = string.Format("Failed - {0}.{1}: {2}", this.ClassName, this.MethodName, errorMessage);
+            Debug.WriteLine(status);
+            this.Statuses.Add(status);
         }
 
         public override void End()

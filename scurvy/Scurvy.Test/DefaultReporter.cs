@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Scurvy.Test
 {
-    internal class DefaultReporter : TestStatusReporter
+    public class DefaultReporter : TestStatusReporter
     {
         private bool failed;
 

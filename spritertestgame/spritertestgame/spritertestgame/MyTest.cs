@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
 using FlatRedBall;
 using FlatRedBall.IO;
 using FlatRedBall_Spriter;
 using Microsoft.Xna.Framework.Content;
 using Scurvy.Test;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
-namespace TestableGame
+namespace spritertestgame
 {
     [TestClass]
     public class MyTest
@@ -77,8 +72,8 @@ namespace TestableGame
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(1.0f, so.KeyFrameList[0].Values[positionedObject].ScaleX, "Scale Test");
-            //Assert.AreEqual(1.0f, so.KeyFrameList[0].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[0].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[0].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[0].Values[positionedObject].Texture.Name, "Texture test");
 
             Assert.AreEqual(0.0f, so.KeyFrameList[1].Values[positionedObject].Position.X, "Position Test");
@@ -87,8 +82,8 @@ namespace TestableGame
             Assert.AreEqual(0.0f, so.KeyFrameList[1].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[1].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[1].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(1.0f, so.KeyFrameList[1].Values[positionedObject].ScaleX, "Scale Test");
-            //Assert.AreEqual(1.0f, so.KeyFrameList[1].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[1].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[1].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[1].Values[positionedObject].Texture.Name, "Texture test");
 
             Assert.AreEqual(-128.0f, so.KeyFrameList[2].Values[positionedObject].Position.X, "Position Test");
@@ -97,8 +92,8 @@ namespace TestableGame
             Assert.AreEqual(0.0f, so.KeyFrameList[2].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[2].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[2].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(1.0f, so.KeyFrameList[2].Values[positionedObject].ScaleX, "Scale Test");
-            //Assert.AreEqual(1.0f, so.KeyFrameList[2].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[2].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[2].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[2].Values[positionedObject].Texture.Name, "Texture test");
 
             Assert.AreEqual(-128.0f, so.KeyFrameList[3].Values[positionedObject].Position.X, "Position Test");
@@ -107,8 +102,8 @@ namespace TestableGame
             Assert.AreEqual(0.0f, so.KeyFrameList[3].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[3].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[3].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(1.0f, so.KeyFrameList[3].Values[positionedObject].ScaleX, "Scale Test");
-            //Assert.AreEqual(1.0f, so.KeyFrameList[3].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[3].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[3].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[3].Values[positionedObject].Texture.Name, "Texture test");
 
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[positionedObject].Position.X, "Position Test");
@@ -117,56 +112,56 @@ namespace TestableGame
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(1.0f, so.KeyFrameList[4].Values[positionedObject].ScaleX, "Scale Test");
-            //Assert.AreEqual(1.0f, so.KeyFrameList[4].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[4].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(32.0f, so.KeyFrameList[4].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[4].Values[positionedObject].Texture.Name, "Texture test");
         }
 
         /// <summary>
         /// This test renders a texture and waits for manual approval that the test is finished.
         /// </summary>
-        [TestMethod]
-        public void ManualContentVerificationTest(TestContext context)
-        {
-            context.ExitCriteria = new ContentVerificationExitCriteria(this.content, context);
-        }
+        //[TestMethod]
+        //public void ManualContentVerificationTest(TestContext context)
+        //{
+        //    context.ExitCriteria = new ContentVerificationExitCriteria(this.content, context);
+        //}
 
-        private class ContentVerificationExitCriteria : ExitCriteria
-        {
-            private readonly SpriteBatch _batch;
-            private readonly Texture2D _texture;
-            private readonly SpriteFont _font;
-            private float _xPosition;
+        //private class ContentVerificationExitCriteria : ExitCriteria
+        //{
+        //    private readonly SpriteBatch _batch;
+        //    private readonly Texture2D _texture;
+        //    private readonly SpriteFont _font;
+        //    private float _xPosition;
 
-            public ContentVerificationExitCriteria(ContentManager content, TestContext context)
-                : base(context)
-            {
-                var graphics = (IGraphicsDeviceService)this.Context.Services.GetService(typeof(IGraphicsDeviceService));
-                this._batch = new SpriteBatch(graphics.GraphicsDevice);
-                this._texture = content.Load<Texture2D>("scurvy_logo_big");
-                this._font = content.Load<SpriteFont>("font");
-            }
+        //    public ContentVerificationExitCriteria(ContentManager content, TestContext context)
+        //        : base(context)
+        //    {
+        //        var graphics = (IGraphicsDeviceService)this.Context.Services.GetService(typeof(IGraphicsDeviceService));
+        //        this._batch = new SpriteBatch(graphics.GraphicsDevice);
+        //        this._texture = content.Load<Texture2D>("scurvy_logo_big");
+        //        this._font = content.Load<SpriteFont>("font");
+        //    }
 
-            public override void Update(TimeSpan elapsedTime)
-            {
-                KeyboardState keyState = Keyboard.GetState();
-                GamePadState padState = GamePad.GetState(PlayerIndex.One);
+        //    public override void Update(TimeSpan elapsedTime)
+        //    {
+        //        KeyboardState keyState = Keyboard.GetState();
+        //        GamePadState padState = GamePad.GetState(PlayerIndex.One);
 
-                _xPosition += elapsedTime.Milliseconds * .01f;
+        //        _xPosition += elapsedTime.Milliseconds * .01f;
 
-                if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space) || padState.IsButtonDown(Buttons.A))
-                {
-                    this.IsFinished = true;
-                }
-            }
+        //        if (keyState.IsKeyDown(Keys.Enter) || keyState.IsKeyDown(Keys.Space) || padState.IsButtonDown(Buttons.A))
+        //        {
+        //            this.IsFinished = true;
+        //        }
+        //    }
 
-            public override void Draw()
-            {
-                _batch.Begin();
-                _batch.DrawString(_font, "Press Enter when finished verifying this test", new Vector2(50, 50), Color.White);
-                _batch.Draw(this._texture, new Vector2((float)Math.Sin(_xPosition) * 100, 100), Color.White);
-                _batch.End();
-            }
-        }
+        //    public override void Draw()
+        //    {
+        //        _batch.Begin();
+        //        _batch.DrawString(_font, "Press Enter when finished verifying this test", new Vector2(50, 50), Color.White);
+        //        _batch.Draw(this._texture, new Vector2((float)Math.Sin(_xPosition) * 100, 100), Color.White);
+        //        _batch.End();
+        //    }
+        //}
     }
 }

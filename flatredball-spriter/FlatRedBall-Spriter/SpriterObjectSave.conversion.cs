@@ -13,16 +13,19 @@ namespace FlatRedBall_Spriter
     {
         public SpriterObject ToRuntime()
         {
-            var spriterObject = new SpriterObject();
+            var spriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
 
             IDictionary<string, string> filenames = new Dictionary<string, string>();
             IDictionary<int, Sprite> persistentSprites = new Dictionary<int, Sprite>();
+            IDictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+
             foreach (var folder in this.Folder)
             {
                 foreach (var file in folder.File)
                 {
                     string folderFileId = string.Format("{0}_{1}", folder.Id, file.Id);
                     filenames[folderFileId] = file.Name;
+                    textures[folderFileId] = FlatRedBallServices.Load<Texture2D>(file.Name);
                 }
             }
 
@@ -32,7 +35,7 @@ namespace FlatRedBall_Spriter
             foreach (var key in mainline.Keys)
             {
                 
-                var keyFrame = new KeyFrame {Time = key.Time/1000.0};
+                var keyFrame = new KeyFrame {Time = key.Time/1000.0f};
                 foreach (var objectRef in key.ObjectRef)
                 {
                     Sprite sprite;
@@ -65,8 +68,9 @@ namespace FlatRedBall_Spriter
                                 {
                                     Z = timelineKey.Object.Angle
                                 },
-                            ScaleX = timelineKey.Object.ScaleX
-                            // TODO: Figure out how to load the texture
+                            ScaleX = timelineKey.Object.ScaleX,
+                            ScaleY = timelineKey.Object.ScaleY,
+                            Texture = textures[folderFileId]
                         };
                     // TODO: Z-index
 

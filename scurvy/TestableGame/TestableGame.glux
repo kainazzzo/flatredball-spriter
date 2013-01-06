@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GlueProjectSave xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Screens>
+    <ScreenSave>
+      <Name>Screens\TestScreen</Name>
+      <NamedObjects>
+        <NamedObjectSave>
+          <SourceType>Entity</SourceType>
+          <SourceClassType>Entities\SpriterObjectTestEntity</SourceClassType>
+          <InstanceName>SpriterObjectTestEntityInstance</InstanceName>
+          <AttachToContainer>true</AttachToContainer>
+          <AddToManagers>true</AddToManagers>
+          <IndependentOfCamera>true</IndependentOfCamera>
+        </NamedObjectSave>
+      </NamedObjects>
+    </ScreenSave>
+  </Screens>
+  <Entities>
+    <EntitySave>
+      <Name>Entities\SpriterObjectTestEntity</Name>
+      <NamedObjects>
+        <NamedObjectSave>
+          <CustomProperty>
+            <Type>float</Type>
+            <Member>PixelSize</Member>
+            <ValueAsFloat>0.5</ValueAsFloat>
+          </CustomProperty>
+          <CustomProperty>
+            <Type>Texture2D</Type>
+            <Member>Texture</Member>
+            <ValueAsString>ball</ValueAsString>
+          </CustomProperty>
+          <CustomProperty>
+            <Type>float</Type>
+            <Member>X</Member>
+            <ValueAsFloat>30</ValueAsFloat>
+          </CustomProperty>
+          <CustomProperty>
+            <Type>float</Type>
+            <Member>Y</Member>
+            <ValueAsFloat>30</ValueAsFloat>
+          </CustomProperty>
+          <SourceType>FlatRedBallType</SourceType>
+          <SourceClassType>Sprite</SourceClassType>
+          <InstanceName>SpriteInstance</InstanceName>
+          <AttachToContainer>true</AttachToContainer>
+          <AddToManagers>true</AddToManagers>
+          <IndependentOfCamera>true</IndependentOfCamera>
+        </NamedObjectSave>
+      </NamedObjects>
+      <ReferencedFiles>
+        <ReferencedFileSave>
+          <Name>Entities/SpriterObjectTestEntity/ball.png</Name>
+          <IsSharedStatic>true</IsSharedStatic>
+          <RuntimeType>Microsoft.Xna.Framework.Graphics.Texture2D</RuntimeType>
+        </ReferencedFileSave>
+      </ReferencedFiles>
+      <Is2D>true</Is2D>
+    </EntitySave>
+  </Entities>
+  <GlobalFiles />
+  <GlobalContentSettingsSave>
+    <LoadAsynchronously>false</LoadAsynchronously>
+    <RecordLockContention>false</RecordLockContention>
+  </GlobalContentSettingsSave>
+  <SyncedProjects />
+  <StartUpScreen>Screens\TestScreen</StartUpScreen>
+  <In2D>false</In2D>
+  <SetResolution>false</SetResolution>
+  <ResolutionWidth>800</ResolutionWidth>
+  <ResolutionHeight>600</ResolutionHeight>
+  <SetOrthogonalResolution>false</SetOrthogonalResolution>
+  <OrthogonalWidth>800</OrthogonalWidth>
+  <OrthogonalHeight>600</OrthogonalHeight>
+  <ResolutionPresets />
+  <PerformanceSettingsSave>
+    <ThrowExceptionOnPostInitializeContentLoad>false</ThrowExceptionOnPostInitializeContentLoad>
+    <RecordInitializeSegments>false</RecordInitializeSegments>
+  </PerformanceSettingsSave>
+  <IgnoredDirectories />
+  <CustomClasses />
+  <TranslatedFiles />
+  <ApplyToFixedResolutionPlatforms>true</ApplyToFixedResolutionPlatforms>
+</GlueProjectSave>

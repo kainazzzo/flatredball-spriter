@@ -1,5 +1,10 @@
 using System;
 using System.Collections.Generic;
+using FlatRedBall;
+using FlatRedBall.Graphics;
+using FlatRedBall.IO;
+using FlatRedBall.Screens;
+using FlatRedBall_Spriter;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -22,6 +27,7 @@ namespace TestableGame
         TestRunner<Game1> runner;
         XnaTestReporter reporter;
         SpriteFont font;
+        private SpriterObject so = null;
 
         public Game1()
         {
@@ -38,13 +44,45 @@ namespace TestableGame
         /// </summary>
         protected override void Initialize()
         {
-            base.Initialize();
+            Renderer.UseRenderTargets = false;
+            FlatRedBallServices.InitializeFlatRedBall(this, graphics);
+			GlobalContent.Initialize();
+
+			FlatRedBall.Screens.ScreenManager.Start(typeof(TestableGame.Screens.TestScreen));
+
+            SpriteManager.Camera.BackgroundColor = Color.Black;
+
+            IsMouseVisible = true;
+
+
 
             this.runner = new TestRunner<Game1>(this.Services);
             this.reporter = new XnaTestReporter();
             this.runner.Reporter(this.reporter);
 
             this.font = this.Content.Load<SpriteFont>("font");
+
+            var sos =
+                SpriterObjectSave.FromFile(
+                    @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\simpleballanimation.scml");
+
+            var oldDir = FileManager.RelativeDirectory;
+            FileManager.RelativeDirectory =
+                FileManager.GetDirectory(
+                    @"c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png");
+            so = sos.ToRuntime();
+            FileManager.RelativeDirectory = oldDir;
+
+            so.X = 300f;
+            so.Y = 300f;
+            
+
+            so.AddToManagers(null);
+            SpriteManager.Camera.Position.Z += 1900;
+            SpriteManager.Camera.Position.Y -= 300;
+
+            SpriteManager.Camera.FarClipPlane = 30000f;
+            base.Initialize();
         }
 
         /// <summary>
@@ -55,6 +93,8 @@ namespace TestableGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            
         }
 
         /// <summary>
@@ -76,6 +116,10 @@ namespace TestableGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            FlatRedBallServices.Update(gameTime);
+
+            ScreenManager.Activity();
+
             this.runner.Update(gameTime.ElapsedGameTime);
 
             base.Update(gameTime);
@@ -89,12 +133,14 @@ namespace TestableGame
         {
             graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            FlatRedBallServices.Draw();
+
             this.runner.Draw();
 
             this.spriteBatch.Begin();
             for (int i = 0; i < this.reporter.Statuses.Count; i++)
             {
-                spriteBatch.DrawString(this.font, this.reporter.Statuses[i], new Vector2(0, i * 25), Color.Black);
+                spriteBatch.DrawString(this.font, this.reporter.Statuses[i], new Vector2(0, i * 25), Color.White);
             }
             this.spriteBatch.End();
 

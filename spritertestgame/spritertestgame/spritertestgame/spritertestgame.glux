@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <GlueProjectSave xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Screens />
+  <Screens>
+    <ScreenSave>
+      <Name>Screens\TestScreen</Name>
+    </ScreenSave>
+  </Screens>
   <Entities />
   <GlobalFiles />
   <GlobalContentSettingsSave>
@@ -8,6 +12,7 @@
     <RecordLockContention>false</RecordLockContention>
   </GlobalContentSettingsSave>
   <SyncedProjects />
+  <StartUpScreen>Screens\TestScreen</StartUpScreen>
   <In2D>false</In2D>
   <SetResolution>false</SetResolution>
   <ResolutionWidth>800</ResolutionWidth>

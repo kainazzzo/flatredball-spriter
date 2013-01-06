@@ -126,10 +126,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\SpriterObjectTestEntity.cs" />
+    <Compile Include="Entities\SpriterObjectTestEntity.Generated.cs">
+      <DependentUpon>SpriterObjectTestEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalContent.Generated.cs" />
     <Compile Include="MyTest.cs" />
+    <Compile Include="Performance\IPoolable.Generated.cs" />
+    <Compile Include="Performance\PoolList.Generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Screens\TestScreen.cs" />
+    <Compile Include="Screens\TestScreen.Generated.cs">
+      <DependentUpon>TestScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TileGraphics\AnimationChainContainer.cs" />
+    <Compile Include="TileGraphics\LayeredTileMap.cs" />
+    <Compile Include="TileGraphics\MapDrawableBatch.cs" />
+    <Compile Include="TileGraphics\ReducedTileMapInfo.cs" />
+    <Compile Include="TileGraphics\Tileset.cs" />
     <Compile Include="XnaTestReporter.cs" />
   </ItemGroup>
   <ItemGroup>

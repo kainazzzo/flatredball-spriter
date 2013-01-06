@@ -24,7 +24,7 @@ namespace Scurvy.Test
 
         public static void AreEqual<T>(T first, T second, string description)
         {
-            IsTrue(first != null ? first.Equals(second) : false, description);
+            IsTrue(first != null ? first.Equals(second) : false, string.Format("Expected Value <{0}> but observed <{1}>. Description: [{2}]", first, second, description));
         }
     }
 }

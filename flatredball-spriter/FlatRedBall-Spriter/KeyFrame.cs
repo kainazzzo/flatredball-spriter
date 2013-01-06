@@ -10,7 +10,7 @@ namespace FlatRedBall_Spriter
             Values = new Dictionary<PositionedObject, KeyFrameValues>();
         }
 
-        public double Time { get; set; }
+        public float Time { get; set; }
         public Dictionary<PositionedObject, KeyFrameValues> Values { get; set; }
     }
 }

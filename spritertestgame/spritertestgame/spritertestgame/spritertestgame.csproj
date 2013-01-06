@@ -113,9 +113,23 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalContent.Generated.cs" />
+    <Compile Include="MyTest.cs" />
+    <Compile Include="Performance\IPoolable.Generated.cs" />
+    <Compile Include="Performance\PoolList.Generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Screens\TestScreen.cs" />
+    <Compile Include="Screens\TestScreen.Generated.cs">
+      <DependentUpon>TestScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TileGraphics\AnimationChainContainer.cs" />
+    <Compile Include="TileGraphics\LayeredTileMap.cs" />
+    <Compile Include="TileGraphics\MapDrawableBatch.cs" />
+    <Compile Include="TileGraphics\ReducedTileMapInfo.cs" />
+    <Compile Include="TileGraphics\Tileset.cs" />
+    <Compile Include="XnaTestReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -156,6 +170,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">
+      <Project>{1A1A158C-5EDE-4750-8BD0-62FAEB1C21DD}</Project>
+      <Name>FlatRedBall-Spriter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\scurvy\Scurvy.Test\Scurvy.Test.csproj">
+      <Project>{71B312F5-1697-4CBD-BE67-AC0D3C34D115}</Project>
+      <Name>Scurvy.Test</Name>
+    </ProjectReference>
     <ProjectReference Include="..\spritertestgameContent\spritertestgameContent.contentproj">
       <Project>{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}</Project>
       <Name>spritertestgameContent %28Content%29</Name>

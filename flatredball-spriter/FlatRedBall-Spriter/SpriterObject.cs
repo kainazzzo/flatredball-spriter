@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using FlatRedBall;
 using FlatRedBall.Graphics;
+using FlatRedBall.IO;
+using FlatRedBall.Input;
 using FlatRedBall.Instructions;
 using FlatRedBall.Math;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace FlatRedBall_Spriter
 {
@@ -17,8 +20,10 @@ namespace FlatRedBall_Spriter
 
         public bool Animating { get; private set; }
         public float SecondsIn { get; private set; }
-        private int CurrentKeyFrameIndex { get; set; }
-        private int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }
+        public int CurrentKeyFrameIndex { get; private set; }
+        public int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }
+
+        private StringBuilder sb = new StringBuilder();
 
         public KeyFrame NextKeyFrame
         {
@@ -43,7 +48,10 @@ namespace FlatRedBall_Spriter
             if (Animating)
             {
                 SecondsIn += secondDifference;
-                if (SecondsIn >= NextKeyFrame.Time)
+
+                sb.AppendFormat("SecondsIn={0},", SecondsIn);
+
+                if (NextKeyFrame != null && SecondsIn >= NextKeyFrame.Time)
                 {
                     ++CurrentKeyFrameIndex;
                 }
@@ -51,7 +59,9 @@ namespace FlatRedBall_Spriter
                 // Interpolate between the current keyframe and next keyframe values based on time difference
                 if (NextKeyFrame != null)
                 {
-                    float time = SecondsIn/NextKeyFrame.Time;
+                    float percentage = GetPercentageIntoFrame(SecondsIn, CurrentKeyFrame.Time, NextKeyFrame.Time);
+
+                    sb.AppendFormat("percentage={0},", percentage);
 
                     foreach (var currentPair in this.CurrentKeyFrame.Values)
                     {
@@ -60,7 +70,10 @@ namespace FlatRedBall_Spriter
                         var currentObject = currentPair.Key;
 
                         // Position
-                        currentObject.Position = Vector3.Lerp(currentValues.Position, nextValues.Position, time);
+                        currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
+                                                                      percentage);
+
+                        sb.AppendFormat("RelativePosition={0}", currentObject.RelativePosition);
 
                         // Sprite specific stuff
                         var sprite = currentObject as Sprite;
@@ -69,11 +82,12 @@ namespace FlatRedBall_Spriter
                             sprite.Texture = currentValues.Texture;
 
                             // Angle
-                            sprite.RelativeRotationZ = MathHelper.Lerp(currentValues.Rotation.Z, nextValues.Rotation.Z, time);
+                            sprite.RelativeRotationZ = MathHelper.Lerp(currentValues.Rotation.Z,
+                                                                       nextValues.Rotation.Z, percentage);
 
                             // Scale
-                            sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, time);
-                            sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, time);
+                            sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
+                            sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
                         }
                     }
                 }
@@ -81,8 +95,21 @@ namespace FlatRedBall_Spriter
                 {
                     Animating = false;
                 }
-                
+                sb.AppendLine("");
             }
+
+            if (InputManager.Keyboard.KeyDown(Keys.Space))
+            {
+                // does this make it only fire once?
+
+                FileManager.SaveText(sb.ToString(), @"c:\flatredballprojects\output.csv");
+
+            }
+        }
+
+        public static float GetPercentageIntoFrame(float secondsIntoAnimation, float currentKeyFrameTime, float nextKeyFrameTime)
+        {
+            return (secondsIntoAnimation - currentKeyFrameTime)/(nextKeyFrameTime - currentKeyFrameTime);
         }
 
         public void Destroy()

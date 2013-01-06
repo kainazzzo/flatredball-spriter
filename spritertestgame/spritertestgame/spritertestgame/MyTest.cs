@@ -56,7 +56,7 @@ namespace spritertestgame
             FileManager.RelativeDirectory = oldDir;
 
             Assert.AreEqual(1, so.ObjectList.Count, "1 Object");
-            Assert.AreEqual(5, so.KeyFrameList.Count, "5 Keys");
+            Assert.AreEqual(6, so.KeyFrameList.Count, "5 Keys");
 
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Time, "KeyFrame 0 Time = 0ms");
             Assert.AreEqual(0.2f, so.KeyFrameList[1].Time, "KeyFrame 1 Time = 200ms");
@@ -72,8 +72,8 @@ namespace spritertestgame
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[0].Values[positionedObject].ScaleX, "Scale Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[0].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[0].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[0].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[0].Values[positionedObject].Texture.Name, "Texture test");
 
             Assert.AreEqual(0.0f, so.KeyFrameList[1].Values[positionedObject].Position.X, "Position Test");
@@ -82,8 +82,8 @@ namespace spritertestgame
             Assert.AreEqual(0.0f, so.KeyFrameList[1].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[1].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[1].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[1].Values[positionedObject].ScaleX, "Scale Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[1].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[1].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[1].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[1].Values[positionedObject].Texture.Name, "Texture test");
 
             Assert.AreEqual(-128.0f, so.KeyFrameList[2].Values[positionedObject].Position.X, "Position Test");
@@ -92,8 +92,8 @@ namespace spritertestgame
             Assert.AreEqual(0.0f, so.KeyFrameList[2].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[2].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[2].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[2].Values[positionedObject].ScaleX, "Scale Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[2].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[2].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[2].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[2].Values[positionedObject].Texture.Name, "Texture test");
 
             Assert.AreEqual(-128.0f, so.KeyFrameList[3].Values[positionedObject].Position.X, "Position Test");
@@ -102,8 +102,8 @@ namespace spritertestgame
             Assert.AreEqual(0.0f, so.KeyFrameList[3].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[3].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[3].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[3].Values[positionedObject].ScaleX, "Scale Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[3].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[3].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[3].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[3].Values[positionedObject].Texture.Name, "Texture test");
 
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[positionedObject].Position.X, "Position Test");
@@ -112,9 +112,20 @@ namespace spritertestgame
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[positionedObject].Rotation.X, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[positionedObject].Rotation.Y, "Rotation Test");
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[positionedObject].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[4].Values[positionedObject].ScaleX, "Scale Test");
-            Assert.AreEqual(32.0f, so.KeyFrameList[4].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[4].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[4].Values[positionedObject].ScaleY, "Scale Test");
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[4].Values[positionedObject].Texture.Name, "Texture test");
+
+            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[positionedObject].Position.X, "Position Test");
+            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[positionedObject].Position.Y, "Position Test");
+            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[positionedObject].Position.Z, "Position Test");
+            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[positionedObject].Rotation.X, "Rotation Test");
+            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[positionedObject].Rotation.Y, "Rotation Test");
+            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[positionedObject].Rotation.Z, "Rotation Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[5].Values[positionedObject].ScaleX, "Scale Test");
+            Assert.AreEqual(64.0f, so.KeyFrameList[5].Values[positionedObject].ScaleY, "Scale Test");
+            Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[4].Values[positionedObject].Texture.Name, "Texture test");
+
         }
 
         /// <summary>

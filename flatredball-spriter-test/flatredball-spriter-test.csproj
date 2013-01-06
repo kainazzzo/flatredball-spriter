@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriterObjectSaveTest.cs" />
+    <Compile Include="SpriterObjectTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">

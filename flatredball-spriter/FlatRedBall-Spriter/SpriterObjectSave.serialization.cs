@@ -104,8 +104,8 @@ namespace FlatRedBall_Spriter
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class KeyObject
     {
-        private float _scalex = 32.0f;
-        private float _scaley = 32.0f;
+        private float _scalex = 1.0f;
+        private float _scaley = 1.0f;
         
 
         /// <remarks/>
@@ -148,8 +148,8 @@ namespace FlatRedBall_Spriter
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class KeyBone
     {
-        private float _scaleX = 32.0f;
-        private float _scaleY = 32.0f;
+        private float _scaleX = 1.0f;
+        private float _scaleY = 1.0f;
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "x")]

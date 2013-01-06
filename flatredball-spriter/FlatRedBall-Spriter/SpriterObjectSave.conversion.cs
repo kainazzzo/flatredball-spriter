@@ -48,6 +48,7 @@ namespace FlatRedBall_Spriter
                         sprite = new Sprite();
                         persistentSprites[objectRef.Id] = sprite;
                         spriterObject.ObjectList.Add(sprite);
+                        sprite.AttachTo(spriterObject, true);
                     }
 
                     // TODO: tie the sprite to object_ref id?
@@ -56,6 +57,9 @@ namespace FlatRedBall_Spriter
                     string folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder, timelineKey.Object.File);
                     var filename =
                         filenames[folderFileId];
+                    var file =
+                        this.Folder.First(f => f.Id == timelineKey.Object.Folder)
+                            .File.First(f => f.Id == timelineKey.Object.File);
 
                     var values = new KeyFrameValues
                         {
@@ -68,8 +72,8 @@ namespace FlatRedBall_Spriter
                                 {
                                     Z = timelineKey.Object.Angle
                                 },
-                            ScaleX = timelineKey.Object.ScaleX,
-                            ScaleY = timelineKey.Object.ScaleY,
+                            ScaleX = (file.Width / 2.0f * timelineKey.Object.ScaleX),
+                            ScaleY = (file.Height / 2.0f * timelineKey.Object.ScaleY),
                             Texture = textures[folderFileId]
                         };
                     // TODO: Z-index
@@ -81,7 +85,12 @@ namespace FlatRedBall_Spriter
                 
             }
 
-
+            var last = spriterObject.KeyFrameList[spriterObject.KeyFrameList.Count - 1];
+            spriterObject.KeyFrameList.Add(new KeyFrame
+                {
+                    Time = this.Entity[0].Animation[0].Length / 1000.0f,
+                    Values = last.Values
+                });
             return spriterObject;
         }
 

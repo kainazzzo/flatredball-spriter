@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using FlatRedBall;
 using FlatRedBall.Graphics;
@@ -29,12 +30,15 @@ namespace spritertestgame.Screens
 	{
 	    private SpriterObject so;
 	    private Text text;
-		void CustomInitialize()
+	    private Text text2;
+	    private Text text3;
+
+	    void CustomInitialize()
 		{
 
             var sos =
     SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\simpleballanimation.scml");
+        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\longballanimation.scml");
 
             var oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory =
@@ -53,8 +57,8 @@ namespace spritertestgame.Screens
             SpriteManager.Camera.FarClipPlane = 30000f;
 
 		    text = TextManager.AddText("test");
-            
-
+		    text2 = TextManager.AddText("test2");
+	        text3 = TextManager.AddText("test3");
 		}
 
 		void CustomActivity(bool firstTimeCalled)
@@ -64,9 +68,14 @@ namespace spritertestgame.Screens
                 so.StartAnimation();
             }
 		    text.DisplayText = so.ObjectList[0].RelativePosition.ToString();
+		    text2.DisplayText = string.Format("{0}", so.SecondsIn);
+		    text3.DisplayText = so.CurrentKeyFrameIndex.ToString(CultureInfo.InvariantCulture);
 		    text.X = 100f;
 		    text.Y = 100f;
-            
+		    text2.X = 100f;
+		    text2.Y = 150f;
+		    text3.X = 100f;
+		    text3.Y = 200f;
 		}
 
 		void CustomDestroy()

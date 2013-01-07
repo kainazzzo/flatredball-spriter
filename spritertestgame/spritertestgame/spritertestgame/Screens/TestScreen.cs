@@ -38,7 +38,7 @@ namespace spritertestgame.Screens
 
             var sos =
     SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\longballanimation.scml");
+        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\ballrotation.scml");
 
             var oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory =
@@ -63,12 +63,12 @@ namespace spritertestgame.Screens
 
 		void CustomActivity(bool firstTimeCalled)
 		{
-            if (firstTimeCalled)
+            if (!so.Animating)
             {
                 so.StartAnimation();
             }
-		    text.DisplayText = so.ObjectList[0].RelativePosition.ToString();
-		    text2.DisplayText = string.Format("{0}", so.SecondsIn);
+		    text.DisplayText = so.ObjectList[0].Position.ToString();
+		    text2.DisplayText = so.ObjectList[1].Position.ToString();
 		    text3.DisplayText = so.CurrentKeyFrameIndex.ToString(CultureInfo.InvariantCulture);
 		    text.X = 100f;
 		    text.Y = 100f;

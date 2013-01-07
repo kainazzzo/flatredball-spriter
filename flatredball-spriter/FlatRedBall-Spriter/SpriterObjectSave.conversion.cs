@@ -39,48 +39,41 @@ namespace FlatRedBall_Spriter
                 foreach (var objectRef in key.ObjectRef)
                 {
                     Sprite sprite;
+                    PositionedObject pivot;
                     if (persistentSprites.ContainsKey(objectRef.Id))
                     {
                         sprite = persistentSprites[objectRef.Id];
+                        pivot = sprite.Parent;
                     }
                     else
                     {
-                        sprite = new Sprite();
+                        pivot = new PositionedObject {Name = "pivot"};
+
+                        sprite = new Sprite {Name = "sprite"};
+
+                        sprite.AttachTo(pivot, true);
+                        pivot.AttachTo(spriterObject, true);
+
                         persistentSprites[objectRef.Id] = sprite;
                         spriterObject.ObjectList.Add(sprite);
-                        sprite.AttachTo(spriterObject, true);
+                        spriterObject.ObjectList.Add(pivot);
                     }
 
                     // TODO: tie the sprite to object_ref id?
                     var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
                     var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
-                    string folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder, timelineKey.Object.File);
-                    var filename =
-                        filenames[folderFileId];
+                    var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder, timelineKey.Object.File);
+
                     var file =
                         this.Folder.First(f => f.Id == timelineKey.Object.Folder)
                             .File.First(f => f.Id == timelineKey.Object.File);
 
-                    var values = new KeyFrameValues
-                        {
-                            Position = new Vector3
-                                {
-                                    X = timelineKey.Object.X,
-                                    Y = timelineKey.Object.Y
-                                },
-                            Rotation = new Vector3
-                                {
-                                    Z = timelineKey.Object.Angle
-                                },
-                            ScaleX = (file.Width / 2.0f * timelineKey.Object.ScaleX),
-                            ScaleY = (file.Height / 2.0f * timelineKey.Object.ScaleY),
-                            Texture = textures[folderFileId]
-                        };
+                    var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId);
                     // TODO: Z-index
 
-                    keyFrame.Values[sprite] = values;
+                    keyFrame.Values[pivot] = values.Pivot;
+                    keyFrame.Values[sprite] = values.Sprite;
                     spriterObject.KeyFrameList.Add(keyFrame);
-                    
                 }
                 
             }
@@ -93,6 +86,43 @@ namespace FlatRedBall_Spriter
                 });
             return spriterObject;
         }
+
+        private static KeyFramePivotSpriteValues GetKeyFrameValues(Key timelineKey, SpriterDataFolderFile file, IDictionary<string, Texture2D> textures,
+                                                        string folderFileId)
+        {
+            var pivotValue = new KeyFrameValues
+                {
+                    Position = new Vector3(timelineKey.Object.X,
+                            timelineKey.Object.Y,
+                            0.0f),
+                    Rotation = new Vector3
+                        {
+                            Z = timelineKey.Object.Angle
+                        },
+                    Spin = timelineKey.Spin
+                };
+
+            var spriteValue = new KeyFrameValues
+                {
+                    Texture = textures[folderFileId],
+                    ScaleX = (file.Width / 2.0f * timelineKey.Object.ScaleX),
+                    ScaleY = (file.Height / 2.0f * timelineKey.Object.ScaleY),
+                    Position = GetSpriteRelativePosition(textures[folderFileId].Width, textures[folderFileId].Height, timelineKey.Object.PivotX,
+                        timelineKey.Object.PivotY)
+                };
+            return new KeyFramePivotSpriteValues { Pivot = pivotValue, Sprite = spriteValue };
+        }
+
+        public static Vector3 GetSpriteRelativePosition(float width, float height, float pivotX, float pivotY)
+        {
+            return new Vector3(-width * (pivotX - .5f), -height * (pivotY - .5f), 0f);
+        }
+        private class KeyFramePivotSpriteValues
+        {
+            public KeyFrameValues Pivot { get; set; }
+            public KeyFrameValues Sprite { get; set; }
+        }
+
 
         public static SpriterObjectSave FromFile(string filename)
         {

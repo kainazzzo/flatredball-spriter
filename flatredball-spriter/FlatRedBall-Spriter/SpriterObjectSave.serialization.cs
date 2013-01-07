@@ -7,6 +7,8 @@ namespace FlatRedBall_Spriter
     [XmlTypeAttribute(TypeName = "key", AnonymousType = true)]
     public partial class Key
     {
+        private int _spin = 1;
+
         /// <remarks/>
         [XmlElement("bone_ref", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public List<KeyBoneRef> BoneRef { get; set; }
@@ -33,7 +35,11 @@ namespace FlatRedBall_Spriter
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "spin")]
-        public int Spin { get; set; }
+        public int Spin
+        {
+            get { return _spin; }
+            set { _spin = value; }
+        }
     }
 
     /// <remarks/>
@@ -106,7 +112,14 @@ namespace FlatRedBall_Spriter
     {
         private float _scalex = 1.0f;
         private float _scaley = 1.0f;
-        
+
+        private float _pivot_y = 1.0f;
+
+        public KeyObject()
+        {
+            PivotX = 0.0f;
+        }
+
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "folder")]
@@ -142,6 +155,17 @@ namespace FlatRedBall_Spriter
         {
             get { return _scaley; }
             set { _scaley = value; }
+        }
+
+        [XmlAttribute(AttributeName = "pivot_x")]
+        public float PivotX { get; set; }
+
+
+        [XmlAttribute(AttributeName = "pivot_y")]
+        public float PivotY
+        {
+            get { return _pivot_y; }
+            set { _pivot_y = value; }
         }
     }
 

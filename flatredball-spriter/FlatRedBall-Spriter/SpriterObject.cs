@@ -61,34 +61,53 @@ namespace FlatRedBall_Spriter
                 {
                     float percentage = GetPercentageIntoFrame(SecondsIn, CurrentKeyFrame.Time, NextKeyFrame.Time);
 
-                    sb.AppendFormat("percentage={0},", percentage);
-
-                    foreach (var currentPair in this.CurrentKeyFrame.Values)
+                    if (percentage >= 0)
                     {
-                        var currentValues = currentPair.Value;
-                        var nextValues = NextKeyFrame.Values[currentPair.Key];
-                        var currentObject = currentPair.Key;
 
-                        // Position
-                        currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
-                                                                      percentage);
 
-                        sb.AppendFormat("RelativePosition={0}", currentObject.RelativePosition);
+                        sb.AppendFormat("percentage={0},", percentage);
 
-                        // Sprite specific stuff
-                        var sprite = currentObject as Sprite;
-                        if (sprite != null)
+                        foreach (var currentPair in this.CurrentKeyFrame.Values)
                         {
-                            sprite.Texture = currentValues.Texture;
+                            var currentValues = currentPair.Value;
+                            var nextValues = NextKeyFrame.Values[currentPair.Key];
+                            var currentObject = currentPair.Key;
+
+                            // Position
+                            currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
+                                                                          percentage);
+
 
                             // Angle
-                            sprite.RelativeRotationZ = MathHelper.Lerp(currentValues.Rotation.Z,
-                                                                       nextValues.Rotation.Z, percentage);
+                            int spin = currentValues.Spin;
+                            float angleA = currentValues.Rotation.Z;
+                            float angleB = nextValues.Rotation.Z;
 
-                            // Scale
-                            sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
-                            sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
-                        }
+                            if (spin == 1 && angleB - angleA < 0)
+                            {
+                                angleB += 360f;
+                            }
+                            else if (spin == -1 && angleB - angleA >= 0)
+                            {
+                                angleB -= 360f;
+                            }
+
+                            currentObject.RelativeRotationZ =
+                                MathHelper.ToRadians(MathHelper.Lerp(angleA,
+                                                                     angleB, percentage));
+
+                            sb.AppendFormat("RelativeRotationZ={0}", currentObject.RelativeRotationZ);
+                            // Sprite specific stuff
+                            var sprite = currentObject as Sprite;
+                            if (sprite != null)
+                            {
+                                sprite.Texture = currentValues.Texture;
+
+                                // Scale
+                                sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
+                                sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
+                            }
+                        } 
                     }
                 }
                 else
@@ -181,6 +200,10 @@ namespace FlatRedBall_Spriter
 		    foreach (var sprite in this.ObjectList.OfType<Sprite>().ToList())
 		    {
 		        SpriteManager.AddSprite(sprite);
+                if (sprite.Parent != null && sprite.Parent.GetType() == typeof (PositionedObject))
+                {
+                    SpriteManager.AddPositionedObject(sprite.Parent);
+                }
 		    }
 			AddToManagersBottomUp(layerToAddTo);
 		}

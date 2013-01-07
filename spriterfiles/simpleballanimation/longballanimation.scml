@@ -4,27 +4,27 @@
         <file id="0" name="ball.png" width="128" height="128"/>
     </folder>
     <entity id="0" name="">
-        <animation id="0" name="First Animation" length="3000" looping="false">
+        <animation id="0" name="First Animation" length="1000" looping="false">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
                 </key>
-                <key id="1" time="1000">
+                <key id="1" time="206">
                     <object_ref id="0" timeline="0" key="1" z_index="0"/>
                 </key>
-                <key id="2" time="2000">
+                <key id="2" time="864">
                     <object_ref id="0" timeline="0" key="2" z_index="0"/>
                 </key>
             </mainline>
             <timeline id="0">
                 <key id="0" spin="0">
-                    <object folder="0" file="0"/>
+                    <object folder="0" file="0" x="-236" y="-41"/>
                 </key>
-                <key id="1" time="1000" spin="0">
-                    <object folder="0" file="0" y="128"/>
+                <key id="1" time="206" spin="-1">
+                    <object folder="0" file="0" x="24" y="135"/>
                 </key>
-                <key id="2" time="2000" spin="0">
-                    <object folder="0" file="0"/>
+                <key id="2" time="864">
+                    <object folder="0" file="0" x="-152" y="-18" angle="312.384245"/>
                 </key>
             </timeline>
         </animation>

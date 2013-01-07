@@ -1,6 +1,8 @@
 ﻿using FlatRedBall;
 using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Microsoft.Xna.Framework;
 
 namespace flatredball_spriter_test
 {
@@ -424,7 +426,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[0];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[0].key[0].bone[0]
 
@@ -442,7 +444,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[0].key[1].bone[0]
 
@@ -460,7 +462,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[2];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[0].key[2].bone[0]
 
@@ -486,7 +488,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[0];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[1].key[0].bone[0]
 
@@ -504,7 +506,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[1].key[1].bone[0]
 
@@ -522,7 +524,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[2];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[1].key[2].bone[0]
 
@@ -548,7 +550,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[0];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[2].key[0].bone[0]
 
@@ -566,7 +568,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[2].key[1].bone[0]
 
@@ -584,7 +586,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[2];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[2].key[1].bone[0]
 
@@ -628,7 +630,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[3].key[1].bone[0]
 
@@ -664,7 +666,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[3];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(3, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[3].key[3].bone[0]
 
@@ -690,7 +692,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[0];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[4].key[0].bone[0]
 
@@ -708,7 +710,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[1].key[1].bone[0]
 
@@ -726,7 +728,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[2];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[4].key[2].bone[0]
 
@@ -752,7 +754,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[0];
             Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[5].key[0].object[0]
 
@@ -763,6 +765,8 @@ namespace flatredball_spriter_test
             Assert.AreEqual(1.08694f, @object.ScaleX);
             Assert.AreEqual(1, @object.Folder);
             Assert.AreEqual(0, @object.File);
+            Assert.AreEqual(0.0f, @object.PivotX);
+            Assert.AreEqual(1.0f, @object.PivotY);
 
             #endregion
 
@@ -771,7 +775,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[5].key[0].object[0]
 
@@ -789,7 +793,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[2];
             Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[5].key[0].object[0]
 
@@ -816,7 +820,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[0];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[6].key[0].bone[0]
 
@@ -834,7 +838,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[6].key[1].bone[0]
 
@@ -852,7 +856,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[2];
             Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[6].key[2].bone[0]
 
@@ -875,7 +879,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[0];
             Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[7].key[0].object[0]
 
@@ -894,7 +898,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[7].key[0].object[0]
 
@@ -912,7 +916,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[2];
             Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[5].key[0].object[0]
 
@@ -939,7 +943,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[0];
             Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[8].key[0].object[0]
 
@@ -958,7 +962,7 @@ namespace flatredball_spriter_test
             key = timeline.Key[1];
             Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
-            Assert.AreEqual(0, key.Spin);
+            Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[8].key[1].object[0]
 
@@ -979,6 +983,22 @@ namespace flatredball_spriter_test
             #endregion
 
 
+        }
+
+        /// <summary>
+        ///A test for GetSpriteRelativePosition
+        ///</summary>
+        [TestMethod()]
+        public void GetSpriteRelativePositionTest()
+        {
+            float width = 128F; 
+            float height = 128F;
+            float pivotX = .75F;
+            float pivotY = .25F;
+            Vector3 expected = new Vector3(-32f, 32f, 0f); // TODO: Initialize to an appropriate value
+            Vector3 actual;
+            actual = SpriterObjectSave.GetSpriteRelativePosition(width, height, pivotX, pivotY);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

@@ -109,18 +109,51 @@ namespace FlatRedBall_Spriter
                         } 
                     }
                 }
-                else if (SecondsIn >= this.AnimationTotalTime)
+                else
                 {
-                    if (!Looping)
+                    if (SecondsIn >= this.AnimationTotalTime)
                     {
-                        Animating = false;
+// ReSharper disable ForCanBeConvertedToForeach
+                        for (int index = 0; index < ObjectList.Count; index++)
+// ReSharper restore ForCanBeConvertedToForeach
+                        {
+                            var positionedObject = ObjectList[index];
+                            if (positionedObject.GetType() == typeof (Sprite))
+                            {
+                                ((Sprite) positionedObject).Texture = null;
+                            }
+                        }
+
+                        if (!Looping)
+                        {
+                            StartAnimation();
+                            Animating = false;
+                        }
+                        else
+                        {
+                            var start = SecondsIn - AnimationTotalTime;
+                            StartAnimation();
+                            SecondsIn = start;
+                        }
                     }
                     else
                     {
-                        var start = SecondsIn - AnimationTotalTime;
-                        StartAnimation();
-                        SecondsIn = start;
+                        foreach (var pair in CurrentKeyFrame.Values)
+                        {
+                            pair.Key.RelativePosition = pair.Value.Position;
+                            pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
+
+                            if (pair.Key.GetType() == typeof (Sprite))
+                            {
+                                var sprite = ((Sprite) pair.Key);
+                                sprite.Texture = pair.Value.Texture;
+                                sprite.ScaleX = pair.Value.ScaleX;
+                                sprite.ScaleY = pair.Value.ScaleY;
+                            }
+                        }
                     }
+
+                    
                 }
             }
         }

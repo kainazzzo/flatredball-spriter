@@ -4,6 +4,7 @@ using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace flatredball_spriter_test
 {
@@ -102,6 +103,8 @@ namespace flatredball_spriter_test
             Assert.IsTrue(so.Animating);
             Assert.AreEqual(1.999f, so.SecondsIn);
         }
+
+        
 
         [TestMethod]
         public void AnimationLoops()

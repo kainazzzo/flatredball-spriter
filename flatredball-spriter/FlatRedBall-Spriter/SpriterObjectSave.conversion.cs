@@ -11,6 +11,10 @@ namespace FlatRedBall_Spriter
 {
     public partial class SpriterObjectSave
     {
+        public virtual ITextureLoader textureLoader
+        {
+            get { return new FlatRedBallTextureLoader(); }
+        }
         public SpriterObject ToRuntime()
         {
             var spriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
@@ -25,7 +29,7 @@ namespace FlatRedBall_Spriter
                 {
                     string folderFileId = string.Format("{0}_{1}", folder.Id, file.Id);
                     filenames[folderFileId] = file.Name;
-                    textures[folderFileId] = FlatRedBallServices.Load<Texture2D>(file.Name);
+                    textures[folderFileId] = LoadTexture(file);
                 }
             }
 
@@ -59,6 +63,8 @@ namespace FlatRedBall_Spriter
                         spriterObject.ObjectList.Add(pivot);
                     }
 
+                    spriterObject.AnimationTotalTime = animation.Length;
+
                     // TODO: tie the sprite to object_ref id?
                     var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
                     var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
@@ -78,17 +84,16 @@ namespace FlatRedBall_Spriter
                 
             }
 
-            var last = spriterObject.KeyFrameList[spriterObject.KeyFrameList.Count - 1];
-            spriterObject.KeyFrameList.Add(new KeyFrame
-                {
-                    Time = this.Entity[0].Animation[0].Length / 1000.0f,
-                    Values = last.Values
-                });
             return spriterObject;
         }
 
-        private static KeyFramePivotSpriteValues GetKeyFrameValues(Key timelineKey, SpriterDataFolderFile file, IDictionary<string, Texture2D> textures,
-                                                        string folderFileId)
+        public virtual Texture2D LoadTexture(SpriterDataFolderFile file)
+        {
+            return FlatRedBallServices.Load<Texture2D>(file.Name);
+        }
+
+        private static KeyFramePivotSpriteValues GetKeyFrameValues(Key timelineKey, SpriterDataFolderFile file,
+            IDictionary<string, Texture2D> textures, string folderFileId)
         {
             var pivotValue = new KeyFrameValues
                 {
@@ -107,7 +112,7 @@ namespace FlatRedBall_Spriter
                     Texture = textures[folderFileId],
                     ScaleX = (file.Width / 2.0f * timelineKey.Object.ScaleX),
                     ScaleY = (file.Height / 2.0f * timelineKey.Object.ScaleY),
-                    Position = GetSpriteRelativePosition(textures[folderFileId].Width, textures[folderFileId].Height, timelineKey.Object.PivotX,
+                    Position = GetSpriteRelativePosition(file.Width, file.Height, timelineKey.Object.PivotX,
                         timelineKey.Object.PivotY)
                 };
             return new KeyFramePivotSpriteValues { Pivot = pivotValue, Sprite = spriteValue };

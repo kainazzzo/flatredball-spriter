@@ -300,7 +300,9 @@ namespace FlatRedBall_Spriter
 		}
 
         private bool mIsPaused;
-		public override void Pause (InstructionList instructions)
+        public int AnimationTotalTime { get; set; }
+
+        public override void Pause (InstructionList instructions)
 		{
 			base.Pause(instructions);
 			mIsPaused = true;

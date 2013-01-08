@@ -128,20 +128,6 @@ namespace spritertestgame
             Assert.AreEqual(0.0f, so.KeyFrameList[4].Values[sprite].Position.X, "X value relative to pivot");
 
             Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[4].Values[sprite].Texture.Name, "Texture test");
-
-            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[pivot].Position.X, "Position Test");
-            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[pivot].Position.Y, "Position Test");
-            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[pivot].Position.Z, "Position Test");
-            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[pivot].Rotation.X, "Rotation Test");
-            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[pivot].Rotation.Y, "Rotation Test");
-            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[pivot].Rotation.Z, "Rotation Test");
-            Assert.AreEqual(64.0f, so.KeyFrameList[5].Values[sprite].ScaleX, "Scale Test");
-            Assert.AreEqual(64.0f, so.KeyFrameList[5].Values[sprite].ScaleY, "Scale Test");
-            Assert.AreEqual(128.0f, so.KeyFrameList[5].Values[sprite].Position.Y, "Y value relative to pivot");
-            Assert.AreEqual(0.0f, so.KeyFrameList[5].Values[sprite].Position.X, "X value relative to pivot");
-
-            Assert.AreEqual("c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png", so.KeyFrameList[4].Values[sprite].Texture.Name, "Texture test");
-
         }
 
         /// <summary>

@@ -63,7 +63,8 @@ namespace FlatRedBall_Spriter
                         spriterObject.ObjectList.Add(pivot);
                     }
 
-                    spriterObject.AnimationTotalTime = animation.Length;
+                    spriterObject.Looping = animation.Looping;
+                    spriterObject.AnimationTotalTime = animation.Length / 1000.0f;
 
                     // TODO: tie the sprite to object_ref id?
                     var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);

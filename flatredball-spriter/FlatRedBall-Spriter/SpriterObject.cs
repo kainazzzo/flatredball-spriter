@@ -103,7 +103,16 @@ namespace FlatRedBall_Spriter
                 }
                 else if (SecondsIn >= this.AnimationTotalTime)
                 {
-                    Animating = false;
+                    if (!Looping)
+                    {
+                        Animating = false;
+                    }
+                    else
+                    {
+                        var start = SecondsIn - AnimationTotalTime;
+                        StartAnimation();
+                        SecondsIn = start;
+                    }
                 }
             }
         }
@@ -282,7 +291,9 @@ namespace FlatRedBall_Spriter
 		}
 
         private bool mIsPaused;
-        public int AnimationTotalTime { get; set; }
+        public float AnimationTotalTime { get; set; }
+
+        public bool Looping { get; set; }
 
         public override void Pause (InstructionList instructions)
 		{

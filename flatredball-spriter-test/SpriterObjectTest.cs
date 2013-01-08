@@ -103,7 +103,21 @@ namespace flatredball_spriter_test
             Assert.AreEqual(1.999f, so.SecondsIn);
         }
 
-        private static SpriterObject GetSimpleSpriterObject()
+        [TestMethod]
+        public void AnimationLoops()
+        {
+            var so = GetSimpleSpriterObject(true);
+            so.StartAnimation();
+            Assert.IsTrue(so.Looping);
+            so.TimedActivity(1.0f, 0f, 0f);
+            so.TimedActivity(0.99f, 0f, 0f);
+            Assert.AreEqual(1.99f, so.SecondsIn);
+            so.TimedActivity(.3f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(.29f - so.SecondsIn) < .0001f);
+            Assert.IsTrue(so.Animating);
+        }
+
+        private static SpriterObject GetSimpleSpriterObject(bool loops=false)
         {
 
             var so = new SpriterObject("Global", false);
@@ -113,7 +127,9 @@ namespace flatredball_spriter_test
             pivot.AttachTo(so, true);
             sprite.AttachTo(pivot, true);
 
-            so.AnimationTotalTime = 2000;
+            so.Looping = loops;
+
+            so.AnimationTotalTime = 2.0f;
             var keyFrame = new KeyFrame()
                 {
                     Time = 0

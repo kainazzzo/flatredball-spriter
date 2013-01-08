@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using FlatRedBall;
 using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Microsoft.Xna.Framework;
 
 namespace flatredball_spriter_test
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for SpriterObjectTest and is intended
     ///to contain all SpriterObjectTest Unit Tests
@@ -79,96 +81,64 @@ namespace flatredball_spriter_test
 
             actual = SpriterObject.GetPercentageIntoFrame(secondsIntoAnimation, currentKeyFrameTime, nextKeyFrameTime);
             Assert.AreEqual(expected, actual);
-            
+
         }
 
         [TestMethod]
-        public void TestAnimationTotalLength()
+        public void AnimationEndsAfterLength()
         {
-            var sos = new SpriterObjectSaveNullTexture
-                {
-                    Folder = new List<SpriterDataFolder>(1)
-                        {
-                            new SpriterDataFolder
-                                {
-                                    Id = 0,
-                                    Name = "folder",
-                                    File = new List<SpriterDataFolderFile>
-                                        {
-                                            new SpriterDataFolderFile
-                                                {
-                                                    Height = 128,
-                                                    Width = 128,
-                                                    Id = 0,
-                                                    Name = "folder/test.png"
-                                                }
-                                        }
-                                }
-                        },
-                        Entity = new List<SpriterDataEntity>
-                            {
-                                new SpriterDataEntity
-                                    {
-                                        Id=0, Name="",
-                                        Animation = new List<SpriterDataEntityAnimation>
-                                            {
-                                                new SpriterDataEntityAnimation
-                                                    {
-                                                        Length=2000,
-                                                        Id=0, Looping = false,
-                                                        Mainline = new SpriterDataEntityAnimationMainline
-                                                            {
-                                                                Keys=new List<Key>()
-                                                                    {
-                                                                        new Key()
-                                                                            {
-                                                                                ObjectRef = new List<KeyObjectRef>()
-                                                                                    {
-                                                                                        new KeyObjectRef()
-                                                                                            {
-                                                                                                Id = 0, Key=0,
-                                                                                                Timeline = 0, ZIndex = 0
-                                                                                            }
-                                                                                    },
-                                                                                    Id=0,
-                                                                                    Spin=1
-                                                                            }
-                                                                    }
-                                                            },
-                                                            Name="First Animation",
-                                                            Timeline = new List<SpriterDataEntityAnimationTimeline>()
-                                                                {
-                                                                    new SpriterDataEntityAnimationTimeline()
-                                                                        {
-                                                                            Id=0, 
-                                                                            Name="",
-                                                                            Key=new List<Key>()
-                                                                                {
-                                                                                    new Key()
-                                                                                        {
-                                                                                            Object = new KeyObject(), Id=0, Spin=1,
-                                                                                            Time=300
-                                                                                        }
-                                                                                }
-                                                                        }
-                                                                }
-                                                    }
-                                            }
-                                    }
-                            }
-                };
-            var so = sos.ToRuntime();
-            Assert.IsNotNull(so);
-            Assert.AreEqual(1, so.KeyFrameList.Count);
-            Assert.AreEqual(2000, so.AnimationTotalTime);
+            var so = GetSimpleSpriterObject();
+            Assert.IsFalse(so.Animating);
+            so.StartAnimation();
+            Assert.IsTrue(so.Animating);
+            so.TimedActivity(.999f, 0f, 0f);
+            Assert.IsTrue(so.Animating);
+            Assert.AreEqual(0, so.CurrentKeyFrameIndex);
+            so.TimedActivity(.013f, 0f, 0f);
+            Assert.AreEqual(1.012f, so.SecondsIn);
+            Assert.IsTrue(so.Animating);
+            Assert.AreEqual(1, so.CurrentKeyFrameIndex);
+            so.TimedActivity(.987f, 0f, 0f);
+            Assert.IsTrue(so.Animating);
+            Assert.AreEqual(1.999f, so.SecondsIn);
         }
 
-        public class SpriterObjectSaveNullTexture : SpriterObjectSave
+        private static SpriterObject GetSimpleSpriterObject()
         {
-            public override Microsoft.Xna.Framework.Graphics.Texture2D LoadTexture(SpriterDataFolderFile file)
+
+            var so = new SpriterObject("Global", false);
+
+            var sprite = new Sprite();
+            var pivot = new PositionedObject();
+            pivot.AttachTo(so, true);
+            sprite.AttachTo(pivot, true);
+
+            so.AnimationTotalTime = 2000;
+            var keyFrame = new KeyFrame()
+                {
+                    Time = 0
+                };
+            keyFrame.Values[pivot] = new KeyFrameValues()
             {
-                return null;
-            }
+                Position = new Vector3(30f, 30f, 0f)
+            };
+
+            so.KeyFrameList.Add(keyFrame);
+
+            keyFrame = new KeyFrame()
+                {
+                    Time = 1.0f
+                };
+            keyFrame.Values[pivot] = new KeyFrameValues()
+            {
+                Position = Vector3.Zero
+            };
+
+            so.KeyFrameList.Add(keyFrame);
+
+            so.ObjectList.Add(sprite);
+            so.ObjectList.Add(pivot);
+            return so;
         }
     }
 }

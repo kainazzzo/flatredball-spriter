@@ -23,8 +23,6 @@ namespace FlatRedBall_Spriter
         public int CurrentKeyFrameIndex { get; private set; }
         public int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }
 
-        private StringBuilder sb = new StringBuilder();
-
         public KeyFrame NextKeyFrame
         {
             get { return KeyFrameList.Count > NextKeyFrameIndex ? KeyFrameList[NextKeyFrameIndex] : null; }
@@ -49,8 +47,6 @@ namespace FlatRedBall_Spriter
             {
                 SecondsIn += secondDifference;
 
-                sb.AppendFormat("SecondsIn={0},", SecondsIn);
-
                 if (NextKeyFrame != null && SecondsIn >= NextKeyFrame.Time)
                 {
                     ++CurrentKeyFrameIndex;
@@ -63,10 +59,6 @@ namespace FlatRedBall_Spriter
 
                     if (percentage >= 0)
                     {
-
-
-                        sb.AppendFormat("percentage={0},", percentage);
-
                         foreach (var currentPair in this.CurrentKeyFrame.Values)
                         {
                             var currentValues = currentPair.Value;
@@ -96,7 +88,6 @@ namespace FlatRedBall_Spriter
                                 MathHelper.ToRadians(MathHelper.Lerp(angleA,
                                                                      angleB, percentage));
 
-                            sb.AppendFormat("RelativeRotationZ={0}", currentObject.RelativeRotationZ);
                             // Sprite specific stuff
                             var sprite = currentObject as Sprite;
                             if (sprite != null)
@@ -110,19 +101,10 @@ namespace FlatRedBall_Spriter
                         } 
                     }
                 }
-                else
+                else if (SecondsIn >= this.AnimationTotalTime)
                 {
                     Animating = false;
                 }
-                sb.AppendLine("");
-            }
-
-            if (InputManager.Keyboard.KeyDown(Keys.Space))
-            {
-                // does this make it only fire once?
-
-                FileManager.SaveText(sb.ToString(), @"c:\flatredballprojects\output.csv");
-
             }
         }
 

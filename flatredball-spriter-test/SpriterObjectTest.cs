@@ -231,5 +231,20 @@ namespace flatredball_spriter_test
             return so;
         }
 
+
+        /// <summary>
+        ///A test for GetPercentageIntoFrame
+        ///</summary>
+        [TestMethod()]
+        public void GetPercentageIntoFrameTestInfinity()
+        {
+            float secondsIntoAnimation = 1.733335f; // TODO: Initialize to an appropriate value
+            float currentKeyFrameTime = 1.722f; // TODO: Initialize to an appropriate value
+            float nextKeyFrameTime = 1.722f; // TODO: Initialize to an appropriate value
+            float expected = 0F; // TODO: Initialize to an appropriate value
+            float actual;
+            actual = SpriterObject.GetPercentageIntoFrame(secondsIntoAnimation, currentKeyFrameTime, nextKeyFrameTime);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

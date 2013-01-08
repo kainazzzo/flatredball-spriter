@@ -69,6 +69,14 @@ namespace FlatRedBall_Spriter
                             currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
                                                                           percentage);
 
+                            if (float.IsNaN(currentObject.RelativePosition.X) ||
+                                float.IsNaN(currentObject.RelativePosition.Y)
+                                || float.IsNaN(currentObject.RelativePosition.Z))
+                            {
+                                throw new Exception(string.Format("Float.IsNaN true! Object name {0} RelativePosition: {1}",
+                                    currentObject.Name, currentObject.RelativePosition));
+                            }
+
 
                             // Angle
                             int spin = currentValues.Spin;
@@ -119,7 +127,16 @@ namespace FlatRedBall_Spriter
 
         public static float GetPercentageIntoFrame(float secondsIntoAnimation, float currentKeyFrameTime, float nextKeyFrameTime)
         {
-            return (secondsIntoAnimation - currentKeyFrameTime)/(nextKeyFrameTime - currentKeyFrameTime);
+          
+          float retVal = (secondsIntoAnimation - currentKeyFrameTime)/(nextKeyFrameTime - currentKeyFrameTime);
+          if (float.IsInfinity(retVal))
+          {
+              return 0.0f;
+          }
+          else
+          {
+              return retVal;
+          }
         }
 
         public void Destroy()

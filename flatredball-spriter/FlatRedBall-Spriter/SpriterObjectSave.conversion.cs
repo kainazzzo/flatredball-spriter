@@ -36,6 +36,10 @@ namespace FlatRedBall_Spriter
 
             var animation = Entity[0].Animation[0];
             var mainline = animation.Mainline;
+
+            spriterObject.Looping = animation.Looping;
+            spriterObject.AnimationTotalTime = animation.Length / 1000.0f;
+
             foreach (var key in mainline.Keys)
             {
                 
@@ -63,8 +67,7 @@ namespace FlatRedBall_Spriter
                         spriterObject.ObjectList.Add(pivot);
                     }
 
-                    spriterObject.Looping = animation.Looping;
-                    spriterObject.AnimationTotalTime = animation.Length / 1000.0f;
+                    
 
                     // TODO: tie the sprite to object_ref id?
                     var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
@@ -80,9 +83,9 @@ namespace FlatRedBall_Spriter
 
                     keyFrame.Values[pivot] = values.Pivot;
                     keyFrame.Values[sprite] = values.Sprite;
-                    spriterObject.KeyFrameList.Add(keyFrame);
+                    
                 }
-                
+                spriterObject.KeyFrameList.Add(keyFrame);
             }
 
             return spriterObject;

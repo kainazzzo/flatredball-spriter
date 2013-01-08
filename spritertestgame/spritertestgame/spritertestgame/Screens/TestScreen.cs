@@ -29,6 +29,7 @@ namespace spritertestgame.Screens
 	public partial class TestScreen
 	{
 	    private SpriterObject so;
+	    private SpriterObject so2;
 	    private Text text;
 	    private Text text2;
 	    private Text text3;
@@ -38,7 +39,7 @@ namespace spritertestgame.Screens
 
             var sos =
     SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\ballrotation.scml");
+        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\manykeyframes.scml");
 
             var oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory =
@@ -51,6 +52,22 @@ namespace spritertestgame.Screens
             so.Y = 200f;
 
             so.AddToManagers(null);
+
+            var sos2 =
+    SpriterObjectSave.FromFile(
+        @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\Example.SCML");
+
+            oldDir = FileManager.RelativeDirectory;
+            FileManager.RelativeDirectory = @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\";
+
+            so2 = sos2.ToRuntime();
+            so2.AddToManagers(null);
+
+	        so.Looping = true;
+            so2.Looping = true;
+
+            FileManager.RelativeDirectory = oldDir;
+
             SpriteManager.Camera.Position.Z += 1900;
             SpriteManager.Camera.Position.Y -= 300;
 
@@ -59,17 +76,31 @@ namespace spritertestgame.Screens
 		    text = TextManager.AddText("test");
 		    text2 = TextManager.AddText("test2");
 	        text3 = TextManager.AddText("test3");
+
+	        var sprite = new Sprite
+	            {
+	                Texture = FlatRedBallServices.Load<Texture2D>(
+	                    "c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png"),
+	                ScaleX = 384f,
+	                ScaleY = 384f,
+	                RotationZVelocity = 1f,
+                    Z = -1f,
+                    X=-384,
+                    Y=-384
+	            };
+	        SpriteManager.AddSprite(sprite);
 		}
 
 		void CustomActivity(bool firstTimeCalled)
 		{
-            if (!so.Animating)
+            if (firstTimeCalled)
             {
                 so.StartAnimation();
+                so2.StartAnimation();
             }
-		    text.DisplayText = so.ObjectList[0].Position.ToString();
-		    text2.DisplayText = so.ObjectList[1].Position.ToString();
-		    text3.DisplayText = so.CurrentKeyFrameIndex.ToString(CultureInfo.InvariantCulture);
+		    text.DisplayText = so2.ObjectList[0].Position.ToString();
+		    text2.DisplayText = so2.ObjectList[1].Position.ToString();
+		    text3.DisplayText = so2.CurrentKeyFrameIndex.ToString(CultureInfo.InvariantCulture);
 		    text.X = 100f;
 		    text.Y = 100f;
 		    text2.X = 100f;

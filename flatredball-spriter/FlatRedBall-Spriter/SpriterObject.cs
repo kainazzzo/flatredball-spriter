@@ -32,11 +32,16 @@ namespace FlatRedBall_Spriter
         {
             get { return KeyFrameList.Count > CurrentKeyFrameIndex ? KeyFrameList[CurrentKeyFrameIndex] : null; }
         }
-        public void StartAnimation()
+        public void ResetAnimation()
         {
-            Animating = true;
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
+        }
+
+        public void StartAnimation()
+        {
+            ResetAnimation();
+            Animating = true;
         }
 
         public override void TimedActivity(float secondDifference, double secondDifferenceSquaredDividedByTwo, float secondsPassedLastFrame)
@@ -47,113 +52,131 @@ namespace FlatRedBall_Spriter
             {
                 SecondsIn += secondDifference;
 
-                if (NextKeyFrame != null && SecondsIn >= NextKeyFrame.Time)
-                {
-                    ++CurrentKeyFrameIndex;
-                }
+                
 
                 // Interpolate between the current keyframe and next keyframe values based on time difference
                 if (NextKeyFrame != null)
                 {
                     float percentage = GetPercentageIntoFrame(SecondsIn, CurrentKeyFrame.Time, NextKeyFrame.Time);
-
-                    if (percentage >= 0)
+                    foreach (var currentPair in this.CurrentKeyFrame.Values)
                     {
-                        foreach (var currentPair in this.CurrentKeyFrame.Values)
-                        {
-                            var currentValues = currentPair.Value;
-                            var nextValues = NextKeyFrame.Values[currentPair.Key];
-                            var currentObject = currentPair.Key;
-
-                            // Position
-                            currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
-                                                                          percentage);
-
-                            if (float.IsNaN(currentObject.RelativePosition.X) ||
-                                float.IsNaN(currentObject.RelativePosition.Y)
-                                || float.IsNaN(currentObject.RelativePosition.Z))
-                            {
-                                throw new Exception(string.Format("Float.IsNaN true! Object name {0} RelativePosition: {1}",
-                                    currentObject.Name, currentObject.RelativePosition));
-                            }
-
-
-                            // Angle
-                            int spin = currentValues.Spin;
-                            float angleA = currentValues.Rotation.Z;
-                            float angleB = nextValues.Rotation.Z;
-
-                            if (spin == 1 && angleB - angleA < 0)
-                            {
-                                angleB += 360f;
-                            }
-                            else if (spin == -1 && angleB - angleA >= 0)
-                            {
-                                angleB -= 360f;
-                            }
-
-                            currentObject.RelativeRotationZ =
-                                MathHelper.ToRadians(MathHelper.Lerp(angleA,
-                                                                     angleB, percentage));
-
-                            // Sprite specific stuff
-                            var sprite = currentObject as Sprite;
-                            if (sprite != null)
-                            {
-                                sprite.Texture = currentValues.Texture;
-
-                                // Scale
-                                sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
-                                sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
-                            }
-                        } 
+                        SetInterpolatedValues(currentPair, percentage);
                     }
                 }
                 else
                 {
                     if (SecondsIn >= this.AnimationTotalTime)
                     {
-// ReSharper disable ForCanBeConvertedToForeach
-                        for (int index = 0; index < ObjectList.Count; index++)
-// ReSharper restore ForCanBeConvertedToForeach
-                        {
-                            var positionedObject = ObjectList[index];
-                            if (positionedObject.GetType() == typeof (Sprite))
-                            {
-                                ((Sprite) positionedObject).Texture = null;
-                            }
-                        }
+                        ClearAllTextures();
 
                         if (!Looping)
                         {
-                            StartAnimation();
+                            ResetAnimation();
                             Animating = false;
                         }
                         else
                         {
-                            var start = SecondsIn - AnimationTotalTime;
-                            StartAnimation();
-                            SecondsIn = start;
+                            RestartAnimationWithWrapping();
                         }
                     }
                     else
                     {
-                        foreach (var pair in CurrentKeyFrame.Values)
-                        {
-                            pair.Key.RelativePosition = pair.Value.Position;
-                            pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
-
-                            if (pair.Key.GetType() == typeof (Sprite))
-                            {
-                                var sprite = ((Sprite) pair.Key);
-                                sprite.Texture = pair.Value.Texture;
-                                sprite.ScaleX = pair.Value.ScaleX;
-                                sprite.ScaleY = pair.Value.ScaleY;
-                            }
-                        }
+                        SetAllObjectValuesToCurrentFrame();
                     }
 
                     
+                }
+
+                if (NextKeyFrame != null && SecondsIn >= NextKeyFrame.Time)
+                {
+                    ++CurrentKeyFrameIndex;
+                }
+            }
+        }
+
+        private void SetInterpolatedValues(KeyValuePair<PositionedObject, KeyFrameValues> currentPair, float percentage)
+        {
+            var currentValues = currentPair.Value;
+            var nextValues = NextKeyFrame.Values[currentPair.Key];
+            var currentObject = currentPair.Key;
+
+            // Position
+            currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
+                                                          percentage);
+
+            if (float.IsNaN(currentObject.RelativePosition.X) ||
+                float.IsNaN(currentObject.RelativePosition.Y)
+                || float.IsNaN(currentObject.RelativePosition.Z))
+            {
+                throw new Exception(string.Format("Float.IsNaN true! Object name {0} RelativePosition: {1}",
+                                                  currentObject.Name, currentObject.RelativePosition));
+            }
+
+
+            // Angle
+            int spin = currentValues.Spin;
+            float angleA = currentValues.Rotation.Z;
+            float angleB = nextValues.Rotation.Z;
+
+            if (spin == 1 && angleB - angleA < 0)
+            {
+                angleB += 360f;
+            }
+            else if (spin == -1 && angleB - angleA >= 0)
+            {
+                angleB -= 360f;
+            }
+
+            currentObject.RelativeRotationZ =
+                MathHelper.ToRadians(MathHelper.Lerp(angleA,
+                                                     angleB, percentage));
+
+            // Sprite specific stuff
+            var sprite = currentObject as Sprite;
+            if (sprite != null)
+            {
+                sprite.Texture = currentValues.Texture;
+
+                // Scale
+                sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
+                sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
+            }
+        }
+
+        private void RestartAnimationWithWrapping()
+        {
+            var start = SecondsIn - AnimationTotalTime;
+            StartAnimation();
+            SecondsIn = start > 0f ? start : 0f;
+        }
+
+        private void SetAllObjectValuesToCurrentFrame()
+        {
+            foreach (var pair in CurrentKeyFrame.Values)
+            {
+                pair.Key.RelativePosition = pair.Value.Position;
+                pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
+
+                if (pair.Key.GetType() == typeof (Sprite))
+                {
+                    var sprite = ((Sprite) pair.Key);
+                    sprite.Texture = pair.Value.Texture;
+                    sprite.ScaleX = pair.Value.ScaleX;
+                    sprite.ScaleY = pair.Value.ScaleY;
+                }
+            }
+        }
+
+        private void ClearAllTextures()
+        {
+// ReSharper disable ForCanBeConvertedToForeach
+            for (int index = 0; index < ObjectList.Count; index++)
+// ReSharper restore ForCanBeConvertedToForeach
+            {
+                var positionedObject = ObjectList[index];
+                if (positionedObject.GetType() == typeof (Sprite))
+                {
+                    ((Sprite) positionedObject).Texture = null;
                 }
             }
         }
@@ -162,7 +185,7 @@ namespace FlatRedBall_Spriter
         {
           
           float retVal = (secondsIntoAnimation - currentKeyFrameTime)/(nextKeyFrameTime - currentKeyFrameTime);
-          if (float.IsInfinity(retVal))
+          if (float.IsInfinity(retVal) || float.IsNaN(retVal))
           {
               return 0.0f;
           }

@@ -156,5 +156,80 @@ namespace flatredball_spriter_test
             so.ObjectList.Add(pivot);
             return so;
         }
+
+        [TestMethod]
+        public void Test2Objects()
+        {
+            var so = GetSimpleSpriterObjectWithTwoObjects(true);
+
+            so.StartAnimation();
+            so.TimedActivity(.5f, 0f, 0f);
+
+            Assert.AreEqual(5f, so.ObjectList[1].RelativePosition.Y);
+            Assert.AreEqual(5f, so.ObjectList[3].RelativePosition.X);
+
+            so.TimedActivity(.25f, 0f, 0f);
+            Assert.AreEqual(7.5f, so.ObjectList[1].RelativePosition.Y);
+            Assert.AreEqual(7.5f, so.ObjectList[3].RelativePosition.X);
+
+        }
+
+        private static SpriterObject GetSimpleSpriterObjectWithTwoObjects(bool loops = false)
+        {
+
+            var so = new SpriterObject("Global", false);
+
+            var sprite = new Sprite();
+            var pivot = new PositionedObject();
+            var sprite2 = new Sprite();
+            var pivot2 = new PositionedObject();
+
+            pivot.AttachTo(so, true);
+            sprite.AttachTo(pivot, true);
+
+            pivot2.AttachTo(so, true);
+            sprite2.AttachTo(pivot2, true);
+
+            so.Looping = loops;
+
+            so.AnimationTotalTime = 2.0f;
+            var keyFrame = new KeyFrame()
+            {
+                Time = 0
+            };
+            keyFrame.Values[pivot] = new KeyFrameValues()
+            {
+                Position = Vector3.Zero
+            };
+            keyFrame.Values[pivot2] = new KeyFrameValues()
+            {
+                Position = Vector3.Zero
+            };
+
+            so.KeyFrameList.Add(keyFrame);
+
+            keyFrame = new KeyFrame()
+            {
+                Time = 1.0f
+            };
+            keyFrame.Values[pivot] = new KeyFrameValues()
+            {
+                Position = new Vector3(0f, 10f, 0f)
+            };
+            keyFrame.Values[pivot2] = new KeyFrameValues()
+            {
+                Position = new Vector3(10f, 0f, 0f)
+            };
+
+            so.KeyFrameList.Add(keyFrame);
+
+            so.ObjectList.Add(sprite);
+            so.ObjectList.Add(pivot);
+            so.ObjectList.Add(sprite2);
+            so.ObjectList.Add(pivot2);
+
+            return so;
+        }
+
     }
 }

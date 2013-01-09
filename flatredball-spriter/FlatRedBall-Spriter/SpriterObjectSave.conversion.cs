@@ -11,7 +11,7 @@ namespace FlatRedBall_Spriter
 {
     public partial class SpriterObjectSave
     {
-        public virtual ITextureLoader textureLoader
+        public virtual ITextureLoader TextureLoader
         {
             get { return new FlatRedBallTextureLoader(); }
         }
@@ -53,7 +53,7 @@ namespace FlatRedBall_Spriter
                     {
                         pivot = new PositionedObject {Name = "pivot"};
 
-                        sprite = new Sprite {Name = "sprite"};
+                        sprite = new Sprite {Name = "sprite", PixelSize = .5f};
 
                         sprite.AttachTo(pivot, true);
                         pivot.AttachTo(spriterObject, true);

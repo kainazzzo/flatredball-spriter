@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FlatRedBall;
 using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -58,6 +59,16 @@ namespace flatredball_spriter_test
             {
                 return null;
             }
+        }
+
+        [TestMethod]
+        public void SpritesUseHalfPixelSize()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTexture();
+
+            var so = sos.ToRuntime();
+
+            Assert.IsTrue(so.ObjectList.OfType<Sprite>().All(s => Math.Abs(s.PixelSize - .5f) < .0001f));
         }
 
         [TestMethod]

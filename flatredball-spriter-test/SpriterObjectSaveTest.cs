@@ -171,8 +171,8 @@ namespace flatredball_spriter_test
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs();
             var so = sos.ToRuntime();
+            Assert.AreEqual(1, so.KeyFrameList.Count);
             Assert.AreEqual(.3f, so.KeyFrameList[0].Time);
-            Assert.AreEqual(.3f, so.KeyFrameList[1].Time);
         }
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs()

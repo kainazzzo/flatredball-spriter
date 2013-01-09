@@ -4,6 +4,7 @@ using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace flatredball_spriter_test
 {
@@ -102,6 +103,8 @@ namespace flatredball_spriter_test
             Assert.IsTrue(so.Animating);
             Assert.AreEqual(1.999f, so.SecondsIn);
         }
+
+        
 
         [TestMethod]
         public void AnimationLoops()
@@ -231,5 +234,35 @@ namespace flatredball_spriter_test
             return so;
         }
 
+
+        /// <summary>
+        ///A test for GetPercentageIntoFrame
+        ///</summary>
+        [TestMethod()]
+        public void GetPercentageIntoFrameTestInfinity()
+        {
+            float secondsIntoAnimation = 1.733335f; // TODO: Initialize to an appropriate value
+            float currentKeyFrameTime = 1.722f; // TODO: Initialize to an appropriate value
+            float nextKeyFrameTime = 1.722f; // TODO: Initialize to an appropriate value
+            float expected = 0F; // TODO: Initialize to an appropriate value
+            float actual;
+            actual = SpriterObject.GetPercentageIntoFrame(secondsIntoAnimation, currentKeyFrameTime, nextKeyFrameTime);
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        ///A test for GetPercentageIntoFrame
+        ///</summary>
+        [TestMethod()]
+        public void GetPercentageIntoFrameTestNaN()
+        {
+            float secondsIntoAnimation = 0F; // TODO: Initialize to an appropriate value
+            float currentKeyFrameTime = 0F; // TODO: Initialize to an appropriate value
+            float nextKeyFrameTime = 0F; // TODO: Initialize to an appropriate value
+            float expected = 0F; // TODO: Initialize to an appropriate value
+            float actual;
+            actual = SpriterObject.GetPercentageIntoFrame(secondsIntoAnimation, currentKeyFrameTime, nextKeyFrameTime);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

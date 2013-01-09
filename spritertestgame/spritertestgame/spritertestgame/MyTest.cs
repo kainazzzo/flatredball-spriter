@@ -1,7 +1,9 @@
 using FlatRedBall;
 using FlatRedBall.IO;
 using FlatRedBall_Spriter;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Scurvy.Test;
 
 namespace spritertestgame
@@ -28,6 +30,102 @@ namespace spritertestgame
             this.content.Dispose();
         }
 
+        [TestMethod]
+        public void SpritesClearTexturesAtStart()
+        {
+            var so = GetSimpleSpriterObjectWithTwoObjects();
+            so.StartAnimation();
+            so.TimedActivity(.5f, 0f, 0f);
+            Assert.IsTrue(((Sprite)so.ObjectList[0]).Texture != null);
+            Assert.IsTrue(((Sprite)so.ObjectList[2]).Texture == null);
+
+            so.TimedActivity(1.0f, 0f, 0f);
+            Assert.IsTrue(((Sprite)so.ObjectList[0]).Texture != null);
+            Assert.IsTrue(((Sprite)so.ObjectList[2]).Texture != null);
+
+            so.TimedActivity(.49f, 0f, 0f);
+            Assert.IsTrue(((Sprite)so.ObjectList[0]).Texture != null);
+            Assert.IsTrue(((Sprite)so.ObjectList[2]).Texture != null);
+
+            so.TimedActivity(.01f, 0f, 0f);
+            Assert.IsTrue(((Sprite)so.ObjectList[0]).Texture == null);
+            Assert.IsTrue(((Sprite)so.ObjectList[2]).Texture == null);
+        }
+
+        private static SpriterObject GetSimpleSpriterObjectWithTwoObjects(bool loops = false)
+        {
+            var goodTexture =
+                FlatRedBallServices.Load<Texture2D>(
+                    "c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png");
+            var so = new SpriterObject("Global", false);
+
+            var sprite = new Sprite();
+            var pivot = new PositionedObject();
+            var sprite2 = new Sprite();
+            var pivot2 = new PositionedObject();
+
+            pivot.AttachTo(so, true);
+            sprite.AttachTo(pivot, true);
+
+            pivot2.AttachTo(so, true);
+            sprite2.AttachTo(pivot2, true);
+
+            so.Looping = loops;
+
+            so.AnimationTotalTime = 2.0f;
+            var keyFrame = new KeyFrame()
+            {
+                Time = 0
+            };
+            keyFrame.Values[pivot] = new KeyFrameValues()
+            {
+                Position = Vector3.Zero,
+            };
+            keyFrame.Values[pivot2] = new KeyFrameValues()
+            {
+                Position = Vector3.Zero,
+            };
+            keyFrame.Values[sprite] = new KeyFrameValues()
+            {
+                Texture = goodTexture
+            };
+            keyFrame.Values[sprite2] = new KeyFrameValues()
+            {
+                Texture = null
+            };
+
+            so.KeyFrameList.Add(keyFrame);
+
+            keyFrame = new KeyFrame()
+            {
+                Time = 1.0f
+            };
+            keyFrame.Values[pivot] = new KeyFrameValues()
+            {
+                Position = new Vector3(0f, 10f, 0f),
+            };
+            keyFrame.Values[pivot2] = new KeyFrameValues()
+            {
+                Position = new Vector3(10f, 0f, 0f),
+            };
+            keyFrame.Values[sprite] = new KeyFrameValues()
+            {
+                Texture = goodTexture
+            };
+            keyFrame.Values[sprite2] = new KeyFrameValues()
+            {
+                Texture = goodTexture
+            };
+
+            so.KeyFrameList.Add(keyFrame);
+
+            so.ObjectList.Add(sprite);
+            so.ObjectList.Add(pivot);
+            so.ObjectList.Add(sprite2);
+            so.ObjectList.Add(pivot2);
+
+            return so;
+        }
         ///// <summary>
         ///// This test makes sure that the scurvy_logo_big content loads successfully.
         ///// </summary>

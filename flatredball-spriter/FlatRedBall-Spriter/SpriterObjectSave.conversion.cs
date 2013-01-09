@@ -78,7 +78,7 @@ namespace FlatRedBall_Spriter
                         this.Folder.First(f => f.Id == timelineKey.Object.Folder)
                             .File.First(f => f.Id == timelineKey.Object.File);
 
-                    var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId);
+                    var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
                     // TODO: Z-index
 
                     keyFrame.Values[pivot] = values.Pivot;
@@ -96,8 +96,7 @@ namespace FlatRedBall_Spriter
             return FlatRedBallServices.Load<Texture2D>(file.Name);
         }
 
-        private static KeyFramePivotSpriteValues GetKeyFrameValues(Key timelineKey, SpriterDataFolderFile file,
-            IDictionary<string, Texture2D> textures, string folderFileId)
+        private static KeyFramePivotSpriteValues GetKeyFrameValues(Key timelineKey, SpriterDataFolderFile file, IDictionary<string, Texture2D> textures, string folderFileId, int zIndex)
         {
             var pivotValue = new KeyFrameValues
                 {
@@ -117,14 +116,14 @@ namespace FlatRedBall_Spriter
                     ScaleX = (file.Width / 2.0f * timelineKey.Object.ScaleX),
                     ScaleY = (file.Height / 2.0f * timelineKey.Object.ScaleY),
                     Position = GetSpriteRelativePosition(file.Width, file.Height, timelineKey.Object.PivotX,
-                        timelineKey.Object.PivotY)
+                        timelineKey.Object.PivotY, zIndex)
                 };
             return new KeyFramePivotSpriteValues { Pivot = pivotValue, Sprite = spriteValue };
         }
 
-        public static Vector3 GetSpriteRelativePosition(float width, float height, float pivotX, float pivotY)
+        public static Vector3 GetSpriteRelativePosition(float width, float height, float pivotX, float pivotY, int zIndex)
         {
-            return new Vector3(-width * (pivotX - .5f), -height * (pivotY - .5f), 0f);
+            return new Vector3(-width * (pivotX - .5f), -height * (pivotY - .5f), zIndex * 0.0001f);
         }
         private class KeyFramePivotSpriteValues
         {

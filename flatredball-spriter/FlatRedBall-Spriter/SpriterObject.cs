@@ -36,6 +36,7 @@ namespace FlatRedBall_Spriter
         {
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
+            SetAllObjectValuesToCurrentFrame();
         }
 
         public void StartAnimation()
@@ -52,7 +53,10 @@ namespace FlatRedBall_Spriter
             {
                 SecondsIn += secondDifference;
 
-                
+                if (NextKeyFrame != null && SecondsIn >= NextKeyFrame.Time)
+                {
+                    ++CurrentKeyFrameIndex;
+                }
 
                 // Interpolate between the current keyframe and next keyframe values based on time difference
                 if (NextKeyFrame != null)
@@ -87,10 +91,7 @@ namespace FlatRedBall_Spriter
                     
                 }
 
-                if (NextKeyFrame != null && SecondsIn >= NextKeyFrame.Time)
-                {
-                    ++CurrentKeyFrameIndex;
-                }
+                
             }
         }
 

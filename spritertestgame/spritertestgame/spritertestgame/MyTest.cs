@@ -34,6 +34,8 @@ namespace spritertestgame
         public void SpritesClearTexturesAtStart()
         {
             var so = GetSimpleSpriterObjectWithTwoObjects();
+            so.Looping = true;
+
             so.StartAnimation();
             so.TimedActivity(.5f, 0f, 0f);
             Assert.IsTrue(((Sprite)so.ObjectList[0]).Texture != null);
@@ -48,7 +50,7 @@ namespace spritertestgame
             Assert.IsTrue(((Sprite)so.ObjectList[2]).Texture != null);
 
             so.TimedActivity(.01f, 0f, 0f);
-            Assert.IsTrue(((Sprite)so.ObjectList[0]).Texture == null);
+            Assert.IsTrue(((Sprite)so.ObjectList[0]).Texture != null);
             Assert.IsTrue(((Sprite)so.ObjectList[2]).Texture == null);
         }
 

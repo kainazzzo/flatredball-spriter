@@ -175,6 +175,17 @@ namespace flatredball_spriter_test
             Assert.AreEqual(.3f, so.KeyFrameList[0].Time);
         }
 
+        [TestMethod]
+        public void ZIndexTest()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs();
+            var so = sos.ToRuntime();
+
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.Position.Z);
+            Assert.AreNotEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z);
+            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z - .0001f) < .00001);
+        }
+
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs()
         {
             return new SpriterObjectSaveNullTexture
@@ -1211,9 +1222,10 @@ namespace flatredball_spriter_test
             float height = 128F;
             float pivotX = .75F;
             float pivotY = .25F;
-            Vector3 expected = new Vector3(-32f, 32f, 0f); // TODO: Initialize to an appropriate value
+            int zIndex = 1;
+            Vector3 expected = new Vector3(-32f, 32f, .0001f); // TODO: Initialize to an appropriate value
             Vector3 actual;
-            actual = SpriterObjectSave.GetSpriteRelativePosition(width, height, pivotX, pivotY);
+            actual = SpriterObjectSave.GetSpriteRelativePosition(width, height, pivotX, pivotY, zIndex);
             Assert.AreEqual(expected, actual);
         }
     }

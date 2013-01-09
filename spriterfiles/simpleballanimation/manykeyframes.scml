@@ -48,23 +48,31 @@
                 <key id="13" time="5483">
                     <object_ref id="0" timeline="0" key="13" z_index="0"/>
                 </key>
-                <key id="14" time="5903">
+                <key id="14" time="5902">
                     <object_ref id="0" timeline="0" key="14" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="0" z_index="1"/>
                 </key>
-                <key id="15" time="6853">
+                <key id="15" time="5903">
                     <object_ref id="0" timeline="0" key="15" z_index="0"/>
                 </key>
-                <key id="16" time="7335">
+                <key id="16" time="6853">
                     <object_ref id="0" timeline="0" key="16" z_index="0"/>
+                    <object_ref id="1" timeline="2" key="0" z_index="1"/>
                 </key>
-                <key id="17" time="7754">
+                <key id="17" time="7335">
                     <object_ref id="0" timeline="0" key="17" z_index="0"/>
                 </key>
-                <key id="18" time="8216">
+                <key id="18" time="7754">
                     <object_ref id="0" timeline="0" key="18" z_index="0"/>
                 </key>
-                <key id="19" time="8724">
+                <key id="19" time="8216">
                     <object_ref id="0" timeline="0" key="19" z_index="0"/>
+                </key>
+                <key id="20" time="8724">
+                    <object_ref id="0" timeline="0" key="20" z_index="0"/>
+                </key>
+                <key id="21" time="9663">
+                    <object_ref id="0" timeline="0" key="21" z_index="0"/>
                 </key>
             </mainline>
             <timeline id="0">
@@ -83,11 +91,11 @@
                 <key id="4" time="1943">
                     <object folder="0" file="0" x="-43.062499" y="-51.731249" pivot_x="0.5" pivot_y="0.5" angle="324.289397"/>
                 </key>
-                <key id="5" time="2281" spin="0">
+                <key id="5" time="2281">
                     <object folder="0" file="0" x="-119" y="14"/>
                 </key>
-                <key id="6" time="2740">
-                    <object folder="0" file="0" x="-173.374363" y="64.364107"/>
+                <key id="6" time="2740" spin="-1">
+                    <object folder="0" file="0" x="192.182142" y="-137.659124" pivot_x="0.653032" pivot_y="-0.335928" angle="61.460015" scale_x="1.545964" scale_y="1.388621"/>
                 </key>
                 <key id="7" time="2974" spin="-1">
                     <object folder="0" file="0" x="-220.60407" y="111.599101" angle="30.619771"/>
@@ -110,23 +118,45 @@
                 <key id="13" time="5483" spin="0">
                     <object folder="0" file="0" x="-153.556874" y="-32.983379"/>
                 </key>
-                <key id="14" time="5903" spin="0">
+                <key id="14" time="5902" spin="0">
+                    <object folder="0" file="0" x="-139.027517" y="-18.035675"/>
+                </key>
+                <key id="15" time="5903">
                     <object folder="0" file="0" x="-142" y="-18"/>
                 </key>
-                <key id="15" time="6853" spin="0">
-                    <object folder="0" file="0" x="-56" y="-30"/>
+                <key id="16" time="6853" spin="-1">
+                    <object folder="0" file="0" x="-56" y="-30" angle="18.313816" scale_x="2.250109" scale_y="2.217396"/>
                 </key>
-                <key id="16" time="7335" spin="0">
+                <key id="17" time="7335" spin="0">
                     <object folder="0" file="0" x="-9" y="-40"/>
                 </key>
-                <key id="17" time="7754" spin="0">
+                <key id="18" time="7754" spin="0">
                     <object folder="0" file="0" x="9" y="-11"/>
                 </key>
-                <key id="18" time="8216" spin="0">
+                <key id="19" time="8216" spin="0">
                     <object folder="0" file="0" x="5" y="21"/>
                 </key>
-                <key id="19" time="8724" spin="0">
+                <key id="20" time="8724" spin="0">
                     <object folder="0" file="0"/>
+                </key>
+                <key id="21" time="9663" spin="0">
+                    <object folder="0" file="0"/>
+                </key>
+            </timeline>
+            <timeline id="1">
+                <key id="0" time="5902" spin="0">
+                    <object folder="0" file="0" x="-154" y="141"/>
+                </key>
+                <key id="1" time="10000">
+                    <object folder="0" file="0" x="-154" y="141"/>
+                </key>
+            </timeline>
+            <timeline id="2">
+                <key id="0" time="6853" spin="0">
+                    <object folder="0" file="0" x="-176" y="159"/>
+                </key>
+                <key id="1" time="10000">
+                    <object folder="0" file="0" x="-176" y="159"/>
                 </key>
             </timeline>
         </animation>

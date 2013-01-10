@@ -174,8 +174,33 @@ namespace flatredball_spriter_test
             so.TimedActivity(.25f, 0f, 0f);
             Assert.AreEqual(7.5f, so.ObjectList[1].RelativePosition.Y);
             Assert.AreEqual(7.5f, so.ObjectList[3].RelativePosition.X);
-
         }
+
+        [TestMethod]
+        public void BoneBecomesPivotForSingleObject()
+        {
+            
+        }
+
+        [TestMethod]
+        public void BoneReparentingOnSingleObject()
+        {
+            
+        }
+
+        [TestMethod]
+        public void BoneScaleEffectsSprite()
+        {
+            
+        }
+
+        [TestMethod]
+        public void AfterBoneIsDetachedObjectScaleTakesOver()
+        {
+            
+        }
+
+
 
         private static SpriterObject GetSimpleSpriterObjectWithTwoObjects(bool loops = false)
         {

@@ -34,60 +34,65 @@ namespace FlatRedBall_Spriter
             }
 
 
-            var animation = Entity[0].Animation[0];
-            var mainline = animation.Mainline;
-
-            spriterObject.Looping = animation.Looping;
-            spriterObject.AnimationTotalTime = animation.Length / 1000.0f;
-
-            foreach (var key in mainline.Keys)
+            foreach (var animation in Entity[0].Animation)
             {
-                
-                var keyFrame = new KeyFrame {Time = key.Time/1000.0f};
-                foreach (var objectRef in key.ObjectRef)
+                var mainline = animation.Mainline;
+
+                spriterObject.Looping = animation.Looping;
+                spriterObject.AnimationTotalTime = animation.Length/1000.0f;
+
+                foreach (var key in mainline.Keys)
                 {
-                    Sprite sprite;
-                    PositionedObject pivot;
-                    if (persistentSprites.ContainsKey(objectRef.Id))
+
+                    var keyFrame = new KeyFrame {Time = key.Time/1000.0f};
+                    foreach (var objectRef in key.ObjectRef)
                     {
-                        sprite = persistentSprites[objectRef.Id];
-                        pivot = sprite.Parent;
+                        Sprite sprite;
+                        PositionedObject pivot;
+                        if (persistentSprites.ContainsKey(objectRef.Id))
+                        {
+                            sprite = persistentSprites[objectRef.Id];
+                            pivot = sprite.Parent;
+                        }
+                        else
+                        {
+                            pivot = new PositionedObject {Name = "pivot"};
+
+                            sprite = new Sprite {Name = "sprite", PixelSize = .5f};
+
+                            sprite.AttachTo(pivot, true);
+                            pivot.AttachTo(spriterObject, true);
+
+                            persistentSprites[objectRef.Id] = sprite;
+                            spriterObject.ObjectList.Add(sprite);
+                            spriterObject.ObjectList.Add(pivot);
+                        }
+
+
+
+                        // TODO: tie the sprite to object_ref id?
+                        var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
+                        var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
+                        var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder, timelineKey.Object.File);
+
+                        var file =
+                            this.Folder.First(f => f.Id == timelineKey.Object.Folder)
+                                .File.First(f => f.Id == timelineKey.Object.File);
+
+                    	var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
+                        // TODO: Z-index
+
+                        keyFrame.Values[pivot] = values.Pivot;
+                        keyFrame.Values[sprite] = values.Sprite;
+
                     }
-                    else
-                    {
-                        pivot = new PositionedObject {Name = "pivot"};
-
-                        sprite = new Sprite {Name = "sprite", PixelSize = .5f};
-
-                        sprite.AttachTo(pivot, true);
-                        pivot.AttachTo(spriterObject, true);
-
-                        persistentSprites[objectRef.Id] = sprite;
-                        spriterObject.ObjectList.Add(sprite);
-                        spriterObject.ObjectList.Add(pivot);
-                    }
-
-                    
-
-                    // TODO: tie the sprite to object_ref id?
-                    var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
-                    var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
-                    var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder, timelineKey.Object.File);
-
-                    var file =
-                        this.Folder.First(f => f.Id == timelineKey.Object.Folder)
-                            .File.First(f => f.Id == timelineKey.Object.File);
-
-                    var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
-                    // TODO: Z-index
-
-                    keyFrame.Values[pivot] = values.Pivot;
-                    keyFrame.Values[sprite] = values.Sprite;
-                    
+                    spriterObject.KeyFrameList.Add(keyFrame);
                 }
-                spriterObject.KeyFrameList.Add(keyFrame);
-            }
 
+                spriterObject.Animations[animation.Name] = new List<KeyFrame>();
+                spriterObject.Animations[animation.Name].AddRange(spriterObject.KeyFrameList);
+                spriterObject.KeyFrameList.Clear();
+            }
             return spriterObject;
         }
 

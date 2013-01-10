@@ -17,6 +17,7 @@ namespace FlatRedBall_Spriter
     {
         public PositionedObjectList<PositionedObject> ObjectList { get; private set; }
         public List<KeyFrame> KeyFrameList { get; private set; }
+        public Dictionary<string, List<KeyFrame>> Animations { get; private set; }
 
         public bool Animating { get; private set; }
         public float SecondsIn { get; private set; }
@@ -36,6 +37,11 @@ namespace FlatRedBall_Spriter
         {
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
+			if (this.KeyFrameList == null || this.KeyFrameList.Count == 0)
+            {
+                this.KeyFrameList = Animations.Values.FirstOrDefault();
+            }
+			
             SetAllObjectValuesToCurrentFrame();
         }
 
@@ -43,6 +49,21 @@ namespace FlatRedBall_Spriter
         {
             ResetAnimation();
             Animating = true;
+        }
+
+
+        public void StartAnimation(string animationName)
+        {
+            List<KeyFrame> keyframes = null;
+            if (Animations.TryGetValue(animationName, out keyframes))
+            {
+                KeyFrameList = Animations[animationName];
+                StartAnimation();
+            }
+            else
+            {
+                throw new ArgumentException("Animation name does not exist.", animationName);
+            }
         }
 
         public override void TimedActivity(float secondDifference, double secondDifferenceSquaredDividedByTwo, float secondsPassedLastFrame)
@@ -229,140 +250,141 @@ namespace FlatRedBall_Spriter
 
 
         public SpriterObject(string contentManagerName, bool addToManagers) :
-			base()
-		{
+            base()
+        {
             LayerProvidedByContainer = null;
             Animating = false;
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
+            Animations = new Dictionary<string, List<KeyFrame>>(1);
             
             ContentManagerName = contentManagerName;
             InitializeSpriterObject(addToManagers);
             KeyFrameList = new List<KeyFrame>();
             ObjectList = new PositionedObjectList<PositionedObject>();
 
-		}
+        }
 
         private void InitializeSpriterObject(bool addToManagers)
-		{
-			// Generated Initialize
-			LoadStaticContent(ContentManagerName);
-			
-			PostInitialize();
-			if (addToManagers)
-			{
-				AddToManagers(null);
-			}
+        {
+            // Generated Initialize
+            LoadStaticContent(ContentManagerName);
+            
+            PostInitialize();
+            if (addToManagers)
+            {
+                AddToManagers(null);
+            }
 
 
-		}
+        }
 
-		public void AddToManagers (Layer layerToAddTo)
-		{
-			LayerProvidedByContainer = layerToAddTo;
-			SpriteManager.AddPositionedObject(this);
+        public void AddToManagers (Layer layerToAddTo)
+        {
+            LayerProvidedByContainer = layerToAddTo;
+            SpriteManager.AddPositionedObject(this);
            
-		    foreach (var sprite in this.ObjectList.OfType<Sprite>().ToList())
-		    {
-		        SpriteManager.AddSprite(sprite);
+            foreach (var sprite in this.ObjectList.OfType<Sprite>().ToList())
+            {
+                SpriteManager.AddSprite(sprite);
                 if (sprite.Parent != null && sprite.Parent.GetType() == typeof (PositionedObject))
                 {
                     SpriteManager.AddPositionedObject(sprite.Parent);
                 }
-		    }
-			AddToManagersBottomUp(layerToAddTo);
-		}
+            }
+            AddToManagersBottomUp(layerToAddTo);
+        }
 
-		public void PostInitialize ()
-		{
-			bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
-			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
-			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
-		}
+        public void PostInitialize ()
+        {
+            bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
+            FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
+            FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
+        }
 
-		public void AddToManagersBottomUp (Layer layerToAddTo)
-		{
-			// We move this back to the origin and unrotate it so that anything attached to it can just use its absolute position
-			float oldRotationX = RotationX;
-			float oldRotationY = RotationY;
-			float oldRotationZ = RotationZ;
-			
-			float oldX = X;
-			float oldY = Y;
-			float oldZ = Z;
-			
-			X = 0;
-			Y = 0;
-			Z = 0;
-			RotationX = 0;
-			RotationY = 0;
-			RotationZ = 0;
-			X = oldX;
-			Y = oldY;
-			Z = oldZ;
-			RotationX = oldRotationX;
-			RotationY = oldRotationY;
-			RotationZ = oldRotationZ;
-		}
+        public void AddToManagersBottomUp (Layer layerToAddTo)
+        {
+            // We move this back to the origin and unrotate it so that anything attached to it can just use its absolute position
+            float oldRotationX = RotationX;
+            float oldRotationY = RotationY;
+            float oldRotationZ = RotationZ;
+            
+            float oldX = X;
+            float oldY = Y;
+            float oldZ = Z;
+            
+            X = 0;
+            Y = 0;
+            Z = 0;
+            RotationX = 0;
+            RotationY = 0;
+            RotationZ = 0;
+            X = oldX;
+            Y = oldY;
+            Z = oldZ;
+            RotationX = oldRotationX;
+            RotationY = oldRotationY;
+            RotationZ = oldRotationZ;
+        }
 
-		public void ConvertToManuallyUpdated ()
-		{
-			this.ForceUpdateDependenciesDeep();
-			SpriteManager.ConvertToManuallyUpdated(this);
-		}
-		public static void LoadStaticContent (string contentManagerName)
-		{
-			if (string.IsNullOrEmpty(contentManagerName))
-			{
-				throw new ArgumentException("contentManagerName cannot be empty or null");
-			}
-			ContentManagerName = contentManagerName;
-			#if DEBUG
-			if (contentManagerName == FlatRedBallServices.GlobalContentManager)
-			{
-				HasBeenLoadedWithGlobalContentManager = true;
-			}
-			else if (HasBeenLoadedWithGlobalContentManager)
-			{
-				throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
-			}
-			#endif
-			bool registerUnload = false;
-			if (LoadedContentManagers.Contains(contentManagerName) == false)
-			{
-				LoadedContentManagers.Add(contentManagerName);
-				lock (mLockObject)
-				{
-					if (!mRegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
-					{
-						FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterObjectTestEntityStaticUnload", UnloadStaticContent);
-						mRegisteredUnloads.Add(ContentManagerName);
-					}
-				}
-			}
-			if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
-			{
-				lock (mLockObject)
-				{
-					if (!mRegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
-					{
-						FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterObjectTestEntityStaticUnload", UnloadStaticContent);
-						mRegisteredUnloads.Add(ContentManagerName);
-					}
-				}
-			}
-		}
-		public static void UnloadStaticContent ()
-		{
-			if (LoadedContentManagers.Count != 0)
-			{
-				LoadedContentManagers.RemoveAt(0);
-				mRegisteredUnloads.RemoveAt(0);
-			}
-			if (LoadedContentManagers.Count == 0)
-			{
-			}
-		}
+        public void ConvertToManuallyUpdated ()
+        {
+            this.ForceUpdateDependenciesDeep();
+            SpriteManager.ConvertToManuallyUpdated(this);
+        }
+        public static void LoadStaticContent (string contentManagerName)
+        {
+            if (string.IsNullOrEmpty(contentManagerName))
+            {
+                throw new ArgumentException("contentManagerName cannot be empty or null");
+            }
+            ContentManagerName = contentManagerName;
+            #if DEBUG
+            if (contentManagerName == FlatRedBallServices.GlobalContentManager)
+            {
+                HasBeenLoadedWithGlobalContentManager = true;
+            }
+            else if (HasBeenLoadedWithGlobalContentManager)
+            {
+                throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
+            }
+            #endif
+            bool registerUnload = false;
+            if (LoadedContentManagers.Contains(contentManagerName) == false)
+            {
+                LoadedContentManagers.Add(contentManagerName);
+                lock (mLockObject)
+                {
+                    if (!mRegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
+                    {
+                        FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterObjectTestEntityStaticUnload", UnloadStaticContent);
+                        mRegisteredUnloads.Add(ContentManagerName);
+                    }
+                }
+            }
+            if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
+            {
+                lock (mLockObject)
+                {
+                    if (!mRegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
+                    {
+                        FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterObjectTestEntityStaticUnload", UnloadStaticContent);
+                        mRegisteredUnloads.Add(ContentManagerName);
+                    }
+                }
+            }
+        }
+        public static void UnloadStaticContent ()
+        {
+            if (LoadedContentManagers.Count != 0)
+            {
+                LoadedContentManagers.RemoveAt(0);
+                mRegisteredUnloads.RemoveAt(0);
+            }
+            if (LoadedContentManagers.Count == 0)
+            {
+            }
+        }
 
         private bool mIsPaused;
         public float AnimationTotalTime { get; set; }
@@ -370,20 +392,19 @@ namespace FlatRedBall_Spriter
         public bool Looping { get; set; }
 
         public override void Pause (InstructionList instructions)
-		{
-			base.Pause(instructions);
-			mIsPaused = true;
-		}
-		public void SetToIgnorePausing ()
-		{
-			InstructionManager.IgnorePausingFor(this);
-		}
-
+        {
+            base.Pause(instructions);
+            mIsPaused = true;
+        }
+        public void SetToIgnorePausing ()
+        {
+            InstructionManager.IgnorePausingFor(this);
+        }
     }
-	
-	
-	// Extra classes
-	public static class SpriterObjectTestEntityExtensionMethods
-	{
-	}
+    
+    
+    // Extra classes
+    public static class SpriterObjectTestEntityExtensionMethods
+    {
+    }
 }

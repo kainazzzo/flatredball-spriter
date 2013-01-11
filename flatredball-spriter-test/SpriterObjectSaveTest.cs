@@ -214,6 +214,11 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z - .0001f) < .00001);
         }
 
+        [TestMethod]
+        public void UnreferencedKeysGetAddedStill()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefsAndExtraKey();
+        }
 
         [TestMethod]
         public void AllAnimationsConvertToRuntimeObject()
@@ -371,6 +376,112 @@ namespace flatredball_spriter_test
             };
         }
 		
+        private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefsAndExtraKey()
+        {
+            return new SpriterObjectSaveNullTexture
+            {
+                Folder = new List<SpriterDataFolder>(1)
+                        {
+                            new SpriterDataFolder
+                                {
+                                    Id = 0,
+                                    Name = "folder",
+                                    File = new List<SpriterDataFolderFile>
+                                        {
+                                            new SpriterDataFolderFile
+                                                {
+                                                    Height = 128,
+                                                    Width = 128,
+                                                    Id = 0,
+                                                    Name = "folder/test.png"
+                                                }
+                                        }
+                                }
+                        },
+                Entity = new List<SpriterDataEntity>
+                        {
+                            new SpriterDataEntity
+                                {
+                                    Id=0, Name="",
+                                    Animation = new List<SpriterDataEntityAnimation>
+                                        {
+                                            new SpriterDataEntityAnimation
+                                                {
+                                                    Length=2000,
+                                                    Id=0, Looping = false,
+                                                    Mainline = new SpriterDataEntityAnimationMainline
+                                                        {
+                                                            Keys=new List<Key>()
+                                                                {
+                                                                    new Key()
+                                                                        {
+                                                                            ObjectRef = new List<KeyObjectRef>()
+                                                                                {
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id = 0, Key=0,
+                                                                                            Timeline = 0, ZIndex = 0
+                                                                                        },
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=1,
+                                                                                            Key=1,
+                                                                                            Timeline=0,
+                                                                                            ZIndex = 1
+                                                                                        }
+                                                                                },
+                                                                            Id=0,
+                                                                            Spin=1,
+                                                                            Time=300
+                                                                        }
+                                                                }
+                                                        },
+                                                    Name="First Animation",
+                                                    Timeline = new List<SpriterDataEntityAnimationTimeline>()
+                                                        {
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id=0, 
+                                                                    Name="",
+                                                                    Key=new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Object = new KeyObject(),
+                                                                                    Id=0, 
+                                                                                    Spin=1,
+                                                                                    Time=300
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=1,
+                                                                                    Object = new KeyObject(),
+                                                                                    Spin=1,
+                                                                                    Time=300
+                                                                                },
+                                                                                new Key()
+                                                                                    {
+                                                                                        Id=2,
+                                                                                        Object = new KeyObject()
+                                                                                            {
+                                                                                                File = 0,
+                                                                                                Folder = 0,
+                                                                                                Angle = 0f,
+                                                                                                X = 1,
+                                                                                                Y = 1
+                                                                                            },
+                                                                                            
+                                                                                    }
+                                                                        }
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+            };
+        }
+
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs()
         {
             return new SpriterObjectSaveNullTexture

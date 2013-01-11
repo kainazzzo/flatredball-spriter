@@ -98,6 +98,14 @@ namespace spritertestgame.Screens
 		public override void Destroy()
 		{
 			// Generated Destroy
+			if (this.UnloadsContentManagerWhenDestroyed && ContentManagerName != "Global")
+			{
+				Example.RemoveFromManagers(ContentManagerName != "Global");
+			}
+			else
+			{
+				Example.RemoveFromManagers(false);
+			}
 			Example = null;
 			
 

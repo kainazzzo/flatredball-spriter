@@ -31,7 +31,6 @@ using Microsoft.Xna.Framework.Media;
 // Generated Usings
 using FlatRedBall;
 using FlatRedBall.Screens;
-using FlatRedBall_Spriter;
 
 namespace spritertestgame.Screens
 {
@@ -41,7 +40,6 @@ namespace spritertestgame.Screens
 		#if DEBUG
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
-		private static FlatRedBall_Spriter.SpriterObject Example;
 		
 
 		public TestScreen()
@@ -98,15 +96,6 @@ namespace spritertestgame.Screens
 		public override void Destroy()
 		{
 			// Generated Destroy
-			if (this.UnloadsContentManagerWhenDestroyed && ContentManagerName != "Global")
-			{
-				Example.RemoveFromManagers(ContentManagerName != "Global");
-			}
-			else
-			{
-				Example.RemoveFromManagers(false);
-			}
-			Example = null;
 			
 
 			base.Destroy();
@@ -124,7 +113,6 @@ namespace spritertestgame.Screens
 		}
 		public virtual void AddToManagersBottomUp ()
 		{
-			Example.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
@@ -145,39 +133,19 @@ namespace spritertestgame.Screens
 				throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
 			}
 			#endif
-			bool registerUnload = false;
-			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/testscreen/example.scml", contentManagerName))
-			{
-			}
-			Example = FlatRedBall_Spriter.SpriterObjectSave.FromFile("content/screens/testscreen/example.scml").ToRuntime();
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]
 		public static object GetStaticMember (string memberName)
 		{
-			switch(memberName)
-			{
-				case  "Example":
-					return Example;
-			}
 			return null;
 		}
 		public static object GetFile (string memberName)
 		{
-			switch(memberName)
-			{
-				case  "Example":
-					return Example;
-			}
 			return null;
 		}
 		object GetMember (string memberName)
 		{
-			switch(memberName)
-			{
-				case  "Example":
-					return Example;
-			}
 			return null;
 		}
 

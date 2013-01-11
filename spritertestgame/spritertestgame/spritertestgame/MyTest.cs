@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FlatRedBall;
 using FlatRedBall.IO;
 using FlatRedBall_Spriter;
@@ -33,8 +34,7 @@ namespace spritertestgame
         [TestMethod]
         public void SpritesClearTexturesAtStart()
         {
-            var so = GetSimpleSpriterObjectWithTwoObjects();
-            so.Looping = true;
+            var so = GetSimpleSpriterObjectWithTwoObjects(true);
 
             so.StartAnimation();
             so.TimedActivity(.5f, 0f, 0f);
@@ -72,9 +72,8 @@ namespace spritertestgame
             pivot2.AttachTo(so, true);
             sprite2.AttachTo(pivot2, true);
 
-            so.Looping = loops;
+            so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
 
-            so.AnimationTotalTime = 2.0f;
             var keyFrame = new KeyFrame()
             {
                 Time = 0
@@ -96,7 +95,7 @@ namespace spritertestgame
                 Texture = null
             };
 
-            so.KeyFrameList.Add(keyFrame);
+            so.Animations[""].KeyFrames.Add(keyFrame);
 
             keyFrame = new KeyFrame()
             {
@@ -119,7 +118,7 @@ namespace spritertestgame
                 Texture = goodTexture
             };
 
-            so.KeyFrameList.Add(keyFrame);
+            so.Animations[""].KeyFrames.Add(keyFrame);
 
             so.ObjectList.Add(sprite);
             so.ObjectList.Add(pivot);
@@ -155,6 +154,7 @@ namespace spritertestgame
             var so = sos.ToRuntime();
             FileManager.RelativeDirectory = oldDir;
 
+            so.StartAnimation();
             Assert.AreEqual(2, so.ObjectList.Count, "1 Object");
             Assert.AreEqual(6, so.KeyFrameList.Count, "5 Keys");
 

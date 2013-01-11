@@ -37,9 +37,7 @@ namespace FlatRedBall_Spriter
             foreach (var animation in Entity[0].Animation)
             {
                 var mainline = animation.Mainline;
-
-                spriterObject.Looping = animation.Looping;
-                spriterObject.AnimationTotalTime = animation.Length/1000.0f;
+                var keyFrameList = new List<KeyFrame>();
 
                 foreach (var key in mainline.Keys)
                 {
@@ -86,12 +84,14 @@ namespace FlatRedBall_Spriter
                         keyFrame.Values[sprite] = values.Sprite;
 
                     }
-                    spriterObject.KeyFrameList.Add(keyFrame);
+                    keyFrameList.Add(keyFrame);
                 }
 
-                spriterObject.Animations[animation.Name] = new List<KeyFrame>();
-                spriterObject.Animations[animation.Name].AddRange(spriterObject.KeyFrameList);
-                spriterObject.KeyFrameList.Clear();
+                
+                var spriterObjectAnimation = new SpriterObjectAnimation(animation.Name,
+                                                                        animation.Looping, animation.Length/1000.0f,
+                                                                        keyFrameList);
+                spriterObject.Animations[animation.Name] = spriterObjectAnimation;
             }
             return spriterObject;
         }
@@ -114,13 +114,20 @@ namespace FlatRedBall_Spriter
                         },
                     Spin = timelineKey.Spin
                 };
+            int width = file.Width;
+            int height = file.Height;
 
+            if ((width == 0 || height == 0) && textures[folderFileId] != null)
+            {
+                width = textures[folderFileId].Width;
+                height = textures[folderFileId].Height;
+            }
             var spriteValue = new KeyFrameValues
                 {
                     Texture = textures[folderFileId],
-                    ScaleX = (file.Width / 2.0f * timelineKey.Object.ScaleX),
-                    ScaleY = (file.Height / 2.0f * timelineKey.Object.ScaleY),
-                    Position = GetSpriteRelativePosition(file.Width, file.Height, timelineKey.Object.PivotX,
+                    ScaleX = (width / 2.0f * timelineKey.Object.ScaleX),
+                    ScaleY = (height / 2.0f * timelineKey.Object.ScaleY),
+                    Position = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
                         timelineKey.Object.PivotY, zIndex)
                 };
             return new KeyFramePivotSpriteValues { Pivot = pivotValue, Sprite = spriteValue };

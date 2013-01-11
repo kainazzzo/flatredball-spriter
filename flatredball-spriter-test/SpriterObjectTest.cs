@@ -120,6 +120,31 @@ namespace flatredball_spriter_test
             Assert.IsTrue(so.Animating);
         }
 
+        [TestMethod]
+        public void OnlyLoopingAnimationTweensToFirstKeyFrameAfterLast()
+        {
+            var so = GetSimpleSpriterObject(true);
+            so.StartAnimation();
+            Assert.IsTrue(so.Looping);
+            so.TimedActivity(1.0f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[1].RelativePosition.X - 0.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[1].RelativePosition.Y - 0.0f) < .0001f);
+
+            so.TimedActivity(.5f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[1].RelativePosition.X - 15.0f) < .0001f);
+
+
+            so = GetSimpleSpriterObject(false);
+            so.StartAnimation();
+            Assert.IsFalse(so.Looping);
+            so.TimedActivity(1.0f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[0].RelativePosition.X - 0.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[0].RelativePosition.Y - 0.0f) < .0001f);
+
+            so.TimedActivity(.5f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[0].RelativePosition.X) < .0001f);
+        }
+
         private static SpriterObject GetSimpleSpriterObject(bool loops=false)
         {
 
@@ -130,9 +155,8 @@ namespace flatredball_spriter_test
             pivot.AttachTo(so, true);
             sprite.AttachTo(pivot, true);
 
-            so.Looping = loops;
+            so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
 
-            so.AnimationTotalTime = 2.0f;
             var keyFrame = new KeyFrame()
                 {
                     Time = 0
@@ -142,7 +166,7 @@ namespace flatredball_spriter_test
                 Position = new Vector3(30f, 30f, 0f)
             };
 
-            so.KeyFrameList.Add(keyFrame);
+            so.Animations[""].KeyFrames.Add(keyFrame);
 
             keyFrame = new KeyFrame()
                 {
@@ -153,7 +177,7 @@ namespace flatredball_spriter_test
                 Position = Vector3.Zero
             };
 
-            so.KeyFrameList.Add(keyFrame);
+            so.Animations[""].KeyFrames.Add(keyFrame);
 
             so.ObjectList.Add(sprite);
             so.ObjectList.Add(pivot);
@@ -217,10 +241,8 @@ namespace flatredball_spriter_test
 
             pivot2.AttachTo(so, true);
             sprite2.AttachTo(pivot2, true);
+            so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
 
-            so.Looping = loops;
-
-            so.AnimationTotalTime = 2.0f;
             var keyFrame = new KeyFrame()
             {
                 Time = 0
@@ -234,7 +256,7 @@ namespace flatredball_spriter_test
                 Position = Vector3.Zero
             };
 
-            so.KeyFrameList.Add(keyFrame);
+            so.Animations[""].KeyFrames.Add(keyFrame);
 
             keyFrame = new KeyFrame()
             {
@@ -249,7 +271,7 @@ namespace flatredball_spriter_test
                 Position = new Vector3(10f, 0f, 0f)
             };
 
-            so.KeyFrameList.Add(keyFrame);
+            so.Animations[""].KeyFrames.Add(keyFrame);
 
             so.ObjectList.Add(sprite);
             so.ObjectList.Add(pivot);

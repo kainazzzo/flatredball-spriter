@@ -50,6 +50,7 @@
     <Compile Include="KeyFrame.cs" />
     <Compile Include="KeyFrameValues.cs" />
     <Compile Include="SpriterObject.cs" />
+    <Compile Include="SpriterObjectAnimation.cs" />
     <Compile Include="SpriterObjectSave.conversion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriterObjectSave.serialization.cs" />

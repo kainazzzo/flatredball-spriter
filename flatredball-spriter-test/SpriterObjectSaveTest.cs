@@ -62,6 +62,17 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void LoopingDefaultsToTrue()
+        {
+            
+            var sos =
+                SpriterObjectSave.FromFile(
+                    @"C:\flatredballprojects\flatredball-spriter\spriterfiles\monsterexample\mytest.scml");
+            Assert.IsTrue(sos.Entity[0].Animation[0].Looping);
+
+        }
+
+        [TestMethod]
         public void SpritesUseHalfPixelSize()
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();
@@ -77,7 +88,21 @@ namespace flatredball_spriter_test
             var sos = GetSimpleSpriterObjectSaveNullTexture();
             var so = sos.ToRuntime();
             Assert.IsNotNull(so);
+            so.StartAnimation();
             Assert.AreEqual(1, so.KeyFrameList.Count);
+            Assert.AreEqual(2.0f, so.AnimationTotalTime);
+        }
+
+        [TestMethod]
+        public void MultipleAnimationTotalLength()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations();
+            var so = sos.ToRuntime();
+
+            so.StartAnimation("0");
+            Assert.AreEqual(1.0f, so.AnimationTotalTime);
+
+            so.StartAnimation("1");
             Assert.AreEqual(2.0f, so.AnimationTotalTime);
         }
 
@@ -86,6 +111,7 @@ namespace flatredball_spriter_test
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();
             var so = sos.ToRuntime();
+            so.StartAnimation();
             Assert.AreEqual(.3f, so.KeyFrameList[0].Time);
         }
 
@@ -171,6 +197,7 @@ namespace flatredball_spriter_test
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs();
             var so = sos.ToRuntime();
+            so.StartAnimation();
             Assert.AreEqual(1, so.KeyFrameList.Count);
             Assert.AreEqual(.3f, so.KeyFrameList[0].Time);
         }
@@ -180,6 +207,7 @@ namespace flatredball_spriter_test
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs();
             var so = sos.ToRuntime();
+            so.StartAnimation();
 
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.Position.Z);
             Assert.AreNotEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z);
@@ -187,13 +215,14 @@ namespace flatredball_spriter_test
         }
 
 
-[TestMethod]
+        [TestMethod]
         public void AllAnimationsConvertToRuntimeObject()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations();
             var so = sos.ToRuntime();
-
+            
             Assert.IsNotNull(so.Animations);
+            Assert.AreEqual(2, so.Animations.Count);
             Assert.IsTrue(so.Animations.ContainsKey("0"));
             Assert.IsTrue(so.Animations.ContainsKey("1"));
 
@@ -202,7 +231,7 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.CurrentKeyFrame.Time - .3f) < .0001);
             so.StartAnimation();
             Assert.IsTrue(so.Animating);
-            Assert.IsTrue(Math.Abs(so.CurrentKeyFrame.Time - .1f) < .0001);
+            Assert.IsTrue(Math.Abs(so.CurrentKeyFrame.Time - .3f) < .0001);
             so.StartAnimation("1");
             Assert.IsTrue(so.Animating);
             Assert.IsTrue(Math.Abs(so.CurrentKeyFrame.Time - .1f) < .0001);
@@ -254,7 +283,7 @@ namespace flatredball_spriter_test
                                         {
                                             new SpriterDataEntityAnimation
                                                 {
-                                                    Length=2000,
+                                                    Length=1000,
                                                     Id=0, Looping = false,
                                                     Name="0",
                                                     Mainline = new SpriterDataEntityAnimationMainline
@@ -495,7 +524,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(0, animation.Id);
             Assert.AreEqual("First Animation", animation.Name);
             Assert.AreEqual(1000, animation.Length);
-            Assert.AreEqual(false, animation.Looping);
+            Assert.AreEqual(true, animation.Looping);
             Assert.AreEqual(9, animation.Timeline.Count);
             #region entity[0].animation[0].mainline
             Assert.AreEqual(3, animation.Mainline.Keys.Count);

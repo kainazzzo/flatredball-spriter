@@ -326,6 +326,8 @@ namespace FlatRedBall_Spriter
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class SpriterDataEntityAnimation
     {
+        private bool _looping = true;
+
         [XmlElement("mainline", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public SpriterDataEntityAnimationMainline Mainline { get; set; }
 
@@ -347,7 +349,11 @@ namespace FlatRedBall_Spriter
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "looping")]
-        public bool Looping { get; set; }
+        public bool Looping
+        {
+            get { return _looping; }
+            set { _looping = value; }
+        }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]

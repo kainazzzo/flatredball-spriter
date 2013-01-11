@@ -61,9 +61,6 @@ namespace spritertestgame.Screens
             _so2 = sos2.ToRuntime();
             _so2.AddToManagers(null);
 
-	        _so.Looping = true;
-            _so2.Looping = true;
-
             FileManager.RelativeDirectory = oldDir;
 
             SpriteManager.Camera.UsePixelCoordinates();
@@ -78,7 +75,7 @@ namespace spritertestgame.Screens
             if (firstTimeCalled)
             {
                 _so.StartAnimation();
-                _so2.StartAnimation();
+                _so2.StartAnimation("Idle");
             }
 		}
 

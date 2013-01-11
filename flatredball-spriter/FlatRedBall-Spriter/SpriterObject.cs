@@ -16,32 +16,87 @@ namespace FlatRedBall_Spriter
     public sealed class SpriterObject : PositionedObject
     {
         public PositionedObjectList<PositionedObject> ObjectList { get; private set; }
-        public List<KeyFrame> KeyFrameList { get; private set; }
-        public Dictionary<string, List<KeyFrame>> Animations { get; private set; }
+        public List<KeyFrame> KeyFrameList { get { return CurrentAnimation != null ? CurrentAnimation.KeyFrames : null; } }
+
+        public Dictionary<string, SpriterObjectAnimation> Animations { get; private set; }
 
         public bool Animating { get; private set; }
         public float SecondsIn { get; private set; }
         public int CurrentKeyFrameIndex { get; private set; }
         public int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }
+        public SpriterObjectAnimation CurrentAnimation
+        {
+            get { return _currentAnimation; }
+            private set
+            {
+                
+                _currentAnimation = value;
+                if (_currentAnimation == null || _currentAnimation.KeyFrames.Count == 0)
+                {
+                    FirstKeyFrameWithEndTime = null;
+                }
+                else
+                {
+                    FirstKeyFrameWithEndTime = new KeyFrame
+                        {
+                            Time = _currentAnimation.TotalTime,
+                            Values = _currentAnimation.KeyFrames[0].Values
+                        };
+                }
+            }
+        }
+
+        private KeyFrame FirstKeyFrameWithEndTime { get; set; }
 
         public KeyFrame NextKeyFrame
         {
-            get { return KeyFrameList.Count > NextKeyFrameIndex ? KeyFrameList[NextKeyFrameIndex] : null; }
+            get
+            {
+                if (NextKeyFrameIndex > KeyFrameList.Count - 1)
+                {
+                    if (Looping)
+                    {
+                        return FirstKeyFrameWithEndTime;
+                    }
+                    else return null;
+                }
+                else
+                {
+                    return KeyFrameList[NextKeyFrameIndex];
+                }
+            }
         }
 
         public KeyFrame CurrentKeyFrame
         {
-            get { return KeyFrameList.Count > CurrentKeyFrameIndex ? KeyFrameList[CurrentKeyFrameIndex] : null; }
+            get
+            {
+                if (CurrentKeyFrameIndex > KeyFrameList.Count - 1)
+                {
+                    if (Looping)
+                    {
+                        return KeyFrameList[KeyFrameList.Count - 1];
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return KeyFrameList[CurrentKeyFrameIndex];
+                }
+            }
         }
         public void ResetAnimation()
         {
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
-			if (this.KeyFrameList == null || this.KeyFrameList.Count == 0)
+            if (this.KeyFrameList == null || this.KeyFrameList.Count == 0)
             {
-                this.KeyFrameList = Animations.Values.FirstOrDefault();
+                CurrentAnimation = Animations.Values.FirstOrDefault();
             }
-			
+
             SetAllObjectValuesToCurrentFrame();
         }
 
@@ -54,10 +109,10 @@ namespace FlatRedBall_Spriter
 
         public void StartAnimation(string animationName)
         {
-            List<KeyFrame> keyframes = null;
-            if (Animations.TryGetValue(animationName, out keyframes))
+            SpriterObjectAnimation animation = null;
+            if (Animations.TryGetValue(animationName, out animation))
             {
-                KeyFrameList = Animations[animationName];
+                CurrentAnimation = animation;
                 StartAnimation();
             }
             else
@@ -68,8 +123,8 @@ namespace FlatRedBall_Spriter
 
         public override void TimedActivity(float secondDifference, double secondDifferenceSquaredDividedByTwo, float secondsPassedLastFrame)
         {
-            base.TimedActivity(secondDifference, secondDifferenceSquaredDividedByTwo, secondsPassedLastFrame); 
-            
+            base.TimedActivity(secondDifference, secondDifferenceSquaredDividedByTwo, secondsPassedLastFrame);
+
             if (Animating)
             {
                 SecondsIn += secondDifference;
@@ -80,7 +135,7 @@ namespace FlatRedBall_Spriter
                 }
 
                 // Interpolate between the current keyframe and next keyframe values based on time difference
-                if (NextKeyFrame != null)
+                if (SecondsIn < AnimationTotalTime && NextKeyFrame != null)
                 {
                     float percentage = GetPercentageIntoFrame(SecondsIn, CurrentKeyFrame.Time, NextKeyFrame.Time);
                     foreach (var currentPair in this.CurrentKeyFrame.Values)
@@ -109,59 +164,62 @@ namespace FlatRedBall_Spriter
                         SetAllObjectValuesToCurrentFrame();
                     }
 
-                    
+
                 }
 
-                
+
             }
         }
 
         private void SetInterpolatedValues(KeyValuePair<PositionedObject, KeyFrameValues> currentPair, float percentage)
         {
             var currentValues = currentPair.Value;
-            var nextValues = NextKeyFrame.Values[currentPair.Key];
-            var currentObject = currentPair.Key;
-
-            // Position
-            currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
-                                                          percentage);
-
-            if (float.IsNaN(currentObject.RelativePosition.X) ||
-                float.IsNaN(currentObject.RelativePosition.Y)
-                || float.IsNaN(currentObject.RelativePosition.Z))
+            if (NextKeyFrame.Values.ContainsKey(currentPair.Key))
             {
-                throw new Exception(string.Format("Float.IsNaN true! Object name {0} RelativePosition: {1}",
-                                                  currentObject.Name, currentObject.RelativePosition));
-            }
+                var nextValues = NextKeyFrame.Values[currentPair.Key];
+                var currentObject = currentPair.Key;
+
+                // Position
+                currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
+                                                              percentage);
+
+                if (float.IsNaN(currentObject.RelativePosition.X) ||
+                    float.IsNaN(currentObject.RelativePosition.Y)
+                    || float.IsNaN(currentObject.RelativePosition.Z))
+                {
+                    throw new Exception(string.Format("Float.IsNaN true! Object name {0} RelativePosition: {1}",
+                                                      currentObject.Name, currentObject.RelativePosition));
+                }
 
 
-            // Angle
-            int spin = currentValues.Spin;
-            float angleA = currentValues.Rotation.Z;
-            float angleB = nextValues.Rotation.Z;
+                // Angle
+                int spin = currentValues.Spin;
+                float angleA = currentValues.Rotation.Z;
+                float angleB = nextValues.Rotation.Z;
 
-            if (spin == 1 && angleB - angleA < 0)
-            {
-                angleB += 360f;
-            }
-            else if (spin == -1 && angleB - angleA >= 0)
-            {
-                angleB -= 360f;
-            }
+                if (spin == 1 && angleB - angleA < 0)
+                {
+                    angleB += 360f;
+                }
+                else if (spin == -1 && angleB - angleA >= 0)
+                {
+                    angleB -= 360f;
+                }
 
-            currentObject.RelativeRotationZ =
-                MathHelper.ToRadians(MathHelper.Lerp(angleA,
-                                                     angleB, percentage));
+                currentObject.RelativeRotationZ =
+                    MathHelper.ToRadians(MathHelper.Lerp(angleA,
+                                                         angleB, percentage));
 
-            // Sprite specific stuff
-            var sprite = currentObject as Sprite;
-            if (sprite != null)
-            {
-                sprite.Texture = currentValues.Texture;
+                // Sprite specific stuff
+                var sprite = currentObject as Sprite;
+                if (sprite != null)
+                {
+                    sprite.Texture = currentValues.Texture;
 
-                // Scale
-                sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
-                sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
+                    // Scale
+                    sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
+                    sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
+                }
             }
         }
 
@@ -179,9 +237,9 @@ namespace FlatRedBall_Spriter
                 pair.Key.RelativePosition = pair.Value.Position;
                 pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
 
-                if (pair.Key.GetType() == typeof (Sprite))
+                if (pair.Key.GetType() == typeof(Sprite))
                 {
-                    var sprite = ((Sprite) pair.Key);
+                    var sprite = ((Sprite)pair.Key);
                     sprite.Texture = pair.Value.Texture;
                     sprite.ScaleX = pair.Value.ScaleX;
                     sprite.ScaleY = pair.Value.ScaleY;
@@ -191,30 +249,30 @@ namespace FlatRedBall_Spriter
 
         private void ClearAllTextures()
         {
-// ReSharper disable ForCanBeConvertedToForeach
+            // ReSharper disable ForCanBeConvertedToForeach
             for (int index = 0; index < ObjectList.Count; index++)
-// ReSharper restore ForCanBeConvertedToForeach
+            // ReSharper restore ForCanBeConvertedToForeach
             {
                 var positionedObject = ObjectList[index];
-                if (positionedObject.GetType() == typeof (Sprite))
+                if (positionedObject.GetType() == typeof(Sprite))
                 {
-                    ((Sprite) positionedObject).Texture = null;
+                    ((Sprite)positionedObject).Texture = null;
                 }
             }
         }
 
         public static float GetPercentageIntoFrame(float secondsIntoAnimation, float currentKeyFrameTime, float nextKeyFrameTime)
         {
-          
-          float retVal = (secondsIntoAnimation - currentKeyFrameTime)/(nextKeyFrameTime - currentKeyFrameTime);
-          if (float.IsInfinity(retVal) || float.IsNaN(retVal))
-          {
-              return 0.0f;
-          }
-          else
-          {
-              return retVal;
-          }
+
+            float retVal = (secondsIntoAnimation - currentKeyFrameTime) / (nextKeyFrameTime - currentKeyFrameTime);
+            if (float.IsInfinity(retVal) || float.IsNaN(retVal))
+            {
+                return 0.0f;
+            }
+            else
+            {
+                return retVal;
+            }
         }
 
         public void Destroy()
@@ -237,6 +295,7 @@ namespace FlatRedBall_Spriter
         static object mLockObject = new object();
         static List<string> mRegisteredUnloads = new List<string>();
         static List<string> LoadedContentManagers = new List<string>();
+        private SpriterObjectAnimation _currentAnimation;
 
         public int Index { get; set; }
         public bool Used { get; set; }
@@ -256,11 +315,10 @@ namespace FlatRedBall_Spriter
             Animating = false;
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
-            Animations = new Dictionary<string, List<KeyFrame>>(1);
-            
+            Animations = new Dictionary<string, SpriterObjectAnimation>(1);
+
             ContentManagerName = contentManagerName;
             InitializeSpriterObject(addToManagers);
-            KeyFrameList = new List<KeyFrame>();
             ObjectList = new PositionedObjectList<PositionedObject>();
 
         }
@@ -269,7 +327,7 @@ namespace FlatRedBall_Spriter
         {
             // Generated Initialize
             LoadStaticContent(ContentManagerName);
-            
+
             PostInitialize();
             if (addToManagers)
             {
@@ -279,15 +337,15 @@ namespace FlatRedBall_Spriter
 
         }
 
-        public void AddToManagers (Layer layerToAddTo)
+        public void AddToManagers(Layer layerToAddTo)
         {
             LayerProvidedByContainer = layerToAddTo;
             SpriteManager.AddPositionedObject(this);
-           
+
             foreach (var sprite in this.ObjectList.OfType<Sprite>().ToList())
             {
                 SpriteManager.AddSprite(sprite);
-                if (sprite.Parent != null && sprite.Parent.GetType() == typeof (PositionedObject))
+                if (sprite.Parent != null && sprite.Parent.GetType() == typeof(PositionedObject))
                 {
                     SpriteManager.AddPositionedObject(sprite.Parent);
                 }
@@ -295,24 +353,24 @@ namespace FlatRedBall_Spriter
             AddToManagersBottomUp(layerToAddTo);
         }
 
-        public void PostInitialize ()
+        public void PostInitialize()
         {
             bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
             FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
         }
 
-        public void AddToManagersBottomUp (Layer layerToAddTo)
+        public void AddToManagersBottomUp(Layer layerToAddTo)
         {
             // We move this back to the origin and unrotate it so that anything attached to it can just use its absolute position
             float oldRotationX = RotationX;
             float oldRotationY = RotationY;
             float oldRotationZ = RotationZ;
-            
+
             float oldX = X;
             float oldY = Y;
             float oldZ = Z;
-            
+
             X = 0;
             Y = 0;
             Z = 0;
@@ -327,19 +385,19 @@ namespace FlatRedBall_Spriter
             RotationZ = oldRotationZ;
         }
 
-        public void ConvertToManuallyUpdated ()
+        public void ConvertToManuallyUpdated()
         {
             this.ForceUpdateDependenciesDeep();
             SpriteManager.ConvertToManuallyUpdated(this);
         }
-        public static void LoadStaticContent (string contentManagerName)
+        public static void LoadStaticContent(string contentManagerName)
         {
             if (string.IsNullOrEmpty(contentManagerName))
             {
                 throw new ArgumentException("contentManagerName cannot be empty or null");
             }
             ContentManagerName = contentManagerName;
-            #if DEBUG
+#if DEBUG
             if (contentManagerName == FlatRedBallServices.GlobalContentManager)
             {
                 HasBeenLoadedWithGlobalContentManager = true;
@@ -348,7 +406,7 @@ namespace FlatRedBall_Spriter
             {
                 throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
             }
-            #endif
+#endif
             bool registerUnload = false;
             if (LoadedContentManagers.Contains(contentManagerName) == false)
             {
@@ -374,7 +432,7 @@ namespace FlatRedBall_Spriter
                 }
             }
         }
-        public static void UnloadStaticContent ()
+        public static void UnloadStaticContent()
         {
             if (LoadedContentManagers.Count != 0)
             {
@@ -386,23 +444,26 @@ namespace FlatRedBall_Spriter
             }
         }
 
-        private bool mIsPaused;
-        public float AnimationTotalTime { get; set; }
-
-        public bool Looping { get; set; }
-
-        public override void Pause (InstructionList instructions)
+        public float AnimationTotalTime
         {
-            base.Pause(instructions);
-            mIsPaused = true;
+            get
+            {
+                return CurrentAnimation != null ? CurrentAnimation.TotalTime : 0.0f;
+            }
         }
-        public void SetToIgnorePausing ()
+
+        public bool Looping
+        {
+            get { return CurrentAnimation != null && CurrentAnimation.Looping; }
+        }
+
+        public void SetToIgnorePausing()
         {
             InstructionManager.IgnorePausingFor(this);
         }
     }
-    
-    
+
+
     // Extra classes
     public static class SpriterObjectTestEntityExtensionMethods
     {

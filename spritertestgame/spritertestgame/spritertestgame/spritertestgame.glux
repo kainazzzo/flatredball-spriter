@@ -3,6 +3,13 @@
   <Screens>
     <ScreenSave>
       <Name>Screens\TestScreen</Name>
+      <ReferencedFiles>
+        <ReferencedFileSave>
+          <Name>Screens/TestScreen/Example.SCML</Name>
+          <IsSharedStatic>true</IsSharedStatic>
+          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
+        </ReferencedFileSave>
+      </ReferencedFiles>
     </ScreenSave>
   </Screens>
   <Entities />

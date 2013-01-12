@@ -201,7 +201,27 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
-        public void BoneBecomesPivotForSingleObject()
+        public void SingleObjectAttachedToBoneMovesRelativeToBone()
+        {
+            var so = GetSimpleSpriterObject(true);
+
+
+        }
+
+        [TestMethod]
+        public void SingleObjectAttachedToBoneRotatesRelativeToBone()
+        {
+
+        }
+
+        [TestMethod]
+        public void SingleObjectAttachedToBoneCanRotateRelativeToBoneAndPivot()
+        {
+
+        }
+
+        [TestMethod]
+        public void BoneAttachesToPivotForSingleObject()
         {
             
         }
@@ -213,7 +233,7 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
-        public void BoneScaleEffectsSprite()
+        public void BoneScaleEffectsSpriteScale()
         {
             
         }

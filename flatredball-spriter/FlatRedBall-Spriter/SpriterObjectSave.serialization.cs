@@ -23,7 +23,7 @@ namespace FlatRedBall_Spriter
 
         /// <remarks/>
         [XmlElement("bone", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public List<KeyBone> Bone { get; set; }
+        public KeyBone Bone { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "id")]

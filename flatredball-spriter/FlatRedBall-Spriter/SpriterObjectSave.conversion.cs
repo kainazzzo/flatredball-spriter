@@ -21,7 +21,10 @@ namespace FlatRedBall_Spriter
 
             IDictionary<string, string> filenames = new Dictionary<string, string>();
             IDictionary<int, Sprite> persistentSprites = new Dictionary<int, Sprite>();
+            IDictionary<int, PositionedObject> persistentBones = new Dictionary<int, PositionedObject>();
             IDictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+            IDictionary<int, PositionedObject> boneRefDic = new Dictionary<int, PositionedObject>();
+            IDictionary<PositionedObject, int> boneRefParentDic = new Dictionary<PositionedObject, int>();
 
             foreach (var folder in this.Folder)
             {
@@ -42,58 +45,122 @@ namespace FlatRedBall_Spriter
                 foreach (var key in mainline.Keys)
                 {
 
-                    var keyFrame = new KeyFrame {Time = key.Time/1000.0f};
-                    foreach (var objectRef in key.ObjectRef)
+                    var keyFrame = new KeyFrame { Time = key.Time / 1000.0f };
+                    if (key.ObjectRef != null)
                     {
-                        Sprite sprite;
-                        PositionedObject pivot;
-                        if (persistentSprites.ContainsKey(objectRef.Id))
-                        {
-                            sprite = persistentSprites[objectRef.Id];
-                            pivot = sprite.Parent;
-                        }
-                        else
-                        {
-                            pivot = new PositionedObject {Name = "pivot"};
-
-                            sprite = new Sprite {Name = "sprite", PixelSize = .5f};
-
-                            sprite.AttachTo(pivot, true);
-                            pivot.AttachTo(spriterObject, true);
-
-                            persistentSprites[objectRef.Id] = sprite;
-                            spriterObject.ObjectList.Add(sprite);
-                            spriterObject.ObjectList.Add(pivot);
-                        }
-
-
-
-                        // TODO: tie the sprite to object_ref id?
-                        var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
-                        var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
-                        var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder, timelineKey.Object.File);
-
-                        var file =
-                            this.Folder.First(f => f.Id == timelineKey.Object.Folder)
-                                .File.First(f => f.Id == timelineKey.Object.File);
-
-                    	var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
-                        // TODO: Z-index
-
-                        keyFrame.Values[pivot] = values.Pivot;
-                        keyFrame.Values[sprite] = values.Sprite;
-
+                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentSprites, spriterObject, animation, textures, keyFrame);
                     }
+                    else if (key.BoneRef != null)
+                    {
+                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame, boneRefDic, boneRefParentDic);
+                    }
+
                     keyFrameList.Add(keyFrame);
                 }
 
-                
+
                 var spriterObjectAnimation = new SpriterObjectAnimation(animation.Name,
-                                                                        animation.Looping, animation.Length/1000.0f,
+                                                                        animation.Looping, animation.Length / 1000.0f,
                                                                         keyFrameList);
                 spriterObject.Animations[animation.Name] = spriterObjectAnimation;
             }
             return spriterObject;
+        }
+
+        private static void CreateRuntimeObjectsForSpriterBoneRef(Key key, IDictionary<int, PositionedObject> persistentBones,
+                                                                  SpriterObject spriterObject,
+                                                                  SpriterDataEntityAnimation animation, KeyFrame keyFrame,
+                                                                  IDictionary<int, PositionedObject> boneRefDic, IDictionary<PositionedObject, int> boneRefParentDic)
+        {
+            foreach (var boneRef in key.BoneRef)
+            {
+                PositionedObject bone;
+                if (persistentBones.ContainsKey(boneRef.Id))
+                {
+                    bone = persistentBones[boneRef.Id];
+                }
+                else
+                {
+                    bone = new PositionedObject();
+                    bone.AttachTo(spriterObject, true);
+
+                    persistentBones[boneRef.Id] = bone;
+                    spriterObject.ObjectList.Add(bone);
+                }
+
+                var timeline = animation.Timeline.Single(t => t.Id == boneRef.Timeline);
+                var timelineKey = timeline.Key.Single(k => k.Id == boneRef.Key);
+
+                keyFrame.Values[bone] = new KeyFrameValues
+                    {
+                        Position = new Vector3(timelineKey.Bone.X, timelineKey.Bone.Y, 0.0f)
+                    };
+
+                boneRefDic[boneRef.Id] = bone;
+                if (boneRef.Parent.HasValue)
+                {
+                    boneRefParentDic[bone] = boneRef.Parent.Value;
+                }
+            }
+
+            foreach (var pair in keyFrame.Values)
+            {
+                if (boneRefParentDic.ContainsKey(pair.Key) &&
+                    boneRefDic.ContainsKey(boneRefParentDic[pair.Key]))
+                {
+                    pair.Value.Parent = boneRefDic[boneRefParentDic[pair.Key]];
+                }
+                else
+                {
+                    pair.Value.Parent = spriterObject;
+                }
+            }
+        }
+
+        private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, Sprite> persistentSprites, SpriterObject spriterObject,
+                                                             SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures,
+                                                             KeyFrame keyFrame)
+        {
+            foreach (var objectRef in key.ObjectRef)
+            {
+                Sprite sprite;
+                PositionedObject pivot;
+                if (persistentSprites.ContainsKey(objectRef.Id))
+                {
+                    sprite = persistentSprites[objectRef.Id];
+                    pivot = sprite.Parent;
+                }
+                else
+                {
+                    pivot = new PositionedObject {Name = "pivot"};
+
+                    sprite = new Sprite {Name = "sprite", PixelSize = .5f};
+
+                    sprite.AttachTo(pivot, true);
+                    pivot.AttachTo(spriterObject, true);
+
+                    persistentSprites[objectRef.Id] = sprite;
+                    spriterObject.ObjectList.Add(sprite);
+                    spriterObject.ObjectList.Add(pivot);
+                }
+
+
+                // TODO: tie the sprite to object_ref id?
+                var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
+                var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
+                var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder,
+                                                 timelineKey.Object.File);
+
+                var file =
+                    this.Folder.First(f => f.Id == timelineKey.Object.Folder)
+                        .File.First(f => f.Id == timelineKey.Object.File);
+
+                var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
+                // TODO: Z-index
+
+                keyFrame.Values[pivot] = values.Pivot;
+                keyFrame.Values[sprite] = values.Sprite;
+            }
         }
 
         public virtual Texture2D LoadTexture(SpriterDataFolderFile file)
@@ -106,8 +173,8 @@ namespace FlatRedBall_Spriter
             var pivotValue = new KeyFrameValues
                 {
                     Position = new Vector3(timelineKey.Object.X,
-                            timelineKey.Object.Y,
-                            0.0f),
+                                           timelineKey.Object.Y,
+                                           0.0f),
                     Rotation = new Vector3
                         {
                             Z = timelineKey.Object.Angle
@@ -122,13 +189,14 @@ namespace FlatRedBall_Spriter
                 width = textures[folderFileId].Width;
                 height = textures[folderFileId].Height;
             }
+
             var spriteValue = new KeyFrameValues
                 {
                     Texture = textures[folderFileId],
                     ScaleX = (width / 2.0f * timelineKey.Object.ScaleX),
                     ScaleY = (height / 2.0f * timelineKey.Object.ScaleY),
                     Position = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
-                        timelineKey.Object.PivotY, zIndex)
+                                                         timelineKey.Object.PivotY, zIndex)
                 };
             return new KeyFramePivotSpriteValues { Pivot = pivotValue, Sprite = spriteValue };
         }
@@ -141,6 +209,7 @@ namespace FlatRedBall_Spriter
         {
             public KeyFrameValues Pivot { get; set; }
             public KeyFrameValues Sprite { get; set; }
+            public KeyFrameValues Bone { get; set; }
         }
 
 
@@ -148,7 +217,7 @@ namespace FlatRedBall_Spriter
         {
             string oldRelativeDirectory = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory = FileManager.GetDirectory(filename);
-           
+
             var sos = FileManager.XmlDeserialize<SpriterObjectSave>(filename);
             FileManager.RelativeDirectory = oldRelativeDirectory;
 

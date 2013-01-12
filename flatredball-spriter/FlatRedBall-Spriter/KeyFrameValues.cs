@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FlatRedBall;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace FlatRedBall_Spriter
@@ -11,5 +12,6 @@ namespace FlatRedBall_Spriter
         public float ScaleY { get; set; }
         public Texture2D Texture { get; set; }
         public int Spin { get; set; }
+        public PositionedObject Parent { get; set; }
     }
 }

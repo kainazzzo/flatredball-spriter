@@ -64,7 +64,7 @@ namespace flatredball_spriter_test
         [TestMethod]
         public void LoopingDefaultsToTrue()
         {
-            
+
             var sos =
                 SpriterObjectSave.FromFile(
                     @"C:\flatredballprojects\flatredball-spriter\spriterfiles\monsterexample\mytest.scml");
@@ -193,6 +193,29 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void BonesGetAddedToKeyframes()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWithSingleBone();
+            var so = sos.ToRuntime();
+            Assert.AreEqual(1, so.ObjectList.Count);
+            CollectionAssert.AllItemsAreInstancesOfType(so.ObjectList, typeof(PositionedObject));
+            Assert.IsNotNull(so.Animations.First().Value.KeyFrames[0].Values.FirstOrDefault());
+            var bone = so.ObjectList[0];
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Values[bone].Position.X - 100f) < .0001f);
+        }
+
+        [TestMethod]
+        public void BoneParenting()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWithTwoBones();
+            var so = sos.ToRuntime();
+            Assert.AreEqual(2, so.ObjectList.Count);
+            Assert.AreSame(so, so.Animations.First().Value.KeyFrames[0].Values[so.ObjectList[0]].Parent);
+            Assert.AreSame(so.ObjectList[0],
+                so.Animations.First().Value.KeyFrames[0].Values[so.ObjectList[1]].Parent);
+        }
+
+        [TestMethod]
         public void ConvertTwoObjects()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs();
@@ -225,7 +248,7 @@ namespace flatredball_spriter_test
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations();
             var so = sos.ToRuntime();
-            
+
             Assert.IsNotNull(so.Animations);
             Assert.AreEqual(2, so.Animations.Count);
             Assert.IsTrue(so.Animations.ContainsKey("0"));
@@ -254,7 +277,7 @@ namespace flatredball_spriter_test
                 pass = true;
             }
 
-            Assert.IsTrue(pass, string.Format("{0}.StartAnimation didn't throw exception for an invalid animation name.", typeof(SpriterObject) ));
+            Assert.IsTrue(pass, string.Format("{0}.StartAnimation didn't throw exception for an invalid animation name.", typeof(SpriterObject)));
         }
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations()
@@ -375,7 +398,7 @@ namespace flatredball_spriter_test
                         }
             };
         }
-		
+
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefsAndExtraKey()
         {
             return new SpriterObjectSaveNullTexture
@@ -575,6 +598,265 @@ namespace flatredball_spriter_test
             };
         }
 
+        private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithTwoBones()
+        {
+            return new SpriterObjectSaveNullTexture
+            {
+                Folder = new List<SpriterDataFolder>(1)
+                        {
+                            new SpriterDataFolder
+                                {
+                                    Id = 0,
+                                    Name = "folder",
+                                    File = new List<SpriterDataFolderFile>
+                                        {
+                                            new SpriterDataFolderFile
+                                                {
+                                                    Height = 128,
+                                                    Width = 128,
+                                                    Id = 0,
+                                                    Name = "folder/test.png"
+                                                }
+                                        }
+                                }
+                        },
+                Entity = new List<SpriterDataEntity>
+                        {
+                            new SpriterDataEntity
+                                {
+                                    Id = 0,
+                                    Name = "",
+                                    Animation = new List<SpriterDataEntityAnimation>
+                                        {
+                                            new SpriterDataEntityAnimation
+                                                {
+                                                    Length = 1000,
+                                                    Id = 0,
+                                                    Looping = false,
+                                                    Mainline = new SpriterDataEntityAnimationMainline
+                                                        {
+                                                            Keys = new List<Key>()
+                                                                {
+                                                                    new Key()
+                                                                        {
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Key=0,
+                                                                                            Timeline = 0
+                                                                                        },
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=1,
+                                                                                            Key=0,
+                                                                                            Timeline = 1,
+                                                                                            Parent = 0
+                                                                                        }
+                                                                                },
+                                                                            Id = 0,
+                                                                            Spin = 1,
+                                                                            Time = 0
+                                                                        },
+                                                                    new Key()
+                                                                        {
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Key=1,
+                                                                                            Timeline = 0
+                                                                                        },
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=1,
+                                                                                            Key=1,
+                                                                                            Timeline = 1,
+                                                                                            Parent = 0
+                                                                                        }
+                                                                                },
+                                                                            Id = 1,
+                                                                            Spin = 1,
+                                                                            Time = 1000
+                                                                        }
+                                                                }
+                                                        },
+                                                    Name = "First Animation",
+                                                    Timeline = new List<SpriterDataEntityAnimationTimeline>()
+                                                        {
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id = 0,
+                                                                    Name = "bone_000",
+                                                                    Key = new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Bone = new KeyBone()
+                                                                                        {
+                                                                                            
+                                                                                        },
+                                                                                    Id = 0,
+                                                                                    Spin = 0,
+                                                                                    Time = 0
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id = 1,
+                                                                                    Bone = new KeyBone()
+                                                                                        {
+                                                                                            X = 100f  
+                                                                                        },
+                                                                                    Spin = 0,
+                                                                                    Time = 500
+                                                                                }
+                                                                        }
+                                                                },
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id=1,
+                                                                    Name="bone_001",
+                                                                    Key = new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=0,
+                                                                                    Spin=0,
+                                                                                    Bone = new KeyBone()
+                                                                                        {
+                                                                                            Y=100f
+                                                                                        }
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                        Id=1,
+                                                                                        Time=500,
+                                                                                        Spin=0,
+                                                                                        Bone=new KeyBone()
+                                                                                            {
+                                                                                                Y=100f,
+                                                                                                X=100f
+                                                                                            }
+                                                                                }
+                                                                        }
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+            };
+
+        }
+        private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithSingleBone()
+        {
+            return new SpriterObjectSaveNullTexture
+                {
+                    Folder = new List<SpriterDataFolder>(1)
+                        {
+                            new SpriterDataFolder
+                                {
+                                    Id = 0,
+                                    Name = "folder",
+                                    File = new List<SpriterDataFolderFile>
+                                        {
+                                            new SpriterDataFolderFile
+                                                {
+                                                    Height = 128,
+                                                    Width = 128,
+                                                    Id = 0,
+                                                    Name = "folder/test.png"
+                                                }
+                                        }
+                                }
+                        },
+                    Entity = new List<SpriterDataEntity>
+                        {
+                            new SpriterDataEntity
+                                {
+                                    Id = 0,
+                                    Name = "",
+                                    Animation = new List<SpriterDataEntityAnimation>
+                                        {
+                                            new SpriterDataEntityAnimation
+                                                {
+                                                    Length = 1000,
+                                                    Id = 0,
+                                                    Looping = false,
+                                                    Mainline = new SpriterDataEntityAnimationMainline
+                                                        {
+                                                            Keys = new List<Key>()
+                                                                {
+                                                                    new Key()
+                                                                        {
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Key=0,
+                                                                                            Timeline = 0
+                                                                                        }
+                                                                                },
+                                                                            Id = 0,
+                                                                            Spin = 1,
+                                                                            Time = 0
+                                                                        },
+                                                                    new Key()
+                                                                        {
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Key=1,
+                                                                                            Timeline = 0
+                                                                                        }
+                                                                                },
+                                                                            Id = 1,
+                                                                            Spin = 1,
+                                                                            Time = 1000
+                                                                        }
+                                                                }
+                                                        },
+                                                    Name = "First Animation",
+                                                    Timeline = new List<SpriterDataEntityAnimationTimeline>()
+                                                        {
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id = 0,
+                                                                    Name = "",
+                                                                    Key = new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Bone = new KeyBone(),
+                                                                                    Id = 0,
+                                                                                    Spin = 0,
+                                                                                    Time = 0
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id = 1,
+                                                                                    Bone = new KeyBone()
+                                                                                        {
+                                                                                            X = 100f
+                                                                                                
+                                                                                        },
+                                                                                    Spin = 0,
+                                                                                    Time = 1000
+                                                                                }
+                                                                        }
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+                };
+        }
 
         [TestMethod]
         public void FromFileTest()
@@ -704,9 +986,9 @@ namespace flatredball_spriter_test
             #endregion
             #region entity[0].animation[0].mainline.key[0].object_ref[0]
 
-// ReSharper disable InconsistentNaming
+            // ReSharper disable InconsistentNaming
             var object_ref = key.ObjectRef[0];
-// ReSharper restore InconsistentNaming
+            // ReSharper restore InconsistentNaming
             Assert.AreEqual(0, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
             Assert.AreEqual(5, object_ref.Parent.Value);
@@ -947,13 +1229,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[0].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[0].key[0].bone[0]
 
-            var bone = key.Bone[0];
+            var bone = key.Bone;
             Assert.AreEqual(6.0f, bone.X);
             Assert.AreEqual(130.0f, bone.Y);
             Assert.AreEqual(254.53166f, bone.Angle);
@@ -965,13 +1246,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[0].key[1]
 
             key = timeline.Key[1];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[0].key[1].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(6.0f, bone.X);
             Assert.AreEqual(130.0f, bone.Y);
             Assert.AreEqual(254.53166f, bone.Angle);
@@ -983,13 +1263,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[0].key[1]
 
             key = timeline.Key[2];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[0].key[2].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(6.0f, bone.X);
             Assert.AreEqual(130.0f, bone.Y);
             Assert.AreEqual(254.53166f, bone.Angle);
@@ -1009,13 +1288,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[1].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[1].key[0].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(229.033836f, bone.X);
             Assert.AreEqual(9.058467f, bone.Y);
             Assert.AreEqual(315.764376f, bone.Angle);
@@ -1027,13 +1305,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[1].key[1]
 
             key = timeline.Key[1];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[1].key[1].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(229.033836f, bone.X);
             Assert.AreEqual(9.058467f, bone.Y);
             Assert.AreEqual(315.764376f, bone.Angle);
@@ -1045,13 +1322,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[0].key[1]
 
             key = timeline.Key[2];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[1].key[2].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(229.033836f, bone.X);
             Assert.AreEqual(9.058467f, bone.Y);
             Assert.AreEqual(315.764376f, bone.Angle);
@@ -1071,13 +1347,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[2].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[2].key[0].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(198.046441f, bone.X);
             Assert.AreEqual(52.481557f, bone.Y);
             Assert.AreEqual(50.18893f, bone.Angle);
@@ -1089,13 +1364,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[2].key[1]
 
             key = timeline.Key[1];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[2].key[1].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(198.046441f, bone.X);
             Assert.AreEqual(52.481557f, bone.Y);
             Assert.AreEqual(50.18893f, bone.Angle);
@@ -1107,13 +1381,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[2].key[2]
 
             key = timeline.Key[2];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[2].key[1].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(198.046441f, bone.X);
             Assert.AreEqual(52.481557f, bone.Y);
             Assert.AreEqual(50.18893f, bone.Angle);
@@ -1133,13 +1406,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[3].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(-1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[3].key[0].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(141.520962f, bone.X);
             Assert.AreEqual(111.118524f, bone.Y);
             Assert.AreEqual(71.248503f, bone.Angle);
@@ -1151,13 +1423,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[3].key[1]
 
             key = timeline.Key[1];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[3].key[1].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(141.520962f, bone.X);
             Assert.AreEqual(111.118524f, bone.Y);
             Assert.AreEqual(108.632633f, bone.Angle);
@@ -1169,13 +1440,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[3].key[2]
 
             key = timeline.Key[2];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(-1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[3].key[2].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(280.733104f, bone.X);
             Assert.AreEqual(-6.194428f, bone.Y);
             Assert.AreEqual(53.874886f, bone.Angle);
@@ -1187,13 +1457,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[3].key[3]
 
             key = timeline.Key[3];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(3, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[3].key[3].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(280.733104f, bone.X);
             Assert.AreEqual(-6.194428f, bone.Y);
             Assert.AreEqual(15.762352f, bone.Angle);
@@ -1213,13 +1482,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[4].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[4].key[0].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(89.716259f, bone.X);
             Assert.AreEqual(-83.45729f, bone.Y);
             Assert.AreEqual(306.847927f, bone.Angle);
@@ -1231,13 +1499,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[4].key[1]
 
             key = timeline.Key[1];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[1].key[1].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(89.716259f, bone.X);
             Assert.AreEqual(-83.45729f, bone.Y);
             Assert.AreEqual(306.847927f, bone.Angle);
@@ -1249,13 +1516,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[4].key[2]
 
             key = timeline.Key[2];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[4].key[2].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(89.716259f, bone.X);
             Assert.AreEqual(-83.45729f, bone.Y);
             Assert.AreEqual(306.847927f, bone.Angle);
@@ -1275,7 +1541,6 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[5].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
@@ -1296,7 +1561,6 @@ namespace flatredball_spriter_test
             #endregion
             #region entity[0].animation[0].timeline[5].key[1]
             key = timeline.Key[1];
-            Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
@@ -1314,7 +1578,6 @@ namespace flatredball_spriter_test
             #endregion
             #region entity[0].animation[0].timeline[5].key[2]
             key = timeline.Key[2];
-            Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
@@ -1341,13 +1604,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[6].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
             #region entity[0].animation[0].timeline[6].key[0].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(73.46162f, bone.X);
             Assert.AreEqual(33.229125f, bone.Y);
             Assert.AreEqual(54.757747f, bone.Angle);
@@ -1359,13 +1621,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[6].key[1]
 
             key = timeline.Key[1];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
             #region entity[0].animation[0].timeline[6].key[1].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(73.46162f, bone.X);
             Assert.AreEqual(33.229125f, bone.Y);
             Assert.AreEqual(54.757747f, bone.Angle);
@@ -1377,13 +1638,12 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[6].key[2]
 
             key = timeline.Key[2];
-            Assert.AreEqual(1, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
             #region entity[0].animation[0].timeline[6].key[2].bone[0]
 
-            bone = key.Bone[0];
+            bone = key.Bone;
             Assert.AreEqual(73.46162f, bone.X);
             Assert.AreEqual(33.229125f, bone.Y);
             Assert.AreEqual(54.757747f, bone.Angle);
@@ -1400,7 +1660,6 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[7].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(0, key.Time);
@@ -1419,7 +1678,6 @@ namespace flatredball_spriter_test
             #endregion
             #region entity[0].animation[0].timeline[7].key[1]
             key = timeline.Key[1];
-            Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
@@ -1437,7 +1695,6 @@ namespace flatredball_spriter_test
             #endregion
             #region entity[0].animation[0].timeline[7].key[2]
             key = timeline.Key[2];
-            Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(2, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
@@ -1464,7 +1721,6 @@ namespace flatredball_spriter_test
             #region entity[0].animation[0].timeline[8].key[0]
 
             key = timeline.Key[0];
-            Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(0, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(1, key.Time);
@@ -1483,7 +1739,6 @@ namespace flatredball_spriter_test
             #endregion
             #region entity[0].animation[0].timeline[8].key[1]
             key = timeline.Key[1];
-            Assert.AreEqual(0, key.Bone.Count);
             Assert.AreEqual(1, key.Id);
             Assert.AreEqual(1, key.Spin);
             Assert.AreEqual(687, key.Time);
@@ -1514,7 +1769,7 @@ namespace flatredball_spriter_test
         [TestMethod()]
         public void GetSpriteRelativePositionTest()
         {
-            float width = 128F; 
+            float width = 128F;
             float height = 128F;
             float pivotX = .75F;
             float pivotY = .25F;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="a4.1">
     <entity id="0" name="">
-        <animation id="0" name="First Animation" length="1000" looping="false">
+        <animation id="0" name="First Animation" length="1000">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="0" key="0"/>
@@ -11,21 +11,41 @@
                     <bone_ref id="0" timeline="0" key="1"/>
                     <bone_ref id="1" parent="0" timeline="1" key="1"/>
                 </key>
+                <key id="2" time="569">
+                    <bone_ref id="0" timeline="0" key="2"/>
+                    <bone_ref id="1" parent="0" timeline="1" key="2"/>
+                </key>
+                <key id="3" time="657">
+                    <bone_ref id="0" timeline="0" key="3"/>
+                    <bone_ref id="1" parent="0" timeline="1" key="3"/>
+                </key>
             </mainline>
             <timeline id="0" name="bone_000">
                 <key id="0" spin="0">
                     <bone scale_x="1.494992"/>
                 </key>
-                <key id="1" time="500" spin="0">
+                <key id="1" time="500">
                     <bone x="161" scale_x="1.494992"/>
+                </key>
+                <key id="2" time="569">
+                    <bone x="138.782" angle="14.318347" scale_x="1.494992"/>
+                </key>
+                <key id="3" time="657" spin="-1">
+                    <bone x="110.445998" angle="32.579428" scale_x="1.494992"/>
                 </key>
             </timeline>
             <timeline id="1" name="bone_001">
                 <key id="0" spin="0">
                     <bone y="127" scale_x="1.000006"/>
                 </key>
-                <key id="1" time="500" spin="0">
-                    <bone y="127" scale_x="1.000006"/>
+                <key id="1" time="500" spin="-1">
+                    <bone x="177.258523" y="-61" scale_x="1.000006"/>
+                </key>
+                <key id="2" time="569" spin="-1">
+                    <bone x="160.440202" y="-69.336254" angle="309.780892" scale_x="1.000006"/>
+                </key>
+                <key id="3" time="657">
+                    <bone x="138.990747" y="-79.967998" angle="245.733332" scale_x="1.000006"/>
                 </key>
             </timeline>
         </animation>

@@ -201,17 +201,19 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
-        public void SingleObjectAttachedToBoneMovesRelativeToBone()
+        public void BoneReparenting()
         {
-            var so = GetSimpleSpriterObject(true);
+            var so = GetSimpleSpriterObjectForParenting();
 
+            so.StartAnimation();
 
-        }
+            so.TimedActivity(.5f, 0f, 0f);
+            Assert.AreSame(so.ObjectList[0], so.ObjectList[1].Parent);
+            Assert.AreSame(so, so.ObjectList[0].Parent);
 
-        [TestMethod]
-        public void SingleObjectAttachedToBoneRotatesRelativeToBone()
-        {
-
+            so.TimedActivity(.5f, 0f, 0f);
+            Assert.AreSame(so, so.ObjectList[1].Parent);
+            Assert.AreSame(so, so.ObjectList[0].Parent);
         }
 
         [TestMethod]
@@ -220,11 +222,6 @@ namespace flatredball_spriter_test
 
         }
 
-        [TestMethod]
-        public void BoneAttachesToPivotForSingleObject()
-        {
-            
-        }
 
         [TestMethod]
         public void BoneReparentingOnSingleObject()
@@ -245,7 +242,45 @@ namespace flatredball_spriter_test
         }
 
 
+        private static SpriterObject GetSimpleSpriterObjectForParenting(bool loops=false)
+        {
+            var so = new SpriterObject("Global", false);
+            var bone1 = new PositionedObject();
+            var bone2 = new PositionedObject();
 
+            so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
+
+            var keyFrame = new KeyFrame()
+                {
+                    Time = 0f
+                };
+
+            keyFrame.Values[bone1] = new KeyFrameValues()
+                {
+                    Parent = so
+                };
+
+            keyFrame.Values[bone2] = new KeyFrameValues {Parent = bone1};
+            so.Animations[""].KeyFrames.Add(keyFrame);
+
+            keyFrame = new KeyFrame()
+                {
+                    Time = 1.0f
+                };
+
+            keyFrame.Values[bone1] = new KeyFrameValues {Position = new Vector3(100f, 0f, 0f), Parent = so};
+            keyFrame.Values[bone2] = new KeyFrameValues()
+                {
+                    Parent = so
+                };
+
+            so.Animations[""].KeyFrames.Add(keyFrame);
+
+            so.ObjectList.Add(bone1);
+            so.ObjectList.Add(bone2);
+
+            return so;
+        }
         private static SpriterObject GetSimpleSpriterObjectWithTwoObjects(bool loops = false)
         {
 

@@ -37,7 +37,7 @@ namespace spritertestgame.Screens
 
             var sos =
     SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\manykeyframes.scml");
+        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\firstbone.scml");
 
             var oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory =
@@ -48,6 +48,14 @@ namespace spritertestgame.Screens
 
             _so.X = 200f;
             _so.Y = 200f;
+
+            var s = new Sprite
+                {
+                    Texture = FlatRedBallServices.Load<Texture2D>(
+                        "c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png"),
+                    PixelSize = .5f
+                };
+	        s.AttachTo(_so.ObjectList[1], true);
 
             _so.AddToManagers(null);
 

@@ -179,6 +179,11 @@ namespace FlatRedBall_Spriter
                 var nextValues = NextKeyFrame.Values[currentPair.Key];
                 var currentObject = currentPair.Key;
 
+                if (currentObject.Parent != currentValues.Parent)
+                {
+                    currentObject.AttachTo(currentValues.Parent, true);
+                }
+
                 // Position
                 currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
                                                               percentage);
@@ -210,6 +215,8 @@ namespace FlatRedBall_Spriter
                     MathHelper.ToRadians(MathHelper.Lerp(angleA,
                                                          angleB, percentage));
 
+                
+
                 // Sprite specific stuff
                 var sprite = currentObject as Sprite;
                 if (sprite != null)
@@ -234,6 +241,7 @@ namespace FlatRedBall_Spriter
         {
             foreach (var pair in CurrentKeyFrame.Values)
             {
+                pair.Key.AttachTo(pair.Value.Parent, true);
                 pair.Key.RelativePosition = pair.Value.Position;
                 pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
 

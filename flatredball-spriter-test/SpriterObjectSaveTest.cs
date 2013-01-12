@@ -216,6 +216,14 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void ChildBoneRelativePositioning()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWithTwoBones();
+            var so = sos.ToRuntime();
+            
+        }
+
+        [TestMethod]
         public void ConvertTwoObjects()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs();

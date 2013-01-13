@@ -215,6 +215,12 @@ namespace flatredball_spriter_test
             Assert.AreSame(so, so.ObjectList[1].Parent);
             Assert.AreSame(so, so.ObjectList[0].Parent);
         }
+        
+        [TestMethod]
+        public void ObjectReparenting()
+        {
+            
+        }
 
         [TestMethod]
         public void SingleObjectAttachedToBoneCanRotateRelativeToBoneAndPivot()

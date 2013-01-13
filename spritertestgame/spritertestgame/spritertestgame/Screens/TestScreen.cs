@@ -37,7 +37,7 @@ namespace spritertestgame.Screens
 
             var sos =
     SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\firstbone.scml");
+        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\ballmove.scml");
 
             var oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory =
@@ -46,30 +46,19 @@ namespace spritertestgame.Screens
             _so = sos.ToRuntime();
             FileManager.RelativeDirectory = oldDir;
 
-            _so.X = 200f;
-            _so.Y = 200f;
-
-            var s = new Sprite
-                {
-                    Texture = FlatRedBallServices.Load<Texture2D>(
-                        "c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png"),
-                    PixelSize = .5f
-                };
-	        s.AttachTo(_so.ObjectList[1], true);
-
             _so.AddToManagers(null);
 
-            var sos2 =
-    SpriterObjectSave.FromFile(
-        @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\Example.SCML");
+    //        var sos2 =
+    //SpriterObjectSave.FromFile(
+    //    @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\Example.SCML");
 
-            oldDir = FileManager.RelativeDirectory;
-            FileManager.RelativeDirectory = @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\";
+    //        oldDir = FileManager.RelativeDirectory;
+    //        FileManager.RelativeDirectory = @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\";
 
-            _so2 = sos2.ToRuntime();
-            _so2.AddToManagers(null);
+    //        _so2 = sos2.ToRuntime();
+    //        _so2.AddToManagers(null);
 
-            FileManager.RelativeDirectory = oldDir;
+    //        FileManager.RelativeDirectory = oldDir;
 
             SpriteManager.Camera.UsePixelCoordinates();
 	        SpriteManager.Camera.Y += 125;
@@ -83,7 +72,7 @@ namespace spritertestgame.Screens
             if (firstTimeCalled)
             {
                 _so.StartAnimation();
-                _so2.StartAnimation("Idle");
+                //_so2.StartAnimation("Idle");
             }
 		}
 

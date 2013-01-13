@@ -69,7 +69,7 @@ namespace FlatRedBall_Spriter
                         var parent = boneRefDic[boneId];
                         pair.Value.Parent = parent;
                     }
-                    else
+                    else if (pair.Value.GetType() != typeof(Sprite))
                     {
                         pair.Value.Parent = spriterObject;
                     }

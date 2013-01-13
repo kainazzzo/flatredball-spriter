@@ -216,6 +216,15 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void ObjectAttachedToPivotIfNoParentSet()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTexture();
+            var so = sos.ToRuntime();
+            Assert.AreSame(so.ObjectList[1], so.ObjectList[0].Parent);
+            Assert.AreSame(so, so.ObjectList[1].Parent);
+        }
+
+        [TestMethod]
         public void ObjectWithBoneParent()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithSingleBoneAsObjectParent();
@@ -1023,6 +1032,114 @@ namespace flatredball_spriter_test
                 };
         }
 
+        public static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithPositionChange()
+        {
+            return new SpriterObjectSaveNullTexture
+            {
+                Folder = new List<SpriterDataFolder>(1)
+                        {
+                            new SpriterDataFolder
+                                {
+                                    Id = 0,
+                                    Name = "folder",
+                                    File = new List<SpriterDataFolderFile>
+                                        {
+                                            new SpriterDataFolderFile
+                                                {
+                                                    Height = 128,
+                                                    Width = 128,
+                                                    Id = 0,
+                                                    Name = "folder/test.png"
+                                                }
+                                        }
+                                }
+                        },
+                Entity = new List<SpriterDataEntity>
+                        {
+                            new SpriterDataEntity
+                                {
+                                    Id=0, Name="",
+                                    Animation = new List<SpriterDataEntityAnimation>
+                                        {
+                                            new SpriterDataEntityAnimation
+                                                {
+                                                    Length=2000,
+                                                    Id=0, Looping = false,
+                                                    Mainline = new SpriterDataEntityAnimationMainline
+                                                        {
+                                                            Keys=new List<Key>()
+                                                                {
+                                                                    new Key()
+                                                                        {
+                                                                            ObjectRef = new List<KeyObjectRef>()
+                                                                                {
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id = 0, Key=0,
+                                                                                            Timeline = 0, ZIndex = 0
+                                                                                        }
+                                                                                },
+                                                                            Id=0,
+                                                                            Spin=1,
+                                                                            Time = 0
+                                                                        },
+                                                                    new Key()
+                                                                        {
+                                                                            ObjectRef = new List<KeyObjectRef>()
+                                                                                {
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=0, Key=1,
+                                                                                            Timeline = 0,ZIndex = 0
+                                                                                        }
+                                                                                },
+                                                                            Id=1,
+                                                                            Time=500
+                                                                        }
+                                                                }
+                                                        },
+                                                    Name="First Animation",
+                                                    Timeline = new List<SpriterDataEntityAnimationTimeline>()
+                                                        {
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id=0, 
+                                                                    Name="",
+                                                                    Key=new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Object = new KeyObject(), Id=0, Spin=1,
+                                                                                    Time=0
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Object = new KeyObject()
+                                                                                        {
+                                                                                            X = 50f
+                                                                                        },
+                                                                                    Id=1,
+                                                                                    Time=500
+                                                                                }
+                                                                        }
+                                                                }
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+            };
+
+        }
+
+        [TestMethod]
+        public void ObjectPosition()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWithPositionChange();
+            var so = sos.ToRuntime();
+            so.StartAnimation();
+            Assert.IsTrue(Math.Abs(so.NextKeyFrame.Values[so.ObjectList[1]].Position.X - 50.0f) < .0001f);
+        }
         [TestMethod]
         public void FromFileTest()
         {

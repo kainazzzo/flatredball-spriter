@@ -4,7 +4,7 @@
         <file id="0" name="ball.png" width="128" height="128"/>
     </folder>
     <entity id="0" name="">
-        <animation id="0" name="First Animation" length="3000" looping="false">
+        <animation id="0" name="First Animation" length="3000">
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
@@ -46,6 +46,9 @@
                     <object folder="0" file="0" x="260" y="158"/>
                 </key>
                 <key id="1" time="2794" spin="0">
+                    <object folder="0" file="0" x="530" y="-45"/>
+                </key>
+                <key id="2" time="3000">
                     <object folder="0" file="0" x="530" y="-45"/>
                 </key>
             </timeline>

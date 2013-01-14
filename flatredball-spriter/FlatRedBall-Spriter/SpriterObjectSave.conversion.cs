@@ -97,7 +97,7 @@ namespace FlatRedBall_Spriter
                 }
                 else
                 {
-                    bone = new PositionedObject();
+                    bone = new PositionedObject() {Name = "bone"};
                     bone.AttachTo(spriterObject, true);
 
                     persistentBones[boneRef.Id] = bone;
@@ -161,9 +161,9 @@ namespace FlatRedBall_Spriter
                 var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
                 // TODO: Z-index
                 values.Sprite.Parent = pivot;
-                if (timelineKey.Object.Parent.HasValue)
+                if (objectRef.Parent.HasValue)
                 {
-                    spriteRefParentDic[values.Pivot] = timelineKey.Object.Parent.Value;
+                    spriteRefParentDic[values.Pivot] = objectRef.Parent.Value;
                 }
                 else
                 {

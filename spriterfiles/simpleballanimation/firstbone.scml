@@ -20,7 +20,7 @@
                     <bone x="45" y="39" angle="359.169685" scale_x="1.140011"/>
                 </key>
                 <key id="1" time="511">
-                    <bone x="45" y="39" angle="264.103036" scale_x="1.140011"/>
+                    <bone x="-74" y="28" angle="264.103036" scale_x="1.140011"/>
                 </key>
             </timeline>
             <timeline id="1">

@@ -167,18 +167,6 @@ namespace FlatRedBall_Spriter
             get { return _pivot_y; }
             set { _pivot_y = value; }
         }
-
-        [XmlIgnore]
-        public int? Parent { get; set; }
-
-        /// <remarks/>
-        [XmlAttribute(AttributeName = "parent")]
-        // ReSharper disable InconsistentNaming
-        public int _donotuseParent
-        {
-            get { return -1; }
-            set { this.Parent = value; }
-        }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]

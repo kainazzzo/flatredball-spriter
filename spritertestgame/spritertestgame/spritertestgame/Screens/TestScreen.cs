@@ -37,7 +37,7 @@ namespace spritertestgame.Screens
 
             var sos =
     SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\ballmove.scml");
+        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\firstbone.scml");
 
             var oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory =
@@ -74,7 +74,13 @@ namespace spritertestgame.Screens
                 _so.StartAnimation();
                 //_so2.StartAnimation("Idle");
             }
-            FlatRedBall.Debugging.Debugger.Write(string.Format("RelativePosition: {0}", _so.ObjectList[1].RelativePosition));
+            FlatRedBall.Debugging.Debugger.Write(string.Format("RelativePosition:\r\n{0}\r\n{1}\r\n{2}\r\nRotations:{3}\r\n{4}\r\n{5}", _so.ObjectList[0].RelativePosition, _so.ObjectList[1].RelativePosition, _so.ObjectList[2].RelativePosition, _so.ObjectList[0].RotationZ,
+                _so.ObjectList[1].RotationZ, _so.ObjectList[2].RotationZ));
+
+            if (InputManager.Keyboard.KeyDown(Keys.Up))
+            {
+                _so.ObjectList[2].RelativeRotationZ++;
+            }
             
 
 		}

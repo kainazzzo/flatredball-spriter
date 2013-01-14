@@ -237,9 +237,11 @@ namespace flatredball_spriter_test
 
             Assert.AreEqual(3, so.ObjectList.Count);
 
-            var pivot = so.ObjectList.OfType<Sprite>().First().Parent;
+            var pivot = so.ObjectList.Single(p => p.Name == "pivot");
+            var bone = so.ObjectList[2];
 
-            Assert.AreSame(so.ObjectList[2], so.Animations.First().Value.KeyFrames.First().Values[pivot].Parent);
+            Assert.AreSame(bone, so.Animations.First().Value.KeyFrames[0].Values[pivot].Parent);
+            Assert.IsTrue(so.Animations.First().Value.KeyFrames.All(k => k.Values[pivot].Parent == bone));
         }
 
         [TestMethod]
@@ -834,7 +836,8 @@ namespace flatredball_spriter_test
                                                                                         {
                                                                                             Id=0,
                                                                                             Key=0,
-                                                                                            Timeline = 1
+                                                                                            Timeline = 1,
+                                                                                            Parent = 0
                                                                                         }
                                                                                 },
                                                                             Id = 0,
@@ -858,7 +861,8 @@ namespace flatredball_spriter_test
                                                                                         {
                                                                                             Id=0,
                                                                                             Key=0,
-                                                                                            Timeline = 1
+                                                                                            Timeline = 1,
+                                                                                            Parent = 0
                                                                                         }
                                                                                 },
                                                                             Id = 1,
@@ -905,19 +909,13 @@ namespace flatredball_spriter_test
                                                                             new Key()
                                                                                 {
                                                                                     Id=0,
-                                                                                    Object = new KeyObject()
-                                                                                        {
-                                                                                            Parent = 0
-                                                                                        },
+                                                                                    Object = new KeyObject(),
                                                                                     Time = 0
                                                                                 },
                                                                             new Key()
                                                                                 {
                                                                                     Id=1,
-                                                                                    Object = new KeyObject()
-                                                                                        {
-                                                                                            Parent = 0
-                                                                                        },
+                                                                                    Object = new KeyObject(),
                                                                                         Time = 1000
                                                                                 }
                                                                         }

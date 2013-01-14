@@ -220,8 +220,13 @@ namespace flatredball_spriter_test
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();
             var so = sos.ToRuntime();
-            Assert.AreSame(so.ObjectList[1], so.ObjectList[0].Parent);
-            Assert.AreSame(so, so.ObjectList[1].Parent);
+            var pivot = so.ObjectList.Single(p => p.Name == "pivot");
+            var sprite = (Sprite)so.ObjectList.Single(p => p.Name == "sprite");
+
+            Assert.AreSame(so, so.Animations.First().Value.KeyFrames[0].Values[pivot].Parent);
+            Assert.AreSame(pivot, so.Animations.First().Value.KeyFrames[0].Values[sprite].Parent);
+            Assert.AreSame(pivot, sprite.Parent);
+            Assert.AreSame(so, pivot.Parent);
         }
 
         [TestMethod]

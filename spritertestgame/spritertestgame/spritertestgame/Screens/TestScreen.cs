@@ -74,6 +74,9 @@ namespace spritertestgame.Screens
                 _so.StartAnimation();
                 //_so2.StartAnimation("Idle");
             }
+            FlatRedBall.Debugging.Debugger.Write(string.Format("RelativePosition: {0}", _so.ObjectList[1].RelativePosition));
+            
+
 		}
 
 		void CustomDestroy()

@@ -61,7 +61,7 @@ namespace FlatRedBall_Spriter
 
                 // find all the keyframevalues, and look up the bone id, then take that bone id and 
                 // set the parent in the keyframevalues variable to the positionedobject in the boneRefDic
-                foreach (KeyValuePair<PositionedObject, KeyFrameValues> pair in keyFrameList.SelectMany(keyFrame => keyFrame.Values))
+                foreach (var pair in keyFrameList.SelectMany(keyFrame => keyFrame.Values))
                 {
                     if (keyFrameValuesParentDictionary.ContainsKey(pair.Value))
                     {
@@ -69,7 +69,7 @@ namespace FlatRedBall_Spriter
                         var parent = boneRefDic[boneId];
                         pair.Value.Parent = parent;
                     }
-                    else if (pair.Value.GetType() != typeof(Sprite))
+                    else if (pair.Key.GetType() != typeof(Sprite))
                     {
                         pair.Value.Parent = spriterObject;
                     }
@@ -160,7 +160,7 @@ namespace FlatRedBall_Spriter
 
                 var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
                 // TODO: Z-index
-
+                values.Sprite.Parent = pivot;
                 if (timelineKey.Object.Parent.HasValue)
                 {
                     spriteRefParentDic[values.Pivot] = timelineKey.Object.Parent.Value;

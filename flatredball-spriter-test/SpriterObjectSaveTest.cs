@@ -339,6 +339,27 @@ namespace flatredball_spriter_test
             Assert.IsTrue(pass, string.Format("{0}.StartAnimation didn't throw exception for an invalid animation name.", typeof(SpriterObject)));
         }
 
+        [TestMethod]
+        public void RelativeScale()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParentAndOneOrphanObject();
+            var so = sos.ToRuntime();
+
+            var sprite = so.ObjectList.First(p => p.Name == "sprite");
+            var sprite2 = so.ObjectList.Where(p => p.Name == "sprite").ElementAt(1);
+
+            Assert.IsTrue(so.Animations.First().Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.GetType() != typeof(Sprite))).All(p => Math.Abs(p.Value.ScaleX - 0.0f) < .0001f));
+            Assert.IsTrue(so.Animations.First().Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.GetType() != typeof(Sprite))).All(p => Math.Abs(p.Value.ScaleY - 0.0f) < .0001f));
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleY - 256.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleX - 144f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleX - 64f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleY - 64f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.Y + 256.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.X - 144f) < .00001f);
+
+            Assert.AreSame(sprite2.Parent, so.Animations.First().Value.KeyFrames.First().Values[sprite2].Parent);
+        }
+
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations()
         {
             return new SpriterObjectSaveNullTexture
@@ -807,6 +828,238 @@ namespace flatredball_spriter_test
 
         }
 
+        private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParentAndOneOrphanObject()
+        {
+            return new SpriterObjectSaveNullTexture
+            {
+                Folder = new List<SpriterDataFolder>(1)
+                        {
+                            new SpriterDataFolder
+                                {
+                                    Id = 0,
+                                    Name = "folder",
+                                    File = new List<SpriterDataFolderFile>
+                                        {
+                                            new SpriterDataFolderFile
+                                                {
+                                                    Height = 128,
+                                                    Width = 128,
+                                                    Id = 0,
+                                                    Name = "folder/test.png"
+                                                }
+                                        }
+                                }
+                        },
+                Entity = new List<SpriterDataEntity>
+                        {
+                            new SpriterDataEntity
+                                {
+                                    Id = 0,
+                                    Name = "",
+                                    Animation = new List<SpriterDataEntityAnimation>
+                                        {
+                                            new SpriterDataEntityAnimation
+                                                {
+                                                    Length = 1000,
+                                                    Id = 0,
+                                                    Looping = false,
+                                                    Mainline = new SpriterDataEntityAnimationMainline
+                                                        {
+                                                            Keys = new List<Key>()
+                                                                {
+                                                                    new Key()
+                                                                        {
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Key=0,
+                                                                                            Timeline = 0
+                                                                                        },
+                                                                                    new KeyBoneRef
+                                                                                        {
+                                                                                            Id=1,
+                                                                                            Key = 0,
+                                                                                            Timeline = 2,
+                                                                                            Parent = 0
+                                                                                        }
+                                                                                },
+                                                                            ObjectRef = new List<KeyObjectRef>()
+                                                                                {
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Key=0,
+                                                                                            Timeline = 1,
+                                                                                            Parent = 1
+                                                                                        },
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=2,
+                                                                                            Key=0,
+                                                                                            Timeline = 3
+                                                                                        }
+                                                                                },
+                                                                            Id = 0,
+                                                                            Spin = 1,
+                                                                            Time = 0
+                                                                        },
+                                                                    new Key()
+                                                                        {
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Key=1,
+                                                                                            Timeline = 0
+                                                                                        },
+                                                                                    new KeyBoneRef
+                                                                                        {
+                                                                                            Id = 1,
+                                                                                            Key = 1,
+                                                                                            Timeline = 2,
+                                                                                            Parent = 0
+                                                                                        }
+                                                                                },
+                                                                            ObjectRef = new List<KeyObjectRef>()
+                                                                                {
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Key=1,
+                                                                                            Timeline = 1,
+                                                                                            Parent = 1
+                                                                                        },
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=1,
+                                                                                            Key=1,
+                                                                                            Timeline = 3
+                                                                                        }
+                                                                                },
+                                                                            Id = 1,
+                                                                            Spin = 1,
+                                                                            Time = 1000
+                                                                        }
+                                                                }
+                                                        },
+                                                    Name = "First Animation",
+                                                    Timeline = new List<SpriterDataEntityAnimationTimeline>()
+                                                        {
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id = 0,
+                                                                    Name = "bone1",
+                                                                    Key = new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Bone = new KeyBone
+                                                                                        {
+                                                                                            ScaleY = 2f,
+                                                                                            ScaleX = 1.5f
+                                                                                        },
+                                                                                    Id = 0,
+                                                                                    Spin = 0,
+                                                                                    Time = 0
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id = 1,
+                                                                                    Bone = new KeyBone()
+                                                                                        {
+                                                                                            X = 100f,
+                                                                                            ScaleY = 2f,
+                                                                                            ScaleX = 1.5f
+                                                                                        },
+                                                                                    Spin = 0,
+                                                                                    Time = 1000
+                                                                                }
+                                                                        }
+                                                                },
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id = 2,
+                                                                    Name = "bone2",
+                                                                    Key = new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Bone = new KeyBone
+                                                                                        {
+                                                                                            ScaleY = 2f,
+                                                                                            ScaleX = 1.5f
+                                                                                        },
+                                                                                    Id = 0,
+                                                                                    Spin = 0,
+                                                                                    Time = 0
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id = 1,
+                                                                                    Bone = new KeyBone
+                                                                                        {
+                                                                                            X = 100f,
+                                                                                            ScaleY = 2f,
+                                                                                            ScaleX = 1.5f
+                                                                                        },
+                                                                                    Spin = 0,
+                                                                                    Time = 1000
+                                                                                }
+                                                                        }
+                                                                },
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id=1,
+                                                                    Name="object",
+                                                                    Key = new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=0,
+                                                                                    Object = new KeyObject(),
+                                                                                    Time = 0
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=1,
+                                                                                    Object = new KeyObject(),
+                                                                                        Time = 1000
+                                                                                }
+                                                                        }
+                                                                },
+                                                                new SpriterDataEntityAnimationTimeline
+                                                                {
+                                                                    Id=3,
+                                                                    Name="object",
+                                                                    Key = new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=0,
+                                                                                    Object = new KeyObject(),
+                                                                                    Time = 0
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=1,
+                                                                                    Object = new KeyObject(),
+                                                                                        Time = 1000
+                                                                                }
+                                                                        }
+                                                                }
+
+                                                        }
+                                                }
+                                        }
+                                }
+                        }
+            };    
+
+        }
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParent()
         {
             return new SpriterObjectSaveNullTexture
@@ -924,7 +1177,11 @@ namespace flatredball_spriter_test
                                                                         {
                                                                             new Key()
                                                                                 {
-                                                                                    Bone = new KeyBone(),
+                                                                                    Bone = new KeyBone
+                                                                                        {
+                                                                                            ScaleY = 2f,
+                                                                                            ScaleX = 1.5f
+                                                                                        },
                                                                                     Id = 0,
                                                                                     Spin = 0,
                                                                                     Time = 0
@@ -934,8 +1191,9 @@ namespace flatredball_spriter_test
                                                                                     Id = 1,
                                                                                     Bone = new KeyBone()
                                                                                         {
-                                                                                            X = 100f
-                                                                                                
+                                                                                            X = 100f,
+                                                                                            ScaleY = 2f,
+                                                                                            ScaleX = 1.5f
                                                                                         },
                                                                                     Spin = 0,
                                                                                     Time = 1000
@@ -950,7 +1208,11 @@ namespace flatredball_spriter_test
                                                                         {
                                                                             new Key()
                                                                                 {
-                                                                                    Bone = new KeyBone(),
+                                                                                    Bone = new KeyBone
+                                                                                        {
+                                                                                            ScaleY = 2f,
+                                                                                            ScaleX = 1.5f
+                                                                                        },
                                                                                     Id = 0,
                                                                                     Spin = 0,
                                                                                     Time = 0
@@ -958,9 +1220,11 @@ namespace flatredball_spriter_test
                                                                             new Key()
                                                                                 {
                                                                                     Id = 1,
-                                                                                    Bone = new KeyBone()
+                                                                                    Bone = new KeyBone
                                                                                         {
-                                                                                            X = 100f
+                                                                                            X = 100f,
+                                                                                            ScaleY = 2f,
+                                                                                            ScaleX = 1.5f
                                                                                         },
                                                                                     Spin = 0,
                                                                                     Time = 1000

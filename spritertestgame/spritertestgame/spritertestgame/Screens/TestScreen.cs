@@ -83,9 +83,16 @@ namespace spritertestgame.Screens
 		    for (int index = 0; index < _so.ObjectList.Count; index++)
 		    {
 		        var positionedObject = _so.ObjectList[index];
-		        sb.AppendFormat("Object Name: [{0}]. RotationZ: [{1}]. RelativePosition: [{2}]\r\n",
+		        sb.AppendFormat("Object Name: [{0}]. RotationZ: [{1}]. RelativePosition: [{2}].",
 		                        positionedObject.Name, positionedObject.RelativeRotationZ,
                                 positionedObject.RelativePosition);
+		        var sprite = positionedObject as Sprite;
+                if (sprite != null)
+                {
+                    sb.AppendFormat(" ScaleX: [{0}]. ScaleY: [{1}].", sprite.ScaleX,
+                                    sprite.ScaleY);
+                }
+		        sb.Append("\r\n");
 		    }
 
 		    FlatRedBall.Debugging.Debugger.Write(sb.ToString());

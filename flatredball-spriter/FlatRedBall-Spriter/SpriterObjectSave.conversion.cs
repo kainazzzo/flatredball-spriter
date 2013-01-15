@@ -168,6 +168,7 @@ namespace FlatRedBall_Spriter
                 if (objectRef.Parent.HasValue)
                 {
                     spriteRefParentDic[values.Pivot] = objectRef.Parent.Value;
+                    CalculateRelativeScaleValues(values, objectRef, animation, key);
                 }
                 else
                 {
@@ -176,6 +177,31 @@ namespace FlatRedBall_Spriter
 
                 keyFrame.Values[pivot] = values.Pivot;
                 keyFrame.Values[sprite] = values.Sprite;
+            }
+        }
+
+        private void CalculateRelativeScaleValues(KeyFramePivotSpriteValues keyFrameValues, KeyObjectRef objectRef, SpriterDataEntityAnimation animation, Key currentKey)
+        {
+            if (objectRef.Parent.HasValue)
+            {
+                // Find the bone reference in the current key
+                var boneRef = currentKey.BoneRef.SingleOrDefault(br => br.Id == objectRef.Parent.Value);
+                while (boneRef != null)
+                {
+                    KeyBoneRef @ref = boneRef;
+                    var bone = animation.Timeline.Where(t => t.Id == @ref.Timeline).SelectMany(t => t.Key).Single(k => k.Id == @ref.Key).Bone;
+                    keyFrameValues.Sprite.ScaleX *= bone.ScaleX;
+                    keyFrameValues.Sprite.ScaleY *= bone.ScaleY;
+                    float x = keyFrameValues.Sprite.Position.X * bone.ScaleX;
+                    float y = keyFrameValues.Sprite.Position.Y * bone.ScaleY;
+                    keyFrameValues.Sprite.Position = new Vector3(x, y, 0.0f);
+
+                    //x = keyFrameValues.Pivot.Position.X*bone.ScaleX;
+                    //y = keyFrameValues.Pivot.Position.Y*bone.ScaleY;
+                    //keyFrameValues.Pivot.Position = new Vector3(x, y, 0.0f);
+
+                    boneRef = !boneRef.Parent.HasValue ? null : currentKey.BoneRef.SingleOrDefault(br => br.Id == boneRef.Parent.Value);
+                }
             }
         }
 

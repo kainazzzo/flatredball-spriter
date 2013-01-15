@@ -132,6 +132,16 @@ namespace FlatRedBall_Spriter
             {
                 Sprite sprite;
                 PositionedObject pivot;
+
+                var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
+                var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
+                var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder,
+                                                 timelineKey.Object.File);
+                var file =
+                    this.Folder.First(f => f.Id == timelineKey.Object.Folder)
+                        .File.First(f => f.Id == timelineKey.Object.File);
+
+
                 if (persistentSprites.ContainsKey(objectRef.Id))
                 {
                     sprite = persistentSprites[objectRef.Id];
@@ -141,7 +151,7 @@ namespace FlatRedBall_Spriter
                 {
                     pivot = new PositionedObject {Name = "pivot"};
 
-                    sprite = new Sprite {Name = "sprite", PixelSize = .5f};
+                    sprite = new Sprite {Name = "sprite", ScaleX =  file.Width / 2.0f, ScaleY = file.Height / 2.0f};
 
                     sprite.AttachTo(pivot, true);
                     pivot.AttachTo(spriterObject, true);
@@ -153,14 +163,9 @@ namespace FlatRedBall_Spriter
 
 
                 // TODO: tie the sprite to object_ref id?
-                var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
-                var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
-                var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder,
-                                                 timelineKey.Object.File);
+                
 
-                var file =
-                    this.Folder.First(f => f.Id == timelineKey.Object.Folder)
-                        .File.First(f => f.Id == timelineKey.Object.File);
+                
 
                 var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
                 // TODO: Z-index

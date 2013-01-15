@@ -73,16 +73,6 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
-        public void SpritesUseHalfPixelSize()
-        {
-            var sos = GetSimpleSpriterObjectSaveNullTexture();
-
-            var so = sos.ToRuntime();
-
-            Assert.IsTrue(so.ObjectList.OfType<Sprite>().All(s => Math.Abs(s.PixelSize - .5f) < .0001f));
-        }
-
-        [TestMethod]
         public void TestAnimationTotalLength()
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();

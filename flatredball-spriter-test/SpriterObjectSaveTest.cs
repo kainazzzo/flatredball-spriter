@@ -191,7 +191,7 @@ namespace flatredball_spriter_test
             CollectionAssert.AllItemsAreInstancesOfType(so.ObjectList, typeof(PositionedObject));
             Assert.IsNotNull(so.Animations.First().Value.KeyFrames[0].Values.FirstOrDefault());
             var bone = so.ObjectList[0];
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Values[bone].Position.X - 100f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Values[bone].Position.X - 400f) < .0001f);
         }
 
         [TestMethod]

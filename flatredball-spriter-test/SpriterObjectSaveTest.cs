@@ -337,6 +337,8 @@ namespace flatredball_spriter_test
 
             var sprite = so.ObjectList.First(p => p.Name == "sprite");
             var sprite2 = so.ObjectList.Where(p => p.Name == "sprite").ElementAt(1);
+            var pivot = sprite.Parent;
+            var pivot2 = sprite2.Parent;
 
             Assert.IsTrue(so.Animations.First().Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.GetType() != typeof(Sprite))).All(p => Math.Abs(p.Value.ScaleX - 0.0f) < .0001f));
             Assert.IsTrue(so.Animations.First().Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.GetType() != typeof(Sprite))).All(p => Math.Abs(p.Value.ScaleY - 0.0f) < .0001f));
@@ -346,8 +348,21 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleY - 64f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.Y + 256.0f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.X - 144f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.X - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].Position.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].Position.X - 0.0f) < .00001f);
 
             Assert.AreSame(sprite2.Parent, so.Animations.First().Value.KeyFrames.First().Values[sprite2].Parent);
+        }
+
+        [TestMethod]
+        public void BonePositionReverseScale()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWithSingleBone();
+            var so = sos.ToRuntime();
+
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Values.First().Value.Position.X - 400f) < .00001f);
         }
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations()
@@ -1397,7 +1412,7 @@ namespace flatredball_spriter_test
                         }
             };    
         }
-
+        
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithSingleBoneRotated()
         {
             return new SpriterObjectSaveNullTexture
@@ -1597,8 +1612,8 @@ namespace flatredball_spriter_test
                                                                                     Id = 1,
                                                                                     Bone = new KeyBone()
                                                                                         {
-                                                                                            X = 100f
-                                                                                                
+                                                                                            X = 100f,
+                                                                                            ScaleX = .25f
                                                                                         },
                                                                                     Spin = 0,
                                                                                     Time = 1000

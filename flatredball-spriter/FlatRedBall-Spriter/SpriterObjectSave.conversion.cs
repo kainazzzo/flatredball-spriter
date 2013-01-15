@@ -109,7 +109,8 @@ namespace FlatRedBall_Spriter
 
                 keyFrame.Values[bone] = new KeyFrameValues
                     {
-                        Position = new Vector3(timelineKey.Bone.X, timelineKey.Bone.Y, 0.0f),
+                        Position = new Vector3(timelineKey.Bone.X / timelineKey.Bone.ScaleX,
+                            timelineKey.Bone.Y / timelineKey.Bone.ScaleY, 0.0f),
                         Rotation = new Vector3(0.0f, 0.0f, timelineKey.Bone.Angle),
                         Spin = timelineKey.Spin
                     };
@@ -201,9 +202,9 @@ namespace FlatRedBall_Spriter
                     float y = keyFrameValues.Sprite.Position.Y * bone.ScaleY;
                     keyFrameValues.Sprite.Position = new Vector3(x, y, 0.0f);
 
-                    //x = keyFrameValues.Pivot.Position.X*bone.ScaleX;
-                    //y = keyFrameValues.Pivot.Position.Y*bone.ScaleY;
-                    //keyFrameValues.Pivot.Position = new Vector3(x, y, 0.0f);
+                    x = keyFrameValues.Pivot.Position.X*bone.ScaleX;
+                    y = keyFrameValues.Pivot.Position.Y*bone.ScaleY;
+                    keyFrameValues.Pivot.Position = new Vector3(x, y, 0.0f);
 
                     boneRef = !boneRef.Parent.HasValue ? null : currentKey.BoneRef.SingleOrDefault(br => br.Id == boneRef.Parent.Value);
                 }

@@ -14,6 +14,7 @@ using FlatRedBall.Graphics.Model;
 using FlatRedBall.Math.Geometry;
 using FlatRedBall.Math.Splines;
 using FlatRedBall_Spriter;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Cursor = FlatRedBall.Gui.Cursor;
 using GuiManager = FlatRedBall.Gui.GuiManager;
@@ -37,7 +38,7 @@ namespace spritertestgame.Screens
 
             var sos =
     SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\firstbone.scml");
+        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\easybone.scml");
 
             var oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory =
@@ -47,6 +48,10 @@ namespace spritertestgame.Screens
             FileManager.RelativeDirectory = oldDir;
 
             _so.AddToManagers(null);
+
+            AxisAlignedRectangle rect = new AxisAlignedRectangle {X = 0, Y = 0, ScaleX = 1, ScaleY = 1, Color = Color.Yellow};
+
+	        ShapeManager.AddAxisAlignedRectangle(rect);
 
     //        var sos2 =
     //SpriterObjectSave.FromFile(
@@ -58,7 +63,7 @@ namespace spritertestgame.Screens
     //        _so2 = sos2.ToRuntime();
     //        _so2.AddToManagers(null);
 
-    //        FileManager.RelativeDirectory = oldDir;
+            FileManager.RelativeDirectory = oldDir;
 
             SpriteManager.Camera.UsePixelCoordinates();
 	        SpriteManager.Camera.Y += 125;
@@ -74,15 +79,16 @@ namespace spritertestgame.Screens
                 _so.StartAnimation();
                 //_so2.StartAnimation("Idle");
             }
-            FlatRedBall.Debugging.Debugger.Write(string.Format("RelativePosition:\r\n{0}\r\n{1}\r\n{2}\r\nRotations:{3}\r\n{4}\r\n{5}", _so.ObjectList[0].RelativePosition, _so.ObjectList[1].RelativePosition, _so.ObjectList[2].RelativePosition, _so.ObjectList[0].RotationZ,
-                _so.ObjectList[1].RotationZ, _so.ObjectList[2].RotationZ));
+            StringBuilder sb = new StringBuilder();
+		    for (int index = 0; index < _so.ObjectList.Count; index++)
+		    {
+		        var positionedObject = _so.ObjectList[index];
+		        sb.AppendFormat("Object Name: [{0}]. RotationZ: [{1}]. RelativePosition: [{2}]\r\n",
+		                        positionedObject.Name, positionedObject.RelativeRotationZ,
+                                positionedObject.RelativePosition);
+		    }
 
-            if (InputManager.Keyboard.KeyDown(Keys.Up))
-            {
-                _so.ObjectList[2].RelativeRotationZ++;
-            }
-            
-
+		    FlatRedBall.Debugging.Debugger.Write(sb.ToString());
 		}
 
 		void CustomDestroy()

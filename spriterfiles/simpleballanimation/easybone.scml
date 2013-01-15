@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="a4.1">
+    <folder id="0">
+        <file id="0" name="ball.png" width="128" height="128"/>
+    </folder>
+    <entity id="0" name="">
+        <animation id="0" name="First Animation" length="1000">
+            <mainline>
+                <key id="0">
+                    <bone_ref id="0" timeline="0" key="0"/>
+                    <bone_ref id="1" parent="0" timeline="1" key="0"/>
+                    <object_ref id="0" parent="1" timeline="2" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="550">
+                    <bone_ref id="0" timeline="0" key="1"/>
+                    <bone_ref id="1" parent="0" timeline="1" key="1"/>
+                    <object_ref id="0" parent="1" timeline="2" key="1" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="bone_000">
+                <key id="0" spin="0">
+                    <bone/>
+                </key>
+                <key id="1" time="550" spin="0">
+                    <bone x="26.153846"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="bone_001">
+                <key id="0" spin="-1">
+                    <bone x="18.461538"/>
+                </key>
+                <key id="1" time="550">
+                    <bone x="18.461538" angle="348.037949"/>
+                </key>
+            </timeline>
+            <timeline id="2">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="20"/>
+                </key>
+                <key id="1" time="550" spin="0">
+                    <object folder="0" file="0" x="20"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

@@ -97,7 +97,7 @@ namespace FlatRedBall_Spriter
                 }
                 else
                 {
-                    bone = new PositionedObject() {Name = "bone"};
+                    bone = new PositionedObject() {Name = "bone" + boneRef.Id};
                     bone.AttachTo(spriterObject, true);
 
                     persistentBones[boneRef.Id] = bone;
@@ -109,7 +109,8 @@ namespace FlatRedBall_Spriter
 
                 keyFrame.Values[bone] = new KeyFrameValues
                     {
-                        Position = new Vector3(timelineKey.Bone.X, timelineKey.Bone.Y, 0.0f)
+                        Position = new Vector3(timelineKey.Bone.X, timelineKey.Bone.Y, 0.0f),
+                        Rotation = new Vector3(0.0f, 0.0f, timelineKey.Bone.Angle)
                     };
 
                 boneRefDic[boneRef.Id] = bone;

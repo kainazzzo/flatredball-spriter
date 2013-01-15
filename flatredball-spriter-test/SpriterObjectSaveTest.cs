@@ -298,7 +298,8 @@ namespace flatredball_spriter_test
             Assert.IsTrue(
     Math.Abs(45f -
              so.Animations.First().Value.KeyFrames.ElementAt(1).Values.First().Value.Rotation.Z) < .0001f);
-
+            Assert.AreEqual(1, so.Animations.First().Value.KeyFrames.ElementAt(0).Values.First().Value.Spin);
+            Assert.AreEqual(-1, so.Animations.First().Value.KeyFrames.ElementAt(1).Values.First().Value.Spin);
         }
 
         [TestMethod]
@@ -1194,7 +1195,6 @@ namespace flatredball_spriter_test
                                                                                         }
                                                                                 },
                                                                             Id = 0,
-                                                                            Spin = 1,
                                                                             Time = 0
                                                                         },
                                                                     new Key()
@@ -1209,7 +1209,6 @@ namespace flatredball_spriter_test
                                                                                         }
                                                                                 },
                                                                             Id = 1,
-                                                                            Spin = 1,
                                                                             Time = 1000
                                                                         }
                                                                 }
@@ -1227,7 +1226,7 @@ namespace flatredball_spriter_test
                                                                                 {
                                                                                     Bone = new KeyBone(),
                                                                                     Id = 0,
-                                                                                    Spin = 0,
+                                                                                    Spin = 1,
                                                                                     Time = 0
                                                                                 },
                                                                             new Key()
@@ -1238,7 +1237,7 @@ namespace flatredball_spriter_test
                                                                                             X = 100f,
                                                                                             Angle = 45f
                                                                                         },
-                                                                                    Spin = 0,
+                                                                                    Spin = -1,
                                                                                     Time = 1000
                                                                                 }
                                                                         }

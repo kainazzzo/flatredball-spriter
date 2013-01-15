@@ -110,7 +110,8 @@ namespace FlatRedBall_Spriter
                 keyFrame.Values[bone] = new KeyFrameValues
                     {
                         Position = new Vector3(timelineKey.Bone.X, timelineKey.Bone.Y, 0.0f),
-                        Rotation = new Vector3(0.0f, 0.0f, timelineKey.Bone.Angle)
+                        Rotation = new Vector3(0.0f, 0.0f, timelineKey.Bone.Angle),
+                        Spin = timelineKey.Spin
                     };
 
                 boneRefDic[boneRef.Id] = bone;
@@ -120,6 +121,8 @@ namespace FlatRedBall_Spriter
                 }
             }
         }
+
+        
 
         private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, Sprite> persistentSprites, SpriterObject spriterObject,
                                                              SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures,

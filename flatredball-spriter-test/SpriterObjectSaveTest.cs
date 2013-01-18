@@ -211,8 +211,8 @@ namespace flatredball_spriter_test
             var sos = GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParent();
             var so = sos.ToRuntime();
 
-            var pivot = so.ObjectList.Single(o => o.Name == "pivot");
-            var sprite = so.ObjectList.Single(o => o.Name == "sprite");
+            //var pivot = so.ObjectList.Single(o => o.Name == "pivot");
+            //var sprite = so.ObjectList.Single(o => o.Name == "sprite");
             var bone1 = so.ObjectList.Single(o => o.Name == "bone0");
             var bone2 = so.ObjectList.Single(o => o.Name == "bone1");
 
@@ -270,10 +270,17 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z - .0001f) < .00001);
         }
 
-        
+        [TestMethod]
         public void UnreferencedKeysGetAddedStill()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefsAndExtraKey();
+            var so = sos.ToRuntime();
+
+            var pivot = so.ObjectList.Single(o => o.Name == "pivot");
+
+            Assert.AreEqual(4, so.Animations.First().Value.KeyFrames.Count);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(2).Time - .207f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(3).Time - .207f) < .0001f);
         }
 
         [TestMethod]
@@ -515,32 +522,83 @@ namespace flatredball_spriter_test
                                         {
                                             new SpriterDataEntityAnimation
                                                 {
-                                                    Length=2000,
-                                                    Id=0, Looping = false,
+                                                    Length=1000,
+                                                    Id=0, Looping = true,
                                                     Mainline = new SpriterDataEntityAnimationMainline
                                                         {
                                                             Keys=new List<Key>()
                                                                 {
                                                                     new Key()
                                                                         {
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Timeline=0,
+                                                                                            Key=0
+                                                                                        }
+                                                                                },
                                                                             ObjectRef = new List<KeyObjectRef>()
                                                                                 {
                                                                                     new KeyObjectRef()
                                                                                         {
-                                                                                            Id = 0, Key=0,
-                                                                                            Timeline = 0, ZIndex = 0
-                                                                                        },
-                                                                                    new KeyObjectRef()
-                                                                                        {
-                                                                                            Id=1,
-                                                                                            Key=1,
-                                                                                            Timeline=0,
-                                                                                            ZIndex = 1
+                                                                                            Id=0,
+                                                                                            Parent = 0,
+                                                                                            Timeline=1,
+                                                                                            Key=0,
+                                                                                            ZIndex = 0
                                                                                         }
                                                                                 },
-                                                                            Id=0,
-                                                                            Spin=1,
-                                                                            Time=300
+                                                                            Id=0
+                                                                        },
+                                                                    new Key()
+                                                                        {
+                                                                            Id=1,
+                                                                            Time=207,
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Timeline = 0,
+                                                                                            Key = 1
+                                                                                        }
+                                                                                },
+                                                                            ObjectRef = new List<KeyObjectRef>()
+                                                                                {
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Timeline = 1,
+                                                                                            Key = 2,
+                                                                                            ZIndex = 0
+                                                                                        }
+                                                                                }
+                                                                        },
+                                                                    new Key()
+                                                                        {
+                                                                            Id=2,
+                                                                            Time=489,
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Timeline = 0,
+                                                                                            Key = 2
+                                                                                        }
+                                                                                },
+                                                                            ObjectRef = new List<KeyObjectRef>()
+                                                                                {
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id = 0,
+                                                                                            Timeline = 1,
+                                                                                            Key = 3,
+                                                                                            ZIndex = 0
+                                                                                        }
+                                                                                }
                                                                         }
                                                                 }
                                                         },
@@ -555,31 +613,89 @@ namespace flatredball_spriter_test
                                                                         {
                                                                             new Key()
                                                                                 {
-                                                                                    Object = new KeyObject(),
-                                                                                    Id=0, 
-                                                                                    Spin=1,
-                                                                                    Time=300
+                                                                                    Bone = new KeyBone(),
+                                                                                    Id=0,
+                                                                                    Spin=0,
                                                                                 },
                                                                             new Key()
                                                                                 {
                                                                                     Id=1,
-                                                                                    Object = new KeyObject(),
-                                                                                    Spin=1,
-                                                                                    Time=300
+                                                                                    Bone = new KeyBone()
+                                                                                        {
+                                                                                            X = 61f,
+                                                                                            Y = -1f
+                                                                                        },
+                                                                                    Spin=0,
+                                                                                    Time=207
                                                                                 },
-                                                                                new Key()
-                                                                                    {
-                                                                                        Id=2,
-                                                                                        Object = new KeyObject()
-                                                                                            {
-                                                                                                File = 0,
-                                                                                                Folder = 0,
-                                                                                                Angle = 0f,
-                                                                                                X = 1,
-                                                                                                Y = 1
-                                                                                            },
-                                                                                            
-                                                                                    }
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=2,
+                                                                                    Time=489,
+                                                                                    Spin=0,
+                                                                                    Bone = new KeyBone()
+                                                                                        {
+                                                                                            X = -19,
+                                                                                            Y = -1
+                                                                                        }
+                                                                                }
+                                                                        }
+                                                                },
+                                                            new SpriterDataEntityAnimationTimeline()
+                                                                {
+                                                                    Id = 1,
+                                                                    Key = new List<Key>()
+                                                                        {
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=0,
+                                                                                    Spin=0,
+                                                                                    Object = new KeyObject()
+                                                                                        {
+                                                                                            Folder=0,
+                                                                                            File = 0,
+                                                                                            X=220f,
+                                                                                            Y=67f
+                                                                                        }
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=1,
+                                                                                    Time=207,
+                                                                                    Object = new KeyObject()
+                                                                                        {
+                                                                                            Folder = 0,
+                                                                                            File = 0,
+                                                                                            X = 220f,
+                                                                                            Y = 67f
+                                                                                        }
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=2,
+                                                                                    Time = 207,
+                                                                                    Spin = 0,
+                                                                                    Object = new KeyObject()
+                                                                                        {
+                                                                                            Folder = 0,
+                                                                                            File = 0,
+                                                                                            X = 281,
+                                                                                            Y = 66
+                                                                                        }
+                                                                                },
+                                                                            new Key()
+                                                                                {
+                                                                                    Id=3,
+                                                                                    Time=489,
+                                                                                    Spin=0,
+                                                                                    Object = new KeyObject()
+                                                                                        {
+                                                                                            Folder = 0,
+                                                                                            File = 0,
+                                                                                            X = 281,
+                                                                                            Y = 66
+                                                                                        }
+                                                                                }
                                                                         }
                                                                 }
                                                         }

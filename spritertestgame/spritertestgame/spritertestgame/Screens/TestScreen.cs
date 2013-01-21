@@ -38,7 +38,7 @@ namespace spritertestgame.Screens
 
             var sos =
     SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\easybone.scml");
+        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\reparenting.scml");
 
             var oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory =

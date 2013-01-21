@@ -277,10 +277,18 @@ namespace flatredball_spriter_test
             var so = sos.ToRuntime();
 
             var pivot = so.ObjectList.Single(o => o.Name == "pivot");
+            var bone = so.ObjectList.Single(o => o.Name != "pivot" && o.Name != "sprite");
 
             Assert.AreEqual(4, so.Animations.First().Value.KeyFrames.Count);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Time - .207f) < .0001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(2).Time - .207f) < .0001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(3).Time - .207f) < .0001f);
+            so.StartAnimation();
+            so.TimedActivity(.205f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(pivot.RelativePosition.X - 220.0f) < .00001f);
+            Assert.AreSame(bone, pivot.Parent);
+            so.TimedActivity(.02f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(pivot.RelativePosition.X - 281f) < .00001f);
+            Assert.AreSame(so, pivot.Parent);
         }
 
         [TestMethod]

@@ -142,6 +142,15 @@ namespace FlatRedBall_Spriter
                     {
                         SetInterpolatedValues(currentPair, percentage);
                     }
+
+                    if (Math.Abs(this.NextKeyFrame.Time - this.CurrentKeyFrame.Time) < .00001f)
+                    {
+                        foreach (var keyFrameValues in this.NextKeyFrame.Values)
+                        {
+                            SetInterpolatedValues(keyFrameValues, percentage);
+                        }
+                        ++CurrentKeyFrameIndex;
+                    }
                 }
                 else
                 {
@@ -181,7 +190,7 @@ namespace FlatRedBall_Spriter
 
                 if (currentObject.Parent != currentValues.Parent)
                 {
-                    currentObject.AttachTo(currentValues.Parent, true);
+                    currentObject.AttachTo(currentValues.Parent, false);
                 }
 
                 // Position

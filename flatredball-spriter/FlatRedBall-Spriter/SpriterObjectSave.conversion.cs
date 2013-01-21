@@ -26,73 +26,6 @@ namespace FlatRedBall_Spriter
             IDictionary<int, PositionedObject> boneRefDic = new Dictionary<int, PositionedObject>();
             IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary = new Dictionary<KeyFrameValues, int>();
 
-            LoadTextures(filenames, textures);
-
-            foreach (var animation in Entity[0].Animation)
-            {
-                var spriterObjectAnimation = GenerateSpriterObjectAnimation(animation, persistentSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic);
-                if (animation != null) spriterObject.Animations[animation.Name] = spriterObjectAnimation;
-            }
-            return spriterObject;
-        }
-
-        private SpriterObjectAnimation GenerateSpriterObjectAnimation(SpriterDataEntityAnimation animation,
-                                                                      IDictionary<int, Sprite> persistentSprites, SpriterObject spriterObject,
-                                                                      IDictionary<string, Texture2D> textures,
-                                                                      IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary,
-                                                                      IDictionary<int, PositionedObject> persistentBones, IDictionary<int, PositionedObject> boneRefDic)
-        {
-            var mainline = animation.Mainline;
-            var keyFrameList = GenerateKeyFrameList(mainline, persistentSprites, spriterObject, animation, textures,
-                                                    keyFrameValuesParentDictionary, persistentBones, boneRefDic);
-
-            SetParentingReferencesInKeyFrames(keyFrameList, keyFrameValuesParentDictionary, boneRefDic, spriterObject);
-
-            var spriterObjectAnimation = new SpriterObjectAnimation(animation.Name,
-                                                                    animation.Looping, animation.Length/1000.0f,
-                                                                    keyFrameList);
-            return spriterObjectAnimation;
-        }
-
-        private List<KeyFrame> GenerateKeyFrameList(SpriterDataEntityAnimationMainline mainline, IDictionary<int, Sprite> persistentSprites,
-                                          SpriterObject spriterObject, SpriterDataEntityAnimation animation,
-                                          IDictionary<string, Texture2D> textures, IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary,
-                                          IDictionary<int, PositionedObject> persistentBones, IDictionary<int, PositionedObject> boneRefDic)
-        {
-            var keyFrameList = new List<KeyFrame>();
-
-            foreach (var key in mainline.Keys)
-            {
-                var keyFrame = GenerateKeyFrame(key, persistentSprites, spriterObject, animation, textures,
-                                                keyFrameValuesParentDictionary, persistentBones, boneRefDic);
-
-                keyFrameList.Add(keyFrame);
-            }
-            return keyFrameList;
-        }
-
-        private KeyFrame GenerateKeyFrame(Key key, IDictionary<int, Sprite> persistentSprites, SpriterObject spriterObject,
-                                          SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures,
-                                          IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary, IDictionary<int, PositionedObject> persistentBones,
-                                          IDictionary<int, PositionedObject> boneRefDic)
-        {
-            var keyFrame = new KeyFrame {Time = key.Time/1000.0f};
-            if (key.ObjectRef != null)
-            {
-                CreateRuntimeObjectsForSpriterObjectRef(key, persistentSprites, spriterObject, animation, textures, keyFrame,
-                                                        keyFrameValuesParentDictionary);
-            }
-
-            if (key.BoneRef != null)
-            {
-                CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame, boneRefDic,
-                                                      keyFrameValuesParentDictionary);
-            }
-            return keyFrame;
-        }
-
-        private void LoadTextures(IDictionary<string, string> filenames, IDictionary<string, Texture2D> textures)
-        {
             foreach (var folder in this.Folder)
             {
                 foreach (var file in folder.File)
@@ -102,24 +35,94 @@ namespace FlatRedBall_Spriter
                     textures[folderFileId] = LoadTexture(file);
                 }
             }
+
+
+            foreach (var animation in Entity[0].Animation)
+            {
+                var mainline = animation.Mainline;
+                var keyFrameList = new List<KeyFrame>();
+
+                foreach (var key in mainline.Keys)
+                {
+
+                    var keyFrame = new KeyFrame { Time = key.Time / 1000.0f };
+                    if (key.ObjectRef != null)
+                    {
+                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentSprites, spriterObject, animation, textures, keyFrame, keyFrameValuesParentDictionary);
+                    }
+                    
+                    if (key.BoneRef != null)
+                    {
+                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame, boneRefDic, keyFrameValuesParentDictionary);
+                    }
+
+                    keyFrameList.Add(keyFrame);
+                }
+
+                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic);
+
+                // find all the keyframevalues, and look up the bone id, then take that bone id and 
+                // set the parent in the keyframevalues variable to the positionedobject in the boneRefDic
+                foreach (var pair in keyFrameList.SelectMany(keyFrame => keyFrame.Values))
+                {
+                    if (keyFrameValuesParentDictionary.ContainsKey(pair.Value))
+                    {
+                        int boneId = keyFrameValuesParentDictionary[pair.Value];
+                        var parent = boneRefDic[boneId];
+                        pair.Value.Parent = parent;
+                    }
+                    else if (pair.Key.GetType() != typeof(Sprite))
+                    {
+                        pair.Value.Parent = spriterObject;
+                    }
+                }
+
+                var spriterObjectAnimation = new SpriterObjectAnimation(animation.Name,
+                                                                        animation.Looping, animation.Length / 1000.0f,
+                                                                        keyFrameList);
+                spriterObject.Animations[animation.Name] = spriterObjectAnimation;
+            }
+            return spriterObject;
         }
 
-        private static void SetParentingReferencesInKeyFrames(List<KeyFrame> keyFrameList, IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary,
-                                                              IDictionary<int, PositionedObject> boneRefDic, SpriterObject spriterObject)
+        private void HandleUnreferencedTimelinekeys(SpriterDataEntityAnimation animation, SpriterDataEntityAnimationMainline mainline,
+                                         List<KeyFrame> keyFrameList, IDictionary<int, Sprite> persistentSprites, SpriterObject spriterObject,
+                                         IDictionary<string, Texture2D> textures, IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary,
+                                         IDictionary<int, PositionedObject> persistentBones, IDictionary<int, PositionedObject> boneRefDic)
         {
-            // find all the keyframevalues, and look up the bone id, then take that bone id and 
-            // set the parent in the keyframevalues variable to the positionedobject in the boneRefDic
-            foreach (var pair in keyFrameList.SelectMany(keyFrame => keyFrame.Values))
+            foreach (var timeline in animation.Timeline)
             {
-                if (keyFrameValuesParentDictionary.ContainsKey(pair.Value))
+                foreach (var timelineKey in timeline.Key)
                 {
-                    int boneId = keyFrameValuesParentDictionary[pair.Value];
-                    var parent = boneRefDic[boneId];
-                    pair.Value.Parent = parent;
-                }
-                else if (pair.Key.GetType() != typeof (Sprite))
-                {
-                    pair.Value.Parent = spriterObject;
+                    // if timeline key has an object, and no mainline keys for objects reference this key
+                    if (timelineKey.Object != null &&
+                        !mainline.Keys.Where(k => k.ObjectRef != null)
+                                 .Any(k => k.ObjectRef.Any(r => r.Key == timelineKey.Id && r.Timeline == timeline.Id)) ||
+                        timelineKey.Bone != null &&
+                        !mainline.Keys.Where(k => k.BoneRef != null)
+                                 .Any(k => k.BoneRef.Any(r => r.Key == timelineKey.Id && r.Timeline == timeline.Id)))
+                    {
+                        int index = keyFrameList.FindLastIndex(kf => Math.Abs(kf.Time - (timelineKey.Time/1000.0f)) < .0001f);
+                        if (index > 0)
+                        {
+                            var keyFrame = new KeyFrame {Time = timelineKey.Time/1000.0f};
+                            var mainlineKey = mainline.Keys.Single(k => k.Time == timelineKey.Time);
+                            if (mainlineKey.ObjectRef != null && timelineKey.Object != null)
+                            {
+                                CreateRuntimeObjectsForSpriterObjectRef(mainlineKey, persistentSprites,
+                                                                        spriterObject, animation, textures, keyFrame,
+                                                                        keyFrameValuesParentDictionary, timelineKey);
+                            }
+
+                            if (mainlineKey.BoneRef != null && timelineKey.Bone != null)
+                            {
+                                CreateRuntimeObjectsForSpriterBoneRef(mainlineKey, persistentBones, spriterObject,
+                                                                      animation, keyFrame, boneRefDic,
+                                                                      keyFrameValuesParentDictionary, timelineKey);
+                            }
+                            keyFrameList.Insert(index, keyFrame);
+                        }
+                    }
                 }
             }
         }
@@ -127,7 +130,8 @@ namespace FlatRedBall_Spriter
         private static void CreateRuntimeObjectsForSpriterBoneRef(Key key, IDictionary<int, PositionedObject> persistentBones,
                                                                   SpriterObject spriterObject,
                                                                   SpriterDataEntityAnimation animation, KeyFrame keyFrame,
-                                                                  IDictionary<int, PositionedObject> boneRefDic, IDictionary<KeyFrameValues, int> boneRefParentDic)
+                                                                  IDictionary<int, PositionedObject> boneRefDic, IDictionary<KeyFrameValues, int> boneRefParentDic,
+                                                                  Key timelineKeyOverride = null)
         {
             foreach (var boneRef in key.BoneRef)
             {
@@ -146,7 +150,7 @@ namespace FlatRedBall_Spriter
                 }
 
                 var timeline = animation.Timeline.Single(t => t.Id == boneRef.Timeline);
-                var timelineKey = timeline.Key.Single(k => k.Id == boneRef.Key);
+                var timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == boneRef.Key);
 
                 keyFrame.Values[bone] = new KeyFrameValues
                     {
@@ -168,7 +172,8 @@ namespace FlatRedBall_Spriter
 
         private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, Sprite> persistentSprites, SpriterObject spriterObject,
                                                              SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures,
-                                                             KeyFrame keyFrame, IDictionary<KeyFrameValues, int> spriteRefParentDic)
+                                                             KeyFrame keyFrame, IDictionary<KeyFrameValues, int> spriteRefParentDic,
+                                                             Key timelineKeyOverride = null)
         {
             foreach (var objectRef in key.ObjectRef)
             {
@@ -176,7 +181,7 @@ namespace FlatRedBall_Spriter
                 PositionedObject pivot;
 
                 var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
-                var timelineKey = timeline.Key.Single(k => k.Id == objectRef.Key);
+                Key timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == objectRef.Key);
                 var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder,
                                                  timelineKey.Object.File);
                 var file =
@@ -203,14 +208,8 @@ namespace FlatRedBall_Spriter
                     spriterObject.ObjectList.Add(pivot);
                 }
 
-
-                // TODO: tie the sprite to object_ref id?
-                
-
-                
-
                 var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef.ZIndex);
-                // TODO: Z-index
+
                 values.Sprite.Parent = pivot;
                 if (objectRef.Parent.HasValue)
                 {

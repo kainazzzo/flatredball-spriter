@@ -87,6 +87,33 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void SpriterObjectScaleTest()
+        {
+            var so = GetSimpleSpriterObject();
+            var sprite = (Sprite) so.ObjectList.Single(o => o.Name == "sprite");
+            var pivot = so.ObjectList.Single(o => o.Name == "pivot");
+            so.ScaleX = .5f;
+            so.ScaleY = .25f;
+            so.StartAnimation();
+            Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < .00001f);
+            Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.RelativePosition.Y - 7.5f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.RelativePosition.X - 15f) < .00001f);
+
+            so.TimedActivity(.5f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(pivot.RelativePosition.Y - 3.75f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.RelativePosition.X - 7.5f) < .00001f);
+
+            so.TimedActivity(.5f, 0f, 0f);
+
+            Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < .00001f);
+            Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.RelativePosition.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.RelativePosition.X - 0.0f) < .00001f);
+            
+        }
+
+        [TestMethod]
         public void AlphaTweeningTest()
         {
             var so = GetSimpleSpriterObject();
@@ -247,38 +274,6 @@ namespace flatredball_spriter_test
             Assert.AreSame(so, so.ObjectList[1].Parent);
             Assert.AreSame(so, so.ObjectList[0].Parent);
         }
-        
-        [TestMethod]
-        public void ObjectReparenting()
-        {
-            
-        }
-
-        [TestMethod]
-        public void SingleObjectAttachedToBoneCanRotateRelativeToBoneAndPivot()
-        {
-
-        }
-
-
-        [TestMethod]
-        public void BoneReparentingOnSingleObject()
-        {
-            
-        }
-
-        [TestMethod]
-        public void BoneScaleEffectsSpriteScale()
-        {
-            
-        }
-
-        [TestMethod]
-        public void AfterBoneIsDetachedObjectScaleTakesOver()
-        {
-            
-        }
-
 
         private static SpriterObject GetSimpleSpriterObjectForParenting(bool loops=false)
         {

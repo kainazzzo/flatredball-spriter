@@ -197,6 +197,9 @@ namespace FlatRedBall_Spriter
                 currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
                                                               percentage);
 
+                currentObject.RelativePosition.X *= this.ScaleX;
+                currentObject.RelativePosition.Y *= this.ScaleY;
+
                 if (float.IsNaN(currentObject.RelativePosition.X) ||
                     float.IsNaN(currentObject.RelativePosition.Y)
                     || float.IsNaN(currentObject.RelativePosition.Z))
@@ -235,6 +238,9 @@ namespace FlatRedBall_Spriter
                     // Scale
                     sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
                     sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
+                    sprite.ScaleX *= this.ScaleX;
+                    sprite.ScaleY *= this.ScaleY;
+
                     sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
                 }
             }
@@ -253,6 +259,8 @@ namespace FlatRedBall_Spriter
             {
                 pair.Key.AttachTo(pair.Value.Parent, true);
                 pair.Key.RelativePosition = pair.Value.Position;
+                pair.Key.RelativePosition.X *= this.ScaleX;
+                pair.Key.RelativePosition.Y *= this.ScaleY;
                 pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
 
                 var sprite = pair.Key as Sprite;
@@ -262,6 +270,9 @@ namespace FlatRedBall_Spriter
                     sprite.ScaleX = pair.Value.ScaleX;
                     sprite.ScaleY = pair.Value.ScaleY;
                     sprite.Alpha = pair.Value.Alpha;
+
+                    sprite.ScaleX *= this.ScaleX;
+                    sprite.ScaleY *= this.ScaleY;
                 }
             }
         }
@@ -334,12 +345,13 @@ namespace FlatRedBall_Spriter
             Animating = false;
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
+            ScaleX = 1.0f;
+            ScaleY = 1.0f;
             Animations = new Dictionary<string, SpriterObjectAnimation>(1);
 
             ContentManagerName = contentManagerName;
             InitializeSpriterObject(addToManagers);
             ObjectList = new PositionedObjectList<PositionedObject>();
-
         }
 
         private void InitializeSpriterObject(bool addToManagers)
@@ -480,6 +492,10 @@ namespace FlatRedBall_Spriter
         {
             InstructionManager.IgnorePausingFor(this);
         }
+
+        public float ScaleX { get; set; }
+
+        public float ScaleY { get; set; }
     }
 
 

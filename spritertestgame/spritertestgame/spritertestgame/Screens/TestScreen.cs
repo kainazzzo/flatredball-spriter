@@ -35,7 +35,7 @@ namespace spritertestgame.Screens
 
 	    void CustomInitialize()
 	    {
-	        const string filename = @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\simpleballanimation\opacity.scml";
+	        const string filename = @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\Example.scml";
             var sos =
             SpriterObjectSave.FromFile(filename);
 
@@ -44,6 +44,8 @@ namespace spritertestgame.Screens
 	            FileManager.GetDirectory(
 	                filename);
             _so = sos.ToRuntime();
+	        _so.ScaleX = .5f;
+	        _so.ScaleY = .75f;
             FileManager.RelativeDirectory = oldDir;
 
             _so.AddToManagers(null);

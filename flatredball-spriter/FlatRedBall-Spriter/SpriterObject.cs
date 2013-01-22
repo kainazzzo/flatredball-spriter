@@ -308,6 +308,10 @@ namespace FlatRedBall_Spriter
         public void Destroy()
         {
             SpriteManager.RemovePositionedObject(this);
+            foreach (var positionedObject in ObjectList)
+            {
+                SpriteManager.RemovePositionedObject(positionedObject);
+            }
         }
 
         // Generated Fields

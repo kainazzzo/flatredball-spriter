@@ -235,6 +235,7 @@ namespace FlatRedBall_Spriter
                     // Scale
                     sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
                     sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
+                    sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
                 }
             }
         }
@@ -254,12 +255,13 @@ namespace FlatRedBall_Spriter
                 pair.Key.RelativePosition = pair.Value.Position;
                 pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
 
-                if (pair.Key.GetType() == typeof(Sprite))
+                var sprite = pair.Key as Sprite;
+                if (sprite != null)
                 {
-                    var sprite = ((Sprite)pair.Key);
                     sprite.Texture = pair.Value.Texture;
                     sprite.ScaleX = pair.Value.ScaleX;
                     sprite.ScaleY = pair.Value.ScaleY;
+                    sprite.Alpha = pair.Value.Alpha;
                 }
             }
         }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="timpart" generator_version="0.2">
+    <folder id="0">
+        <file id="0" name="Depth0.png" width="128" height="128"/>
+    </folder>
+    <folder id="1" name="Depth">
+        <file id="0" name="Depth/Depth1.png" width="128" height="128"/>
+    </folder>
+    <folder id="2" name="Depth/Dir2">
+        <file id="0" name="Depth/Dir2/Depth2.png" width="128" height="128"/>
+    </folder>
+    <folder id="3" name="Depth/Dir2/Dir3">
+        <file id="0" name="Depth/Dir2/Dir3/Depth3.png" width="128" height="128"/>
+    </folder>
+    <folder id="4" name="Depth/Dir2/Dir3/Dir4">
+        <file id="0" name="Depth/Dir2/Dir3/Dir4/Depth4.png" width="128" height="128"/>
+    </folder>
+    <folder id="5" name="Depth/Dir2/Dir3/Dir4/Dir5">
+        <file id="0" name="Depth/Dir2/Dir3/Dir4/Dir5/Depth5.png" width="128" height="128"/>
+    </folder>
+    <entity id="0" name="Basic">
+        <animation id="0" name="Fail8_Ignore_Folder" length="4000" looping="false">
+            <mainline>
+                <key id="0">
+                    <object id="0" folder="0" file="0" x="-192" y="128" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="0" x="-64" y="128" pivot_x="0" pivot_y="1" z_index="1"/>
+                    <object id="2" folder="0" file="0" x="64" y="128" pivot_x="0" pivot_y="1" z_index="2"/>
+                    <object id="3" folder="0" file="0" x="-192" y="0" pivot_x="0" pivot_y="1" z_index="3"/>
+                    <object id="4" folder="0" file="0" x="-64" y="0" pivot_x="0" pivot_y="1" z_index="4"/>
+                    <object id="5" folder="0" file="0" x="64" y="0" pivot_x="0" pivot_y="1" z_index="5"/>
+                </key>
+            </mainline>
+        </animation>
+        <animation id="1" name="Fail8_No_Subfolder" length="4000" looping="false">
+            <mainline>
+                <key id="0">
+                    <object id="0" folder="0" file="0" x="-192" y="128" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="1" file="0" x="-64" y="128" pivot_x="0" pivot_y="1" z_index="1"/>
+                </key>
+            </mainline>
+        </animation>
+    </entity>
+</spriter_data>

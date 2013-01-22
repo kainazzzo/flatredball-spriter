@@ -284,7 +284,8 @@ namespace FlatRedBall_Spriter
                     ScaleX = (width / 2.0f * timelineKey.Object.ScaleX),
                     ScaleY = (height / 2.0f * timelineKey.Object.ScaleY),
                     Position = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
-                                                         timelineKey.Object.PivotY, zIndex)
+                                                         timelineKey.Object.PivotY, zIndex),
+                    Alpha = timelineKey.Object.Alpha
                 };
             return new KeyFramePivotSpriteValues { Pivot = pivotValue, Sprite = spriteValue };
         }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="timpart" generator_version="0.2">
+    <folder id="0" name="Rectangles">
+        <file id="0" name="Rectangles/Stripes256_128.png" width="256" height="128"/>
+        <file id="1" name="Rectangles/OrangeTrans100.png" width="64" height="64"/>
+        <file id="2" name="Rectangles/BlueTrans100.png" width="64" height="64"/>
+        <file id="3" name="Rectangles/OrangeTrans80.png" width="64" height="64"/>
+        <file id="4" name="Rectangles/BlueTrans50.png" width="64" height="64"/>
+    </folder>
+    <folder id="1" name="Actual">
+        <file id="0" name="Actual/OrangeTrans100Alpha70.png" width="64" height="64"/>
+        <file id="1" name="Actual/BlueTrans100Alpha60.png" width="64" height="64"/>
+        <file id="2" name="Actual/OrangeTrans80Alpha50.png" width="64" height="64"/>
+        <file id="3" name="Actual/BlueTrans50Alpha50.png" width="64" height="64"/>
+    </folder>
+    <entity id="0" name="Render">
+        <animation id="0" name="Render2" length="6000" looping="false">
+            <mainline>
+                <key id="0">
+                    <object id="0" folder="0" file="0" x="-128" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="1" x="0" y="32" pivot_x="0" pivot_y="1" a="0.7" z_index="1"/>
+                    <object id="2" folder="1" file="0" x="-64" y="32" pivot_x="0" pivot_y="1" z_index="2"/>
+                </key>
+                <key id="1" time="1500">
+                    <object id="0" folder="0" file="0" x="-128" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="2" x="0" y="32" pivot_x="0" pivot_y="1" a="0.6" z_index="1"/>
+                    <object id="2" folder="1" file="1" x="-64" y="32" pivot_x="0" pivot_y="1" z_index="2"/>
+                </key>
+                <key id="2" time="3000">
+                    <object id="0" folder="0" file="0" x="-128" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="3" x="0" y="32" pivot_x="0" pivot_y="1" a="0.5" z_index="1"/>
+                    <object id="2" folder="1" file="2" x="-64" y="32" pivot_x="0" pivot_y="1" z_index="2"/>
+                </key>
+                <key id="3" time="4500">
+                    <object id="0" folder="0" file="0" x="-128" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="4" x="0" y="32" pivot_x="0" pivot_y="1" a="0.5" z_index="1"/>
+                    <object id="2" folder="1" file="3" x="-64" y="32" pivot_x="0" pivot_y="1" z_index="2"/>
+                </key>
+            </mainline>
+        </animation>
+    </entity>
+</spriter_data>

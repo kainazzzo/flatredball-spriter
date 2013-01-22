@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="timpart" generator_version="0.2">
+    <folder id="0" name="Numbers">
+        <file id="0" name="Numbers/Big1.png" width="128" height="128"/>
+        <file id="1" name="Numbers/Big2.png" width="128" height="128"/>
+        <file id="2" name="Numbers/Big3.png" width="128" height="128"/>
+        <file id="3" name="Numbers/Big4.png" width="128" height="128"/>
+        <file id="4" name="Numbers/Big5.png" width="128" height="128"/>
+    </folder>
+    <entity id="0" name="Basic">
+        <animation id="0" name="Basic6_Looping_to_Start" length="5000">
+            <mainline>
+                <key id="0">
+                    <object id="0" folder="0" file="0" x="-64" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                </key>
+                <key id="1" time="1000">
+                    <object id="0" folder="0" file="1" x="-64" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                </key>
+                <key id="2" time="2000">
+                    <object id="0" folder="0" file="2" x="-64" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                </key>
+                <key id="3" time="3000">
+                    <object id="0" folder="0" file="3" x="-64" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                </key>
+                <key id="4" time="4000">
+                    <object id="0" folder="0" file="4" x="-64" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                </key>
+            </mainline>
+        </animation>
+    </entity>
+</spriter_data>

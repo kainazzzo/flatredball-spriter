@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="timpart" generator_version="0.2">
+    <folder id="0" name="Scale">
+        <file id="0" name="Scale/OrangeSq64.png" width="64" height="64"/>
+        <file id="1" name="Scale/LtBlueSqIR64.png" width="64" height="64"/>
+        <file id="2" name="Scale/BrownR64_32.png" width="64" height="32"/>
+        <file id="3" name="Scale/IndigoR32_64.png" width="32" height="64"/>
+        <file id="4" name="Scale/BlackSq4.png" width="4" height="4"/>
+    </folder>
+    <entity id="0" name="Basic">
+        <animation id="0" name="Basic4" length="5000" looping="false">
+            <mainline>
+                <key id="0">
+                    <object id="0" folder="0" file="0" x="-64" y="64" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="1" x="0" y="64" pivot_x="2" pivot_y="1" angle="270" scale_x="-1" z_index="1"/>
+                    <object id="2" folder="0" file="2" x="-128" y="64" pivot_x="2" pivot_y="3" angle="90" scale_y="2" z_index="2"/>
+                    <object id="3" folder="0" file="3" x="-64" y="128" pivot_x="-1" pivot_y="-1" angle="270" scale_x="2" z_index="3"/>
+                    <object id="4" folder="0" file="4" x="-2" y="2" pivot_x="0" pivot_y="1" z_index="4"/>
+                </key>
+            </mainline>
+        </animation>
+    </entity>
+</spriter_data>

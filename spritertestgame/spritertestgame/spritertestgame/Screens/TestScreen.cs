@@ -34,22 +34,21 @@ namespace spritertestgame.Screens
 	    private SpriterObject _so2;
 
 	    void CustomInitialize()
-		{
-
+	    {
+	        const string filename = @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\simpleballanimation\opacity.scml";
             var sos =
-    SpriterObjectSave.FromFile(
-        @"c:\flatredballprojects\flatredball-spriter\spriterfiles\simpleballanimation\reparenting.scml");
+            SpriterObjectSave.FromFile(filename);
 
             var oldDir = FileManager.RelativeDirectory;
-            FileManager.RelativeDirectory =
-                FileManager.GetDirectory(
-                    @"c:/flatredballprojects/flatredball-spriter/spriterfiles/simpleballanimation/ball.png");
+	        FileManager.RelativeDirectory =
+	            FileManager.GetDirectory(
+	                filename);
             _so = sos.ToRuntime();
             FileManager.RelativeDirectory = oldDir;
 
             _so.AddToManagers(null);
 
-            AxisAlignedRectangle rect = new AxisAlignedRectangle {X = 0, Y = 0, ScaleX = 1, ScaleY = 1, Color = Color.Yellow};
+            var rect = new AxisAlignedRectangle {X = 0, Y = 0, ScaleX = 1, ScaleY = 1, Color = Color.Yellow};
 
 	        ShapeManager.AddAxisAlignedRectangle(rect);
 

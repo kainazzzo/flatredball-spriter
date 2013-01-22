@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="timpart" generator_version="0.2">
+    <folder id="0" name="Numbers">
+        <file id="0" name="Numbers/Big1.png" pivot_y="1" width="128" height="128"/>
+        <file id="1" name="Numbers/Big2.png" width="128" height="128"/>
+        <file id="2" name="Numbers/Big3.png" width="128" height="128"/>
+        <file id="3" name="Numbers/Big4.png" width="128" height="128"/>
+    </folder>
+    <entity id="0" name="Basic">
+        <animation id="0" name="Basic5" length="5000">
+            <mainline>
+                <key id="0"/>
+                <key id="1" time="500">
+                    <object id="0" folder="0" file="0" x="-128" y="128" pivot_x="0" pivot_y="1" z_index="0"/>
+                </key>
+                <key id="2" time="1000">
+                    <object id="0" folder="0" file="0" x="-128" y="128" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="1" x="0" y="128" pivot_x="0" pivot_y="1" z_index="1"/>
+                </key>
+                <key id="3" time="1500">
+                    <object id="0" folder="0" file="0" x="-128" y="128" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="1" x="0" y="128" pivot_x="0" pivot_y="1" z_index="1"/>
+                    <object id="2" folder="0" file="2" x="0" y="0" pivot_x="0" pivot_y="1" z_index="2"/>
+                </key>
+                <key id="4" time="2000">
+                    <object id="0" folder="0" file="0" x="-128" y="128" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="1" x="0" y="128" pivot_x="0" pivot_y="1" z_index="1"/>
+                    <object id="2" folder="0" file="2" x="0" y="0" pivot_x="0" pivot_y="1" z_index="2"/>
+                    <object id="3" folder="0" file="3" x="-128" y="0" pivot_x="0" pivot_y="1" z_index="3"/>
+                </key>
+                <key id="5" time="2500">
+                    <object id="0" folder="0" file="1" x="0" y="128" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="2" x="0" y="0" pivot_x="0" pivot_y="1" z_index="1"/>
+                    <object id="2" folder="0" file="3" x="-128" y="0" pivot_x="0" pivot_y="1" z_index="2"/>
+                </key>
+                <key id="6" time="3000">
+                    <object id="0" folder="0" file="2" x="0" y="0" pivot_x="0" pivot_y="1" z_index="0"/>
+                    <object id="1" folder="0" file="3" x="-128" y="0" pivot_x="0" pivot_y="1" z_index="1"/>
+                </key>
+                <key id="7" time="3500">
+                    <object id="0" folder="0" file="3" x="-128" y="0" pivot_x="0" pivot_y="1" z_index="0"/>
+                </key>
+                <key id="8" time="4000"/>
+            </mainline>
+        </animation>
+    </entity>
+</spriter_data>

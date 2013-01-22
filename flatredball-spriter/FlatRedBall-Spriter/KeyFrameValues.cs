@@ -13,5 +13,7 @@ namespace FlatRedBall_Spriter
         public Texture2D Texture { get; set; }
         public int Spin { get; set; }
         public PositionedObject Parent { get; set; }
+
+        public float Alpha { get; set; }
     }
 }

@@ -31,6 +31,7 @@ using Microsoft.Xna.Framework.Media;
 // Generated Usings
 using FlatRedBall;
 using FlatRedBall.Screens;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace spritertestgame.Screens
 {
@@ -40,7 +41,9 @@ namespace spritertestgame.Screens
 		#if DEBUG
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
+		private static Microsoft.Xna.Framework.Graphics.Texture2D ball;
 		
+		private FlatRedBall.Sprite SpriteInstance;
 
 		public TestScreen()
 			: base("TestScreen")
@@ -51,6 +54,7 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
+			SpriteInstance = new FlatRedBall.Sprite();
 			
 			
 			PostInitialize();
@@ -96,7 +100,12 @@ namespace spritertestgame.Screens
 		public override void Destroy()
 		{
 			// Generated Destroy
+			ball = null;
 			
+			if (SpriteInstance != null)
+			{
+				SpriteInstance.Detach(); SpriteManager.RemoveSprite(SpriteInstance);
+			}
 
 			base.Destroy();
 
@@ -109,13 +118,23 @@ namespace spritertestgame.Screens
 		{
 			bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
+			SpriteInstance.Texture = ball;
+			SpriteInstance.Alpha = 0.5f;
+			SpriteInstance.ScaleX = 64f;
+			SpriteInstance.ScaleY = 64f;
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
 		}
 		public virtual void AddToManagersBottomUp ()
 		{
+			SpriteManager.AddSprite(SpriteInstance);
+			SpriteInstance.Texture = ball;
+			SpriteInstance.Alpha = 0.5f;
+			SpriteInstance.ScaleX = 64f;
+			SpriteInstance.ScaleY = 64f;
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
+			SpriteManager.ConvertToManuallyUpdated(SpriteInstance);
 		}
 		public static void LoadStaticContent (string contentManagerName)
 		{
@@ -133,19 +152,39 @@ namespace spritertestgame.Screens
 				throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
 			}
 			#endif
+			bool registerUnload = false;
+			if (!FlatRedBallServices.IsLoaded<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/testscreen/ball.png", contentManagerName))
+			{
+			}
+			ball = FlatRedBallServices.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/testscreen/ball.png", contentManagerName);
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]
 		public static object GetStaticMember (string memberName)
 		{
+			switch(memberName)
+			{
+				case  "ball":
+					return ball;
+			}
 			return null;
 		}
 		public static object GetFile (string memberName)
 		{
+			switch(memberName)
+			{
+				case  "ball":
+					return ball;
+			}
 			return null;
 		}
 		object GetMember (string memberName)
 		{
+			switch(memberName)
+			{
+				case  "ball":
+					return ball;
+			}
 			return null;
 		}
 

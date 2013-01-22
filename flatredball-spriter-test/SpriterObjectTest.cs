@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FlatRedBall;
 using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -86,6 +87,20 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void AlphaTweeningTest()
+        {
+            var so = GetSimpleSpriterObject();
+            var sprite = (Sprite)so.ObjectList.Single(o => o.Name == "sprite");
+            so.Animations.First().Value.KeyFrames[1].Values[sprite].Alpha = .5f;
+            so.StartAnimation();
+            Assert.IsTrue(Math.Abs(sprite.Alpha - 1f) < .00001f);
+            so.TimedActivity(.5f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(sprite.Alpha - .75f) < .00001f);
+            so.TimedActivity(.5f, 0f, 0f);
+            Assert.IsTrue(Math.Abs(sprite.Alpha - .5f) < .00001f);
+        }
+
+        [TestMethod]
         public void AnimationEndsAfterLength()
         {
             var so = GetSimpleSpriterObject();
@@ -154,6 +169,8 @@ namespace flatredball_spriter_test
             var pivot = new PositionedObject();
             pivot.AttachTo(so, true);
             sprite.AttachTo(pivot, true);
+            sprite.Name = "sprite";
+            pivot.Name = "pivot";
 
             so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
 
@@ -165,6 +182,13 @@ namespace flatredball_spriter_test
             {
                 Position = new Vector3(30f, 30f, 0f)
             };
+            keyFrame.Values[sprite] = new KeyFrameValues()
+                {
+                    Alpha = 1.0f,
+                    Parent = pivot,
+                    ScaleX = 1.0f,
+                    ScaleY = 1.0f
+                };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
 
@@ -176,6 +200,14 @@ namespace flatredball_spriter_test
             {
                 Position = Vector3.Zero
             };
+
+            keyFrame.Values[sprite] = new KeyFrameValues()
+                {
+                    Alpha = 1.0f,
+                    Parent = pivot,
+                    ScaleX = 1.0f,
+                    ScaleY = 1.0f
+                };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
 

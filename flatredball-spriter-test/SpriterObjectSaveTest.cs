@@ -73,6 +73,17 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void OpacityConversion()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTexture();
+            var so = sos.ToRuntime();
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames[0].Values.ElementAt(1).Value.Alpha - 1f) < .00001f);
+            sos.Entity[0].Animation[0].Timeline[0].Key[0].Object.Alpha = .5f;
+            so = sos.ToRuntime();
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames[0].Values.ElementAt(1).Value.Alpha - .5f) < .00001f);
+        }
+
+        [TestMethod]
         public void TestAnimationTotalLength()
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();

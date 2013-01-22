@@ -113,7 +113,8 @@ namespace FlatRedBall_Spriter
         private float _scalex = 1.0f;
         private float _scaley = 1.0f;
 
-        private float _pivot_y = 1.0f;
+        private float _pivotY = 1.0f;
+        private float _alpha = 1.0f;
 
         public KeyObject()
         {
@@ -164,8 +165,15 @@ namespace FlatRedBall_Spriter
         [XmlAttribute(AttributeName = "pivot_y")]
         public float PivotY
         {
-            get { return _pivot_y; }
-            set { _pivot_y = value; }
+            get { return _pivotY; }
+            set { _pivotY = value; }
+        }
+
+        [XmlAttribute(AttributeName = "a")]
+        public float Alpha
+        {
+            get { return _alpha; }
+            set { _alpha = value; }
         }
     }
 

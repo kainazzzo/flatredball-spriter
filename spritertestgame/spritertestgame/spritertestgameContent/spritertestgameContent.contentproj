@@ -51,13 +51,13 @@
     <Folder Include="Screens\TestScreen\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Screens\TestScreen\Ant\ant.scml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>ant</Name>
+    </None>
     <None Include="Screens\TestScreen\ball.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>ball</Name>
-    </None>
-    <None Include="Screens\TestScreen\simpleballanimation\opacity.scml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>opacity</Name>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

@@ -304,11 +304,11 @@ namespace FlatRedBall_Spriter
 
         public static SpriterObjectSave FromFile(string filename)
         {
-            string oldRelativeDirectory = FileManager.RelativeDirectory;
-            FileManager.RelativeDirectory = FileManager.GetDirectory(filename);
+            //string oldRelativeDirectory = FileManager.RelativeDirectory;
+            //FileManager.RelativeDirectory = FileManager.GetDirectory(filename);
 
             var sos = FileManager.XmlDeserialize<SpriterObjectSave>(filename);
-            FileManager.RelativeDirectory = oldRelativeDirectory;
+            //FileManager.RelativeDirectory = oldRelativeDirectory;
 
             return sos;
         }

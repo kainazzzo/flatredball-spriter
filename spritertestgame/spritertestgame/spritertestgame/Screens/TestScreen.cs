@@ -35,24 +35,24 @@ namespace spritertestgame.Screens
 
 	    void CustomInitialize()
 	    {
-	        const string filename = @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\Example.scml";
-            var sos =
-            SpriterObjectSave.FromFile(filename);
+            //const string filename = @"C:\FlatRedBallProjects\flatredball-spriter\spriterfiles\monsterexample\Example.scml";
+            //var sos =
+            //SpriterObjectSave.FromFile(filename);
 
-            var oldDir = FileManager.RelativeDirectory;
-	        FileManager.RelativeDirectory =
-	            FileManager.GetDirectory(
-	                filename);
-            _so = sos.ToRuntime();
-	        _so.ScaleX = .5f;
-	        _so.ScaleY = .75f;
-            FileManager.RelativeDirectory = oldDir;
+            //var oldDir = FileManager.RelativeDirectory;
+            //FileManager.RelativeDirectory =
+            //    FileManager.GetDirectory(
+            //        filename);
+            //_so = sos.ToRuntime();
+            //_so.ScaleX = .5f;
+            //_so.ScaleY = .75f;
+            //FileManager.RelativeDirectory = oldDir;
 
-            _so.AddToManagers(null);
+            //_so.AddToManagers(null);
 
-            var rect = new AxisAlignedRectangle {X = 0, Y = 0, ScaleX = 1, ScaleY = 1, Color = Color.Yellow};
+            //var rect = new AxisAlignedRectangle {X = 0, Y = 0, ScaleX = 1, ScaleY = 1, Color = Color.Yellow};
 
-	        ShapeManager.AddAxisAlignedRectangle(rect);
+            //ShapeManager.AddAxisAlignedRectangle(rect);
 
     //        var sos2 =
     //SpriterObjectSave.FromFile(
@@ -64,10 +64,10 @@ namespace spritertestgame.Screens
     //        _so2 = sos2.ToRuntime();
     //        _so2.AddToManagers(null);
 
-            FileManager.RelativeDirectory = oldDir;
+            //FileManager.RelativeDirectory = oldDir;
 
             SpriteManager.Camera.UsePixelCoordinates();
-	        SpriteManager.Camera.Y += 125;
+	        
             FlatRedBallServices.GraphicsOptions.TextureFilter = TextureFilter.Point;
 
 
@@ -77,26 +77,26 @@ namespace spritertestgame.Screens
 		{
             if (firstTimeCalled)
             {
-                _so.StartAnimation();
+                AntSpriterObject.StartAnimation();
                 //_so2.StartAnimation("Idle");
             }
-            StringBuilder sb = new StringBuilder();
-		    for (int index = 0; index < _so.ObjectList.Count; index++)
-		    {
-		        var positionedObject = _so.ObjectList[index];
-		        sb.AppendFormat("Object Name: [{0}]. RotationZ: [{1}]. RelativePosition: [{2}].",
-		                        positionedObject.Name, positionedObject.RelativeRotationZ,
-                                positionedObject.RelativePosition);
-		        var sprite = positionedObject as Sprite;
-                if (sprite != null)
-                {
-                    sb.AppendFormat(" ScaleX: [{0}]. ScaleY: [{1}].", sprite.ScaleX,
-                                    sprite.ScaleY);
-                }
-		        sb.Append("\r\n");
-		    }
+            //StringBuilder sb = new StringBuilder();
+            //for (int index = 0; index < _so.ObjectList.Count; index++)
+            //{
+            //    var positionedObject = _so.ObjectList[index];
+            //    sb.AppendFormat("Object Name: [{0}]. RotationZ: [{1}]. RelativePosition: [{2}].",
+            //                    positionedObject.Name, positionedObject.RelativeRotationZ,
+            //                    positionedObject.RelativePosition);
+            //    var sprite = positionedObject as Sprite;
+            //    if (sprite != null)
+            //    {
+            //        sb.AppendFormat(" ScaleX: [{0}]. ScaleY: [{1}].", sprite.ScaleX,
+            //                        sprite.ScaleY);
+            //    }
+            //    sb.Append("\r\n");
+            //}
 
-		    FlatRedBall.Debugging.Debugger.Write(sb.ToString());
+            //FlatRedBall.Debugging.Debugger.Write(sb.ToString());
 		}
 
 		void CustomDestroy()

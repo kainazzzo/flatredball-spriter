@@ -41,10 +41,16 @@ namespace spritertestgame.Screens
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
 		private static Microsoft.Xna.Framework.Graphics.Texture2D ball;
-		private static FlatRedBall_Spriter.SpriterObject opacity;
+		private static FlatRedBall_Spriter.SpriterObject ant;
 		
-		private FlatRedBall.Sprite SpriteInstance;
-		private FlatRedBall_Spriter.SpriterObject opacityInstance;
+		private FlatRedBall_Spriter.SpriterObject mAntSpriterObject;
+		public FlatRedBall_Spriter.SpriterObject AntSpriterObject
+		{
+			get
+			{
+				return mAntSpriterObject;
+			}
+		}
 
 		public TestScreen()
 			: base("TestScreen")
@@ -55,8 +61,7 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			opacityInstance = opacity;
-			SpriteInstance = new FlatRedBall.Sprite();
+			mAntSpriterObject = ant.Clone();
 			
 			
 			PostInitialize();
@@ -103,12 +108,12 @@ namespace spritertestgame.Screens
 		{
 			// Generated Destroy
 			ball = null;
-			opacity.Destroy();
-			opacity = null;
+			ant.Destroy();
+			ant = null;
 			
-			if (SpriteInstance != null)
+			if (AntSpriterObject != null)
 			{
-				SpriteInstance.Detach(); SpriteManager.RemoveSprite(SpriteInstance);
+				AntSpriterObject.Destroy();
 			}
 
 			base.Destroy();
@@ -122,24 +127,14 @@ namespace spritertestgame.Screens
 		{
 			bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
-			SpriteInstance.Alpha = 0.5f;
-			SpriteInstance.ScaleX = 64f;
-			SpriteInstance.ScaleY = 64f;
-			SpriteInstance.Texture = ball;
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
 		}
 		public virtual void AddToManagersBottomUp ()
 		{
-			opacity.AddToManagers(mLayer);
-			SpriteManager.AddSprite(SpriteInstance);
-			SpriteInstance.Alpha = 0.5f;
-			SpriteInstance.ScaleX = 64f;
-			SpriteInstance.ScaleY = 64f;
-			SpriteInstance.Texture = ball;
+			ant.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
-			SpriteManager.ConvertToManuallyUpdated(SpriteInstance);
 		}
 		public static void LoadStaticContent (string contentManagerName)
 		{
@@ -162,10 +157,10 @@ namespace spritertestgame.Screens
 			{
 			}
 			ball = FlatRedBallServices.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/testscreen/ball.png", contentManagerName);
-			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/testscreen/simpleballanimation/opacity.scml", contentManagerName))
+			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/testscreen/ant/ant.scml", contentManagerName))
 			{
 			}
-			opacity = FlatRedBall_Spriter.SpriterObjectSave.FromFile("content/screens/testscreen/simpleballanimation/opacity.scml").ToRuntime();
+			ant = FlatRedBall_Spriter.SpriterObjectSave.FromFile("content/screens/testscreen/ant/ant.scml").ToRuntime();
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]
@@ -175,8 +170,8 @@ namespace spritertestgame.Screens
 			{
 				case  "ball":
 					return ball;
-				case  "opacity":
-					return opacity;
+				case  "ant":
+					return ant;
 			}
 			return null;
 		}
@@ -186,8 +181,8 @@ namespace spritertestgame.Screens
 			{
 				case  "ball":
 					return ball;
-				case  "opacity":
-					return opacity;
+				case  "ant":
+					return ant;
 			}
 			return null;
 		}
@@ -197,8 +192,8 @@ namespace spritertestgame.Screens
 			{
 				case  "ball":
 					return ball;
-				case  "opacity":
-					return opacity;
+				case  "ant":
+					return ant;
 			}
 			return null;
 		}

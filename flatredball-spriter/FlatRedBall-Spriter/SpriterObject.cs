@@ -500,6 +500,49 @@ namespace FlatRedBall_Spriter
         public float ScaleX { get; set; }
 
         public float ScaleY { get; set; }
+
+        public SpriterObject Clone()
+        {
+            var so = (SpriterObject)this.MemberwiseClone();
+
+            so.Animations = new Dictionary<string, SpriterObjectAnimation>();
+            foreach (var animationPair in this.Animations)
+            {
+                var keyframes = new List<KeyFrame>();
+                animationPair.Value.KeyFrames.ForEach((kf) =>
+                    {
+                        var keyFrame = new KeyFrame
+                            {
+                                Time = kf.Time,
+                                Values = new Dictionary<PositionedObject, KeyFrameValues>(kf.Values.Count)
+                            };
+
+                        foreach (var kfPair in kf.Values)
+                        {
+                            var kfv = new KeyFrameValues()
+                                {
+                                    Alpha = kfPair.Value.Alpha,
+                                    Parent = kfPair.Value.Parent,
+                                    Position = kfPair.Value.Position,
+                                    Rotation = kfPair.Value.Rotation,
+                                    ScaleX = kfPair.Value.ScaleX,
+                                    ScaleY = kfPair.Value.ScaleY,
+                                    Spin = kfPair.Value.Spin,
+                                    Texture = kfPair.Value.Texture
+                                };
+
+                            keyFrame.Values[kfPair.Key] = kfv;
+                        }
+                        keyframes.Add(keyFrame);
+                    });
+                so.Animations[animationPair.Key] = new SpriterObjectAnimation(animationPair.Value.Name,
+                                                                              animationPair.Value.Looping,
+                                                                              animationPair.Value.TotalTime,
+                                                                              keyframes);
+            }
+
+            return so;
+        }
     }
 
 

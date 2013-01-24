@@ -15,6 +15,9 @@ namespace FlatRedBall_Spriter
         {
             get { return new FlatRedBallTextureLoader(); }
         }
+
+        public string FileName { get; set; }
+
         public SpriterObject ToRuntime()
         {
             var spriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
@@ -26,6 +29,8 @@ namespace FlatRedBall_Spriter
             IDictionary<int, PositionedObject> boneRefDic = new Dictionary<int, PositionedObject>();
             IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary = new Dictionary<KeyFrameValues, int>();
 
+            string oldDir = FileManager.RelativeDirectory;
+            FileManager.RelativeDirectory = FileManager.GetDirectory(this.FileName);
             foreach (var folder in this.Folder)
             {
                 foreach (var file in folder.File)
@@ -35,6 +40,7 @@ namespace FlatRedBall_Spriter
                     textures[folderFileId] = LoadTexture(file);
                 }
             }
+            FileManager.RelativeDirectory = oldDir;
 
 
             foreach (var animation in Entity[0].Animation)
@@ -304,11 +310,9 @@ namespace FlatRedBall_Spriter
 
         public static SpriterObjectSave FromFile(string filename)
         {
-            string oldRelativeDirectory = FileManager.RelativeDirectory;
-            FileManager.RelativeDirectory = FileManager.GetDirectory(filename);
-
+            filename = filename.Replace(@"\", "/");
             var sos = FileManager.XmlDeserialize<SpriterObjectSave>(filename);
-            FileManager.RelativeDirectory = oldRelativeDirectory;
+            sos.FileName = FileManager.GetDirectory(filename) + filename.Substring(filename.LastIndexOf("/") + 1);
 
             return sos;
         }

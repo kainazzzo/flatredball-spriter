@@ -87,6 +87,37 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void CloneTest()
+        {
+            var so = GetSimpleSpriterObject();
+            var clone = so.Clone();
+
+            Assert.AreNotSame(so, clone);
+
+            Assert.AreEqual(so.Looping, clone.Looping);
+            Assert.AreEqual(so.Animating, clone.Animating);
+            Assert.AreEqual(so.ObjectList.Count, clone.ObjectList.Count);
+            Assert.AreEqual(so.Animations.Count, clone.Animations.Count);
+            so.StartAnimation();
+            Assert.AreNotEqual(so.Animating, clone.Animating);
+            clone.StartAnimation();
+            Assert.AreEqual(true, clone.Animating);
+            Assert.AreEqual(so.Animating, clone.Animating);
+
+            Assert.AreEqual(so.KeyFrameList.Count, clone.KeyFrameList.Count);
+
+            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Time - clone.KeyFrameList[0].Time) < .00001f);
+            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.First().Value.ScaleX - clone.KeyFrameList[0].Values.First().Value.ScaleX) < .00001f);
+            so.KeyFrameList[0].Time = 12345f;
+            so.KeyFrameList[0].Values.First().Value.ScaleX = 12345f;
+
+            Assert.IsFalse(Math.Abs(clone.KeyFrameList[0].Time - 12345f) < .00001f);
+            Assert.IsFalse(Math.Abs(clone.KeyFrameList[0].Values.First().Value.ScaleX - 12345f) < .00001f);
+
+            
+        }
+
+        [TestMethod]
         public void SpriterObjectScaleTest()
         {
             var so = GetSimpleSpriterObject();

@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spritertestgame", "spritert
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spritertestgameContent", "spritertestgame\spritertestgameContent\spritertestgameContent.contentproj", "{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriterPlugin", "..\SpriterPlugin\SpriterPlugin\SpriterPlugin.csproj", "{D73086FC-957E-4E3F-97FA-742CBBF02EA6}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = spritertestgame.vsmdi
@@ -153,6 +155,26 @@ Global
 		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Release|Any CPU.ActiveCfg = Release|x86
 		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Release|x86.ActiveCfg = Release|x86
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.DebugProfile|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.DebugProfile|Any CPU.Build.0 = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.DebugProfile|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.DebugProfile|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.DebugProfile|x86.ActiveCfg = Debug|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Profile|Any CPU.ActiveCfg = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Profile|Any CPU.Build.0 = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Profile|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Profile|Mixed Platforms.Build.0 = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Profile|x86.ActiveCfg = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

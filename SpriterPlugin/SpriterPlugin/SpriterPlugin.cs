@@ -64,12 +64,10 @@ namespace SpriterPlugin
 
         public void AddNewFileOptions(NewFileWindow newFileWindow)
         {
-            throw new NotImplementedException();
         }
 
         public bool CreateNewFile(AssetTypeInfo assetTypeInfo, object extraData, string directory, string name, out string resultingName)
         {
-            throw new NotImplementedException();
         }
 
         public void ReactToNewFile(ReferencedFileSave newFile)

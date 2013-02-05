@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SpriteEditorSceneProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Camera>
+    <X>0</X>
+    <Y>0</Y>
+    <Z>-40</Z>
+    <Orthogonal>true</Orthogonal>
+    <OrthogonalHeight>-1</OrthogonalHeight>
+    <OrthogonalWidth>-1</OrthogonalWidth>
+    <NearClipPlane>1</NearClipPlane>
+    <FarClipPlane>1000</FarClipPlane>
+  </Camera>
+  <BoundsVisible>false</BoundsVisible>
+  <WorldAxesVisible>true</WorldAxesVisible>
+  <PixelSize>0.5</PixelSize>
+  <FilesToMakeDotDotSlashRelative />
+  <TextureDisplayRegionsList />
+</SpriteEditorSceneProperties>

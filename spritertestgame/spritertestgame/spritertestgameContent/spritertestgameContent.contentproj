@@ -55,9 +55,45 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>ant</Name>
     </None>
-    <None Include="Screens\TestScreen\ball.png">
+    <None Include="screens\testscreen\ant\fist.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>ball</Name>
+      <Name>fist</Name>
+    </None>
+    <None Include="screens\testscreen\ant\head0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>head0</Name>
+    </None>
+    <None Include="screens\testscreen\ant\innerfist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>innerfist</Name>
+    </None>
+    <None Include="screens\testscreen\ant\lowerArm180.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>lowerArm180</Name>
+    </None>
+    <None Include="screens\testscreen\ant\lowerleg0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>lowerleg0</Name>
+    </None>
+    <None Include="screens\testscreen\ant\shoe0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>shoe0</Name>
+    </None>
+    <None Include="screens\testscreen\ant\torso0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>torso0</Name>
+    </None>
+    <None Include="screens\testscreen\ant\upperarm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>upperarm</Name>
+    </None>
+    <None Include="screens\testscreen\ant\upperArm180.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>upperArm180</Name>
+    </None>
+    <None Include="screens\testscreen\ant\upperleg0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>upperleg0</Name>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

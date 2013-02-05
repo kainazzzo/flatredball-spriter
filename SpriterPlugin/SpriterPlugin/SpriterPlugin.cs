@@ -2,27 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
-using System.Text;
-using FlatRedBall.Glue;
-using FlatRedBall.Glue.Controls;
-using FlatRedBall.Glue.Elements;
+using EditorObjects.Parsing;
 using FlatRedBall.Glue.Plugins.ExportedInterfaces;
 using FlatRedBall.Glue.Plugins.Interfaces;
-using FlatRedBall.Glue.SaveClasses;
 using FlatRedBall.Glue.Plugins;
+using FlatRedBall.IO;
+using FlatRedBall_Spriter;
 
 
 namespace SpriterPlugin
 {
-    public class SpriterPlugin : INewFile
+    [Export(typeof(PluginBase))]
+    public class SpriterPlugin : PluginBase
     {
-        [Import("GlueProjectSave")]
-        public GlueProjectSave GlueProjectSave
-        {
-            get;
-            set;
-        }
-
         [Import("GlueCommands")]
         public IGlueCommands GlueCommands
         {
@@ -37,12 +29,12 @@ namespace SpriterPlugin
 		    set;
         }
 
-        public string FriendlyName
+        public override string FriendlyName
         {
             get { return "Spriter Integration"; }
         }
 
-        public bool ShutDown(PluginShutDownReason reason)
+        public override bool ShutDown(PluginShutDownReason reason)
         {
             // Do anything your plugin needs to do to shut down
             // or don't shut down and return false
@@ -50,30 +42,38 @@ namespace SpriterPlugin
             return true;
         }
 
-        public void StartUp()
+        public override void StartUp()
         {
             // Do anything your plugin needs to do when it first starts up
-
+            GetFilesReferencedBy += GetFilesReferencedByFunc;
         }
 
-        public Version Version
+        private void GetFilesReferencedByFunc(string absoluteFileName, TopLevelOrRecursive topLevelOrRecursive, List<string> files)
+        {
+            if (!string.IsNullOrEmpty(absoluteFileName) && 
+                FileManager.GetExtension(absoluteFileName).ToLowerInvariant() == "scml")
+            {
+                var oldDir = FileManager.RelativeDirectory;
+                FileManager.RelativeDirectory = FileManager.GetDirectory(absoluteFileName);
+                var spriterObjectSave = SpriterObjectSave.FromFile(absoluteFileName);
+                foreach (var file in spriterObjectSave.Folder.SelectMany(folder => folder.File))
+                {
+                    var filename = FileManager.MakeAbsolute(file.Name);
+                    if (!files.Contains(filename))
+                    {
+                        files.Add(filename);
+                    }
+                }
+
+                FileManager.RelativeDirectory = oldDir;
+            }
+        }
+
+        public override Version Version
         {
             get { return new Version(1, 0); }
         }
 
 
-        public void AddNewFileOptions(NewFileWindow newFileWindow)
-        {
-        }
-
-        public bool CreateNewFile(AssetTypeInfo assetTypeInfo, object extraData, string directory, string name, out string resultingName)
-        {
-        }
-
-        public void ReactToNewFile(ReferencedFileSave newFile)
-        {
-            string absoluteFileName = ProjectManager.MakeAbsolute(newFile.Name, true);
-            Console.WriteLine(absoluteFileName);
-        }
     }
 }

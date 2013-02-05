@@ -13,8 +13,10 @@ using BitmapFont = FlatRedBall.Graphics.BitmapFont;
 using Cursor = FlatRedBall.Gui.Cursor;
 using GuiManager = FlatRedBall.Gui.GuiManager;
 
-#if XNA4
+#if XNA4 || WINDOWS_8
 using Color = Microsoft.Xna.Framework.Color;
+#elif FRB_MDX
+using Color = System.Drawing.Color;
 #else
 using Color = Microsoft.Xna.Framework.Graphics.Color;
 #endif
@@ -29,7 +31,6 @@ using Microsoft.Xna.Framework.Media;
 // Generated Usings
 using FlatRedBall;
 using FlatRedBall.Screens;
-using Microsoft.Xna.Framework.Graphics;
 using FlatRedBall_Spriter;
 
 namespace spritertestgame.Screens
@@ -40,17 +41,9 @@ namespace spritertestgame.Screens
 		#if DEBUG
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
-		private static Microsoft.Xna.Framework.Graphics.Texture2D ball;
 		private static FlatRedBall_Spriter.SpriterObject ant;
 		
-		private FlatRedBall_Spriter.SpriterObject mAntSpriterObject;
-		public FlatRedBall_Spriter.SpriterObject AntSpriterObject
-		{
-			get
-			{
-				return mAntSpriterObject;
-			}
-		}
+		private FlatRedBall_Spriter.SpriterObject antTest;
 
 		public TestScreen()
 			: base("TestScreen")
@@ -61,7 +54,7 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			mAntSpriterObject = ant.Clone();
+			antTest = ant.Clone();
 			
 			
 			PostInitialize();
@@ -107,14 +100,9 @@ namespace spritertestgame.Screens
 		public override void Destroy()
 		{
 			// Generated Destroy
-			ball = null;
 			ant.Destroy();
 			ant = null;
 			
-			if (AntSpriterObject != null)
-			{
-				AntSpriterObject.Destroy();
-			}
 
 			base.Destroy();
 
@@ -153,10 +141,6 @@ namespace spritertestgame.Screens
 			}
 			#endif
 			bool registerUnload = false;
-			if (!FlatRedBallServices.IsLoaded<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/testscreen/ball.png", contentManagerName))
-			{
-			}
-			ball = FlatRedBallServices.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/testscreen/ball.png", contentManagerName);
 			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/testscreen/ant/ant.scml", contentManagerName))
 			{
 			}
@@ -168,8 +152,6 @@ namespace spritertestgame.Screens
 		{
 			switch(memberName)
 			{
-				case  "ball":
-					return ball;
 				case  "ant":
 					return ant;
 			}
@@ -179,8 +161,6 @@ namespace spritertestgame.Screens
 		{
 			switch(memberName)
 			{
-				case  "ball":
-					return ball;
 				case  "ant":
 					return ant;
 			}
@@ -190,8 +170,6 @@ namespace spritertestgame.Screens
 		{
 			switch(memberName)
 			{
-				case  "ball":
-					return ball;
 				case  "ant":
 					return ant;
 			}

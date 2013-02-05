@@ -77,7 +77,7 @@ namespace spritertestgame.Screens
 		{
             if (firstTimeCalled)
             {
-                AntSpriterObject.StartAnimation();
+                antTest.StartAnimation();
                 //_so2.StartAnimation("Idle");
             }
             //StringBuilder sb = new StringBuilder();

@@ -18,6 +18,7 @@
     <CurrentSolutionConfigurationContents>
       <SolutionConfiguration xmlns="">
   <ProjectConfiguration Project="{D73086FC-957E-4E3F-97FA-742CBBF02EA6}" AbsolutePath="C:\BuildServer\TeamCity\buildAgent\work\FlatRedBallProjects\Templates\GluePluginTemplate\GluePluginTemplate\GluePluginTemplate.csproj" BuildProjectInSolution="True">Debug|AnyCPU</ProjectConfiguration>
+  <ProjectConfiguration Project="{1B0AA1F9-5D93-4705-BE4D-30B7B9A51EE8}" AbsolutePath="C:\BuildServer\TeamCity\buildAgent\work\FlatRedBallProjects\Templates\GluePluginTemplate\TestWithGlue\TestWithGlue.csproj" BuildProjectInSolution="True">Debug|x86</ProjectConfiguration>
 </SolutionConfiguration>
     </CurrentSolutionConfigurationContents>
   </PropertyGroup>
@@ -31,13 +32,25 @@
       <Configuration>Debug</Configuration>
       <Platform>AnyCPU</Platform>
     </ProjectReference>
+    <ProjectReference Include="C:\BuildServer\TeamCity\buildAgent\work\FlatRedBallProjects\Templates\GluePluginTemplate\TestWithGlue\TestWithGlue.csproj">
+      <ToolsVersion>
+      </ToolsVersion>
+      <SkipNonexistentProjects>False</SkipNonexistentProjects>
+      <AdditionalProperties>Configuration=Debug; Platform=x86</AdditionalProperties>
+      <Configuration>Debug</Configuration>
+      <Platform>x86</Platform>
+    </ProjectReference>
   </ItemGroup>
   <Target Name="Build" Outputs="@(CollectedBuildOutput)">
     <MSBuild Projects="@(ProjectReference)" BuildInParallel="True" Properties="BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" SkipNonexistentProjects="%(ProjectReference.SkipNonexistentProjects)">
       <Output TaskParameter="TargetOutputs" ItemName="CollectedBuildOutput" />
     </MSBuild>
   </Target>
-  <Target Name="ValidateProjects" />
+  <Target Name="ValidateProjects">
+    <Message Condition=" ('$(Configuration)' == 'Debug') and ('$(Platform)' == 'x86') " Text="The project &quot;GluePluginTemplate&quot; is not selected for building in solution configuration &quot;Debug|x86&quot;." />
+    <Message Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'x86') " Text="The project &quot;GluePluginTemplate&quot; is not selected for building in solution configuration &quot;Release|x86&quot;." />
+    <Message Condition=" ('$(Configuration)' == 'Release') and ('$(Platform)' == 'Any CPU') " Text="The project &quot;TestWithGlue&quot; is not selected for building in solution configuration &quot;Release|Any CPU&quot;." />
+  </Target>
   <Target Name="ValidateToolsVersions">
     <Error Condition="'$(MSBuildToolsVersion)' == '2.0' and ('$(ProjectToolsVersion)' != '2.0' and '$(ProjectToolsVersion)' != '')" Text="The tools version &quot;$(MSBuildToolsVersion)&quot; of the solution does not support building projects with a different tools version." Code="MSB4149" HelpKeyword="MSBuild.SolutionToolsVersionDoesNotSupportProjectToolsVersion" />
   </Target>
@@ -72,5 +85,21 @@
   </Target>
   <Target Name="GluePluginTemplate:Publish">
     <MSBuild Condition="'%(ProjectReference.Identity)' == 'C:\BuildServer\TeamCity\buildAgent\work\FlatRedBallProjects\Templates\GluePluginTemplate\GluePluginTemplate\GluePluginTemplate.csproj'" Projects="@(ProjectReference)" Targets="Publish" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Debug; Platform=AnyCPU;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="TestWithGlue" Outputs="@(TestWithGlueBuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'C:\BuildServer\TeamCity\buildAgent\work\FlatRedBallProjects\Templates\GluePluginTemplate\TestWithGlue\TestWithGlue.csproj'" Projects="@(ProjectReference)" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Debug; Platform=x86;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="TestWithGlueBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="TestWithGlue:Clean">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'C:\BuildServer\TeamCity\buildAgent\work\FlatRedBallProjects\Templates\GluePluginTemplate\TestWithGlue\TestWithGlue.csproj'" Projects="@(ProjectReference)" Targets="Clean" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Debug; Platform=x86;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
+  </Target>
+  <Target Name="TestWithGlue:Rebuild" Outputs="@(TestWithGlueBuildOutput)">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'C:\BuildServer\TeamCity\buildAgent\work\FlatRedBallProjects\Templates\GluePluginTemplate\TestWithGlue\TestWithGlue.csproj'" Projects="@(ProjectReference)" Targets="Rebuild" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Debug; Platform=x86;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)">
+      <Output TaskParameter="TargetOutputs" ItemName="TestWithGlueBuildOutput" />
+    </MSBuild>
+  </Target>
+  <Target Name="TestWithGlue:Publish">
+    <MSBuild Condition="'%(ProjectReference.Identity)' == 'C:\BuildServer\TeamCity\buildAgent\work\FlatRedBallProjects\Templates\GluePluginTemplate\TestWithGlue\TestWithGlue.csproj'" Projects="@(ProjectReference)" Targets="Publish" BuildInParallel="True" ToolsVersion="$(ProjectToolsVersion)" Properties="Configuration=Debug; Platform=x86;BuildingSolutionFile=true; CurrentSolutionConfigurationContents=$(CurrentSolutionConfigurationContents); SolutionDir=$(SolutionDir); SolutionExt=$(SolutionExt); SolutionFileName=$(SolutionFileName); SolutionName=$(SolutionName); SolutionPath=$(SolutionPath)" />
   </Target>
 </Project>

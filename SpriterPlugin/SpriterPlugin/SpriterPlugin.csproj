@@ -44,14 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\XnaPc\FlatRedBall.PropertyGrid.dll</HintPath>
     </Reference>
-    <Reference Include="Glue, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Glue, Version=2011.7.12.1344, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <ExecutableExtension>.exe</ExecutableExtension>
       <HintPath>Libraries\XnaPc\Glue.exe</HintPath>
-    </Reference>
-    <Reference Include="GlueSaveClasses, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libraries\XnaPc\GlueSaveClasses.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
@@ -66,14 +62,32 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBallTextureLoader.cs">
+      <Link>FlatRedBallTextureLoader.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\ITextureLoader.cs">
+      <Link>ITextureLoader.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\KeyFrame.cs">
+      <Link>KeyFrame.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\KeyFrameValues.cs">
+      <Link>KeyFrameValues.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterObject.cs">
+      <Link>SpriterObject.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterObjectAnimation.cs">
+      <Link>SpriterObjectAnimation.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterObjectSave.conversion.cs">
+      <Link>SpriterObjectSave.conversion.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterObjectSave.serialization.cs">
+      <Link>SpriterObjectSave.serialization.cs</Link>
+    </EmbeddedResource>
     <Compile Include="SpriterPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">
-      <Project>{1A1A158C-5EDE-4750-8BD0-62FAEB1C21DD}</Project>
-      <Name>FlatRedBall-Spriter</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libraries\XnaPc\EditorObjectsXna.dll" />
@@ -82,6 +96,12 @@
     <Content Include="Libraries\XnaPc\FlatRedBall.PropertyGrid.dll" />
     <Content Include="Libraries\XnaPc\Glue.exe" />
     <Content Include="Libraries\XnaPc\GlueSaveClasses.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">
+      <Project>{1A1A158C-5EDE-4750-8BD0-62FAEB1C21DD}</Project>
+      <Name>FlatRedBall-Spriter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

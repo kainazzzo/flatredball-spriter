@@ -5,11 +5,6 @@
       <Name>Screens\TestScreen</Name>
       <ReferencedFiles>
         <ReferencedFileSave>
-          <Name>Screens/TestScreen/ball.png</Name>
-          <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>Microsoft.Xna.Framework.Graphics.Texture2D</RuntimeType>
-        </ReferencedFileSave>
-        <ReferencedFileSave>
           <Name>Screens/TestScreen/Ant/ant.scml</Name>
           <IsSharedStatic>true</IsSharedStatic>
           <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
@@ -20,10 +15,9 @@
           <SourceType>File</SourceType>
           <SourceFile>Screens/TestScreen/Ant/ant.scml</SourceFile>
           <SourceName>Entire File (SpriterObject)</SourceName>
-          <InstanceName>AntSpriterObject</InstanceName>
-          <HasPublicProperty>true</HasPublicProperty>
+          <InstanceName>antTest</InstanceName>
           <AttachToContainer>true</AttachToContainer>
-          <AddToManagers>true</AddToManagers>
+          <AddToManagers>false</AddToManagers>
           <IndependentOfCamera>true</IndependentOfCamera>
         </NamedObjectSave>
       </NamedObjects>

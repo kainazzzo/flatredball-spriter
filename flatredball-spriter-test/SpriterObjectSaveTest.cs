@@ -368,7 +368,10 @@ namespace flatredball_spriter_test
             var pivot = sprite.Parent;
             var pivot2 = sprite2.Parent;
 
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.X - -212.403893f) < .0001f);            
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.X - -212.403893f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.Y - 1.062019f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleX - 51.327448f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleY - 64f) < .0001f);
         }
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithBonesAndObjectScaled()

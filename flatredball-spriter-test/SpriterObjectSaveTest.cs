@@ -120,6 +120,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
                 {
+                    Directory = "C:\\",
                     Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -356,7 +357,184 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
-        public void RelativeScale()
+        public void RelativeScaleWithObjectScaled()
+        {
+            var sos = GetSimpleSpriterObjectSaveNullTextureWithBonesAndObjectScaled();
+            
+            var so = sos.ToRuntime();
+
+            var sprite = so.ObjectList.First(p => p.Name == "sprite");
+            var sprite2 = so.ObjectList.Where(p => p.Name == "sprite").ElementAt(1);
+            var pivot = sprite.Parent;
+            var pivot2 = sprite2.Parent;
+
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.X - -212.403893f) < .0001f);            
+        }
+
+        private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithBonesAndObjectScaled()
+        {
+            return new SpriterObjectSaveNullTexture
+                {
+                    Directory = "C:\\",
+                    FileName = "",
+                    Folder = new List<SpriterDataFolder>()
+                        {
+                            new SpriterDataFolder()
+                                {
+                                    Id = 0,
+                                    File = new List<SpriterDataFolderFile>()
+                                        {
+                                            new SpriterDataFolderFile()
+                                                {
+                                                    Name = "test.png",
+                                                    Width = 116,
+                                                    Height = 128
+                                                }
+                                        }
+                                }
+                        },
+                    Entity = new List<SpriterDataEntity>()
+                        {
+                            new SpriterDataEntity()
+                                {
+                                    Id=0,
+                                    Name="",
+                                    Animation = new List<SpriterDataEntityAnimation>()
+                                        {
+                                            new SpriterDataEntityAnimation()
+                                                {
+                                                    Id=0,
+                                                    Name="first",
+                                                    Length = 1000,
+                                                    Looping = false,
+                                                    Mainline = new SpriterDataEntityAnimationMainline()
+                                                        {
+                                                            Keys = new List<Key>()
+                                                                {
+                                                                    new Key()
+                                                                        {
+                                                                            Id=0,
+                                                                            BoneRef = new List<KeyBoneRef>()
+                                                                                {
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Timeline = 0,
+                                                                                            Key=0
+                                                                                        },
+                                                                                    new KeyBoneRef()
+                                                                                        {
+                                                                                            Id=1,
+                                                                                            Parent = 0,
+                                                                                            Timeline = 1,
+                                                                                            Key = 0
+                                                                                        }
+                                                                                },
+                                                                            ObjectRef = new List<KeyObjectRef>()
+                                                                                {
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=0,
+                                                                                            Parent = 1,
+                                                                                            Timeline = 2,
+                                                                                            Key=0
+                                                                                        },
+                                                                                    new KeyObjectRef()
+                                                                                        {
+                                                                                            Id=1,
+                                                                                            Parent = 0,
+                                                                                            Timeline = 3,
+                                                                                            Key = 0
+                                                                                        }
+                                                                                }
+                                                                        }
+                                                                }
+                                                        },
+                                                        Timeline = new List<SpriterDataEntityAnimationTimeline>()
+                                                            {
+                                                                new SpriterDataEntityAnimationTimeline()
+                                                                    {
+                                                                        Id = 0,
+                                                                        Name = "bone_000",
+                                                                        Key = new List<Key>()
+                                                                            {
+                                                                                new Key()
+                                                                                    {
+                                                                                        Id = 0,
+                                                                                        Spin = 0,
+                                                                                        Bone = new KeyBone()
+                                                                                            {
+                                                                                                ScaleX = 1.200094f
+                                                                                            }
+                                                                                    }
+                                                                            }
+                                                                    },
+                                                                new SpriterDataEntityAnimationTimeline()
+                                                                    {
+                                                                        Id = 1,
+                                                                        Name = "bone_001",
+                                                                        Key = new List<Key>()
+                                                                            {
+                                                                                new Key()
+                                                                                    {
+                                                                                        Id = 0,
+                                                                                        Spin = 0,
+                                                                                        Bone = new KeyBone()
+                                                                                            {
+                                                                                                X = 200,
+                                                                                                ScaleX = .941593f
+                                                                                            }
+                                                                                    }
+                                                                            }
+                                                                    },
+                                                                new SpriterDataEntityAnimationTimeline()
+                                                                    {
+                                                                        Id = 2,
+                                                                        Key = new List<Key>()
+                                                                            {
+                                                                                new Key()
+                                                                                    {
+                                                                                        Id = 0,
+                                                                                        Spin = 0,
+                                                                                        Object = new KeyObject()
+                                                                                            {
+                                                                                                Folder = 0,
+                                                                                                File = 0,
+                                                                                                X = -212.403893f,
+                                                                                                Y = 1.062019f,
+                                                                                                ScaleX = .884956f
+                                                                                            }
+                                                                                    }
+                                                                            }
+                                                                    },
+                                                                new SpriterDataEntityAnimationTimeline()
+                                                                    {
+                                                                        Id = 3,
+                                                                        Key = new List<Key>()
+                                                                            {
+                                                                                new Key()
+                                                                                    {
+                                                                                        Id = 0,
+                                                                                        Spin = 0,
+                                                                                        Object = new KeyObject()
+                                                                                            {
+                                                                                                Folder = 0,
+                                                                                                File = 0,
+                                                                                                ScaleX = .833268f
+                                                                                            }
+                                                                                    }
+                                                                            }
+                                                                    }
+                                                            }
+                                                }
+                                        }
+                                }
+                        }
+                };
+        }
+
+        [TestMethod]
+        public void RelativeScaleWithObjectUnscaled()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParentAndOneOrphanObject();
             var so = sos.ToRuntime();
@@ -395,6 +573,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -514,6 +693,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -729,6 +909,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -822,6 +1003,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -972,6 +1154,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -1204,6 +1387,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -1404,6 +1588,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -1552,6 +1737,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -1659,6 +1845,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
                 {
+                    Directory = "C:\\",
                     Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
@@ -1767,6 +1954,7 @@ namespace flatredball_spriter_test
         {
             return new SpriterObjectSaveNullTexture
             {
+                Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder

@@ -1,3 +1,15 @@
 Content\Screens\TestScreen\Ant\ant.scml
-Content\Screens\TestScreen\ball.png
+Content\Screens\TestScreen\Ant\anthead.scml
+Content\screens\testscreen\ant\fist.png
+Content\screens\testscreen\ant\head0.png
+Content\screens\testscreen\ant\head90.png
+Content\screens\testscreen\ant\innerfist.png
+Content\screens\testscreen\ant\lowerArm180.png
+Content\screens\testscreen\ant\lowerleg0.png
+Content\screens\testscreen\ant\shoe0.png
+Content\screens\testscreen\ant\torso0.png
+Content\screens\testscreen\ant\torso60.png
+Content\screens\testscreen\ant\upperarm.png
+Content\screens\testscreen\ant\upperArm180.png
+Content\screens\testscreen\ant\upperleg0.png
 redball.BMP

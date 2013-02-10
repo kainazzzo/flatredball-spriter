@@ -16,6 +16,7 @@ namespace FlatRedBall_Spriter
             get { return new FlatRedBallTextureLoader(); }
         }
 
+        public string Directory { get; set; }
         public string FileName { get; set; }
 
         public SpriterObject ToRuntime()
@@ -30,7 +31,7 @@ namespace FlatRedBall_Spriter
             IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary = new Dictionary<KeyFrameValues, int>();
 
             string oldDir = FileManager.RelativeDirectory;
-            FileManager.RelativeDirectory = FileManager.GetDirectory(this.FileName);
+            FileManager.RelativeDirectory = this.Directory;
             foreach (var folder in this.Folder)
             {
                 foreach (var file in folder.File)
@@ -238,14 +239,15 @@ namespace FlatRedBall_Spriter
             {
                 // Find the bone reference in the current key
                 var boneRef = currentKey.BoneRef.SingleOrDefault(br => br.Id == objectRef.Parent.Value);
+                float x, y;
                 while (boneRef != null)
                 {
                     KeyBoneRef @ref = boneRef;
                     var bone = animation.Timeline.Where(t => t.Id == @ref.Timeline).SelectMany(t => t.Key).Single(k => k.Id == @ref.Key).Bone;
                     keyFrameValues.Sprite.ScaleX *= bone.ScaleX;
                     keyFrameValues.Sprite.ScaleY *= bone.ScaleY;
-                    float x = keyFrameValues.Sprite.Position.X * bone.ScaleX;
-                    float y = keyFrameValues.Sprite.Position.Y * bone.ScaleY;
+                    x = keyFrameValues.Sprite.Position.X * bone.ScaleX;
+                    y = keyFrameValues.Sprite.Position.Y * bone.ScaleY;
                     keyFrameValues.Sprite.Position = new Vector3(x, y, 0.0f);
 
                     x = keyFrameValues.Pivot.Position.X*bone.ScaleX;
@@ -254,6 +256,21 @@ namespace FlatRedBall_Spriter
 
                     boneRef = !boneRef.Parent.HasValue ? null : currentKey.BoneRef.SingleOrDefault(br => br.Id == boneRef.Parent.Value);
                 }
+
+                var obj =
+                    animation.Timeline.Where(t => t.Id == objectRef.Timeline)
+                             .SelectMany(t => t.Key)
+                             .Single(k => k.Id == objectRef.Key)
+                             .Object;
+                keyFrameValues.Sprite.ScaleX *= obj.ScaleX;
+                keyFrameValues.Sprite.ScaleY *= obj.ScaleY;
+                x = keyFrameValues.Sprite.Position.X*obj.ScaleX;
+                y = keyFrameValues.Sprite.Position.Y*obj.ScaleY;
+                keyFrameValues.Sprite.Position = new Vector3(x, y, 0f);
+
+                x = keyFrameValues.Pivot.Position.X*obj.ScaleX;
+                y = keyFrameValues.Pivot.Position.Y*obj.ScaleY;
+                keyFrameValues.Pivot.Position = new Vector3(x, y, 0f);
             }
         }
 
@@ -312,7 +329,8 @@ namespace FlatRedBall_Spriter
         {
             filename = filename.Replace(@"\", "/");
             var sos = FileManager.XmlDeserialize<SpriterObjectSave>(filename);
-            sos.FileName = FileManager.GetDirectory(filename) + filename.Substring(filename.LastIndexOf("/") + 1);
+            sos.FileName = FileManager.GetDirectory(filename) + filename.Substring(filename.LastIndexOf("/", StringComparison.Ordinal) + 1);
+            sos.Directory = FileManager.GetDirectory(filename);
 
             return sos;
         }

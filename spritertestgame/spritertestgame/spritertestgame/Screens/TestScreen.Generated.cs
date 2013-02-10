@@ -42,8 +42,9 @@ namespace spritertestgame.Screens
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
 		private static FlatRedBall_Spriter.SpriterObject ant;
+		private static FlatRedBall_Spriter.SpriterObject anthead;
 		
-		private FlatRedBall_Spriter.SpriterObject antTest;
+		private FlatRedBall_Spriter.SpriterObject antHeadObj;
 
 		public TestScreen()
 			: base("TestScreen")
@@ -54,7 +55,7 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			antTest = ant.Clone();
+			antHeadObj = anthead.Clone();
 			
 			
 			PostInitialize();
@@ -102,7 +103,13 @@ namespace spritertestgame.Screens
 			// Generated Destroy
 			ant.Destroy();
 			ant = null;
+			anthead.Destroy();
+			anthead = null;
 			
+			if (antHeadObj != null)
+			{
+				antHeadObj.Destroy();
+			}
 
 			base.Destroy();
 
@@ -120,6 +127,7 @@ namespace spritertestgame.Screens
 		public virtual void AddToManagersBottomUp ()
 		{
 			ant.AddToManagers(mLayer);
+			anthead.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
@@ -145,6 +153,10 @@ namespace spritertestgame.Screens
 			{
 			}
 			ant = FlatRedBall_Spriter.SpriterObjectSave.FromFile("content/screens/testscreen/ant/ant.scml").ToRuntime();
+			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/testscreen/ant/anthead.scml", contentManagerName))
+			{
+			}
+			anthead = FlatRedBall_Spriter.SpriterObjectSave.FromFile("content/screens/testscreen/ant/anthead.scml").ToRuntime();
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]
@@ -154,6 +166,8 @@ namespace spritertestgame.Screens
 			{
 				case  "ant":
 					return ant;
+				case  "anthead":
+					return anthead;
 			}
 			return null;
 		}
@@ -163,6 +177,8 @@ namespace spritertestgame.Screens
 			{
 				case  "ant":
 					return ant;
+				case  "anthead":
+					return anthead;
 			}
 			return null;
 		}
@@ -172,6 +188,8 @@ namespace spritertestgame.Screens
 			{
 				case  "ant":
 					return ant;
+				case  "anthead":
+					return anthead;
 			}
 			return null;
 		}

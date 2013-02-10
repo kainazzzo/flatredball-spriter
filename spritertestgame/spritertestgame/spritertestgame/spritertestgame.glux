@@ -9,15 +9,20 @@
           <IsSharedStatic>true</IsSharedStatic>
           <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
         </ReferencedFileSave>
+        <ReferencedFileSave>
+          <Name>Screens/TestScreen/Ant/anthead.scml</Name>
+          <IsSharedStatic>true</IsSharedStatic>
+          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
+        </ReferencedFileSave>
       </ReferencedFiles>
       <NamedObjects>
         <NamedObjectSave>
           <SourceType>File</SourceType>
-          <SourceFile>Screens/TestScreen/Ant/ant.scml</SourceFile>
+          <SourceFile>Screens/TestScreen/Ant/anthead.scml</SourceFile>
           <SourceName>Entire File (SpriterObject)</SourceName>
-          <InstanceName>antTest</InstanceName>
+          <InstanceName>antHeadObj</InstanceName>
           <AttachToContainer>true</AttachToContainer>
-          <AddToManagers>false</AddToManagers>
+          <AddToManagers>true</AddToManagers>
           <IndependentOfCamera>true</IndependentOfCamera>
         </NamedObjectSave>
       </NamedObjects>

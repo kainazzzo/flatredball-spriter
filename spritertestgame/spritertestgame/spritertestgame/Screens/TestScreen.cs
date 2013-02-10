@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using FlatRedBall;
 using FlatRedBall.Graphics;
@@ -75,9 +76,20 @@ namespace spritertestgame.Screens
 
 		void CustomActivity(bool firstTimeCalled)
 		{
+            //FlatRedBall.Debugging.Debugger.Write(anthead.ObjectList[1].RelativePosition);
+            if (FlatRedBall.Input.InputManager.Keyboard.KeyDown(Keys.OemMinus))
+            {
+                //anthead.ScaleX -= .05f;
+                //anthead.ScaleY -= .05f;
+                SpriteManager.Camera.OrthogonalHeight += 10.0f;
+                SpriteManager.Camera.OrthogonalWidth += 10f;
+            }
             if (firstTimeCalled)
             {
-                antTest.StartAnimation();
+                ant.StartAnimation();
+                //antHeadTest.StartAnimation();
+                //FlatRedBall.Debugging.Debugger.WriteAutomaticallyUpdatedObjectInformation();
+                //antTest.ObjectList.ToList().ForEach(FlatRedBall.Debugging.Debugger.);
                 //_so2.StartAnimation("Idle");
             }
             //StringBuilder sb = new StringBuilder();

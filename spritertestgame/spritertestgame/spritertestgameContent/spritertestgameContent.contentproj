@@ -55,6 +55,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>ant</Name>
     </None>
+    <None Include="Screens\TestScreen\Ant\anthead.scml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>anthead</Name>
+    </None>
     <None Include="screens\testscreen\ant\fist.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>fist</Name>
@@ -62,6 +66,10 @@
     <None Include="screens\testscreen\ant\head0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>head0</Name>
+    </None>
+    <None Include="screens\testscreen\ant\head90.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>head90</Name>
     </None>
     <None Include="screens\testscreen\ant\innerfist.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -82,6 +90,10 @@
     <None Include="screens\testscreen\ant\torso0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>torso0</Name>
+    </None>
+    <None Include="screens\testscreen\ant\torso60.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>torso60</Name>
     </None>
     <None Include="screens\testscreen\ant\upperarm.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

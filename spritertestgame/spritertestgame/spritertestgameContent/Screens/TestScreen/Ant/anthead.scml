@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="a4.1">
+    <folder id="0">
+        <file id="0" name="head90.png" width="116" height="128"/>
+    </folder>
+    <entity id="0" name="">
+        <animation id="0" name="First Animation" length="1000" looping="false">
+            <mainline>
+                <key id="0">
+                    <bone_ref id="0" timeline="0" key="0"/>
+                    <bone_ref id="1" parent="0" timeline="1" key="0"/>
+                    <object_ref id="0" parent="1" timeline="2" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="3" key="0" z_index="1"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="bone_000">
+                <key id="0" spin="0">
+                    <bone scale_x="1.200094"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="bone_001">
+                <key id="0" spin="0">
+                    <bone x="200" scale_x="0.941593"/>
+                </key>
+            </timeline>
+            <timeline id="2">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="-212.403893" y="1.062019" scale_x="0.884956" a="0.15"/>
+                </key>
+            </timeline>
+            <timeline id="3">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" scale_x="0.833268"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

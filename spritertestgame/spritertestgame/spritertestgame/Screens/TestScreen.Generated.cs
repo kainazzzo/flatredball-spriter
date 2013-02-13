@@ -41,7 +41,6 @@ namespace spritertestgame.Screens
 		#if DEBUG
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
-		private static FlatRedBall_Spriter.SpriterObject ant;
 		private static FlatRedBall_Spriter.SpriterObject anthead;
 		
 		private FlatRedBall_Spriter.SpriterObject antHeadObj;
@@ -101,8 +100,6 @@ namespace spritertestgame.Screens
 		public override void Destroy()
 		{
 			// Generated Destroy
-			ant.Destroy();
-			ant = null;
 			anthead.Destroy();
 			anthead = null;
 			
@@ -126,7 +123,6 @@ namespace spritertestgame.Screens
 		}
 		public virtual void AddToManagersBottomUp ()
 		{
-			ant.AddToManagers(mLayer);
 			anthead.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
@@ -149,10 +145,6 @@ namespace spritertestgame.Screens
 			}
 			#endif
 			bool registerUnload = false;
-			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/testscreen/ant/ant.scml", contentManagerName))
-			{
-			}
-			ant = FlatRedBall_Spriter.SpriterObjectSave.FromFile("content/screens/testscreen/ant/ant.scml").ToRuntime();
 			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/testscreen/ant/anthead.scml", contentManagerName))
 			{
 			}
@@ -164,8 +156,6 @@ namespace spritertestgame.Screens
 		{
 			switch(memberName)
 			{
-				case  "ant":
-					return ant;
 				case  "anthead":
 					return anthead;
 			}
@@ -175,8 +165,6 @@ namespace spritertestgame.Screens
 		{
 			switch(memberName)
 			{
-				case  "ant":
-					return ant;
 				case  "anthead":
 					return anthead;
 			}
@@ -186,8 +174,6 @@ namespace spritertestgame.Screens
 		{
 			switch(memberName)
 			{
-				case  "ant":
-					return ant;
 				case  "anthead":
 					return anthead;
 			}

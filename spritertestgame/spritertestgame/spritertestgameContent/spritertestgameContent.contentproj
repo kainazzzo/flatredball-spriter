@@ -51,10 +51,6 @@
     <Folder Include="Screens\TestScreen\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Screens\TestScreen\Ant\ant.scml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>ant</Name>
-    </None>
     <None Include="Screens\TestScreen\Ant\anthead.scml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>anthead</Name>

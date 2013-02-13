@@ -71,12 +71,14 @@ namespace spritertestgame.Screens
 	        
             FlatRedBallServices.GraphicsOptions.TextureFilter = TextureFilter.Point;
 
-
-		}
+            AxisAlignedRectangle rect = new AxisAlignedRectangle(1f, 1f);
+	        rect.Visible = true;
+	        ShapeManager.AddAxisAlignedRectangle(rect);
+	    }
 
 		void CustomActivity(bool firstTimeCalled)
 		{
-            //FlatRedBall.Debugging.Debugger.Write(anthead.ObjectList[1].RelativePosition);
+            FlatRedBall.Debugging.Debugger.Write(anthead.ObjectList[1].RelativePosition);
             if (FlatRedBall.Input.InputManager.Keyboard.KeyDown(Keys.OemMinus))
             {
                 //anthead.ScaleX -= .05f;
@@ -86,7 +88,7 @@ namespace spritertestgame.Screens
             }
             if (firstTimeCalled)
             {
-                ant.StartAnimation();
+                anthead.StartAnimation();
                 //antHeadTest.StartAnimation();
                 //FlatRedBall.Debugging.Debugger.WriteAutomaticallyUpdatedObjectInformation();
                 //antTest.ObjectList.ToList().ForEach(FlatRedBall.Debugging.Debugger.);

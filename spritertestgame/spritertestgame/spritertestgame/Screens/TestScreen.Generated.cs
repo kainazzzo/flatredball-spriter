@@ -43,7 +43,6 @@ namespace spritertestgame.Screens
 		#endif
 		private static FlatRedBall_Spriter.SpriterObject anthead;
 		
-		private FlatRedBall_Spriter.SpriterObject antHeadObj;
 
 		public TestScreen()
 			: base("TestScreen")
@@ -54,7 +53,6 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			antHeadObj = anthead.Clone();
 			
 			
 			PostInitialize();
@@ -103,10 +101,6 @@ namespace spritertestgame.Screens
 			anthead.Destroy();
 			anthead = null;
 			
-			if (antHeadObj != null)
-			{
-				antHeadObj.Destroy();
-			}
 
 			base.Destroy();
 

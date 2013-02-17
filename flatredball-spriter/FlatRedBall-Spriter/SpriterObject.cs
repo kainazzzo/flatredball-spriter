@@ -194,7 +194,7 @@ namespace FlatRedBall_Spriter
                 }
 
                 // Position
-                currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
+                currentObject.RelativePosition = Vector3.Lerp(currentValues.RelativePosition, nextValues.RelativePosition,
                                                               percentage);
 
                 currentObject.RelativePosition.X *= this.ScaleX;
@@ -258,7 +258,7 @@ namespace FlatRedBall_Spriter
             foreach (var pair in CurrentKeyFrame.Values)
             {
                 pair.Key.AttachTo(pair.Value.Parent, true);
-                pair.Key.RelativePosition = pair.Value.Position;
+                pair.Key.RelativePosition = pair.Value.RelativePosition;
                 pair.Key.RelativePosition.X *= this.ScaleX;
                 pair.Key.RelativePosition.Y *= this.ScaleY;
                 pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
@@ -523,7 +523,7 @@ namespace FlatRedBall_Spriter
                                 {
                                     Alpha = kfPair.Value.Alpha,
                                     Parent = kfPair.Value.Parent,
-                                    Position = kfPair.Value.Position,
+                                    RelativePosition = kfPair.Value.RelativePosition,
                                     Rotation = kfPair.Value.Rotation,
                                     ScaleX = kfPair.Value.ScaleX,
                                     ScaleY = kfPair.Value.ScaleY,

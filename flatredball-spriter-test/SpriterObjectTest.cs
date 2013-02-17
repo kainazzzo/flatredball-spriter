@@ -238,7 +238,7 @@ namespace flatredball_spriter_test
                 };
             keyFrame.Values[pivot] = new KeyFrameValues()
             {
-                Position = new Vector3(30f, 30f, 0f)
+                RelativePosition = new Vector3(30f, 30f, 0f)
             };
             keyFrame.Values[sprite] = new KeyFrameValues()
                 {
@@ -256,7 +256,7 @@ namespace flatredball_spriter_test
                 };
             keyFrame.Values[pivot] = new KeyFrameValues()
             {
-                Position = Vector3.Zero
+                RelativePosition = Vector3.Zero
             };
 
             keyFrame.Values[sprite] = new KeyFrameValues()
@@ -332,7 +332,7 @@ namespace flatredball_spriter_test
                     Time = 1.0f
                 };
 
-            keyFrame.Values[bone1] = new KeyFrameValues {Position = new Vector3(100f, 0f, 0f), Parent = so};
+            keyFrame.Values[bone1] = new KeyFrameValues {RelativePosition = new Vector3(100f, 0f, 0f), Parent = so};
             keyFrame.Values[bone2] = new KeyFrameValues()
                 {
                     Parent = so
@@ -368,11 +368,11 @@ namespace flatredball_spriter_test
             };
             keyFrame.Values[pivot] = new KeyFrameValues()
             {
-                Position = Vector3.Zero
+                RelativePosition = Vector3.Zero
             };
             keyFrame.Values[pivot2] = new KeyFrameValues()
             {
-                Position = Vector3.Zero
+                RelativePosition = Vector3.Zero
             };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
@@ -383,11 +383,11 @@ namespace flatredball_spriter_test
             };
             keyFrame.Values[pivot] = new KeyFrameValues()
             {
-                Position = new Vector3(0f, 10f, 0f)
+                RelativePosition = new Vector3(0f, 10f, 0f)
             };
             keyFrame.Values[pivot2] = new KeyFrameValues()
             {
-                Position = new Vector3(10f, 0f, 0f)
+                RelativePosition = new Vector3(10f, 0f, 0f)
             };
 
             so.Animations[""].KeyFrames.Add(keyFrame);

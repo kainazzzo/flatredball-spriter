@@ -4,25 +4,25 @@
         <name>FlatRedBall</name>
     </assembly>
     <members>
-        <member name="T:FlatRedBall.Math.IStaticPositionable">
+        <member name="T:FlatRedBall.Math.IStaticRelativePositionable">
             <summary>
             Provides an interface for 3D position.
             </summary>
             <remarks>
-            Does not include Velocity and Acceleration like IPositionable.
+            Does not include Velocity and Acceleration like IRelativePositionable.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.Math.IStaticPositionable.X">
+        <member name="P:FlatRedBall.Math.IStaticRelativePositionable.X">
             <summary>
             The absolute X position.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Math.IStaticPositionable.Y">
+        <member name="P:FlatRedBall.Math.IStaticRelativePositionable.Y">
             <summary>
             The absolute Y position.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Math.IStaticPositionable.Z">
+        <member name="P:FlatRedBall.Math.IStaticRelativePositionable.Z">
             <summary>
             The absolute Z position.
             </summary>
@@ -34,7 +34,7 @@
             <param name="X">The X coordinate of the tile</param>
             <param name="Y">The Y coordinate of the tile</param>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PathfindingFunctions.IsInLineOfSight(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,FlatRedBall.Math.PositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
+        <member name="M:FlatRedBall.AI.Pathfinding.PathfindingFunctions.IsInLineOfSight(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,FlatRedBall.Math.RelativePositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
             <summary>
             Tests if two vector positions are within line of sight given a collision map.
             </summary>
@@ -43,7 +43,7 @@
             <param name="collisionMap">The list of polygons used to test if the two positions are within line of sight.</param>
             <returns></returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PathfindingFunctions.IsInLineOfSight(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,System.Single,FlatRedBall.Math.PositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
+        <member name="M:FlatRedBall.AI.Pathfinding.PathfindingFunctions.IsInLineOfSight(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,System.Single,FlatRedBall.Math.RelativePositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
             <summary>
             Tests if two vector positions are within line of sight given a collision map.
             </summary>
@@ -62,13 +62,13 @@
             <param name="position2">The connecting position.</param>
             <returns>The midpoint between the two positions.</returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PathfindingFunctions.OptimalVisiblePoint(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,System.Int32,System.Single,FlatRedBall.Math.PositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
+        <member name="M:FlatRedBall.AI.Pathfinding.PathfindingFunctions.OptimalVisiblePoint(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,System.Int32,System.Single,FlatRedBall.Math.RelativePositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
             <summary>
-            Calculates the closest visible point to outOfSightPosition given the currentPosition.
+            Calculates the closest visible point to outOfSightRelativePosition given the currentRelativePosition.
             </summary>
-            <param name="currentPosition">The position with which to test Line Of Sight</param>
-            <param name="inSightPosition">The connector to the outOfSightPosition with which to find midpoint optimizations.</param>
-            <param name="outOfSightPosition">The guide to find the optimal in sight position.</param>
+            <param name="currentRelativePosition">The position with which to test Line Of Sight</param>
+            <param name="inSightRelativePosition">The connector to the outOfSightRelativePosition with which to find midpoint optimizations.</param>
+            <param name="outOfSightRelativePosition">The guide to find the optimal in sight position.</param>
             <param name="numberOfOptimizations">The number of times we will midpoint optimize, higher means closer to optimal.</param>
             <param name="collisionThreshold">Usually the object using the path will be larger than 0, use the size of the collision for testing line of sight.</param>
             <param name="collisionMap">Polygon list which we will use for collision (without it, everything is straight line of sight).</param>
@@ -76,10 +76,10 @@
         </member>
         <member name="T:FlatRedBall.AI.Pathfinding.Link">
             <summary>
-            Represents a one-way const-including path to a PositionedNode.
+            Represents a one-way const-including path to a RelativePositionedNode.
             </summary>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.Link.#ctor(FlatRedBall.AI.Pathfinding.PositionedNode,System.Single)">
+        <member name="M:FlatRedBall.AI.Pathfinding.Link.#ctor(FlatRedBall.AI.Pathfinding.RelativePositionedNode,System.Single)">
             <summary>
             Creates a new Link.
             </summary>
@@ -98,12 +98,12 @@
         </member>
         <member name="P:FlatRedBall.AI.Pathfinding.Link.NodeLinkingTo">
             <summary>
-            The destination PositionedNode.  The starting PositionedNode is not stored by the Link instance.
+            The destination RelativePositionedNode.  The starting RelativePositionedNode is not stored by the Link instance.
             </summary>
         </member>
         <member name="T:FlatRedBall.AI.Pathfinding.NodeNetwork">
             <summary>
-            Stores a collection of PositionedNodes and provides common functionality for
+            Stores a collection of RelativePositionedNodes and provides common functionality for
             pathfinding logic.
             </summary>
         </member>
@@ -129,99 +129,99 @@
         </member>
         <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.AddNode">
             <summary>
-            Creates a new PositionedNode and adds it to the NodeNetwork.
+            Creates a new RelativePositionedNode and adds it to the NodeNetwork.
             </summary>
-            <returns>The newly-created PositionedNode.</returns>
+            <returns>The newly-created RelativePositionedNode.</returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.AddNode(FlatRedBall.AI.Pathfinding.PositionedNode)">
+        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.AddNode(FlatRedBall.AI.Pathfinding.RelativePositionedNode)">
             <summary>
-            Adds an already-created PositionedNode to the NodeNetwork.
+            Adds an already-created RelativePositionedNode to the NodeNetwork.
             </summary>
             <remarks>
-            Will not add the PositionedNode if it is already part of the NodeNetwork
+            Will not add the RelativePositionedNode if it is already part of the NodeNetwork
             </remarks>
-            <param name="nodeToAdd">The PositionedNode to add.</param>
+            <param name="nodeToAdd">The RelativePositionedNode to add.</param>
         </member>
         <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.FindByName(System.String)">
             <summary>
-            Finds a PositionedNode by the argument nameofNode.
+            Finds a RelativePositionedNode by the argument nameofNode.
             </summary>
-            <param name="nameOfNode">The name of the PositionedNode to search for.</param>
-            <returns>The PositionedNode with the matching Name, or null if no PositionedNodes match.</returns>
+            <param name="nameOfNode">The name of the RelativePositionedNode to search for.</param>
+            <returns>The RelativePositionedNode with the matching Name, or null if no RelativePositionedNodes match.</returns>
         </member>
         <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetClosestNodeTo(Microsoft.Xna.Framework.Vector3@)">
             <summary>
-            Returns the PositionedNode that's the closest to the argument position.
+            Returns the RelativePositionedNode that's the closest to the argument position.
             </summary>
-            <param name="position">The point to find the closest PositionedNode to.</param>
-            <returns>The PositionedNode that is the closest to the argument position.</returns>
+            <param name="position">The point to find the closest RelativePositionedNode to.</param>
+            <returns>The RelativePositionedNode that is the closest to the argument position.</returns>
         </member>
         <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetVisibleNodeRadius(FlatRedBall.Camera,System.Int32)">
             <summary>
-            Returns the radius of the PositionedNode visible representation Polygons.
+            Returns the radius of the RelativePositionedNode visible representation Polygons.
             </summary>
             <remarks>
-            The size of the PositionedNode visible representation Polygons depends on the
+            The size of the RelativePositionedNode visible representation Polygons depends on the
             camera's Z position - as the Camera moves further away, the Polygons are drawn larger.
             If the Camera is viewing down the Z axis then changing the Z will not affect the visible
-            size of the PositionedNode visible representation.
+            size of the RelativePositionedNode visible representation.
             </remarks>
             <param name="camera">The camera to use when calculating the size.</param>
-            <param name="nodeIndex">The index of the PositionedNode in the NodeNetwork.  Since nodes can be in 
-            3D space the individual PositionedNode is required.</param>
+            <param name="nodeIndex">The index of the RelativePositionedNode in the NodeNetwork.  Since nodes can be in 
+            3D space the individual RelativePositionedNode is required.</param>
             <returns>The radius of the node.</returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetPath(FlatRedBall.AI.Pathfinding.PositionedNode,FlatRedBall.AI.Pathfinding.PositionedNode)">
+        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetPath(FlatRedBall.AI.Pathfinding.RelativePositionedNode,FlatRedBall.AI.Pathfinding.RelativePositionedNode)">
             <summary>
-            Returns the List of PositionedNodes which make the path from the start PositionedNode to the end PositionedNode.
+            Returns the List of RelativePositionedNodes which make the path from the start RelativePositionedNode to the end RelativePositionedNode.
             </summary>
             <remarks>
             If start and end are the same node then the List returned will contain that node.
             </remarks>
-            <param name="start">The PositionedNode to begin the path at.</param>
-            <param name="end">The destination PositionedNode.</param>
-            <returns>The list of nodes to travel through to reach the end PositionedNode from the start PositionedNode.  The
+            <param name="start">The RelativePositionedNode to begin the path at.</param>
+            <param name="end">The destination RelativePositionedNode.</param>
+            <returns>The list of nodes to travel through to reach the end RelativePositionedNode from the start RelativePositionedNode.  The
             start and end nodes are included in the returned List.</returns>
         </member>
         <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetPath(Microsoft.Xna.Framework.Vector3@,Microsoft.Xna.Framework.Vector3@)">
             <summary>
-            Returns the List of PositionedNodes which make the path from the start Vector3 to the end Vector3.
+            Returns the List of RelativePositionedNodes which make the path from the start Vector3 to the end Vector3.
             </summary>
             <remarks>
             This method finds the closest nodes to each of the arguments, then calls the overload for GetPath which takes
-            PositionedNode arguments.
+            RelativePositionedNode arguments.
             </remarks>
             <param name="startPoint">The world-coordinate start position.</param>
             <param name="endPoint">The world-coordinate end position.</param>
-            <returns>The list of nodes to travel through to reach the closest PositionedNode to the endPoint from the closest
-            PositionedNode to the startPoint.</returns>
+            <returns>The list of nodes to travel through to reach the closest RelativePositionedNode to the endPoint from the closest
+            RelativePositionedNode to the startPoint.</returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetPathOrClosest(FlatRedBall.AI.Pathfinding.PositionedNode,FlatRedBall.AI.Pathfinding.PositionedNode)">
+        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetPathOrClosest(FlatRedBall.AI.Pathfinding.RelativePositionedNode,FlatRedBall.AI.Pathfinding.RelativePositionedNode)">
             <summary>
-            Returns the List of PositionedNodes which make the path from the start PositionedNode to the end PositionedNode, or the node closest to the end node which is linked through the network to the start PositionedNode.
+            Returns the List of RelativePositionedNodes which make the path from the start RelativePositionedNode to the end RelativePositionedNode, or the node closest to the end node which is linked through the network to the start RelativePositionedNode.
             </summary>
             <remarks>
             If start and end are the same node then the List returned will contain that node.
             </remarks>
-            <param name="start">The PositionedNode to begin the path at.</param>
-            <param name="end">The optimal destination PositionedNode.</param>
-            <returns>The list of nodes to travel through to reach the end PositionedNode, or the node closest to the PositionedNode which is connected to the start PositionedNode, from the start PositionedNode.  The
+            <param name="start">The RelativePositionedNode to begin the path at.</param>
+            <param name="end">The optimal destination RelativePositionedNode.</param>
+            <returns>The list of nodes to travel through to reach the end RelativePositionedNode, or the node closest to the RelativePositionedNode which is connected to the start RelativePositionedNode, from the start RelativePositionedNode.  The
             start and end nodes are included in the returned List.</returns>
         </member>
         <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetPathOrClosest(Microsoft.Xna.Framework.Vector3@,Microsoft.Xna.Framework.Vector3@)">
             <summary>
-            Returns the List of PositionedNodes which make the path from the start Vector3 to the end Vector3, or to the node closest to the end Vector3 available if the end node is not linked in some way to the start node. 
+            Returns the List of RelativePositionedNodes which make the path from the start Vector3 to the end Vector3, or to the node closest to the end Vector3 available if the end node is not linked in some way to the start node. 
             </summary>
             <remarks>
             This method finds the closest nodes to each of the arguments, then calls the overload for GetPathOrClosest which takes
-            PositionedNode arguments.
+            RelativePositionedNode arguments.
             </remarks>
             <param name="startPoint">The world-coordinate start position.</param>
             <param name="endPoint">The world-coordinate end position.</param>
-            <returns>The list of nodes to travel through to reach the closest PositionedNode which is linked to the closest PositionedNode to the startPoint.
+            <returns>The list of nodes to travel through to reach the closest RelativePositionedNode which is linked to the closest RelativePositionedNode to the startPoint.
             </returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetCollisionOptimizedPath(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,FlatRedBall.Math.PositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
+        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetCollisionOptimizedPath(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,FlatRedBall.Math.RelativePositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
             <summary>
             Returns a List of Vector3s that will be an optimized version of GetPath given the NodeNetwork and a Collision Map to test against.
             </summary>
@@ -229,17 +229,17 @@
             This method will get the optimal path between the two vectors using GetPath, and then will optimize it by
             testing line of sight between the nodes to see if the path can be optimized further (for more optimized
             pathfinding). When optimizing the path between two nodes, it will check if the midpoint is in line of sight with the
-            startingPosition, and if it is, change the path to the midpoint instead of the current target node. the numberOfOptimizations
+            startingRelativePosition, and if it is, change the path to the midpoint instead of the current target node. the numberOfOptimizations
             decides how many times it will take the midpoint and optimize further.
             
             This method assumes that the node network does NOT fall within collidable objects.
             </remarks>
-            <param name="startingPosition">The world-coordinate of the starting position.</param>
+            <param name="startingRelativePosition">The world-coordinate of the starting position.</param>
             <param name="destination">The world-coordinate of the destination.</param>
             <param name="collisionMap">The collision map which will have the obstacles you are trying to path around.</param>
             <returns></returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetCollisionOptimizedPath(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,System.Int32,System.Int32,System.Single,FlatRedBall.Math.PositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
+        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.GetCollisionOptimizedPath(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3,System.Int32,System.Int32,System.Single,FlatRedBall.Math.RelativePositionedObjectList{FlatRedBall.Math.Geometry.Polygon})">
             <summary>
             Returns a List of Vector3s that will be an optimized version of GetPath given the NodeNetwork and a Collision Map to test against.
             </summary>
@@ -247,10 +247,10 @@
             This method will get the optimal path between the two vectors using GetPath, and then will optimize it by
             testing line of sight between the nodes to see if the path can be optimized further (for more optimized
             pathfinding). When optimizing the path between two nodes, it will check if the midpoint is in line of sight with the
-            startingPosition, and if it is, change the path to the midpoint instead of the current target node. the numberOfOptimizations
+            startingRelativePosition, and if it is, change the path to the midpoint instead of the current target node. the numberOfOptimizations
             decides how many times it will take the midpoint and optimize further.
             </remarks>
-            <param name="startingPosition">The world-coordinate of the starting position.</param>
+            <param name="startingRelativePosition">The world-coordinate of the starting position.</param>
             <param name="destination">The world-coordinate of the destination.</param>
             <param name="numberOfOptimizations">The number of times the algorithm will take the midpoint between
             two nodes to test if they are within line of sight of each other (higher means nearer to optimal path).</param>
@@ -258,25 +258,25 @@
             <param name="collisionMap">The collision map which will have the obstacles you are trying to path around.</param>
             <returns></returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.Remove(FlatRedBall.AI.Pathfinding.PositionedNode)">
+        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.Remove(FlatRedBall.AI.Pathfinding.RelativePositionedNode)">
             <summary>
-            Removes the argument PositionedNode from the NodeNetwork.  Also destroys any links
-            pointing to the argument PositionedNode.
+            Removes the argument RelativePositionedNode from the NodeNetwork.  Also destroys any links
+            pointing to the argument RelativePositionedNode.
             </summary>
-            <param name="nodeToRemove">The PositionedNode to remove.</param>
+            <param name="nodeToRemove">The RelativePositionedNode to remove.</param>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.Remove(FlatRedBall.AI.Pathfinding.PositionedNode,System.Boolean)">
+        <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.Remove(FlatRedBall.AI.Pathfinding.RelativePositionedNode,System.Boolean)">
             <summary>
-            Removes the argument PositionedNode from the NodeNetwork.  Also destroys any links
-            pointing to the argument PositionedNode.
+            Removes the argument RelativePositionedNode from the NodeNetwork.  Also destroys any links
+            pointing to the argument RelativePositionedNode.
             </summary>
-            <param name="nodeToRemove">The PositionedNode to remove from the network.</param>
+            <param name="nodeToRemove">The RelativePositionedNode to remove from the network.</param>
             <param name="scanAndRemoveOneWayReferences">Scans the entire network and removes all links to this node. Used when not all link relationships are two way.</param>
         </member>
         <member name="M:FlatRedBall.AI.Pathfinding.NodeNetwork.UpdateShapes">
             <summary>
             Updates the visible representation of the NodeNetwork.  This is only needed to be called if the NodeNetwork
-            is visible and if any contained PositionedNodes or Links have changed.
+            is visible and if any contained RelativePositionedNodes or Links have changed.
             </summary>
         </member>
         <member name="P:FlatRedBall.AI.Pathfinding.NodeNetwork.Nodes">
@@ -286,7 +286,7 @@
         </member>
         <member name="P:FlatRedBall.AI.Pathfinding.NodeNetwork.NodeVisibleRepresentation">
             <summary>
-            The polygons used to represent PositionedNodes.  This is populated and managed by the
+            The polygons used to represent RelativePositionedNodes.  This is populated and managed by the
             NodeNetwork if Visible is set to true.
             </summary>
         </member>
@@ -306,89 +306,89 @@
             representation.
             </remarks>
         </member>
-        <member name="T:FlatRedBall.AI.Pathfinding.PositionedNode">
+        <member name="T:FlatRedBall.AI.Pathfinding.RelativePositionedNode">
             <summary>
             An object which has position properties 
             </summary>
         </member>
-        <member name="F:FlatRedBall.AI.Pathfinding.PositionedNode.mParentNode">
+        <member name="F:FlatRedBall.AI.Pathfinding.RelativePositionedNode.mParentNode">
             <summary>
             The node that links to this node.  This is reset every time the 
             containing NodeNetwork searches for a path.
             </summary>
         </member>
-        <member name="F:FlatRedBall.AI.Pathfinding.PositionedNode.mCostToGetHere">
+        <member name="F:FlatRedBall.AI.Pathfinding.RelativePositionedNode.mCostToGetHere">
             <summary>
             The cost to get to this node from the start node.  This variable is
             set when the containing NodeNetwork searches for a path.
             </summary>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PositionedNode.#ctor">
+        <member name="M:FlatRedBall.AI.Pathfinding.RelativePositionedNode.#ctor">
             <summary>
-            Creates a new PositionedNode.
+            Creates a new RelativePositionedNode.
             </summary>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PositionedNode.BreakLinkBetween(FlatRedBall.AI.Pathfinding.PositionedNode)">
+        <member name="M:FlatRedBall.AI.Pathfinding.RelativePositionedNode.BreakLinkBetween(FlatRedBall.AI.Pathfinding.RelativePositionedNode)">
             <summary>
             Disconnects all Links between this and the argument node.
             </summary>
-            <param name="node">The PositionedNode to break links between.</param>
+            <param name="node">The RelativePositionedNode to break links between.</param>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PositionedNode.IsLinkedTo(FlatRedBall.AI.Pathfinding.PositionedNode)">
+        <member name="M:FlatRedBall.AI.Pathfinding.RelativePositionedNode.IsLinkedTo(FlatRedBall.AI.Pathfinding.RelativePositionedNode)">
             <summary>
-            Returns whether this has a Link to the argument PositionedNode.
+            Returns whether this has a Link to the argument RelativePositionedNode.
             </summary>
             <remarks>
-            If this does not link to the argument PositionedNode, but the argument
+            If this does not link to the argument RelativePositionedNode, but the argument
             links back to this, the method will return false.  It only checks links one-way.
             </remarks>
             <param name="node">The argument to test linking.</param>
-            <returns>Whether this PositionedNode links to the argument node.</returns>
+            <returns>Whether this RelativePositionedNode links to the argument node.</returns>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PositionedNode.LinkTo(FlatRedBall.AI.Pathfinding.PositionedNode,System.Single)">
+        <member name="M:FlatRedBall.AI.Pathfinding.RelativePositionedNode.LinkTo(FlatRedBall.AI.Pathfinding.RelativePositionedNode,System.Single)">
             <summary>
             Creates Links from this to the argument nodeToLinkTo, and another Link from the
             argument nodeToLinkTo back to this.
             </summary>
             <remarks>
             If either this or the argument nodeToLinkTo already contains a link to the other 
-            PositionedNode, then the cost of the link is set to the argument costTo.
+            RelativePositionedNode, then the cost of the link is set to the argument costTo.
             </remarks>
-            <param name="nodeToLinkTo">The other PositionedNode to create Links between.</param>
+            <param name="nodeToLinkTo">The other RelativePositionedNode to create Links between.</param>
             <param name="costTo">The cost to travel between this and the argument nodeToLinkTo.</param>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PositionedNode.LinkTo(FlatRedBall.AI.Pathfinding.PositionedNode,System.Single,System.Single)">
+        <member name="M:FlatRedBall.AI.Pathfinding.RelativePositionedNode.LinkTo(FlatRedBall.AI.Pathfinding.RelativePositionedNode,System.Single,System.Single)">
             <summary>
             Creates Links from this to the argument nodeToLinkTo, and another Link from the
             argument nodeToLinkTo back to this.
             </summary>
             <remarks>
             If either this or the argument nodeToLinkTo already contains a link to the other 
-            PositionedNode, then the cost of the link is set to the argument costTo or costFrom as appropriate.
+            RelativePositionedNode, then the cost of the link is set to the argument costTo or costFrom as appropriate.
             </remarks>
-            <param name="nodeToLinkTo">The other PositionedNode to create the Links between.</param>
+            <param name="nodeToLinkTo">The other RelativePositionedNode to create the Links between.</param>
             <param name="costTo">The cost to travel from this to the argument nodeToLinkTo.</param>
             <param name="costFrom">The cost to travel from the nodeToLinkTo back to this.</param>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PositionedNode.LinkToOneWay(FlatRedBall.AI.Pathfinding.PositionedNode,System.Single)">
+        <member name="M:FlatRedBall.AI.Pathfinding.RelativePositionedNode.LinkToOneWay(FlatRedBall.AI.Pathfinding.RelativePositionedNode,System.Single)">
             <summary>
-            Creates a link from this PositionedNode to the argument nodeToLinkTo.  Links
+            Creates a link from this RelativePositionedNode to the argument nodeToLinkTo.  Links
             on the argument nodeToLinkTo are not modified.
             </summary>
             <remarks>
             If this already links to the arugment nodeToLinkTo, the cost is set to the argument
             costTo.
             </remarks>
-            <param name="nodeToLinkTo">The PositionedNode to create a link to.</param>
+            <param name="nodeToLinkTo">The RelativePositionedNode to create a link to.</param>
             <param name="costTo">The cost to travel from this to the argument nodeToLinkTo.</param>
         </member>
-        <member name="M:FlatRedBall.AI.Pathfinding.PositionedNode.ToString">
+        <member name="M:FlatRedBall.AI.Pathfinding.RelativePositionedNode.ToString">
             <summary>
             Returns the string representation of this.
             </summary>
             <returns>The string representation of this.</returns>
         </member>
-        <member name="P:FlatRedBall.AI.Pathfinding.PositionedNode.CostToGetHere">
+        <member name="P:FlatRedBall.AI.Pathfinding.RelativePositionedNode.CostToGetHere">
             <summary>
             Returns the cost to get to this node from the start node.  This
             value is only accurate if the node is contained in list returned
@@ -398,34 +398,34 @@
             This value is reset anytime GetPath is called on the containing NodeNetwork.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.AI.Pathfinding.PositionedNode.Name">
+        <member name="P:FlatRedBall.AI.Pathfinding.RelativePositionedNode.Name">
             <summary>
             The Node's name.  Mainly used for saving NodeNetworks since saved Links reference
-            PositionedNodes by name.
+            RelativePositionedNodes by name.
             </summary>
         </member>
-        <member name="P:FlatRedBall.AI.Pathfinding.PositionedNode.X">
+        <member name="P:FlatRedBall.AI.Pathfinding.RelativePositionedNode.X">
             <summary>
-            The X position of the PositionedNode.
+            The X position of the RelativePositionedNode.
             </summary>
         </member>
-        <member name="P:FlatRedBall.AI.Pathfinding.PositionedNode.Y">
+        <member name="P:FlatRedBall.AI.Pathfinding.RelativePositionedNode.Y">
             <summary>
-            The Y position of the PositionedNode.
+            The Y position of the RelativePositionedNode.
             </summary>
         </member>
-        <member name="P:FlatRedBall.AI.Pathfinding.PositionedNode.Z">
+        <member name="P:FlatRedBall.AI.Pathfinding.RelativePositionedNode.Z">
             <summary>
-            The Z position of the PositionedNode.
+            The Z position of the RelativePositionedNode.
             </summary>
         </member>
-        <member name="P:FlatRedBall.AI.Pathfinding.PositionedNode.Links">
+        <member name="P:FlatRedBall.AI.Pathfinding.RelativePositionedNode.Links">
             <summary>
-            The links belonging to this PositionedNode.
+            The links belonging to this RelativePositionedNode.
             </summary>
             <remarks>
-            This is a list of Links which reference the PositionedNodes that this links to.
-            Links are one-way and PositionedNodes that this links to do not necessarily contain
+            This is a list of Links which reference the RelativePositionedNodes that this links to.
+            Links are one-way and RelativePositionedNodes that this links to do not necessarily contain
             Links back to this.
             </remarks>
         </member>
@@ -517,14 +517,14 @@
             <param name="soundBankFile">The name of the sound bank to retrieve the sound from</param>
             <returns>A new sound</returns>
         </member>
-        <member name="M:FlatRedBall.Audio.AudioManager.GetPositionedSound(System.String)">
+        <member name="M:FlatRedBall.Audio.AudioManager.GetRelativePositionedSound(System.String)">
             <summary>
             Gets a positioned sound
             </summary>
             <param name="soundName">The name of the sound in the XACT project</param>
             <returns>A new positioned sound</returns>
         </member>
-        <member name="M:FlatRedBall.Audio.AudioManager.GetPositionedSound(System.String,System.String)">
+        <member name="M:FlatRedBall.Audio.AudioManager.GetRelativePositionedSound(System.String,System.String)">
             <summary>
             Gets a positioned sound
             </summary>
@@ -532,7 +532,7 @@
             <param name="soundBankFile">The name of the sound bank to retrieve the sound from</param>
             <returns>A new positioned sound</returns>
         </member>
-        <member name="M:FlatRedBall.Audio.AudioManager.RemovePositionedSound(FlatRedBall.Audio.PositionedSound)">
+        <member name="M:FlatRedBall.Audio.AudioManager.RemoveRelativePositionedSound(FlatRedBall.Audio.RelativePositionedSound)">
             <summary>
             Removes the specified sound from the audio manager
             Warning: The sound will stop being positioned when removed
@@ -583,26 +583,26 @@
             Used to manage global variables in the audio engine
             </summary>
         </member>
-        <member name="T:FlatRedBall.Audio.PositionedSound">
+        <member name="T:FlatRedBall.Audio.RelativePositionedSound">
             <summary>
             A sound which has a position enabling effects such as doppler effect and 
             distance-based volume adjustments.
             </summary>
         </member>
-        <member name="T:FlatRedBall.PositionedObject">
+        <member name="T:FlatRedBall.RelativePositionedObject">
             <summary>
             Represents an object with position, rotation, ability to 
             store instructions, and attachment abilities.
             </summary>
             <remarks>
-            The PositionedObject is a common object in FlatRedBall.  It is the root class
-            for a number of FlatRedBall classes including Sprites, Texts, SpriteFrames, PositionedModels,
+            The RelativePositionedObject is a common object in FlatRedBall.  It is the root class
+            for a number of FlatRedBall classes including Sprites, Texts, SpriteFrames, RelativePositionedModels,
             and all Shapes.
             <para>
-            The PositionedObject class is also used as the base class when creating custom Entitiy objects.
+            The RelativePositionedObject class is also used as the base class when creating custom Entitiy objects.
             </para>
             <para>
-            PositionedObjects can be automatically managed by being added to the SpriteManager.
+            RelativePositionedObjects can be automatically managed by being added to the SpriteManager.
             </para>
             </remarks>
         </member>
@@ -644,42 +644,42 @@
             and common FlatRedBall Lists.
             </remarks>
         </member>
-        <member name="T:FlatRedBall.Math.IPositionable">
+        <member name="T:FlatRedBall.Math.IRelativePositionable">
             <summary>
             Provides an interface for 3D position, velocity, and acceleration.
             </summary>
             <remarks>
             For an interface which provides only and no velocity and acceleration, see
-            FlatRedBall.Math.IStaticPositionable.
-            <seealso cref="T:FlatRedBall.Math.IStaticPositionable"/>
+            FlatRedBall.Math.IStaticRelativePositionable.
+            <seealso cref="T:FlatRedBall.Math.IStaticRelativePositionable"/>
             </remarks>
         </member>
-        <member name="P:FlatRedBall.Math.IPositionable.XVelocity">
+        <member name="P:FlatRedBall.Math.IRelativePositionable.XVelocity">
             <summary>
             Gets and sets the absolute X Velocity.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Math.IPositionable.YVelocity">
+        <member name="P:FlatRedBall.Math.IRelativePositionable.YVelocity">
             <summary>
             Gets and sets the absolute Y Velocity.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Math.IPositionable.ZVelocity">
+        <member name="P:FlatRedBall.Math.IRelativePositionable.ZVelocity">
             <summary>
             Gets and sets the absolute Z Velocity.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Math.IPositionable.XAcceleration">
+        <member name="P:FlatRedBall.Math.IRelativePositionable.XAcceleration">
             <summary>
             Gets and sets the absolute X Acceleration.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Math.IPositionable.YAcceleration">
+        <member name="P:FlatRedBall.Math.IRelativePositionable.YAcceleration">
             <summary>
             Gets and sets the absolute Y Acceleration.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Math.IPositionable.ZAcceleration">
+        <member name="P:FlatRedBall.Math.IRelativePositionable.ZAcceleration">
             <summary>
             Gets and sets the absolute Z Acceleration.  Meausred in units per second.
             </summary>
@@ -752,7 +752,7 @@
             will execute on this instance; however, this is not a requirement.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.Position">
+        <member name="F:FlatRedBall.RelativePositionedObject.RelativePosition">
             <summary>
             The absolute world position of the instance.
             </summary>
@@ -761,17 +761,17 @@
             read-only if this object has a Parent.
             </remarks>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.RelativePosition">
+        <member name="F:FlatRedBall.RelativePositionedObject.RelativeRelativePosition">
             <summary>
             The position of the object relative to its Parent in its Parent's coordinate space.
             </summary>
             <remarks>
-            These values become the dominant controller of absolute Position if this
+            These values become the dominant controller of absolute RelativePosition if this
             instance has a Parent.  These values have no impact if the instance does not
             have a Parent.
             </remarks>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.Velocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.Velocity">
             <summary>
             The absolute world velocity of the instance measured in units per second.
             </summary>
@@ -780,15 +780,15 @@
             invalid if this instance has a Parent.
             </remarks>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.RelativeVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.RelativeVelocity">
             <summary>
             The velocity of the object relative to its Parent in its Parent's cooridnate space.
             </summary>
             <remarks>
-            This value modifies the RelativePosition field even if the object does not have a Parent.
+            This value modifies the RelativeRelativePosition field even if the object does not have a Parent.
             </remarks>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.Acceleration">
+        <member name="F:FlatRedBall.RelativePositionedObject.Acceleration">
             <summary>
             The absolute world acceleration of the instance measured in units per second per second.
             </summary>
@@ -803,7 +803,7 @@
             </para>
             </remarks>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.RelativeAcceleration">
+        <member name="F:FlatRedBall.RelativePositionedObject.RelativeAcceleration">
             <summary>
             The acceleration of the object relative to its Parent in its Parent's coordinate space.
             </summary>
@@ -811,162 +811,162 @@
             This value modifies the RelativeVelocity field even if the object does not have a Parent.
             </remarks>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.RealVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.RealVelocity">
             <summary>
             The actual velocity of the object from the last frame to this frame.  This value is only valid
             if the KeepTrackOfReal property has been true for over one frame.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.RealAcceleration">
+        <member name="F:FlatRedBall.RelativePositionedObject.RealAcceleration">
             <summary>
             The actualy acceleration of the object from the last frame to this frame.  This value is only valid
             if the KeepTrackOfReal property has been set to true for over two frames.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.LastPosition">
+        <member name="F:FlatRedBall.RelativePositionedObject.LastRelativePosition">
             <summary>
-            The last Position of the object - used to calculate the RealVelocity field.  This is
+            The last RelativePosition of the object - used to calculate the RealVelocity field.  This is
             valid only if the KeepTrackOfReal property is true.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.LastVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.LastVelocity">
             <summary>
             The last Velocity of the object - this is used to calculate the RealAcceleration field.  This is
             valid only if the KeepTrackOfReal property is true.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mDrag">
+        <member name="F:FlatRedBall.RelativePositionedObject.mDrag">
             <summary>
             The drag of the instance.
             </summary>
             <remarks>
-            <seealso cref="P:FlatRedBall.PositionedObject.Drag"/>
+            <seealso cref="P:FlatRedBall.RelativePositionedObject.Drag"/>
             </remarks>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mName">
+        <member name="F:FlatRedBall.RelativePositionedObject.mName">
             <summary>
             The name of the instance.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRotationX">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRotationX">
             <summary>
             The X component of the object's absolute rotation.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRotationY">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRotationY">
             <summary>
             The Y component of the object's absolute rotation.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRotationZ">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRotationZ">
             <summary>
             The Z component of the object's absolute rotation.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRotationXVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRotationXVelocity">
             <summary>
             The X component of the object's absolute rotational velocity.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRotationYVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRotationYVelocity">
             <summary>
             The Y component of the object's absolute rotational velocity.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRotationZVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRotationZVelocity">
             <summary>
             The Z component of the object's absolute rotational velocity.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRelativeRotationX">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRelativeRotationX">
             <summary>
             The X component of the object's relative rotation.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRelativeRotationY">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRelativeRotationY">
             <summary>
             The Y component of the object's relative rotation.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRelativeRotationZ">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRelativeRotationZ">
             <summary>
             The Z component of the object's relative rotation.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRelativeRotationXVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRelativeRotationXVelocity">
             <summary>
             The X component of the object's relative rotational velocity.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRelativeRotationYVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRelativeRotationYVelocity">
             <summary>
             The Y component of the object's relative rotational velocity.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRelativeRotationZVelocity">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRelativeRotationZVelocity">
             <summary>
             The Z component of the object's relative rotational velocity.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRotationMatrix">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRotationMatrix">
             <summary>
             The matrix representing the absolute orientation of the instance.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mRelativeRotationMatrix">
+        <member name="F:FlatRedBall.RelativePositionedObject.mRelativeRotationMatrix">
             <summary>
             The matrix representing the relative orientation of the object in parent space.  This
             has no impact if the Parent is null.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mListsBelongingTo">
+        <member name="F:FlatRedBall.RelativePositionedObject.mListsBelongingTo">
             <summary>
             The lists that this instance belongs to.  This is how two-way relationships are implemented.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mParent">
+        <member name="F:FlatRedBall.RelativePositionedObject.mParent">
             <summary>
-            The PositionedObject that this is attached to.  If it is null then this does not
+            The RelativePositionedObject that this is attached to.  If it is null then this does not
             follow any relative properties.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mChildren">
+        <member name="F:FlatRedBall.RelativePositionedObject.mChildren">
             <summary>
             The objects that are attached to this instance.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mLastDependencyUpdate">
+        <member name="F:FlatRedBall.RelativePositionedObject.mLastDependencyUpdate">
             <summary>
             The value that was last used when calling UpdateDependencies.
             </summary>
         </member>
-        <member name="F:FlatRedBall.PositionedObject.mInstructions">
+        <member name="F:FlatRedBall.RelativePositionedObject.mInstructions">
             <summary>
             The instructions that belong to this instance.
             </summary>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.#ctor">
+        <member name="M:FlatRedBall.RelativePositionedObject.#ctor">
             <summary>
-            Creates a new PositionedObject instance.
+            Creates a new RelativePositionedObject instance.
             </summary>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.AreSubHierarchiesIdentical(FlatRedBall.PositionedObject,FlatRedBall.PositionedObject)">
+        <member name="M:FlatRedBall.RelativePositionedObject.AreSubHierarchiesIdentical(FlatRedBall.RelativePositionedObject,FlatRedBall.RelativePositionedObject)">
             <summary>
-            Determines whether the tree structure created by attachments of two PositionedObjects are identical.
+            Determines whether the tree structure created by attachments of two RelativePositionedObjects are identical.
             </summary>
             <remarks>
-            This method does not investigate the PositionedObjects any more than looking at their children.  It traverses
-            through the trees multiple times, and can be a very slow method if the PositionedObjects have large subtrees.  
+            This method does not investigate the RelativePositionedObjects any more than looking at their children.  It traverses
+            through the trees multiple times, and can be a very slow method if the RelativePositionedObjects have large subtrees.  
             The subtrees are small enough in most cases
             where there won't be a performance issue.
             </remarks>
-            <param name="s1">The first PositionedObject.</param>
-            <param name="s2">The second PositionedObject.</param>
+            <param name="s1">The first RelativePositionedObject.</param>
+            <param name="s2">The second RelativePositionedObject.</param>
             <returns>Whether the tree structure created by attachments is the same.</returns>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.AttachTo(FlatRedBall.PositionedObject,System.Boolean)">
+        <member name="M:FlatRedBall.RelativePositionedObject.AttachTo(FlatRedBall.RelativePositionedObject,System.Boolean)">
             <summary>
-            Attaches this PositionedObject to the argument newParent.
+            Attaches this RelativePositionedObject to the argument newParent.
             </summary>
             <remarks>
             <para>A useful way to understand the affect of changeRelative is to consider that it is the opposite of whether 
@@ -986,18 +986,18 @@
             the parent isn't rotated).
             </para>
             </remarks>
-            <param name="newParent">The PositionedObject to attach to.</param>
+            <param name="newParent">The RelativePositionedObject to attach to.</param>
             <param name="changeRelative">Whether relative values should change so that absolute values stay the same.</param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.ClearRelationships">
+        <member name="M:FlatRedBall.RelativePositionedObject.ClearRelationships">
             <summary>
-            Detaches this PositionedObject from its parent and detaches all of the PositionedObject's 
+            Detaches this RelativePositionedObject from its parent and detaches all of the RelativePositionedObject's 
             Children.
             </summary>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.CopyFieldsTo(FlatRedBall.PositionedObject)">
+        <member name="M:FlatRedBall.RelativePositionedObject.CopyFieldsTo(FlatRedBall.RelativePositionedObject)">
             <summary>
-            Copies most internal fields of this instance to the argument PositionedObjects.
+            Copies most internal fields of this instance to the argument RelativePositionedObjects.
             </summary>
             <remarks>
             The following fields are not copied:
@@ -1009,61 +1009,61 @@
             </remarks>
             <param name="positionedObject"></param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.CopyAbsoluteToRelative">
+        <member name="M:FlatRedBall.RelativePositionedObject.CopyAbsoluteToRelative">
             <summary>
             Copies the absolute position and rotation values to the relative values.
             </summary>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.Clone``1">
+        <member name="M:FlatRedBall.RelativePositionedObject.Clone``1">
             <summary>
             Creates a clone of this instance typed as a T.
             </summary>
             <typeparam name="T">The type of the new object.</typeparam>
             <returns>The newly created instance.</returns>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.CreateNewChildrenList">
+        <member name="M:FlatRedBall.RelativePositionedObject.CreateNewChildrenList">
             <summary>
-            Creates a new Children PositionedObjectList.
+            Creates a new Children RelativePositionedObjectList.
             </summary>
             <remarks>
-            This method is only necessary if a PositionedObject
+            This method is only necessary if a RelativePositionedObject
             is manually cloned by calling MemberwiseClone.  This
             should not be called to detach children as the two-way
-            relationship between PositionedObject and PositionedObjectList
-            will keep the old Children PositionedObjectList in scope resulting
+            relationship between RelativePositionedObject and RelativePositionedObjectList
+            will keep the old Children RelativePositionedObjectList in scope resulting
             in a memory leak.
             </remarks>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.CreateNewInstructionsList">
+        <member name="M:FlatRedBall.RelativePositionedObject.CreateNewInstructionsList">
             <summary>
             Creates a new InstructionList.
             </summary>
             <remarks>
-            This method is only necessary if a PositionedObject
+            This method is only necessary if a RelativePositionedObject
             is manually cloned by calling MemberwiseClone.  This
             should not be called to clear the Instructions property
             as it will create a new instance and get rid fo the old one
             resulting in unnecessary garbage collection.
             </remarks>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.Detach">
+        <member name="M:FlatRedBall.RelativePositionedObject.Detach">
             <summary>
-            Detaches the PositionedObject from its parent PositionedObject.
+            Detaches the RelativePositionedObject from its parent RelativePositionedObject.
             </summary>
             <remarks>
             This method cleans up the two way relationship between parent and child.
             </remarks>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.ExecuteInstructions(System.Double)">
+        <member name="M:FlatRedBall.RelativePositionedObject.ExecuteInstructions(System.Double)">
             <summary>
             Executes instructions according to the argument currentTime and cycles and reorders
             Instructions as necessary.
             </summary>
             <param name="currentTime">The current time to compare the instruction's TimeToExecute against.</param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.ForceUpdateDependencies">
+        <member name="M:FlatRedBall.RelativePositionedObject.ForceUpdateDependencies">
             <summary>
-            Forces an update of the PositionedObject's absolute position and rotation values 
+            Forces an update of the RelativePositionedObject's absolute position and rotation values 
             according to its attachment and relative values.
             </summary>
             <remarks>
@@ -1076,37 +1076,37 @@
             positions are needed
             immediately after relative values or attachments have been changed.
             
-            <para>This method will recur up the hierarchical PositionedObject struture stopping 
+            <para>This method will recur up the hierarchical RelativePositionedObject struture stopping 
             when it hits the top parent.</para>
             </remarks>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.GetAllDescendantsOneWay(FlatRedBall.Math.AttachableList{FlatRedBall.PositionedObject})">
+        <member name="M:FlatRedBall.RelativePositionedObject.GetAllDescendantsOneWay(FlatRedBall.Math.AttachableList{FlatRedBall.RelativePositionedObject})">
             <summary>
             Fills the argument list with the instance's parent, grandparent, etc. recursively.
             </summary>
             <param name="positionedObjects">The list to fill.</param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.Initialize">
+        <member name="M:FlatRedBall.RelativePositionedObject.Initialize">
             <summary>
             Resets all properties to their default values and clears the ListsBelongingTo property.
             </summary>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.Initialize(System.Boolean)">
+        <member name="M:FlatRedBall.RelativePositionedObject.Initialize(System.Boolean)">
             <summary>
             Resets all properties to their default values.
             </summary>
             <param name="clearListsBelongingTo">Whether the instance should clear its ListsBelongingTo property.</param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.IsParentOf(FlatRedBall.Math.IAttachable)">
+        <member name="M:FlatRedBall.RelativePositionedObject.IsParentOf(FlatRedBall.Math.IAttachable)">
             <summary>
             Determines whether this is a parent (or grandparent of any level) of the argument
-            PositionedObject
+            RelativePositionedObject
             </summary>
-            <param name="attachable">The PositionedObject to test whether it is lower 
+            <param name="attachable">The RelativePositionedObject to test whether it is lower 
             in the same hiearchical structure.</param>
             <returns>Whether the attachable argument is a child of this instance.</returns>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.Pause(FlatRedBall.Instructions.InstructionList)">
+        <member name="M:FlatRedBall.RelativePositionedObject.Pause(FlatRedBall.Instructions.InstructionList)">
             <summary>
             Stops all automatic behavior and stores the necessary instructions to 
             resume activity in the argument InstructionList.
@@ -1114,7 +1114,7 @@
             <param name="instructions">The List to store instructions which are executed to
             resume activity.</param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.RemoveSelfFromListsBelongingTo">
+        <member name="M:FlatRedBall.RelativePositionedObject.RemoveSelfFromListsBelongingTo">
             <summary>
             Removes this instance from all Lists that it shares two-way
             relationships with.
@@ -1123,104 +1123,104 @@
             FlatRedBall managers use this method in Remove methods.
             </remarks>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.ResetRealValues">
+        <member name="M:FlatRedBall.RelativePositionedObject.ResetRealValues">
             <summary>
             Sets the internal storage of the last frame's position and velocity
             so that the next frame's real velocity and acceleration values will be
             Vector3.Zero.
             </summary>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.SetRealValuesFrom(FlatRedBall.PositionedObject)">
+        <member name="M:FlatRedBall.RelativePositionedObject.SetRealValuesFrom(FlatRedBall.RelativePositionedObject)">
             <summary>
             Copies all values related to "Real" values from the argument
-            PositionedObject to this instance.
+            RelativePositionedObject to this instance.
             </summary>
-            <param name="positionedObject">The PositionedObject to copy Real values from.</param>
+            <param name="positionedObject">The RelativePositionedObject to copy Real values from.</param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.SetRelativeFromAbsolute">
+        <member name="M:FlatRedBall.RelativePositionedObject.SetRelativeFromAbsolute">
             <summary>
             Uses the object's absolute position and orientation along with its
             Parent's orientation and position to update its relative position and orientation.
             </summary>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.TimedActivity(System.Single,System.Double,System.Single)">
+        <member name="M:FlatRedBall.RelativePositionedObject.TimedActivity(System.Single,System.Double,System.Single)">
             <summary>
             Performs the every-frame position and rotation changing activity.
             </summary>
             <remarks>
             This method does not need to be explicitly called
             for managed objects such as Sprites and collision shapes.
-            This method is exposed for custom PositionedObjects which
+            This method is exposed for custom RelativePositionedObjects which
             are not added to a Manager.
             </remarks>
             <param name="secondDifference">The amount of time since last frame.</param>
             <param name="secondDifferenceSquaredDividedByTwo">Pre-calculated ((secondDifference*secondDifference) ^2) / 2.</param>
             <param name="secondsPassedLastFrame">The last frame secondDifference.</param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.TimedActivityRelative(System.Single,System.Double)">
+        <member name="M:FlatRedBall.RelativePositionedObject.TimedActivityRelative(System.Single,System.Double)">
             <summary>
             Performs the every-frame relative position and relative rotation changing activity.
             </summary>
             <remarks>
             This method does not need to be explicitly called
             for managed objects such as Sprites and collision shapes.
-            This method is exposed for custom PositionedObjects which
+            This method is exposed for custom RelativePositionedObjects which
             are not added to a Manager.
             </remarks>
             <param name="secondDifference">The amount of time since last frame.</param>
             <param name="secondDifferenceSquaredDividedByTwo">Pre-calculated ((secondDifference*secondDifference) ^2) / 2.</param>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.ToString">
+        <member name="M:FlatRedBall.RelativePositionedObject.ToString">
             <summary>
-            Returns a string containing common information about the PositionedObject.
+            Returns a string containing common information about the RelativePositionedObject.
             </summary>
             <returns>The string containing the information about this object.</returns>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.UpdateDependencies(System.Double)">
+        <member name="M:FlatRedBall.RelativePositionedObject.UpdateDependencies(System.Double)">
             <summary>
-            Updates the absolute position and rotation using relative values and the Parent PositionedObject.
+            Updates the absolute position and rotation using relative values and the Parent RelativePositionedObject.
             </summary>
             <remarks>
             This method recurs up the hierarchical chain calling UpdateDependencies so that the entire family of 
-            PositionedObjects is positioned appropriately.
+            RelativePositionedObjects is positioned appropriately.
             </remarks>
         </member>
-        <member name="M:FlatRedBall.PositionedObject.UpdateRotationValuesAccordingToMatrix">
+        <member name="M:FlatRedBall.RelativePositionedObject.UpdateRotationValuesAccordingToMatrix">
             <summary>
             Sets the absolute rotation values according to the object's RotationMatrix.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.Children">
+        <member name="P:FlatRedBall.RelativePositionedObject.Children">
             <summary>
-            The list of PositionedObjects that are attached to this instance.
+            The list of RelativePositionedObjects that are attached to this instance.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.ListsBelongingTo">
+        <member name="P:FlatRedBall.RelativePositionedObject.ListsBelongingTo">
             <summary>
             The List of IAttachableRemovables (containers) that this shares a two-way relationship with.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.Name">
+        <member name="P:FlatRedBall.RelativePositionedObject.Name">
             <summary>
             The instance's name.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.Parent">
+        <member name="P:FlatRedBall.RelativePositionedObject.Parent">
             <summary>
-            The PositionedObject that this instance is attached to.
+            The RelativePositionedObject that this instance is attached to.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.ParentRotationChangesPosition">
+        <member name="P:FlatRedBall.RelativePositionedObject.ParentRotationChangesRelativePosition">
             <summary>
             Whether the parent's rotation should change the object's position.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.ParentRotationChangesRotation">
+        <member name="P:FlatRedBall.RelativePositionedObject.ParentRotationChangesRotation">
             <summary>
             Gets and sets whether the parent's rotation should change the object's rotation.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeX">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeX">
             <summary>
             Gets and sets the X position relative to the instance's parent.
             </summary>
@@ -1228,7 +1228,7 @@
             If the instance does not have a parent this property has no effect.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeY">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeY">
             <summary>
             Gets and sets the Y position relative to the instance's parent.
             </summary>
@@ -1236,7 +1236,7 @@
             If the instance does not have a parent this property has no effect.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeZ">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeZ">
             <summary>
             Gets and sets the Z position relative to the instance's parent.
             </summary>
@@ -1244,52 +1244,52 @@
             If the instance does not have a parent this property has no effect.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeXVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeXVelocity">
             <summary>
             Gets and sets the rate of change of the RelativeX property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeYVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeYVelocity">
             <summary>
             Gets and sets the rate of change of the RelativeY property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeZVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeZVelocity">
             <summary>
             Gets and sets the rate of change of the RelativeZ property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeXAcceleration">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeXAcceleration">
             <summary>
             Gets and sets the rate of change of the RelativeXVelocity property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeYAcceleration">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeYAcceleration">
             <summary>
             Gets and sets the rate of change of the RelativeYVelocity property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeZAcceleration">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeZAcceleration">
             <summary>
             Gets and sets the rate of change of the RelativeZVelocity property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeRotationX">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeRotationX">
             <summary>
             Gets and sets the rotation on the X axis relative to the instance's parent.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeRotationY">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeRotationY">
             <summary>
             Gets and sets the rotation on the Y axis relative to the instance's parent.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeRotationZ">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeRotationZ">
             <summary>
             Gets and sets the rotation on the Z axis relative to the instance's parent.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeRotationMatrix">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeRotationMatrix">
             <summary>
             The rotation representing the orientation relative to the instance's Parent.
             </summary>
@@ -1297,22 +1297,22 @@
             If the instance does not have a Parent then this property has no effect.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeRotationXVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeRotationXVelocity">
             <summary>
             Gets and sets the rate of change of the RelativeRotationX property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeRotationYVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeRotationYVelocity">
             <summary>
             Gets and sets the rate of change of the RelativeRotationY property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeRotationZVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeRotationZVelocity">
             <summary>
             Gets and sets the rate of change of the RelativeRotationZ property in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.LastDependencyUpdate">
+        <member name="P:FlatRedBall.RelativePositionedObject.LastDependencyUpdate">
             <summary>
             The last time Update was called.
             </summary>
@@ -1320,62 +1320,62 @@
             This value is set through the TimeManager's CurrentTime property.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RotationX">
+        <member name="P:FlatRedBall.RelativePositionedObject.RotationX">
             <summary>
-            The x rotation of a PositionedObject
+            The x rotation of a RelativePositionedObject
             </summary>
             <remarks>
-            This rotates the PositionedObject about the X axis.  Rotation is represented in 
+            This rotates the RelativePositionedObject about the X axis.  Rotation is represented in 
             radians.  Angles will always be greater than or equal to 0 and less than
             two times PI.  Values outside of these bounds will be regulated by the
             set property.
             
-            RotationX can be used to flip an image of a PositionedObject, but a PositionedObject should not 
+            RotationX can be used to flip an image of a RelativePositionedObject, but a RelativePositionedObject should not 
             be flipped during animation (if it is a Sprite).  AnimationFrames can be flipped without 
             setting a Sprite's Rotation values.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RotationY">
+        <member name="P:FlatRedBall.RelativePositionedObject.RotationY">
             <summary>
-            The y rotation of a PositionedObject
+            The y rotation of a RelativePositionedObject
             </summary>
             <remarks>
-            This rotates the PositionedObject about the Y axis.  Rotation is represented in 
+            This rotates the RelativePositionedObject about the Y axis.  Rotation is represented in 
             radians.  Angles will always be greater than or equal to 0 and less than
             two times PI.  Values outside of these bounds will be regulated by the
             set property.
             
-            RotationY can be used to flip an image and set it upside down, but a PositionedObject
+            RotationY can be used to flip an image and set it upside down, but a RelativePositionedObject
             should not be flipped during animation (if it is a Sprite).  AnimationFrames can be flipped without
             setting a Sprite's Rotation values.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RotationZ">
+        <member name="P:FlatRedBall.RelativePositionedObject.RotationZ">
             <summary>
-            The z rotation of a PositionedObject
+            The z rotation of a RelativePositionedObject
             </summary>
             <remarks>
-            This rotates the PositionedObject about the Z axis.  Rotation is represented in 
+            This rotates the RelativePositionedObject about the Z axis.  Rotation is represented in 
             radians.  Angles will always be greater than or equal to 0 and less than
             two times PI.  Values outside of these bounds will be regulated by the
             set property.
             
-            RotationZ can be used to "spin" a PositionedObject, with a positive variable spinning
+            RotationZ can be used to "spin" a RelativePositionedObject, with a positive variable spinning
             clockwise.  
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RotationMatrix">
+        <member name="P:FlatRedBall.RelativePositionedObject.RotationMatrix">
             <summary>
             The matrix applied to the object resulting in its final orientation.
             </summary>
             <remarks>
             The RotationMatrix and RotationX, RotationY, RotationZ reflect eachother.  Changing one will change the other.
-            <seealso cref="P:FlatRedBall.PositionedObject.RotationX"/>
-            <seealso cref="P:FlatRedBall.PositionedObject.RotationY"/>
-            <seealso cref="P:FlatRedBall.PositionedObject.RotationZ"/>
+            <seealso cref="P:FlatRedBall.RelativePositionedObject.RotationX"/>
+            <seealso cref="P:FlatRedBall.RelativePositionedObject.RotationY"/>
+            <seealso cref="P:FlatRedBall.RelativePositionedObject.RotationZ"/>
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.TransformationMatrix">
+        <member name="P:FlatRedBall.RelativePositionedObject.TransformationMatrix">
             <summary>
             Gets or sets the overall transformation of this object
             </summary>
@@ -1383,7 +1383,7 @@
             Changing the transformation matrix will change rotation, position and scaling
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RelativeTransformationMatrix">
+        <member name="P:FlatRedBall.RelativePositionedObject.RelativeTransformationMatrix">
             <summary>
             Gets or sets the overall transformation of this object, relative to its parent
             </summary>
@@ -1391,91 +1391,91 @@
             Changing the transformation matrix will change rotation, position and scaling
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RotationXVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RotationXVelocity">
             <summary>
             The absolute X rotation speed measured in radians per second
             </summary>
             <remarks>
-            The RotationXVelocity variable is how fast a PositionedObject is rotating on the X axis. It is
+            The RotationXVelocity variable is how fast a RelativePositionedObject is rotating on the X axis. It is
             measured in radians per second.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RotationYVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RotationYVelocity">
             <summary>
             The absolute Y rotation speed measured in radians per second
             </summary>
             <remarks>
-            The RotationYVelocity variable is how fast a PositionedObject is rotating on the Y axis. It is
+            The RotationYVelocity variable is how fast a RelativePositionedObject is rotating on the Y axis. It is
             measured in radians per second.
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.RotationZVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.RotationZVelocity">
             <summary>
             The absolute Z rotation speed measured in radians per second
             </summary>
             <remarks>
-            The RotationZVelocity variable is how fast a PositionedObject is rotating on the Z axis. It is
+            The RotationZVelocity variable is how fast a RelativePositionedObject is rotating on the Z axis. It is
             measured in radians per second.
             </remarks>
             
         </member>
-        <member name="P:FlatRedBall.PositionedObject.TopParent">
+        <member name="P:FlatRedBall.RelativePositionedObject.TopParent">
             <summary>
             Returns the top node in the attachment hierarchical relationship
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.X">
+        <member name="P:FlatRedBall.RelativePositionedObject.X">
             <summary>
             The absolute X position.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.Y">
+        <member name="P:FlatRedBall.RelativePositionedObject.Y">
             <summary>
             The absolute Y position.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.Z">
+        <member name="P:FlatRedBall.RelativePositionedObject.Z">
             <summary>
             The absolute Z position.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.XVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.XVelocity">
             <summary>
             Gets and sets the absolute X Velocity.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.YVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.YVelocity">
             <summary>
             Gets and sets the absolute Y Velocity.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.ZVelocity">
+        <member name="P:FlatRedBall.RelativePositionedObject.ZVelocity">
             <summary>
             Gets and sets the absolute Z Velocity.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.XAcceleration">
+        <member name="P:FlatRedBall.RelativePositionedObject.XAcceleration">
             <summary>
             Gets and sets the absolute X Acceleration.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.YAcceleration">
+        <member name="P:FlatRedBall.RelativePositionedObject.YAcceleration">
             <summary>
             Gets and sets the absolute Y Acceleration.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.ZAcceleration">
+        <member name="P:FlatRedBall.RelativePositionedObject.ZAcceleration">
             <summary>
             Gets and sets the absolute Z Acceleration.  Meausred in units per second.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.KeepTrackOfReal">
+        <member name="P:FlatRedBall.RelativePositionedObject.KeepTrackOfReal">
             <summary>
-            Whether the PositionedObject's RealVelocity and RealAcceleration are
+            Whether the RelativePositionedObject's RealVelocity and RealAcceleration are
             updated every frame.
             </summary>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.Drag">
+        <member name="P:FlatRedBall.RelativePositionedObject.Drag">
             <summary>
             Linear approximation of drag.  This reduces the Velocity of the
             instance according to its absolute Velocity.  
@@ -1488,38 +1488,38 @@
             </para>
             </remarks>
         </member>
-        <member name="P:FlatRedBall.PositionedObject.Instructions">
+        <member name="P:FlatRedBall.RelativePositionedObject.Instructions">
             <summary>
             The list of Instructions that this instance owns.  These instructions usually
             will execute on this instance; however, this is not a requirement.
             </summary>
         </member>
-        <member name="M:FlatRedBall.Audio.PositionedSound.Play">
+        <member name="M:FlatRedBall.Audio.RelativePositionedSound.Play">
             <summary>
             Begins playback of this sound, or resumes playback (if it has been paused)
             </summary>
         </member>
-        <member name="M:FlatRedBall.Audio.PositionedSound.Pause">
+        <member name="M:FlatRedBall.Audio.RelativePositionedSound.Pause">
             <summary>
             Pauses playback of this sound
             </summary>
         </member>
-        <member name="M:FlatRedBall.Audio.PositionedSound.Stop">
+        <member name="M:FlatRedBall.Audio.RelativePositionedSound.Stop">
             <summary>
             Stops playing this sound immediately
             </summary>
         </member>
-        <member name="M:FlatRedBall.Audio.PositionedSound.StopAsAuthored">
+        <member name="M:FlatRedBall.Audio.RelativePositionedSound.StopAsAuthored">
             <summary>
             Stops playing this sound as authored in the XACT project
             </summary>
         </member>
-        <member name="M:FlatRedBall.Audio.PositionedSound.StopImmediately">
+        <member name="M:FlatRedBall.Audio.RelativePositionedSound.StopImmediately">
             <summary>
             Stops playing this sound immediately
             </summary>
         </member>
-        <member name="P:FlatRedBall.Audio.PositionedSound.DopplerScale">
+        <member name="P:FlatRedBall.Audio.RelativePositionedSound.DopplerScale">
             <summary>
             Gets or sets a scalar applied to the level of Doppler effect calculated
             between this sound and a listener.
@@ -1646,9 +1646,9 @@
             </remarks>
             <param name="sprite">The Sprite to keep in view.</param>
         </member>
-        <member name="M:FlatRedBall.Camera.PositionRandomlyInView(FlatRedBall.Math.IPositionable,System.Single,System.Single)">
+        <member name="M:FlatRedBall.Camera.RelativePositionRandomlyInView(FlatRedBall.Math.IRelativePositionable,System.Single,System.Single)">
             <summary>
-            Positiones the argument positionable randomly in camera between the argument bounds.
+            RelativePositiones the argument positionable randomly in camera between the argument bounds.
             </summary>
             <remarks>
             Assumes the camera is viewing down the Z plane - it is unrotated.
@@ -1691,7 +1691,7 @@
             Copies all fields from the argument to the camera instance.
             </summary>
             <remarks>
-            This method will not copy the name, InstructionArray, or children PositionedObjects 
+            This method will not copy the name, InstructionArray, or children RelativePositionedObjects 
             (objects attached to the cameraToSetTo).
             </remarks>
             <param name="cameraToSetTo">The camera to clone.</param>
@@ -1809,9 +1809,9 @@
             An XML-Serializable object representing the state of a Link.
             </summary>
         </member>
-        <member name="T:FlatRedBall.Content.AI.Pathfinding.PositionedNodeSave">
+        <member name="T:FlatRedBall.Content.AI.Pathfinding.RelativePositionedNodeSave">
             <summary>
-            Save class for the PositionedNode class.  This class is used in the
+            Save class for the RelativePositionedNode class.  This class is used in the
             .nntx (Node Network XML) file type.
             </summary>
         </member>
@@ -1891,14 +1891,14 @@
         <member name="F:FlatRedBall.Content.AnimationChain.AnimationFrameSaveBase.RelativeX">
             <summary>
             The relative X position of the object that is using this AnimationFrame.  This
-            is only applied if the IAnimationChainAnimatable's UseAnimationRelativePosition is
+            is only applied if the IAnimationChainAnimatable's UseAnimationRelativeRelativePosition is
             set to true.
             </summary>
         </member>
         <member name="F:FlatRedBall.Content.AnimationChain.AnimationFrameSaveBase.RelativeY">
             <summary>
             The relative Y position of the object that is using this AnimationFrame.  This
-            is only applied if the IAnimationChainAnimatable's UseAnimationRelativePosition is
+            is only applied if the IAnimationChainAnimatable's UseAnimationRelativeRelativePosition is
             set to true.
             </summary>
         </member>
@@ -2068,7 +2068,7 @@
             </summary>
             <remarks>
             The ordering is performed by Mesh and by MeshPart.  That is, if there were
-            a PositionedModel with multiple Meshes and multiple MeshParts per mesh, then
+            a RelativePositionedModel with multiple Meshes and multiple MeshParts per mesh, then
             the application might go as follows:
             
             model.Mesh[0].MeshPart[0].Effect = EffectFrom(EffectFiles[0]);
@@ -2779,14 +2779,14 @@
         <member name="F:FlatRedBall.Graphics.Animation.AnimationFrame.RelativeX">
             <summary>
             The relative X position of the object that is using this AnimationFrame.  This
-            is only applied if the IAnimationChainAnimatable's UseAnimationRelativePosition is
+            is only applied if the IAnimationChainAnimatable's UseAnimationRelativeRelativePosition is
             set to true.
             </summary>
         </member>
         <member name="F:FlatRedBall.Graphics.Animation.AnimationFrame.RelativeY">
             <summary>
             The relative Y position of the object that is using this AnimationFrame.  This
-            is only applied if the IAnimationChainAnimatable's UseAnimationRelativePosition is
+            is only applied if the IAnimationChainAnimatable's UseAnimationRelativeRelativePosition is
             set to true.
             </summary>
         </member>
@@ -2878,7 +2878,7 @@
             Gets whether the current AnimationChain just cycled (looped) this frame due to animation.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Graphics.Animation.IAnimationChainAnimatable.UseAnimationRelativePosition">
+        <member name="P:FlatRedBall.Graphics.Animation.IAnimationChainAnimatable.UseAnimationRelativeRelativePosition">
             <summary>
             Whether the current AnimationFrame's relative position values (RelativeX and RelativeY) are applied
             when animating.
@@ -2992,7 +2992,7 @@
             <param name="effect">The effect to cache</param>
             <param name="cacheShared">Whether or not shared parameters should be cached</param>
         </member>
-        <member name="M:FlatRedBall.Graphics.EffectCache.#ctor(FlatRedBall.Graphics.Model.PositionedModel,System.Boolean)">
+        <member name="M:FlatRedBall.Graphics.EffectCache.#ctor(FlatRedBall.Graphics.Model.RelativePositionedModel,System.Boolean)">
             <summary>
             Caches an model's effects and effect parameters
             </summary>
@@ -3366,11 +3366,11 @@
             The Batches referenced by and drawn on the Layer.
             </summary>
             <remarks>
-            The Layer stores a regular IDrawableBatch PositionedObjectList
+            The Layer stores a regular IDrawableBatch RelativePositionedObjectList
             internally.  Since this internal list is used for drawing
             the layer the engine sorts it every frame.  
             
-            For efficiency purposes the internal IDrawableBatch PositionedObjectList
+            For efficiency purposes the internal IDrawableBatch RelativePositionedObjectList
             cannot be sorted.
             </remarks>
         </member>
@@ -3391,11 +3391,11 @@
             The Texts referenced by and drawn on the Layer.
             </summary>
             <remarks>
-            The Layer stores a regular Text PositionedObjectList
+            The Layer stores a regular Text RelativePositionedObjectList
             internally.  Since this internal list is used for drawing 
             the layer the engine sorts it every frame.  
             
-            For efficiency purposes the internal Text PositionedObjectList 
+            For efficiency purposes the internal Text RelativePositionedObjectList 
             cannot be sorted.
             </remarks>
         </member>
@@ -3412,11 +3412,11 @@
             The Models referenced by and drawn on the Layer.
             </summary>
             <remarks>
-            The Layer stores a regular PositionedModel PositionedObjectList
+            The Layer stores a regular RelativePositionedModel RelativePositionedObjectList
             internally.  Since this internal list is used for drawing
             the layer the engine sorts it every frame.  
             
-            For efficiency purposes the internal PositionedModel PositionedObjectList
+            For efficiency purposes the internal RelativePositionedModel RelativePositionedObjectList
             cannot be sorted.
             </remarks>
         </member>
@@ -3470,7 +3470,7 @@
             This is mostly for the Windows Phone system
             All lights on the phone are directional, relative to the object being lit.
             </summary>
-            <param name="objectPosition"></param>
+            <param name="objectRelativePosition"></param>
             <returns></returns>
         </member>
         <member name="P:FlatRedBall.Graphics.Lighting.LightBase.DiffuseColor">
@@ -3500,7 +3500,7 @@
             All lights on the phone are directional, relative to the object being lit.
             Overloaded for directional lights since they always effect all models the same.
             </summary>
-            <param name="objectPosition"></param>
+            <param name="objectRelativePosition"></param>
             <returns></returns>
         </member>
         <member name="T:FlatRedBall.Graphics.Lighting.LightIndexer`1">
@@ -3552,12 +3552,12 @@
             <param name="diffuseColor"></param>
             <returns></returns>
         </member>
-        <member name="T:FlatRedBall.Graphics.Model.AnimatedPositionedBone">
+        <member name="T:FlatRedBall.Graphics.Model.AnimatedRelativePositionedBone">
             <summary>
             An animated bone that can be attached to
             </summary>
         </member>
-        <member name="T:FlatRedBall.Graphics.Model.PositionedBone">
+        <member name="T:FlatRedBall.Graphics.Model.RelativePositionedBone">
             <summary>
             A bone that can be attached to
             </summary>
@@ -4274,24 +4274,24 @@
             Provides access to the BasicModelEffect.  This should only be used in debugging.
             </summary>
         </member>
-        <member name="T:FlatRedBall.Graphics.Model.PositionedBoneCollection">
+        <member name="T:FlatRedBall.Graphics.Model.RelativePositionedBoneCollection">
             <summary>
             Provides access to positioned bones in a model
             </summary>
         </member>
-        <member name="M:FlatRedBall.Graphics.Model.PositionedBoneCollection.DetachAll">
+        <member name="M:FlatRedBall.Graphics.Model.RelativePositionedBoneCollection.DetachAll">
             <summary>
             Detaches all bones from parents/children and destroys the collection
             </summary>
         </member>
-        <member name="M:FlatRedBall.Graphics.Model.PositionedBoneCollection.CreatePositionedBone(System.String)">
+        <member name="M:FlatRedBall.Graphics.Model.RelativePositionedBoneCollection.CreateRelativePositionedBone(System.String)">
             <summary>
             Creates a positioned bone when asking for one that does not exist yet
             </summary>
             <param name="boneName">The name of the bone to get</param>
             <returns>A positioned bone or animated positioned bone</returns>
         </member>
-        <member name="P:FlatRedBall.Graphics.Model.PositionedBoneCollection.Item(System.String)">
+        <member name="P:FlatRedBall.Graphics.Model.RelativePositionedBoneCollection.Item(System.String)">
             <summary>
             Gets the positioned bone with the specified name
             </summary>
@@ -4313,41 +4313,41 @@
             Whether the instance is currently selectable (active).
             </summary>
         </member>
-        <member name="F:FlatRedBall.Graphics.Model.PositionedModel.LodMeshOrder">
+        <member name="F:FlatRedBall.Graphics.Model.RelativePositionedModel.LodMeshOrder">
             <summary>
             Specifies the ordering and distance of meshes to be used at different LODs
             </summary>
         </member>
-        <member name="F:FlatRedBall.Graphics.Model.PositionedModel.mAnimate">
+        <member name="F:FlatRedBall.Graphics.Model.RelativePositionedModel.mAnimate">
             <summary>
             Whether animation is being performed.
             </summary>
         </member>
-        <member name="F:FlatRedBall.Graphics.Model.PositionedModel.CustomEffect">
+        <member name="F:FlatRedBall.Graphics.Model.RelativePositionedModel.CustomEffect">
             <summary>
             Specifies a custom effect to use with this model
             (when null, uses Model's internal effects)
             </summary>
         </member>
-        <member name="F:FlatRedBall.Graphics.Model.PositionedModel.VertexInformation">
+        <member name="F:FlatRedBall.Graphics.Model.RelativePositionedModel.VertexInformation">
             <summary>
             A list of vertex information, indexed as VertexInformation[mesh#][meshpart#]
             Built during ModelManager.AddModel()
             </summary>
         </member>
-        <member name="M:FlatRedBall.Graphics.Model.PositionedModel.Clone">
+        <member name="M:FlatRedBall.Graphics.Model.RelativePositionedModel.Clone">
             <summary>
-            Creates a new PositionedModel which shares the same reference
+            Creates a new RelativePositionedModel which shares the same reference
             for XnaModel and Effects.
             </summary>
-            <returns>The newly-created PositionedModel.</returns>
+            <returns>The newly-created RelativePositionedModel.</returns>
         </member>
-        <member name="P:FlatRedBall.Graphics.Model.PositionedModel.HasAnimation">
+        <member name="P:FlatRedBall.Graphics.Model.RelativePositionedModel.HasAnimation">
             <summary>
             Whether or not this model has animation information
             </summary>
         </member>
-        <member name="P:FlatRedBall.Graphics.Model.PositionedModel.Texture">
+        <member name="P:FlatRedBall.Graphics.Model.RelativePositionedModel.Texture">
             <summary>
             Sets the model's texture
             Will not work if the model is using custom effects or if
@@ -4355,22 +4355,22 @@
             the same parameter name for texture as BasicEffect uses.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Graphics.Model.PositionedModel.LodType">
+        <member name="P:FlatRedBall.Graphics.Model.RelativePositionedModel.LodType">
             <summary>
             Gets or sets the type of LOD drawing to use for this model
             </summary>
         </member>
-        <member name="P:FlatRedBall.Graphics.Model.PositionedModel.TransformationMatrix">
+        <member name="P:FlatRedBall.Graphics.Model.RelativePositionedModel.TransformationMatrix">
             <summary>
             Gets the transformation (world) matrix for this model
             </summary>
         </member>
-        <member name="F:FlatRedBall.Graphics.Model.PositionedModel.LodMeshOrdering.MeshId">
+        <member name="F:FlatRedBall.Graphics.Model.RelativePositionedModel.LodMeshOrdering.MeshId">
             <summary>
             The index of the mesh in the model's mesh collection
             </summary>
         </member>
-        <member name="F:FlatRedBall.Graphics.Model.PositionedModel.LodMeshOrdering.LodDistance">
+        <member name="F:FlatRedBall.Graphics.Model.RelativePositionedModel.LodMeshOrdering.LodDistance">
             <summary>
             The distance after which this mesh will be drawn (up until the next
             mesh's distance, if it exists)
@@ -4388,7 +4388,7 @@
             two-way lists.
             </summary>
             <remarks>
-            This should not be implemented outside of the FlatRedBall Engine, but is public so that PositionedOjbect-inheriting
+            This should not be implemented outside of the FlatRedBall Engine, but is public so that RelativePositionedOjbect-inheriting
             objects can access the lists of objects that they belong to.
             </remarks>
         </member>
@@ -4586,7 +4586,7 @@
             Gets and sets the name of this instance.
             </summary>
         </member>
-        <member name="M:FlatRedBall.Math.PositionedObjectList`1.GetFirstAfterPosition(System.Single,FlatRedBall.Math.Axis,System.Int32,System.Int32)">
+        <member name="M:FlatRedBall.Math.RelativePositionedObjectList`1.GetFirstAfterRelativePosition(System.Single,FlatRedBall.Math.Axis,System.Int32,System.Int32)">
             <summary>
             Gets the first object found after the argument "value" on the argument "axis".  Lists
             must be sorted for this method to work effectively.  WARNING:  This method uses an inclusive upper bound.  Use GetFirstAfter instead which uses an exclusive upper bound.
@@ -4595,10 +4595,10 @@
             the argument value.  In other words, if 0 is passed as the value, then objects with position values greater than (not equal to) will be returned.</param>
             <param name="axis">The axis representing the value to use (x, y, or z)</param>
             <param name="lowBound">The lower (inclusive) bound.</param>
-            <param name="highBound">The upper (inclusive) bound.  This argument is why GetFirstAfterPosition is obsolete.</param>
+            <param name="highBound">The upper (inclusive) bound.  This argument is why GetFirstAfterRelativePosition is obsolete.</param>
             <returns>The index of the first object after the given value.</returns>
         </member>
-        <member name="M:FlatRedBall.Math.PositionedObjectList`1.GetFirstAfter(System.Single,FlatRedBall.Math.Axis,System.Int32,System.Int32)">
+        <member name="M:FlatRedBall.Math.RelativePositionedObjectList`1.GetFirstAfter(System.Single,FlatRedBall.Math.Axis,System.Int32,System.Int32)">
             <summary>
             Gets the first object found after the argument "value" on the argument "axis".  Lists
             must be sorted ascending for this method to work effectively.
@@ -4613,7 +4613,7 @@
             <param name="highBound">The upper (exclusive) bound.</param>
             <returns>The index of the first object after the given value.</returns>
         </member>
-        <member name="M:FlatRedBall.Math.PositionedObjectList`1.GetTopParents">
+        <member name="M:FlatRedBall.Math.RelativePositionedObjectList`1.GetTopParents">
             <summary>
             Returns a one-way List containing the TopParents of all items in the list without duplication.
             </summary>
@@ -4664,7 +4664,7 @@
             The Type of Key by an integer value.
             0 - Rotation
             1 - Scale
-            2 - Position
+            2 - RelativePosition
             </summary>
         </member>
         <member name="P:FlatRedBall.Content.Model.XLoader.Templates.AnimationKey.nKeys">
@@ -4703,7 +4703,7 @@
             An integer value for whether or not the animation is open or closed.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Content.Model.XLoader.Templates.AnimationOptions.PositionQuality">
+        <member name="P:FlatRedBall.Content.Model.XLoader.Templates.AnimationOptions.RelativePositionQuality">
             <summary>
             An integer value for whether or not the animation using spline or linear positions for
             interpolation.
@@ -6087,10 +6087,10 @@
             Effect technique: RenderDepth
             </summary>
         </member>
-        <member name="F:FlatRedBall.Graphics.RenderMode.Position">
+        <member name="F:FlatRedBall.Graphics.RenderMode.RelativePosition">
             <summary>
-            Position rendering mode - renders position
-            Effect technique: RenderPosition
+            RelativePosition rendering mode - renders position
+            Effect technique: RenderRelativePosition
             </summary>
         </member>
         <member name="T:FlatRedBall.Graphics.Renderer">
@@ -6609,7 +6609,7 @@
             the constructor.</para>
             <code>
             Window newWindow = GuiManager.AddWindow();
-            newWindow.SetPositionTL(SpriteManager.Camera.XEdge, SpriteManager.Camera.YEdge);
+            newWindow.SetRelativePositionTL(SpriteManager.Camera.XEdge, SpriteManager.Camera.YEdge);
             newWindow.ScaleX = 10;
             newWindow.ScaleY = 10;
             newWindow.HasMoveBar = true;
@@ -6711,7 +6711,7 @@
             </summary>
             <param name="chainToSet"></param>
         </member>
-        <member name="M:FlatRedBall.Gui.Window.SetPositionTL(System.Single,System.Single)">
+        <member name="M:FlatRedBall.Gui.Window.SetRelativePositionTL(System.Single,System.Single)">
             <summary>
             Sets the screen relative or Parent-relative position.
             </summary>
@@ -6769,7 +6769,7 @@
             <remarks>
             The GuiManager automatically calls this on all Windows so it's unlikely that
             this needs to be called outside of the engine.  This method does not update the
-            Window's Parents like the UpdateDependencies method does for PositionedObjects because
+            Window's Parents like the UpdateDependencies method does for RelativePositionedObjects because
             the GuiManager only keeps reference to the top parents of Windows.  Therefore, the GuiManager
             only loops through the top parents and it's their responsibility to update their children's positions.
             </remarks>
@@ -6897,7 +6897,7 @@
             NOT IMPLEMENTED
             </summary>
         </member>
-        <member name="P:FlatRedBall.Gui.Window.UseAnimationRelativePosition">
+        <member name="P:FlatRedBall.Gui.Window.UseAnimationRelativeRelativePosition">
             <summary>
             NOT IMPLEMENTED
             </summary>
@@ -7323,7 +7323,7 @@
             Default is -1, which specifies that it shouldn't be drawn.
             </summary>
         </member>
-        <member name="F:FlatRedBall.Gui.ListBoxBase.mYPositionPushed">
+        <member name="F:FlatRedBall.Gui.ListBoxBase.mYRelativePositionPushed">
             <summary>
             When the user pushes the mouse over the list box
             this value will be set.  Then this value can be compared
@@ -7456,14 +7456,14 @@
             with ToggleButtons to control when they are pressed and unpressed.
             </remarks>
         </member>
-        <member name="F:FlatRedBall.Gui.Cursor.StaticPosition">
+        <member name="F:FlatRedBall.Gui.Cursor.StaticRelativePosition">
             <summary>
             If this value is true, the Cursor will not move in response to the mouse or gamepad.
             </summary>
             <remarks>
             This value can be set to true if the Cursor should not move in response to input.
-            The staticPosition value is only used by the engine when over the button on an UpDown.  When pushing down
-            on an UpDown button, the staticPosition is set to true, and set to false when releasing the mouse button.
+            The staticRelativePosition value is only used by the engine when over the button on an UpDown.  When pushing down
+            on an UpDown button, the staticRelativePosition is set to true, and set to false when releasing the mouse button.
             </remarks>
         </member>
         <member name="F:FlatRedBall.Gui.Cursor.mWindowGrabbed">
@@ -7487,7 +7487,7 @@
             as Sprites or Text objects.
             The ObjectGrabbedRelativeX and ObjectGrabbedRelativeY can also be set to keep the object static after a click rather than
             "snapping" its center to the Cursor's tip.
-            <seealso cref="M:FlatRedBall.Gui.Cursor.SetObjectRelativePosition(FlatRedBall.Math.IStaticPositionable)"/>
+            <seealso cref="M:FlatRedBall.Gui.Cursor.SetObjectRelativeRelativePosition(FlatRedBall.Math.IStaticRelativePositionable)"/>
             </remarks>
         </member>
         <member name="F:FlatRedBall.Gui.Cursor.ObjectGrabbedRelativeX">
@@ -7495,10 +7495,10 @@
             The relative x position of a grabbed object from the center of the cursor.
             </summary>
             <remarks>
-            This value can be set through the SetObjectRelativePosition.  
-            This value used in the GetCursorPositionForSprite method.
-             <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorPositionForSprite(System.Single@,System.Single@,System.Single)"/>
-             <seealso cref="M:FlatRedBall.Gui.Cursor.SetObjectRelativePosition(FlatRedBall.Math.IStaticPositionable)"/>
+            This value can be set through the SetObjectRelativeRelativePosition.  
+            This value used in the GetCursorRelativePositionForSprite method.
+             <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorRelativePositionForSprite(System.Single@,System.Single@,System.Single)"/>
+             <seealso cref="M:FlatRedBall.Gui.Cursor.SetObjectRelativeRelativePosition(FlatRedBall.Math.IStaticRelativePositionable)"/>
             </remarks>
         </member>
         <member name="F:FlatRedBall.Gui.Cursor.ObjectGrabbedRelativeY">
@@ -7506,10 +7506,10 @@
             The relative y position of a grabbed object from the center of the cursor.
             </summary>
             <remarks>
-            This value can be set through the SetObjectRelativePosition.  
-            This value used in the GetCursorPositionForSprite method.
-             <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorPositionForSprite(System.Single@,System.Single@,System.Single)"/>
-             <seealso cref="M:FlatRedBall.Gui.Cursor.SetObjectRelativePosition(FlatRedBall.Math.IStaticPositionable)"/>
+            This value can be set through the SetObjectRelativeRelativePosition.  
+            This value used in the GetCursorRelativePositionForSprite method.
+             <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorRelativePositionForSprite(System.Single@,System.Single@,System.Single)"/>
+             <seealso cref="M:FlatRedBall.Gui.Cursor.SetObjectRelativeRelativePosition(FlatRedBall.Math.IStaticRelativePositionable)"/>
             </remarks>
         </member>
         <member name="F:FlatRedBall.Gui.Cursor.PrimaryPush">
@@ -7598,7 +7598,7 @@
             <param name="z">The z value to measure the velocity at.</param>
             <returns>The Y velocity at the particular Z.</returns>
         </member>
-        <member name="M:FlatRedBall.Gui.Cursor.GetCursorPosition(System.Single@,System.Single@,System.Single)">
+        <member name="M:FlatRedBall.Gui.Cursor.GetCursorRelativePosition(System.Single@,System.Single@,System.Single)">
             <summary>
             Modifies the x and y arguments to show the point of the cursor's tip at at the z value.
             </summary>
@@ -7610,7 +7610,7 @@
             <param name="y">The y value to change.</param>
             <param name="z">The z value to use.</param>
         </member>
-        <member name="M:FlatRedBall.Gui.Cursor.GetCursorPositionForSprite(System.Single@,System.Single@,System.Single)">
+        <member name="M:FlatRedBall.Gui.Cursor.GetCursorRelativePositionForSprite(System.Single@,System.Single@,System.Single)">
             <summary>
             Modifies the x and y arguments to show the position that the grabbed Sprite should be at.
             </summary>
@@ -7618,13 +7618,13 @@
             This method assumes that the camera's currentFollowingStyle is Camera.LOOKINGSTYLE.DOWNZ.  The x and y
             arguments will represent the location of the cursor's tip and adds the relative Sprite positions.
             
-            <seealso cref="M:FlatRedBall.Gui.Cursor.SetObjectRelativePosition(FlatRedBall.Math.IStaticPositionable)"/>
+            <seealso cref="M:FlatRedBall.Gui.Cursor.SetObjectRelativeRelativePosition(FlatRedBall.Math.IStaticRelativePositionable)"/>
             </remarks>
             <param name="x"></param>
             <param name="y"></param>
             <param name="z"></param>
         </member>
-        <member name="M:FlatRedBall.Gui.Cursor.GetCursorPosition(FlatRedBall.PositionedObject,System.Single)">
+        <member name="M:FlatRedBall.Gui.Cursor.GetCursorRelativePosition(FlatRedBall.RelativePositionedObject,System.Single)">
             <summary>
             Gets the cursor's position and sets the argument positionedObject's
             x and y values to the cursor's position at the argument Z value.
@@ -7830,14 +7830,14 @@
             </summary>
             <param name="js">Refernce to the joystick that will control the cursor.</param>
         </member>
-        <member name="M:FlatRedBall.Gui.Cursor.SetObjectRelativePosition(FlatRedBall.Math.IStaticPositionable)">
+        <member name="M:FlatRedBall.Gui.Cursor.SetObjectRelativeRelativePosition(FlatRedBall.Math.IStaticRelativePositionable)">
             <summary>
             Tells the Cursor to store the relative position of the Sprite to the Cursor's tip.
             </summary>
             <remarks>
-            The relative Sprite position is used in the GetCursorPositionForSprite method.  Relative values
+            The relative Sprite position is used in the GetCursorRelativePositionForSprite method.  Relative values
             keep objects from "snapping" to the center of the cursor when grabbed.
-            <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorPositionForSprite(System.Single@,System.Single@,System.Single)"/>
+            <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorRelativePositionForSprite(System.Single@,System.Single@,System.Single)"/>
             </remarks>
             <param name="spriteToSetTo">The Sprite that the relative values should be set to.</param>
         </member>
@@ -7874,8 +7874,8 @@
             </code>
             This will only be accurate if the object is also 100 units away from the camera and
             if the camera is centered on the origin.  The
-            x and y values must be passed to the GetCursorPosition method.
-            <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorPosition(System.Single@,System.Single@,System.Single)"/>
+            x and y values must be passed to the GetCursorRelativePosition method.
+            <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorRelativePosition(System.Single@,System.Single@,System.Single)"/>
             </remarks>
         </member>
         <member name="P:FlatRedBall.Gui.Cursor.YForUI">
@@ -7891,8 +7891,8 @@
             </code>
             This will only be accurate if the object is also 100 units away from the camera and
             if the camera is centered on the origin.  The
-            x and y values must be passed to the GetCursorPosition method.
-            <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorPosition(System.Single@,System.Single@,System.Single)"/>
+            x and y values must be passed to the GetCursorRelativePosition method.
+            <seealso cref="M:FlatRedBall.Gui.Cursor.GetCursorRelativePosition(System.Single@,System.Single@,System.Single)"/>
             </remarks>
         </member>
         <member name="P:FlatRedBall.Gui.Cursor.XVelocity">
@@ -7941,7 +7941,7 @@
         <member name="P:FlatRedBall.Gui.Cursor.ObjectGrabbed">
             <summary>
             Assigns the ObjectGrabbed and calculates the relative position of the
-            grabbed object.  After this method is called, UpdateObjectGrabbedPosition can be called
+            grabbed object.  After this method is called, UpdateObjectGrabbedRelativePosition can be called
             every frame to position the grabbed object.
             </summary>
         </member>
@@ -8267,14 +8267,14 @@
             <param name="valueToGet">The absolute value to convert to position.</param>
             <returns>The position on the bar.</returns>
         </member>
-        <member name="M:FlatRedBall.Gui.TimeLine.PositionToValueAbsolute(System.Single)">
+        <member name="M:FlatRedBall.Gui.TimeLine.RelativePositionToValueAbsolute(System.Single)">
             <summary>
             Returns the precision-adjusted value of the time line given an absolute position.
             </summary>
             <param name="pos">The absolute X position.</param>
             <returns>The precision-adjusted value.</returns>
         </member>
-        <member name="M:FlatRedBall.Gui.TimeLine.PositionToValueRelative(System.Single)">
+        <member name="M:FlatRedBall.Gui.TimeLine.RelativePositionToValueRelative(System.Single)">
             <summary>
             Converts the argument relative-to-TimeLine argument to a value that it represents.
             </summary>
@@ -8284,7 +8284,7 @@
             <param name="worldUnitRelativeX">The relative-to-Timeline position.</param>
             <returns>The value that corresponds to the argument position.</returns>
         </member>
-        <member name="M:FlatRedBall.Gui.TimeLine.ValueToPositionRelative(System.Double)">
+        <member name="M:FlatRedBall.Gui.TimeLine.ValueToRelativePositionRelative(System.Double)">
             <summary>
             Converts the value to the corresponding relative X position on the timeline.
             </summary>
@@ -8769,11 +8769,11 @@
             </remarks>
             <returns>The number of elements down.</returns>
         </member>
-        <member name="M:FlatRedBall.Gui.ScrollBar.SetScrollPosition(System.Int32)">
+        <member name="M:FlatRedBall.Gui.ScrollBar.SetScrollRelativePosition(System.Int32)">
             <summary>
             Sets the position bar so that it reflects the number down passed as the argument.
             </summary>
-            <param name="numDown">The number down to match with the PositionBar's position.</param>
+            <param name="numDown">The number down to match with the RelativePositionBar's position.</param>
         </member>
         <member name="M:FlatRedBall.Gui.ScrollBar.SetSkin(FlatRedBall.Gui.GuiSkin)">
             <summary>
@@ -8828,12 +8828,12 @@
             Makes sure the current text can be successfully parsed, and if not, changes it to 0.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Gui.TextBox.CursorXPosition">
+        <member name="P:FlatRedBall.Gui.TextBox.CursorXRelativePosition">
             <summary>
-            Gets the position of the visible text cursor given the mAbsoluteCursorPosition.
+            Gets the position of the visible text cursor given the mAbsoluteCursorRelativePosition.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Gui.TextBox.AbsoluteCursorPosition">
+        <member name="P:FlatRedBall.Gui.TextBox.AbsoluteCursorRelativePosition">
             <summary>
             The position of the cursor on the text in the TextBox.  This is always greater than 0 and less than
             the length of the text.
@@ -8915,7 +8915,7 @@
             A button or single-axis input device which can return a range of values like the shoulder triggers.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Input.AnalogButton.Position">
+        <member name="P:FlatRedBall.Input.AnalogButton.RelativePosition">
             <summary>
             The current value of the AnalogButton.
             </summary>
@@ -8947,7 +8947,7 @@
             Gets the distance from the center position of the analog stick.
             </summary>
         </member>
-        <member name="P:FlatRedBall.Input.AnalogStick.Position">
+        <member name="P:FlatRedBall.Input.AnalogStick.RelativePosition">
             <summary>
             The position of the analog stick.  The range for each component is -1 to 1.
             </summary>
@@ -8998,14 +8998,14 @@
             </remarks>
             <typeparam name="T">The type of the first argument.</typeparam>
             <param name="objectToTest">The object to test if the mouse is on.</param>
-            <param name="relativeToCamera">Whether the object's Position is relative to the Camera.</param>
+            <param name="relativeToCamera">Whether the object's RelativePosition is relative to the Camera.</param>
             <param name="intersectionPoint">The point where the intersection between the ray casted from the 
             mouse into the distance and the argument objectToTest occurred.</param>
             <returns>Whether the mouse is over the argument objectToTest</returns>
         </member>
-        <member name="P:FlatRedBall.Input.Mouse.GrabbedPositionedObject">
+        <member name="P:FlatRedBall.Input.Mouse.GrabbedRelativePositionedObject">
             <summary>
-            Grabs a PositionedObject.  The PositionedObject will automatically update
+            Grabs a RelativePositionedObject.  The RelativePositionedObject will automatically update
             its position according to mouse movement while the reference remains.
             </summary>
         </member>
@@ -9182,8 +9182,8 @@
             <summary>
             Generic method of setting a particular variable at a given time.
             </summary>
-            <typeparam name="TargetType">The type of object to operate on (ex. PositionedObject)</typeparam>
-            <typeparam name="ValueType">The type of the value.  For example, the X value in PositionedObject is float.</typeparam>
+            <typeparam name="TargetType">The type of object to operate on (ex. RelativePositionedObject)</typeparam>
+            <typeparam name="ValueType">The type of the value.  For example, the X value in RelativePositionedObject is float.</typeparam>
         </member>
         <member name="M:FlatRedBall.Instructions.Instruction`2.#ctor">
             <summary>
@@ -9194,12 +9194,12 @@
             <summary>
             To be used when inheriting from this class since you won't need the property's name
             </summary>
-            <param name="targetObject">The object to operate on (ex. a PositionedObject)</param>
+            <param name="targetObject">The object to operate on (ex. a RelativePositionedObject)</param>
             <param name="value">The value to set to the property when the instruction is executed</param>
             <param name="timeToExecute">Absolute time to executing this instruction</param>
         </member>
         <member name="M:FlatRedBall.Instructions.Instruction`2.#ctor(`0,System.String,`1,System.Double)">
-            <param name="targetObject">The object to operate on (ex. a PositionedObject)</param>
+            <param name="targetObject">The object to operate on (ex. a RelativePositionedObject)</param>
             <param name="property">The name of the property to set</param>
             <param name="value">The value to set to the property when the instruction is executed</param>
             <param name="timeToExecute">Absolute time to executing this instruction</param>
@@ -9223,13 +9223,13 @@
             Executes all contained Instructions in order of index.  Contained instructions are not removed.
             </summary>
         </member>
-        <member name="M:FlatRedBall.Instructions.InstructionManager.RelativeRotateToAccurate(FlatRedBall.PositionedObject,System.Single,System.Single,System.Single,System.Double)">
+        <member name="M:FlatRedBall.Instructions.InstructionManager.RelativeRotateToAccurate(FlatRedBall.RelativePositionedObject,System.Single,System.Single,System.Single,System.Double)">
             <summary>
-            Sets the relative rotational velcoities of a PositionedObject so that it rotates 
+            Sets the relative rotational velcoities of a RelativePositionedObject so that it rotates 
             to the desired relative orientation in a given amount of time.
             </summary>
             <remarks>
-            This method first sets the relative rotational velocities of the PositionedObject then 
+            This method first sets the relative rotational velocities of the RelativePositionedObject then 
             sets instructions to stop the relative rotational velocities and
             finally sets the rotational values to fix any problems introduced by timing.
             </remarks>
@@ -9260,7 +9260,7 @@
             in its Update method (called automatically by FlatRedBallServices).
             </summary>
             <remarks>
-            Instructions for managed PositionedObjects like Sprites and Text objects
+            Instructions for managed RelativePositionedObjects like Sprites and Text objects
             should be added to the object's internal InstructionList.  This prevents instructions
             from referencing removed objects and helps with debugging.  This list should only be used
             on un-managed objects or for instructions which do not associate with a particular object.
@@ -10067,7 +10067,7 @@
             </summary>
             <param name="value">The partially parsed value, if available.</param>
             <param name="fieldIndex">The missing field index.</param>
-            <param name="currentPosition">The current position in the raw data.</param>
+            <param name="currentRelativePosition">The current position in the raw data.</param>
             <returns>
             The resulting value according to <see cref="M:MissingFieldAction"/>.
             If the action is set to <see cref="T:MissingFieldAction.TreatAsParseError"/>,
@@ -12557,7 +12557,7 @@
             A value representing the length of the stream in bytes.
             </summary>
         </member>
-        <member name="P:ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream.Position">
+        <member name="P:ICSharpCode.SharpZipLib.Zip.Compression.Streams.InflaterInputStream.RelativePosition">
             <summary>
             The current position within the stream.
             Throws a NotSupportedException when attempting to set the position
@@ -13421,7 +13421,7 @@
             Gets whether the current AnimationChain just cycled (looped) this frame due to animation.
             </summary>
         </member>
-        <member name="P:FlatRedBall.ManagedSpriteGroups.SpriteFrame.UseAnimationRelativePosition">
+        <member name="P:FlatRedBall.ManagedSpriteGroups.SpriteFrame.UseAnimationRelativeRelativePosition">
             <summary>
             Whether the current AnimationFrame's relative position values (RelativeX and RelativeY) are applied
             when animating.
@@ -13804,7 +13804,7 @@
             <param name="height">The desired height of the heightmap (resolution)</param>
             <param name="model">The model to render for the heightmap</param>
         </member>
-        <member name="M:FlatRedBall.Math.Collision.HeightMap.#ctor(System.String,System.Int32,System.Int32,FlatRedBall.Graphics.Model.PositionedModel)">
+        <member name="M:FlatRedBall.Math.Collision.HeightMap.#ctor(System.String,System.Int32,System.Int32,FlatRedBall.Graphics.Model.RelativePositionedModel)">
             <summary>
             Creates a height map from a model (heightmap will be available next frame)
             </summary>
@@ -13946,8 +13946,8 @@
         </member>
         <member name="M:FlatRedBall.Math.Geometry.Line.SetFromAbsoluteEndpoints(Microsoft.Xna.Framework.Vector3,Microsoft.Xna.Framework.Vector3)">
             <summary>
-            Sets the Line's Position to the average of the two given endpoints and
-            it's RelativePoints to be the distance from the new Position to each of the given Vectors.
+            Sets the Line's RelativePosition to the average of the two given endpoints and
+            it's RelativePoints to be the distance from the new RelativePosition to each of the given Vectors.
             </summary>
             <param name="endpoint1">The first endpoint for which to find the midpoint</param>
             <param name="endpoint2">The second endpoint for which to find the midpoint</param>
@@ -14065,7 +14065,7 @@
         </member>
         <member name="P:FlatRedBall.Math.Geometry.Polygon.Points">
             <summary>
-            The Position-relative points of the Polygon.
+            The RelativePosition-relative points of the Polygon.
             </summary>
         </member>
         <member name="P:FlatRedBall.Math.Geometry.Polygon.LastMoveCollisionReposition">
@@ -14237,7 +14237,7 @@
             <param name="axisAlignedRectangle">The AxisAlignedRectangle to add.</param>
             <returns>The same AxisAlignedRectangle as was passed to the method.</returns>
         </member>
-        <member name="M:FlatRedBall.Math.Geometry.ShapeManager.AddAxisAlignedRectangleList(FlatRedBall.Math.PositionedObjectList{FlatRedBall.Math.Geometry.AxisAlignedRectangle})">
+        <member name="M:FlatRedBall.Math.Geometry.ShapeManager.AddAxisAlignedRectangleList(FlatRedBall.Math.RelativePositionedObjectList{FlatRedBall.Math.Geometry.AxisAlignedRectangle})">
             <summary>
             Adds all AxisAlignedRectangles contained in the argument axisAlignedRectangleList to the ShapeManager.
             </summary>
@@ -14277,7 +14277,7 @@
             <param name="circle">The Circle to add.</param>
             <returns>The instance that was just added.</returns>
         </member>
-        <member name="M:FlatRedBall.Math.Geometry.ShapeManager.AddCircleList(FlatRedBall.Math.PositionedObjectList{FlatRedBall.Math.Geometry.Circle})">
+        <member name="M:FlatRedBall.Math.Geometry.ShapeManager.AddCircleList(FlatRedBall.Math.RelativePositionedObjectList{FlatRedBall.Math.Geometry.Circle})">
             <summary>
             Adds all Circles contained in the argument circleList to the ShapeManager.
             </summary>
@@ -14392,44 +14392,44 @@
         </member>
         <member name="M:FlatRedBall.Math.Geometry.ShapeManager.Remove(FlatRedBall.Math.Geometry.AxisAlignedRectangle)">
             <summary>
-            Removes the argument AxisAlignedRectangle from the ShapeManager and any 2-way PositionedObjectLists it belongs to.
+            Removes the argument AxisAlignedRectangle from the ShapeManager and any 2-way RelativePositionedObjectLists it belongs to.
             </summary>
             <param name="axisAlignedRectangleToRemove">The AxisAlignedRectangle to remove.  Cannot be null.</param>
         </member>
         <member name="M:FlatRedBall.Math.Geometry.ShapeManager.Remove(FlatRedBall.Math.Geometry.AxisAlignedCube)">
             <summary>
-            Removes the argument AxisAlignedCube from the ShapeManager and any 2-way PositionedObjectLists it belongs to.
+            Removes the argument AxisAlignedCube from the ShapeManager and any 2-way RelativePositionedObjectLists it belongs to.
             </summary>
             <param name="axisAlignedCubeToRemove">The AxisAlignedCube to remove.  Cannot be null.</param>
         </member>
         <member name="M:FlatRedBall.Math.Geometry.ShapeManager.Remove(FlatRedBall.Math.Geometry.Capsule2D)">
             <summary>
             Removes the argument Capsule2D from the ShapeManager and any 2-way
-            PositionedObjectLists it belongs to.
+            RelativePositionedObjectLists it belongs to.
             </summary>
             <param name="capsule2DToRemove">The Capsule2D to remove.  Should not be null.</param>
         </member>
         <member name="M:FlatRedBall.Math.Geometry.ShapeManager.Remove(FlatRedBall.Math.Geometry.Circle)">
             <summary>
-            Removes the argument Circle from the ShapeManager and any 2-way PositionedObjectLists it belongs to.
+            Removes the argument Circle from the ShapeManager and any 2-way RelativePositionedObjectLists it belongs to.
             </summary>
             <param name="circleToRemove">The Circle to remove.  Should not be null.</param>
         </member>
         <member name="M:FlatRedBall.Math.Geometry.ShapeManager.Remove(FlatRedBall.Math.Geometry.Sphere)">
             <summary>
-            Removes the argument Sphere from the ShapeManager and any 2-way PositionedObjectLists it belongs to.
+            Removes the argument Sphere from the ShapeManager and any 2-way RelativePositionedObjectLists it belongs to.
             </summary>
             <param name="sphereToRemove">The Sphere to remove.  Should not be null.</param>
         </member>
         <member name="M:FlatRedBall.Math.Geometry.ShapeManager.Remove(FlatRedBall.Math.Geometry.Polygon)">
             <summary>
-            Removes the argument Polygon from the ShapeManager and any 2-way PositionedObjectLists it belongs to.
+            Removes the argument Polygon from the ShapeManager and any 2-way RelativePositionedObjectLists it belongs to.
             </summary>
             <param name="polygonToRemove">The Polygon to remove.  Should not be null.</param>
         </member>
         <member name="M:FlatRedBall.Math.Geometry.ShapeManager.Remove(FlatRedBall.Math.Geometry.Line)">
             <summary>
-            Removes the argument Line from the ShapeManager and any 2-way PositionedObjectLists it belongs to.
+            Removes the argument Line from the ShapeManager and any 2-way RelativePositionedObjectLists it belongs to.
             </summary>
             <param name="lineToRemove">The Line to remove.  Should not be null.</param>
         </member>
@@ -14447,7 +14447,7 @@
         </member>
         <member name="M:FlatRedBall.Math.Geometry.ShapeManager.Remove``1(System.Collections.Generic.IList{``0})">
             <summary>
-            Removes all Polygons held in the argument listToRemove from the Shapemanager and any 2-way PositionedObjectLists they belong to.
+            Removes all Polygons held in the argument listToRemove from the Shapemanager and any 2-way RelativePositionedObjectLists they belong to.
             </summary>
             <typeparam name="T">The type of object which must be a Polygon.</typeparam>
             <param name="listToRemove">The list of objects to remove.</param>
@@ -14680,7 +14680,7 @@
             A point in a Spline storing position, velocity, acceleration, and time information.
             </summary>
         </member>
-        <member name="F:FlatRedBall.Math.Splines.SplinePoint.Position">
+        <member name="F:FlatRedBall.Math.Splines.SplinePoint.RelativePosition">
             <summary>
             The position of the SplinePoint in absolute world coordinates.
             </summary>
@@ -15024,7 +15024,7 @@
         <member name="T:FlatRedBall.SpriteManager">
             <summary>
             Static manager class which handles the management of Sprites, SpriteFrames, Cameras, and
-            other PositionedObjects.
+            other RelativePositionedObjects.
             </summary>
             <remarks>
             The SpriteManager is commonly used in FlatRedBall examples to create Sprites.  Perhaps the most

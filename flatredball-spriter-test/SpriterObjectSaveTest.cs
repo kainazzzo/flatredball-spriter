@@ -203,7 +203,7 @@ namespace flatredball_spriter_test
             CollectionAssert.AllItemsAreInstancesOfType(so.ObjectList, typeof(PositionedObject));
             Assert.IsNotNull(so.Animations.First().Value.KeyFrames[0].Values.FirstOrDefault());
             var bone = so.ObjectList[0];
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Values[bone].Position.X - 100f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Values[bone].RelativePosition.X - 100f) < .0001f);
         }
 
         [TestMethod]
@@ -277,9 +277,9 @@ namespace flatredball_spriter_test
             var so = sos.ToRuntime();
             so.StartAnimation();
 
-            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.Position.Z);
-            Assert.AreNotEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z);
-            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z - .0001f) < .00001);
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.RelativePosition.Z);
+            Assert.AreNotEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(3).Value.RelativePosition.Z);
+            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.RelativePosition.Z - .0001f) < .00001);
         }
 
         [TestMethod]
@@ -368,8 +368,8 @@ namespace flatredball_spriter_test
             var pivot = sprite.Parent;
             var pivot2 = sprite2.Parent;
 
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.X - -212.403893f) < .0001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.Y - 1.062019f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.X - -212.403893f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.Y - 1.062019f) < .0001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleX - 51.327448f) < .0001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleY - 64f) < .0001f);
         }
@@ -553,12 +553,12 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleX - 144f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleX - 64f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleY - 64f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.Y + 256.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.X - 144f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.Y - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.X - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].Position.Y - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].Position.X - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativePosition.Y + 256.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativePosition.X - 144f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.X - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].RelativePosition.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].RelativePosition.X - 0.0f) < .00001f);
 
             Assert.AreSame(sprite2.Parent, so.Animations.First().Value.KeyFrames.First().Values[sprite2].Parent);
         }
@@ -575,13 +575,13 @@ namespace flatredball_spriter_test
                 so.ObjectList.Where(o => o.GetType() != typeof (Sprite) && o.Name.Contains("bone")).ToList();
             var values = keyframes[0].Values;
             
-            Assert.IsTrue(Math.Abs(values[bones[0]].Position.X - 0f) < .0001f);
-            Assert.IsTrue(Math.Abs(values[bones[1]].Position.X - 100f) < .0001f);
-            Assert.IsTrue(Math.Abs(values[bones[2]].Position.X - 300f) < .0001f);
+            Assert.IsTrue(Math.Abs(values[bones[0]].RelativePosition.X - 0f) < .0001f);
+            Assert.IsTrue(Math.Abs(values[bones[1]].RelativePosition.X - 100f) < .0001f);
+            Assert.IsTrue(Math.Abs(values[bones[2]].RelativePosition.X - 300f) < .0001f);
 
-            Assert.IsTrue(Math.Abs(values[pivots[0]].Position.X - 0f) < .0001f);
-            Assert.IsTrue(Math.Abs(values[pivots[1]].Position.X - -100f) < .0001f);
-            Assert.IsTrue(Math.Abs(values[pivots[2]].Position.X - -400f) < .0001f);
+            Assert.IsTrue(Math.Abs(values[pivots[0]].RelativePosition.X - 0f) < .0001f);
+            Assert.IsTrue(Math.Abs(values[pivots[1]].RelativePosition.X - -100f) < .0001f);
+            Assert.IsTrue(Math.Abs(values[pivots[2]].RelativePosition.X - -400f) < .0001f);
 
         }
 
@@ -2288,7 +2288,7 @@ namespace flatredball_spriter_test
             var sos = GetSimpleSpriterObjectSaveNullTextureWithPositionChange();
             var so = sos.ToRuntime();
             so.StartAnimation();
-            Assert.IsTrue(Math.Abs(so.NextKeyFrame.Values[so.ObjectList[1]].Position.X - 50.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.NextKeyFrame.Values[so.ObjectList[1]].RelativePosition.X - 50.0f) < .0001f);
         }
         [TestMethod]
         public void FromFileTest()

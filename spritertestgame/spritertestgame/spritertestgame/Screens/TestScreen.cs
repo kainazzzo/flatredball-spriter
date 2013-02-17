@@ -78,7 +78,7 @@ namespace spritertestgame.Screens
 
 		void CustomActivity(bool firstTimeCalled)
 		{
-            FlatRedBall.Debugging.Debugger.Write(anthead.ObjectList[1].RelativePosition);
+            //FlatRedBall.Debugging.Debugger.Write(anthead.ObjectList[1].RelativePosition);
             if (FlatRedBall.Input.InputManager.Keyboard.KeyDown(Keys.OemMinus))
             {
                 //anthead.ScaleX -= .05f;

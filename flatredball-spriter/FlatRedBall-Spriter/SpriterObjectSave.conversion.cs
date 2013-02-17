@@ -200,13 +200,16 @@ namespace FlatRedBall_Spriter
                     {
                         x *= parentBone.ScaleX;
                         y *= parentBone.ScaleY;
-                        if (parentBoneRef.Parent.HasValue) {}
+                        if (parentBoneRef.Parent.HasValue)
+                        {
+                            parentBoneRef = 
+                        }
                     }
                 }
 
                 keyFrame.Values[bone] = new KeyFrameValues
                     {
-                        Position = new Vector3(x, y, 0.0f),
+                        AbsolutePosition = new Vector3(x, y, 0.0f),
                         Rotation = new Vector3(0.0f, 0.0f, timelineKey.Bone.Angle),
                         Spin = timelineKey.Spin
                     };
@@ -290,13 +293,13 @@ namespace FlatRedBall_Spriter
                     var bone = animation.Timeline.Where(t => t.Id == @ref.Timeline).SelectMany(t => t.Key).Single(k => k.Id == @ref.Key).Bone;
                     keyFrameValues.Sprite.ScaleX *= bone.ScaleX;
                     keyFrameValues.Sprite.ScaleY *= bone.ScaleY;
-                    x = keyFrameValues.Sprite.Position.X * bone.ScaleX;
-                    y = keyFrameValues.Sprite.Position.Y * bone.ScaleY;
-                    keyFrameValues.Sprite.Position = new Vector3(x, y, 0.0f);
+                    x = keyFrameValues.Sprite.RelativePosition.X * bone.ScaleX;
+                    y = keyFrameValues.Sprite.RelativePosition.Y * bone.ScaleY;
+                    keyFrameValues.Sprite.RelativePosition = new Vector3(x, y, 0.0f);
 
-                    x = keyFrameValues.Pivot.Position.X*bone.ScaleX;
-                    y = keyFrameValues.Pivot.Position.Y*bone.ScaleY;
-                    keyFrameValues.Pivot.Position = new Vector3(x, y, 0.0f);
+                    x = keyFrameValues.Pivot.RelativePosition.X*bone.ScaleX;
+                    y = keyFrameValues.Pivot.RelativePosition.Y*bone.ScaleY;
+                    keyFrameValues.Pivot.RelativePosition = new Vector3(x, y, 0.0f);
 
                     boneRef = !boneRef.Parent.HasValue ? null : currentKey.BoneRef.SingleOrDefault(br => br.Id == boneRef.Parent.Value);
                 }
@@ -308,13 +311,13 @@ namespace FlatRedBall_Spriter
                              .Object;
                 keyFrameValues.Sprite.ScaleX *= obj.ScaleX;
                 keyFrameValues.Sprite.ScaleY *= obj.ScaleY;
-                x = keyFrameValues.Sprite.Position.X*obj.ScaleX;
-                y = keyFrameValues.Sprite.Position.Y*obj.ScaleY;
-                keyFrameValues.Sprite.Position = new Vector3(x, y, 0f);
+                x = keyFrameValues.Sprite.RelativePosition.X*obj.ScaleX;
+                y = keyFrameValues.Sprite.RelativePosition.Y*obj.ScaleY;
+                keyFrameValues.Sprite.RelativePosition = new Vector3(x, y, 0f);
 
-                //x = keyFrameValues.Pivot.Position.X*obj.ScaleX;
-                //y = keyFrameValues.Pivot.Position.Y*obj.ScaleY;
-                //keyFrameValues.Pivot.Position = new Vector3(x, y, 0f);
+                //x = keyFrameValues.Pivot.RelativePosition.X*obj.ScaleX;
+                //y = keyFrameValues.Pivot.RelativePosition.Y*obj.ScaleY;
+                //keyFrameValues.Pivot.RelativePosition = new Vector3(x, y, 0f);
             }
         }
 
@@ -327,7 +330,7 @@ namespace FlatRedBall_Spriter
         {
             var pivotValue = new KeyFrameValues
                 {
-                    Position = new Vector3(timelineKey.Object.X,
+                    RelativePosition = new Vector3(timelineKey.Object.X,
                                            timelineKey.Object.Y,
                                            0.0f),
                     Rotation = new Vector3
@@ -350,7 +353,7 @@ namespace FlatRedBall_Spriter
                     Texture = textures[folderFileId],
                     ScaleX = (width / 2.0f * timelineKey.Object.ScaleX),
                     ScaleY = (height / 2.0f * timelineKey.Object.ScaleY),
-                    Position = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
+                    RelativePosition = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
                                                          timelineKey.Object.PivotY, zIndex),
                     Alpha = timelineKey.Object.Alpha
                 };

@@ -19,17 +19,17 @@
             </mainline>
             <timeline id="0" name="bone_000">
                 <key id="0" spin="0">
-                    <bone scale_x="0.5"/>
+                    <bone x="100" scale_x="0.5"/>
                 </key>
             </timeline>
             <timeline id="1" name="bone_001">
                 <key id="0" spin="0">
-                    <bone x="200" scale_x="1.5"/>
+                    <bone x="200"/>
                 </key>
             </timeline>
             <timeline id="2" name="bone_002">
                 <key id="0" spin="0">
-                    <bone x="200" scale_x="0.5"/>
+                    <bone x="200" scale_x="2"/>
                 </key>
             </timeline>
             <timeline id="3">
@@ -39,22 +39,22 @@
             </timeline>
             <timeline id="4">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" x="-133.333333" scale_x="1.333333"/>
+                    <object folder="0" file="0" x="-200" scale_x="2"/>
                 </key>
             </timeline>
             <timeline id="5">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" x="-666.666667" scale_x="2.666667"/>
+                    <object folder="0" file="0" x="-200" y="-1"/>
                 </key>
             </timeline>
             <timeline id="6">
                 <key id="0" spin="0">
-                    <object folder="0" file="0" x="-433.333333" scale_x="1.333333"/>
+                    <object folder="0" file="0" x="-250" scale_x="0.5"/>
                 </key>
             </timeline>
             <timeline id="7" name="bone_003">
                 <key id="0" spin="0">
-                    <bone x="200" scale_x="2"/>
+                    <bone x="300" scale_x="2"/>
                 </key>
             </timeline>
         </animation>

@@ -180,6 +180,18 @@ namespace FlatRedBall_Spriter
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class KeyBone
     {
+        public KeyBone(KeyBone that)
+        {
+            this.Angle = that.Angle;
+            this.ScaleX = that.ScaleX;
+            this.ScaleY = that.ScaleY;
+            this.X = that.X;
+            this.Y = that.Y;
+        }
+        public KeyBone()
+        {
+            
+        }
         private float _scaleX = 1.0f;
         private float _scaleY = 1.0f;
 

@@ -140,6 +140,8 @@ namespace FlatRedBall_Spriter
                                                                   IDictionary<int, PositionedObject> boneRefDic, IDictionary<KeyFrameValues, int> boneRefParentDic,
                                                                   Key timelineKeyOverride = null)
         {
+            IDictionary<int, KeyBone> bones = new Dictionary<int, KeyBone>();
+
             foreach (var boneRef in key.BoneRef)
             {
                 PositionedObject bone;
@@ -159,58 +161,22 @@ namespace FlatRedBall_Spriter
                 var timeline = animation.Timeline.Single(t => t.Id == boneRef.Timeline);
                 var timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == boneRef.Key);
 
-                float x, y;
-                x = timelineKey.Bone.X;
-                y = timelineKey.Bone.Y;
-                /*
-                 *23:54:18] Domenic: 3 bones connected
-[23:54:25] Domenic: all on the x axis for simplicity
-[23:54:40] Domenic: bone0: x=0 scale=.5f
-[23:55:12] Domenic: bone1: x=200 scale=1.5f (relativex calculates to 100f)
-[23:55:31] Domenic: bone2: x=200 scale=.5f (relativex calculates to 300f)
-[23:56:07] Domenic: i attach sprites to each bone in spriter, and change their relative X values to make them all exactly on top of each other
-[23:56:28] Victor: Wait.
-[23:56:37] Victor: You said RelativeX calculates to 100f on Bone 1
-[23:56:42] Domenic: the sprite attached to bone2... the x value is -666.666667
-[23:56:53] Domenic: yes because it's relative to bone0
-[23:56:59] Domenic: which is scaled to .5f
-[23:57:04] Victor: Oh, okay.
-[23:57:08] Victor: So the scale of ...okay.
-[23:57:20] Domenic: yea it's f'n weird...
-[23:57:28] Domenic: the third bone has a sprite attached to it
-[23:57:41] Domenic: spriter saves -666.666667f as its x value
-[23:57:51] Domenic: really it's -400f
-[23:58:43] Domenic: -666.666667f * 1.5f * .5f - bone1's relativex
-[23:59:07] Domenic: i can't calculate all this shit without a reference chain
-[00:00:01] Victor: Hm.
-[00:00:05] Domenic: why couldn't they just save it as -400f
-[00:00:18] Victor: haha.
-                 * 
-                 */
-
+                var timelineKeyBone = new KeyBone(timelineKey.Bone);
                 if (boneRef.Parent.HasValue)
                 {
-                    var parentBoneRef =
-                        animation.Mainline.Keys.SelectMany(k => k.BoneRef).Single(b => b.Id == boneRef.Parent.Value);
-                    var parentBone =
-                        animation.Timeline.Single(t => t.Id == parentBoneRef.Timeline)
-                                 .Key.Single(k => k.Id == parentBoneRef.Key)
-                                 .Bone;
-                    while (parentBone != null)
-                    {
-                        x *= parentBone.ScaleX;
-                        y *= parentBone.ScaleY;
-                        if (parentBoneRef.Parent.HasValue)
-                        {
-                            parentBoneRef = 
-                        }
-                    }
+                    var parentBone = bones[boneRef.Parent.Value];
+                    timelineKeyBone.X *= parentBone.ScaleX;
+                    timelineKeyBone.Y *= parentBone.ScaleY;
+                    timelineKeyBone.X += parentBone.X;
+                    timelineKeyBone.Y += parentBone.Y;
                 }
+
+                bones[boneRef.Id] = timelineKeyBone;
 
                 keyFrame.Values[bone] = new KeyFrameValues
                     {
-                        AbsolutePosition = new Vector3(x, y, 0.0f),
-                        Rotation = new Vector3(0.0f, 0.0f, timelineKey.Bone.Angle),
+                        AbsolutePosition = new Vector3(timelineKeyBone.X, timelineKeyBone.Y, 0.0f),
+                        Rotation = new Vector3(0.0f, 0.0f, timelineKeyBone.Angle),
                         Spin = timelineKey.Spin
                     };
 

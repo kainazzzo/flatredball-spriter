@@ -76,7 +76,6 @@ namespace FlatRedBall_Spriter
     [XmlTypeAttribute(AnonymousType = true)]
     public partial class KeyObjectRef
     {
-
         /// <remarks/>
         [XmlAttribute(AttributeName = "id")]
         public int Id { get; set; }
@@ -105,6 +104,127 @@ namespace FlatRedBall_Spriter
         /// <remarks/>
         [XmlAttribute(AttributeName = "z_index")]
         public int ZIndex { get; set; }
+
+        [XmlIgnore]
+        public int? AbsoluteX { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_x")]
+        public int do_notuse_abs_x
+        {
+            get { return AbsoluteX.HasValue ? AbsoluteX.Value : int.MinValue; }
+            set { AbsoluteX = value; }
+        }
+
+        [XmlAttribute(AttributeName = "abs_y")]
+        public int do_not_use_abs_y
+        {
+            get
+            {
+                return AbsoluteY.HasValue ? AbsoluteY.Value : int.MinValue;
+            }
+            set
+            {
+                AbsoluteY = value;
+            }
+        }
+
+        [XmlIgnore]
+        public int? AbsoluteY { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_pivot_x")]
+        public int donotuse_abs_pivot_x
+        {
+            get
+            {
+                return AbsolutePivotX.HasValue ? AbsolutePivotX.Value : int.MinValue;
+            }
+            set
+            {
+                AbsolutePivotX = value;
+            }
+        }
+
+        [XmlIgnore]
+        public int? AbsolutePivotX { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_pivot_y")]
+        public int donotuse_pivot_y
+        {
+            get
+            {
+                return AbsolutePivotY.HasValue ? AbsolutePivotY.Value : int.MinValue;
+            }
+            set
+            {
+                AbsolutePivotY = value;
+            }
+        }
+
+        [XmlIgnore]
+        public int? AbsolutePivotY { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_angle")]
+        public float donotuse_absolute_angle
+        {
+            get
+            {
+                return AbsoluteAngle.HasValue ? AbsoluteAngle.Value : float.MinValue;
+            }
+            set
+            {
+                AbsoluteAngle = value;
+            }
+        }
+
+        [XmlIgnore]
+        public float? AbsoluteAngle { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_scale_x")]
+        public float donotuse_absolute_scale_x
+        {
+            get
+            {
+                return AbsoluteScaleX.HasValue ? AbsoluteScaleX.Value : float.MinValue;
+            }
+            set
+            {
+                AbsoluteScaleX = value;
+            }
+        }
+
+        [XmlIgnore]
+        public float? AbsoluteScaleX { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_scale_y")]
+        public float donotuse_absolute_scale_y {
+            get
+            {
+                return AbsoluteScaleY.HasValue ? AbsoluteScaleY.Value : float.MinValue;
+            }
+            set
+            {
+                AbsoluteScaleY = value;
+            }
+        }
+
+        [XmlIgnore]
+        public float? AbsoluteScaleY { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_a")]
+        public float donotuse_absolute_alpha
+        {
+            get
+            {
+                return AbsoluteAlpha.HasValue ? AbsoluteAlpha.Value : float.MinValue;
+            }
+            set
+            {
+                AbsoluteAlpha = value;
+            }
+        }
+
+        [XmlIgnore]
+        public float? AbsoluteAlpha { get; set; }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]

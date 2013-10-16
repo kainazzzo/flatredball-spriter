@@ -232,16 +232,16 @@ namespace flatredball_spriter_test
 
             so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
 
-            var keyFrame = new KeyFrame()
-                {
+            var keyFrame = new KeyFrame
+            {
                     Time = 0
                 };
-            keyFrame.Values[pivot] = new KeyFrameValues()
+            keyFrame.Values[pivot] = new KeyFrameValues
             {
                 RelativePosition = new Vector3(30f, 30f, 0f)
             };
-            keyFrame.Values[sprite] = new KeyFrameValues()
-                {
+            keyFrame.Values[sprite] = new KeyFrameValues
+            {
                     Alpha = 1.0f,
                     Parent = pivot,
                     ScaleX = 1.0f,
@@ -250,17 +250,17 @@ namespace flatredball_spriter_test
 
             so.Animations[""].KeyFrames.Add(keyFrame);
 
-            keyFrame = new KeyFrame()
-                {
+            keyFrame = new KeyFrame
+            {
                     Time = 1.0f
                 };
-            keyFrame.Values[pivot] = new KeyFrameValues()
+            keyFrame.Values[pivot] = new KeyFrameValues
             {
                 RelativePosition = Vector3.Zero
             };
 
-            keyFrame.Values[sprite] = new KeyFrameValues()
-                {
+            keyFrame.Values[sprite] = new KeyFrameValues
+            {
                     Alpha = 1.0f,
                     Parent = pivot,
                     ScaleX = 1.0f,
@@ -314,27 +314,27 @@ namespace flatredball_spriter_test
 
             so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
 
-            var keyFrame = new KeyFrame()
-                {
+            var keyFrame = new KeyFrame
+            {
                     Time = 0f
                 };
 
-            keyFrame.Values[bone1] = new KeyFrameValues()
-                {
+            keyFrame.Values[bone1] = new KeyFrameValues
+            {
                     Parent = so
                 };
 
             keyFrame.Values[bone2] = new KeyFrameValues {Parent = bone1};
             so.Animations[""].KeyFrames.Add(keyFrame);
 
-            keyFrame = new KeyFrame()
-                {
+            keyFrame = new KeyFrame
+            {
                     Time = 1.0f
                 };
 
             keyFrame.Values[bone1] = new KeyFrameValues {RelativePosition = new Vector3(100f, 0f, 0f), Parent = so};
-            keyFrame.Values[bone2] = new KeyFrameValues()
-                {
+            keyFrame.Values[bone2] = new KeyFrameValues
+            {
                     Parent = so
                 };
 
@@ -362,30 +362,30 @@ namespace flatredball_spriter_test
             sprite2.AttachTo(pivot2, true);
             so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
 
-            var keyFrame = new KeyFrame()
+            var keyFrame = new KeyFrame
             {
                 Time = 0
             };
-            keyFrame.Values[pivot] = new KeyFrameValues()
+            keyFrame.Values[pivot] = new KeyFrameValues
             {
                 RelativePosition = Vector3.Zero
             };
-            keyFrame.Values[pivot2] = new KeyFrameValues()
+            keyFrame.Values[pivot2] = new KeyFrameValues
             {
                 RelativePosition = Vector3.Zero
             };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
 
-            keyFrame = new KeyFrame()
+            keyFrame = new KeyFrame
             {
                 Time = 1.0f
             };
-            keyFrame.Values[pivot] = new KeyFrameValues()
+            keyFrame.Values[pivot] = new KeyFrameValues
             {
                 RelativePosition = new Vector3(0f, 10f, 0f)
             };
-            keyFrame.Values[pivot2] = new KeyFrameValues()
+            keyFrame.Values[pivot2] = new KeyFrameValues
             {
                 RelativePosition = new Vector3(10f, 0f, 0f)
             };

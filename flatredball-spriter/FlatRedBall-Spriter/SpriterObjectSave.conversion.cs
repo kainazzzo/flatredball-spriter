@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 using FlatRedBall;
 using FlatRedBall.IO;
 using Microsoft.Xna.Framework;
@@ -11,10 +12,8 @@ namespace FlatRedBall_Spriter
 {
     public partial class SpriterObjectSave
     {
-        public virtual ITextureLoader TextureLoader
-        {
-            get { return new FlatRedBallTextureLoader(); }
-        }
+        [XmlIgnore]
+        public ITextureLoader TextureLoader { get; set; }
 
         public string Directory { get; set; }
         public string FileName { get; set; }

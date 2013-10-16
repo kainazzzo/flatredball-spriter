@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatRedBall-Spriter", "..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj", "{1A1A158C-5EDE-4750-8BD0-62FAEB1C21DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flatredball-spriter-test", "..\flatredball-spriter-test\flatredball-spriter-test.csproj", "{FEB70393-A1C4-433A-AE50-8B16B276EAE3}"
@@ -17,10 +17,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XNATest", "..\scurvy\XNATest\XNATest.csproj", "{9F339A9B-201E-4D8E-B44A-3E25950BAE5A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CEF3C4D9-560C-4C22-BEE8-4BB1ADB53161}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spritertestgame", "spritertestgame\spritertestgame\spritertestgame.csproj", "{649DE040-99C6-4838-ADA3-533D0DBD4325}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spritertestgameContent", "spritertestgame\spritertestgameContent\spritertestgameContent.contentproj", "{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriterPlugin", "..\SpriterPlugin\SpriterPlugin\SpriterPlugin.csproj", "{D73086FC-957E-4E3F-97FA-742CBBF02EA6}"
 EndProject
@@ -123,38 +119,6 @@ Global
 		{9F339A9B-201E-4D8E-B44A-3E25950BAE5A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9F339A9B-201E-4D8E-B44A-3E25950BAE5A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9F339A9B-201E-4D8E-B44A-3E25950BAE5A}.Release|x86.ActiveCfg = Release|Any CPU
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|x86.ActiveCfg = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|x86.Build.0 = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|Any CPU.ActiveCfg = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|Mixed Platforms.ActiveCfg = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|Mixed Platforms.Build.0 = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|x86.ActiveCfg = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|x86.Build.0 = Debug|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|Any CPU.ActiveCfg = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|Mixed Platforms.ActiveCfg = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|Mixed Platforms.Build.0 = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|x86.ActiveCfg = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|x86.Build.0 = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|Any CPU.ActiveCfg = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|Mixed Platforms.Build.0 = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|x86.ActiveCfg = Release|x86
-		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|x86.Build.0 = Release|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Debug|x86.ActiveCfg = Debug|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.DebugProfile|Any CPU.ActiveCfg = Debug|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.DebugProfile|Mixed Platforms.ActiveCfg = Debug|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.DebugProfile|x86.ActiveCfg = Debug|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Profile|Any CPU.ActiveCfg = Release|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Profile|Mixed Platforms.ActiveCfg = Release|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Profile|x86.ActiveCfg = Release|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Release|Any CPU.ActiveCfg = Release|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}.Release|x86.ActiveCfg = Release|x86
 		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -183,7 +147,8 @@ Global
 		{71B312F5-1697-4CBD-BE67-AC0D3C34D115} = {CEF3C4D9-560C-4C22-BEE8-4BB1ADB53161}
 		{9F339A9B-201E-4D8E-B44A-3E25950BAE5A} = {CEF3C4D9-560C-4C22-BEE8-4BB1ADB53161}
 		{FEB70393-A1C4-433A-AE50-8B16B276EAE3} = {CEF3C4D9-560C-4C22-BEE8-4BB1ADB53161}
-		{649DE040-99C6-4838-ADA3-533D0DBD4325} = {CEF3C4D9-560C-4C22-BEE8-4BB1ADB53161}
-		{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4} = {CEF3C4D9-560C-4C22-BEE8-4BB1ADB53161}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal

@@ -194,11 +194,20 @@ namespace FlatRedBall_Spriter
                 }
 
                 // Position
-                currentObject.RelativePosition = Vector3.Lerp(currentValues.Position, nextValues.Position,
-                                                              percentage);
+                // In a single dimension, if the spriterobject is on x = 5, and the position to move a subobject to is x=8, then it should actually move to x=3, because you subtract the spriterobject's position from the subobject's interpolated value
+                currentObject.Position = Vector3.Lerp(currentValues.Position, nextValues.Position,
+                                                              percentage) - Position;
 
-                currentObject.RelativePosition.X *= this.ScaleX;
-                currentObject.RelativePosition.Y *= this.ScaleY;
+
+                // Now the scale can happen
+                currentObject.Position.X *= this.ScaleX;
+                currentObject.Position.Y *= this.ScaleY;
+
+                // Set relative values based on the absolute value set above
+                if (currentObject.Parent != null)
+                {
+                    currentObject.SetRelativeFromAbsolute();
+                }
 
                 if (float.IsNaN(currentObject.RelativePosition.X) ||
                     float.IsNaN(currentObject.RelativePosition.Y)
@@ -258,9 +267,15 @@ namespace FlatRedBall_Spriter
             foreach (var pair in CurrentKeyFrame.Values)
             {
                 pair.Key.AttachTo(pair.Value.Parent, true);
-                pair.Key.RelativePosition = pair.Value.Position;
-                pair.Key.RelativePosition.X *= this.ScaleX;
-                pair.Key.RelativePosition.Y *= this.ScaleY;
+                pair.Key.Position = pair.Value.Position - Position;
+                pair.Key.Position.X *= this.ScaleX;
+                pair.Key.Position.Y *= this.ScaleY;
+
+                if (pair.Value.Parent != null)
+                {
+                    pair.Key.SetRelativeFromAbsolute();
+                }
+
                 pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
 
                 var sprite = pair.Key as Sprite;

@@ -18,57 +18,6 @@ namespace flatredball_spriter_test
     [TestClass()]
     public class SpriterObjectTest
     {
-
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
         /// <summary>
         ///A test for GetPercentageIntoFrame
         ///</summary>
@@ -128,19 +77,19 @@ namespace flatredball_spriter_test
             so.StartAnimation();
             Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < .00001f);
             Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.RelativePosition.Y - 7.5f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.RelativePosition.X - 15f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 7.5f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 15f) < .00001f);
 
             so.TimedActivity(.5f, 0f, 0f);
-            Assert.IsTrue(Math.Abs(pivot.RelativePosition.Y - 3.75f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.RelativePosition.X - 7.5f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 3.75f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 7.5f) < .00001f);
 
             so.TimedActivity(.5f, 0f, 0f);
 
             Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < .00001f);
             Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.RelativePosition.Y - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.RelativePosition.X - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 0.0f) < .00001f);
             
         }
 
@@ -232,23 +181,29 @@ namespace flatredball_spriter_test
 
             so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
 
+            // first keyframe (0ms)
             var keyFrame = new KeyFrame
             {
-                    Time = 0
-                };
+                Time = 0
+            };
+
+            // The pivot is at 30,30
             keyFrame.Values[pivot] = new KeyFrameValues
             {
                 Position = new Vector3(30f, 30f, 0f)
             };
+            // Sprite is just there to connect to the pivot
             keyFrame.Values[sprite] = new KeyFrameValues
             {
                     Alpha = 1.0f,
                     Parent = pivot,
                     ScaleX = 1.0f,
-                    ScaleY = 1.0f
+                    ScaleY = 1.0f,
+                    Position = new Vector3(30f, 30f, 0f)
                 };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
+
 
             keyFrame = new KeyFrame
             {
@@ -264,7 +219,8 @@ namespace flatredball_spriter_test
                     Alpha = 1.0f,
                     Parent = pivot,
                     ScaleX = 1.0f,
-                    ScaleY = 1.0f
+                    ScaleY = 1.0f,
+                    Position = Vector3.Zero
                 };
 
             so.Animations[""].KeyFrames.Add(keyFrame);

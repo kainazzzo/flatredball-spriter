@@ -238,7 +238,7 @@ namespace flatredball_spriter_test
                 };
             keyFrame.Values[pivot] = new KeyFrameValues
             {
-                RelativePosition = new Vector3(30f, 30f, 0f)
+                Position = new Vector3(30f, 30f, 0f)
             };
             keyFrame.Values[sprite] = new KeyFrameValues
             {
@@ -256,7 +256,7 @@ namespace flatredball_spriter_test
                 };
             keyFrame.Values[pivot] = new KeyFrameValues
             {
-                RelativePosition = Vector3.Zero
+                Position = Vector3.Zero
             };
 
             keyFrame.Values[sprite] = new KeyFrameValues
@@ -293,7 +293,40 @@ namespace flatredball_spriter_test
         [TestMethod]
         public void BoneReparenting()
         {
-            var so = GetSimpleSpriterObjectForParenting();
+            var so = new SpriterObject("Global", false);
+            var bone1 = new PositionedObject();
+            var bone2 = new PositionedObject();
+
+            so.Animations.Add("", new SpriterObjectAnimation("", false, 2.0f, new List<KeyFrame>()));
+
+            var keyFrame = new KeyFrame
+            {
+                Time = 0f
+            };
+
+            keyFrame.Values[bone1] = new KeyFrameValues
+            {
+                Parent = so
+            };
+
+            keyFrame.Values[bone2] = new KeyFrameValues { Parent = bone1 };
+            so.Animations[""].KeyFrames.Add(keyFrame);
+
+            keyFrame = new KeyFrame
+            {
+                Time = 1.0f
+            };
+
+            keyFrame.Values[bone1] = new KeyFrameValues { Position = new Vector3(100f, 0f, 0f), Parent = so };
+            keyFrame.Values[bone2] = new KeyFrameValues
+            {
+                Parent = so
+            };
+
+            so.Animations[""].KeyFrames.Add(keyFrame);
+
+            so.ObjectList.Add(bone1);
+            so.ObjectList.Add(bone2);
 
             so.StartAnimation();
 
@@ -306,45 +339,6 @@ namespace flatredball_spriter_test
             Assert.AreSame(so, so.ObjectList[0].Parent);
         }
 
-        private static SpriterObject GetSimpleSpriterObjectForParenting(bool loops=false)
-        {
-            var so = new SpriterObject("Global", false);
-            var bone1 = new PositionedObject();
-            var bone2 = new PositionedObject();
-
-            so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
-
-            var keyFrame = new KeyFrame
-            {
-                    Time = 0f
-                };
-
-            keyFrame.Values[bone1] = new KeyFrameValues
-            {
-                    Parent = so
-                };
-
-            keyFrame.Values[bone2] = new KeyFrameValues {Parent = bone1};
-            so.Animations[""].KeyFrames.Add(keyFrame);
-
-            keyFrame = new KeyFrame
-            {
-                    Time = 1.0f
-                };
-
-            keyFrame.Values[bone1] = new KeyFrameValues {RelativePosition = new Vector3(100f, 0f, 0f), Parent = so};
-            keyFrame.Values[bone2] = new KeyFrameValues
-            {
-                    Parent = so
-                };
-
-            so.Animations[""].KeyFrames.Add(keyFrame);
-
-            so.ObjectList.Add(bone1);
-            so.ObjectList.Add(bone2);
-
-            return so;
-        }
         private static SpriterObject GetSimpleSpriterObjectWithTwoObjects(bool loops = false)
         {
 
@@ -368,11 +362,11 @@ namespace flatredball_spriter_test
             };
             keyFrame.Values[pivot] = new KeyFrameValues
             {
-                RelativePosition = Vector3.Zero
+                Position = Vector3.Zero
             };
             keyFrame.Values[pivot2] = new KeyFrameValues
             {
-                RelativePosition = Vector3.Zero
+                Position = Vector3.Zero
             };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
@@ -383,11 +377,11 @@ namespace flatredball_spriter_test
             };
             keyFrame.Values[pivot] = new KeyFrameValues
             {
-                RelativePosition = new Vector3(0f, 10f, 0f)
+                Position = new Vector3(0f, 10f, 0f)
             };
             keyFrame.Values[pivot2] = new KeyFrameValues
             {
-                RelativePosition = new Vector3(10f, 0f, 0f)
+                Position = new Vector3(10f, 0f, 0f)
             };
 
             so.Animations[""].KeyFrames.Add(keyFrame);

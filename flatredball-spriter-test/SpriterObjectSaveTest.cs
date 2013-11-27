@@ -5,6 +5,7 @@ using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.Xna.Framework;
+using Telerik.JustMock;
 
 namespace flatredball_spriter_test
 {
@@ -52,14 +53,6 @@ namespace flatredball_spriter_test
         //}
         //
         #endregion
-
-        public class SpriterObjectSaveNullTexture : SpriterObjectSave
-        {
-            public override Microsoft.Xna.Framework.Graphics.Texture2D LoadTexture(SpriterDataFolderFile file)
-            {
-                return null;
-            }
-        }
 
         [TestMethod]
         public void LoopingDefaultsToTrue()
@@ -118,8 +111,9 @@ namespace flatredball_spriter_test
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTexture()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
                 {
+                    TextureLoader = Mock.Create<ITextureLoader>(),
                     Directory = "C:\\",
                     Folder = new List<SpriterDataFolder>(1)
                         {
@@ -277,9 +271,9 @@ namespace flatredball_spriter_test
             var so = sos.ToRuntime();
             so.StartAnimation();
 
-            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.RelativePosition.Z);
-            Assert.AreNotEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(3).Value.RelativePosition.Z);
-            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.RelativePosition.Z - .0001f) < .00001);
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.Position.Z);
+            Assert.AreNotEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z);
+            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z - .0001f) < .00001);
         }
 
         [TestMethod]
@@ -356,285 +350,6 @@ namespace flatredball_spriter_test
             Assert.IsTrue(pass, string.Format("{0}.StartAnimation didn't throw exception for an invalid animation name.", typeof(SpriterObject)));
         }
 
-        [TestMethod]
-        public void RelativeScaleWithObjectScaled()
-        {
-            var sos = GetSimpleSpriterObjectSaveNullTextureWithBonesAndObjectScaled();
-            
-            var so = sos.ToRuntime();
-
-            var sprite = so.ObjectList.First(p => p.Name == "sprite");
-            var sprite2 = so.ObjectList.Where(p => p.Name == "sprite").ElementAt(1);
-            var pivot = sprite.Parent;
-            var pivot2 = sprite2.Parent;
-
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].AbsolutePosition.X - 100f) < .0001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.Y - 1.062019f) < .0001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleX - 51.327448f) < .0001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleY - 64f) < .0001f);
-        }
-
-        private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithBonesAndObjectScaled()
-        {
-            return new SpriterObjectSaveNullTexture
-                {
-                    Directory = "C:\\",
-                    FileName = "",
-                    Folder = new List<SpriterDataFolder>
-                    {
-                            new SpriterDataFolder
-                            {
-                                    Id = 0,
-                                    File = new List<SpriterDataFolderFile>
-                                    {
-                                            new SpriterDataFolderFile
-                                            {
-                                                    Name = "test.png",
-                                                    Width = 116,
-                                                    Height = 128
-                                                }
-                                        }
-                                }
-                        },
-                    Entity = new List<SpriterDataEntity>
-                    {
-                            new SpriterDataEntity
-                            {
-                                    Id=0,
-                                    Name="",
-                                    Animation = new List<SpriterDataEntityAnimation>
-                                    {
-                                            new SpriterDataEntityAnimation
-                                            {
-                                                    Id=0,
-                                                    Name="first",
-                                                    Length = 1000,
-                                                    Looping = false,
-                                                    Mainline = new SpriterDataEntityAnimationMainline
-                                                    {
-                                                            Keys = new List<Key>
-                                                            {
-                                                                    new Key
-                                                                    {
-                                                                            Id=0,
-                                                                            BoneRef = new List<KeyBoneRef>
-                                                                            {
-                                                                                    new KeyBoneRef
-                                                                                    {
-                                                                                            Id=0,
-                                                                                            Timeline = 0,
-                                                                                            Key=0
-                                                                                        },
-                                                                                    new KeyBoneRef
-                                                                                    {
-                                                                                            Id=1,
-                                                                                            Parent = 0,
-                                                                                            Timeline = 1,
-                                                                                            Key = 0
-                                                                                        },
-                                                                                    new KeyBoneRef
-                                                                                    {
-                                                                                            Id = 2,
-                                                                                            Parent = 1,
-                                                                                            Timeline = 2,
-                                                                                            Key = 0
-                                                                                        },
-                                                                                    new KeyBoneRef
-                                                                                    {
-                                                                                            Id = 3,
-                                                                                            Parent = 2,
-                                                                                            Timeline = 7,
-                                                                                            Key = 0
-                                                                                        }
-                                                                                },
-                                                                            ObjectRef = new List<KeyObjectRef>
-                                                                            {
-                                                                                    new KeyObjectRef
-                                                                                    {
-                                                                                            Id=0,
-                                                                                            Parent = 0,
-                                                                                            Timeline = 3,
-                                                                                            Key=0
-                                                                                        },
-                                                                                    new KeyObjectRef
-                                                                                    {
-                                                                                            Id=1,
-                                                                                            Parent = 1,
-                                                                                            Timeline = 4,
-                                                                                            Key = 0
-                                                                                        },
-                                                                                    new KeyObjectRef
-                                                                                    {
-                                                                                            Id = 2,
-                                                                                            Parent = 2,
-                                                                                            Timeline = 5,
-                                                                                            Key = 0
-                                                                                        },
-                                                                                    new KeyObjectRef
-                                                                                    {
-                                                                                            Id = 3,
-                                                                                            Parent = 3,
-                                                                                            Timeline = 6,
-                                                                                            Key = 0
-                                                                                        }
-                                                                                }
-                                                                        }
-                                                                }
-                                                        },
-                                                        Timeline = new List<SpriterDataEntityAnimationTimeline>
-                                                        {
-                                                                new SpriterDataEntityAnimationTimeline
-                                                                {
-                                                                        Id = 0,
-                                                                        Name = "bone_000",
-                                                                        Key = new List<Key>
-                                                                        {
-                                                                                new Key
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Spin = 0,
-                                                                                        Bone = new KeyBone
-                                                                                        {
-                                                                                                X = 100,
-                                                                                                ScaleX = .5f
-                                                                                            }
-                                                                                    }
-                                                                            }
-                                                                    },
-                                                                new SpriterDataEntityAnimationTimeline
-                                                                {
-                                                                        Id = 1,
-                                                                        Name = "bone_001",
-                                                                        Key = new List<Key>
-                                                                        {
-                                                                                new Key
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Spin = 0,
-                                                                                        Bone = new KeyBone
-                                                                                        {
-                                                                                                X = 200
-                                                                                            }
-                                                                                    }
-                                                                            }
-                                                                    },
-                                                                new SpriterDataEntityAnimationTimeline
-                                                                {
-                                                                        Id = 2,
-                                                                        Name = "bone_002",
-                                                                        Key = new List<Key>
-                                                                        {
-                                                                                new Key
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Spin = 0,
-                                                                                        Bone = new KeyBone
-                                                                                        {
-                                                                                                X = 200,
-                                                                                                ScaleX = 2f
-                                                                                            }
-                                                                                    }
-                                                                            }
-                                                                    },
-                                                                new SpriterDataEntityAnimationTimeline
-                                                                {
-                                                                        Id = 3,
-                                                                        Key = new List<Key>
-                                                                        {
-                                                                                new Key
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Spin = 0,
-                                                                                        Object = new KeyObject
-                                                                                        {
-                                                                                                Folder = 0,
-                                                                                                File = 0,
-                                                                                                ScaleX = 2f
-                                                                                            }
-                                                                                    }
-                                                                            }
-                                                                    },
-                                                                new SpriterDataEntityAnimationTimeline
-                                                                {
-                                                                        Id = 4,
-                                                                        Key = new List<Key>
-                                                                        {
-                                                                                new Key
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Spin = 0,
-                                                                                        Object = new KeyObject
-                                                                                        {
-                                                                                                Folder = 0,
-                                                                                                File = 0,
-                                                                                                X = -200f,
-                                                                                                ScaleX = 2f
-                                                                                            }
-                                                                                    }
-                                                                            }
-                                                                    },
-                                                                new SpriterDataEntityAnimationTimeline
-                                                                {
-                                                                        Id = 5,
-                                                                        Key = new List<Key>
-                                                                        {
-                                                                                new Key
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Spin = 0,
-                                                                                        Object = new KeyObject
-                                                                                        {
-                                                                                                Folder = 0,
-                                                                                                File = 0,
-                                                                                                X = -200
-                                                                                            }
-                                                                                    }
-                                                                            }
-                                                                    },
-                                                                new SpriterDataEntityAnimationTimeline
-                                                                {
-                                                                        Id = 6,
-                                                                        Key = new List<Key>
-                                                                        {
-                                                                                new Key
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Spin = 0,
-                                                                                        Object = new KeyObject
-                                                                                        {
-                                                                                                Folder = 0,
-                                                                                                File = 0,
-                                                                                                X = -250,
-                                                                                                ScaleX = .5f
-                                                                                            }
-                                                                                    }
-                                                                            }
-                                                                    },
-                                                                new SpriterDataEntityAnimationTimeline
-                                                                {
-                                                                        Id = 7,
-                                                                        Name = "bone_003",
-                                                                        Key = new List<Key>
-                                                                        {
-                                                                                new Key
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Spin = 0,
-                                                                                        Bone = new KeyBone
-                                                                                        {
-                                                                                                X = 300,
-                                                                                                ScaleX = 2f
-                                                                                            }
-                                                                                    }
-                                                                            }
-                                                                    }
-                                                            }
-                                                }
-                                        }
-                                }
-                        }
-                };
-        }
 
         [TestMethod]
         public void RelativeScaleWithObjectUnscaled()
@@ -653,42 +368,21 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleX - 144f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleX - 64f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleY - 64f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativePosition.Y + 256.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativePosition.X - 144f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.Y - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.X - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].RelativePosition.Y - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].RelativePosition.X - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.Y + 256.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.X - 144f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.X - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].Position.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].Position.X - 0.0f) < .00001f);
 
             Assert.AreSame(sprite2.Parent, so.Animations.First().Value.KeyFrames.First().Values[sprite2].Parent);
         }
 
-        [TestMethod]
-        public void BonePositionReverseScale()
-        {
-            var sos = GetSimpleSpriterObjectSaveNullTextureWith3ConnectedBonesAndObjectsPositionedTogether();
-            var so = sos.ToRuntime();
-
-            var keyframes = so.Animations.First().Value.KeyFrames;
-            var pivots = so.ObjectList.Where(o => o.GetType() != typeof (Sprite) && o.Name == "pivot").ToList();
-            var bones =
-                so.ObjectList.Where(o => o.GetType() != typeof (Sprite) && o.Name.Contains("bone")).ToList();
-            var values = keyframes[0].Values;
-            
-            Assert.IsTrue(Math.Abs(values[bones[0]].AbsolutePosition.X - 0f) < .0001f);
-            Assert.IsTrue(Math.Abs(values[bones[1]].AbsolutePosition.X - 0f) < .0001f);
-            Assert.IsTrue(Math.Abs(values[bones[2]].AbsolutePosition.X - 0f) < .0001f);
-
-            Assert.IsTrue(Math.Abs(values[pivots[0]].RelativePosition.X - 0f) < .0001f);
-            Assert.IsTrue(Math.Abs(values[pivots[1]].RelativePosition.X - -100f) < .0001f);
-            Assert.IsTrue(Math.Abs(values[pivots[2]].RelativePosition.X - -400f) < .0001f);
-
-        }
-
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith3ConnectedBonesAndObjectsPositionedTogether()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>
                 {
@@ -902,8 +596,9 @@ namespace flatredball_spriter_test
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -1022,8 +717,9 @@ namespace flatredball_spriter_test
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefsAndExtraKey()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -1238,8 +934,9 @@ namespace flatredball_spriter_test
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -1332,8 +1029,9 @@ namespace flatredball_spriter_test
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithTwoBones()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -1483,8 +1181,9 @@ namespace flatredball_spriter_test
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParentAndOneOrphanObject()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -1711,13 +1410,14 @@ namespace flatredball_spriter_test
                                         }
                                 }
                         }
-            };    
+            };
 
         }
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParent()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -1911,14 +1611,15 @@ namespace flatredball_spriter_test
                                         }
                                 }
                         }
-            };    
-            
+            };
+
         }
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithSingleBoneAsObjectParent()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -2061,13 +1762,14 @@ namespace flatredball_spriter_test
                                         }
                                 }
                         }
-            };    
+            };
         }
-        
+
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithSingleBoneRotated()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -2174,10 +1876,11 @@ namespace flatredball_spriter_test
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithSingleBone()
         {
-            return new SpriterObjectSaveNullTexture
-                {
-                    Directory = "C:\\",
-                    Folder = new List<SpriterDataFolder>(1)
+            return new SpriterObjectSave
+            {
+                TextureLoader = Mock.Create<ITextureLoader>(),
+                Directory = "C:\\",
+                Folder = new List<SpriterDataFolder>(1)
                         {
                             new SpriterDataFolder
                                 {
@@ -2195,7 +1898,7 @@ namespace flatredball_spriter_test
                                         }
                                 }
                         },
-                    Entity = new List<SpriterDataEntity>
+                Entity = new List<SpriterDataEntity>
                         {
                             new SpriterDataEntity
                                 {
@@ -2278,13 +1981,14 @@ namespace flatredball_spriter_test
                                         }
                                 }
                         }
-                };
+            };
         }
 
         public static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithPositionChange()
         {
-            return new SpriterObjectSaveNullTexture
+            return new SpriterObjectSave
             {
+                TextureLoader = Mock.Create<ITextureLoader>(),
                 Directory = "C:\\",
                 Folder = new List<SpriterDataFolder>(1)
                         {
@@ -2388,7 +2092,7 @@ namespace flatredball_spriter_test
             var sos = GetSimpleSpriterObjectSaveNullTextureWithPositionChange();
             var so = sos.ToRuntime();
             so.StartAnimation();
-            Assert.IsTrue(Math.Abs(so.NextKeyFrame.Values[so.ObjectList[1]].RelativePosition.X - 50.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.NextKeyFrame.Values[so.ObjectList[1]].Position.X - 50.0f) < .0001f);
         }
         [TestMethod]
         public void FromFileTest()
@@ -2474,8 +2178,8 @@ namespace flatredball_spriter_test
             Assert.AreEqual(4, bone_ref.Timeline);
             Assert.AreEqual(0, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-            
-// ReSharper disable once PossibleInvalidOperationException
+
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
             #endregion
             #region entity[0].animation[0].mainline.key[0].bone_ref[2]
@@ -2485,8 +2189,8 @@ namespace flatredball_spriter_test
             Assert.AreEqual(3, bone_ref.Timeline);
             Assert.AreEqual(0, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-            
-// ReSharper disable once PossibleInvalidOperationException
+
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2497,7 +2201,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(2, bone_ref.Timeline);
             Assert.AreEqual(0, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2508,7 +2212,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(1, bone_ref.Timeline);
             Assert.AreEqual(0, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2519,7 +2223,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(6, bone_ref.Timeline);
             Assert.AreEqual(0, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2530,7 +2234,7 @@ namespace flatredball_spriter_test
             // ReSharper restore InconsistentNaming
             Assert.AreEqual(0, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(5, object_ref.Parent.Value);
             Assert.AreEqual(7, object_ref.Timeline);
             Assert.AreEqual(0, object_ref.Key);
@@ -2544,7 +2248,7 @@ namespace flatredball_spriter_test
             // ReSharper restore InconsistentNaming
             Assert.AreEqual(1, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, object_ref.Parent.Value);
             Assert.AreEqual(5, object_ref.Timeline);
             Assert.AreEqual(0, object_ref.Key);
@@ -2573,7 +2277,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(4, bone_ref.Timeline);
             Assert.AreEqual(1, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
             #endregion
             #region entity[0].animation[0].mainline.key[1].bone_ref[2]
@@ -2583,7 +2287,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(2, bone_ref.Timeline);
             Assert.AreEqual(1, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2594,7 +2298,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(1, bone_ref.Timeline);
             Assert.AreEqual(1, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2606,7 +2310,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(1, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
 
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
 
@@ -2618,7 +2322,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(3, bone_ref.Timeline);
             Assert.AreEqual(2, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(4, bone_ref.Parent.Value);
 
             #endregion
@@ -2629,7 +2333,7 @@ namespace flatredball_spriter_test
             // ReSharper restore InconsistentNaming
             Assert.AreEqual(0, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(4, object_ref.Parent.Value);
             Assert.AreEqual(7, object_ref.Timeline);
             Assert.AreEqual(1, object_ref.Key);
@@ -2643,7 +2347,7 @@ namespace flatredball_spriter_test
             // ReSharper restore InconsistentNaming
             Assert.AreEqual(1, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, object_ref.Parent.Value);
             Assert.AreEqual(5, object_ref.Timeline);
             Assert.AreEqual(1, object_ref.Key);
@@ -2657,7 +2361,7 @@ namespace flatredball_spriter_test
             // ReSharper restore InconsistentNaming
             Assert.AreEqual(2, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(5, object_ref.Parent.Value);
             Assert.AreEqual(8, object_ref.Timeline);
             Assert.AreEqual(0, object_ref.Key);
@@ -2686,7 +2390,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(4, bone_ref.Timeline);
             Assert.AreEqual(2, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
             #endregion
             #region entity[0].animation[0].mainline.key[1].bone_ref[2]
@@ -2696,7 +2400,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(2, bone_ref.Timeline);
             Assert.AreEqual(2, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2707,7 +2411,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(1, bone_ref.Timeline);
             Assert.AreEqual(2, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2718,7 +2422,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(6, bone_ref.Timeline);
             Assert.AreEqual(2, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, bone_ref.Parent.Value);
 
             #endregion
@@ -2729,7 +2433,7 @@ namespace flatredball_spriter_test
             Assert.AreEqual(3, bone_ref.Timeline);
             Assert.AreEqual(3, bone_ref.Key);
             Assert.IsTrue(bone_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(4, bone_ref.Parent.Value);
 
             #endregion
@@ -2740,7 +2444,7 @@ namespace flatredball_spriter_test
             // ReSharper restore InconsistentNaming
             Assert.AreEqual(0, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(4, object_ref.Parent.Value);
             Assert.AreEqual(7, object_ref.Timeline);
             Assert.AreEqual(2, object_ref.Key);
@@ -2754,7 +2458,7 @@ namespace flatredball_spriter_test
             // ReSharper restore InconsistentNaming
             Assert.AreEqual(1, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(0, object_ref.Parent.Value);
             Assert.AreEqual(5, object_ref.Timeline);
             Assert.AreEqual(2, object_ref.Key);
@@ -2768,7 +2472,7 @@ namespace flatredball_spriter_test
             // ReSharper restore InconsistentNaming
             Assert.AreEqual(2, object_ref.Id);
             Assert.IsTrue(object_ref.Parent.HasValue);
-// ReSharper disable once PossibleInvalidOperationException
+            // ReSharper disable once PossibleInvalidOperationException
             Assert.AreEqual(5, object_ref.Parent.Value);
             Assert.AreEqual(8, object_ref.Timeline);
             Assert.AreEqual(1, object_ref.Key);

@@ -106,21 +106,21 @@ namespace FlatRedBall_Spriter
         public int ZIndex { get; set; }
 
         [XmlIgnore]
-        public int? AbsoluteX { get; set; }
+        public float? AbsoluteX { get; set; }
 
         [XmlAttribute(AttributeName = "abs_x")]
-        public int do_notuse_abs_x
+        public float do_notuse_abs_x
         {
-            get { return AbsoluteX.HasValue ? AbsoluteX.Value : int.MinValue; }
+            get { return AbsoluteX.HasValue ? AbsoluteX.Value : float.MinValue; }
             set { AbsoluteX = value; }
         }
 
         [XmlAttribute(AttributeName = "abs_y")]
-        public int do_not_use_abs_y
+        public float do_not_use_abs_y
         {
             get
             {
-                return AbsoluteY.HasValue ? AbsoluteY.Value : int.MinValue;
+                return AbsoluteY.HasValue ? AbsoluteY.Value : float.MinValue;
             }
             set
             {
@@ -129,14 +129,14 @@ namespace FlatRedBall_Spriter
         }
 
         [XmlIgnore]
-        public int? AbsoluteY { get; set; }
+        public float? AbsoluteY { get; set; }
 
         [XmlAttribute(AttributeName = "abs_pivot_x")]
-        public int donotuse_abs_pivot_x
+        public float donotuse_abs_pivot_x
         {
             get
             {
-                return AbsolutePivotX.HasValue ? AbsolutePivotX.Value : int.MinValue;
+                return AbsolutePivotX.HasValue ? AbsolutePivotX.Value : float.MinValue;
             }
             set
             {
@@ -145,14 +145,14 @@ namespace FlatRedBall_Spriter
         }
 
         [XmlIgnore]
-        public int? AbsolutePivotX { get; set; }
+        public float? AbsolutePivotX { get; set; }
 
         [XmlAttribute(AttributeName = "abs_pivot_y")]
-        public int donotuse_pivot_y
+        public float donotuse_pivot_y
         {
             get
             {
-                return AbsolutePivotY.HasValue ? AbsolutePivotY.Value : int.MinValue;
+                return AbsolutePivotY.HasValue ? AbsolutePivotY.Value : float.MinValue;
             }
             set
             {
@@ -161,7 +161,7 @@ namespace FlatRedBall_Spriter
         }
 
         [XmlIgnore]
-        public int? AbsolutePivotY { get; set; }
+        public float? AbsolutePivotY { get; set; }
 
         [XmlAttribute(AttributeName = "abs_angle")]
         public float donotuse_absolute_angle

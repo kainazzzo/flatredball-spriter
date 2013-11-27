@@ -20,6 +20,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CEF3C4D9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriterPlugin", "..\SpriterPlugin\SpriterPlugin\SpriterPlugin.csproj", "{D73086FC-957E-4E3F-97FA-742CBBF02EA6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{AF3FADA1-6956-4238-A19D-E46E2978FF69}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "spritertestgame", "spritertestgame\spritertestgame\spritertestgame.csproj", "{649DE040-99C6-4838-ADA3-533D0DBD4325}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = spritertestgame.vsmdi
@@ -139,6 +148,26 @@ Global
 		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D73086FC-957E-4E3F-97FA-742CBBF02EA6}.Release|x86.ActiveCfg = Release|Any CPU
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|x86.ActiveCfg = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Debug|x86.Build.0 = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|Any CPU.ActiveCfg = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|Mixed Platforms.ActiveCfg = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|Mixed Platforms.Build.0 = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|x86.ActiveCfg = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.DebugProfile|x86.Build.0 = Debug|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|Any CPU.ActiveCfg = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|Mixed Platforms.ActiveCfg = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|Mixed Platforms.Build.0 = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|x86.ActiveCfg = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Profile|x86.Build.0 = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|Any CPU.ActiveCfg = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|Mixed Platforms.Build.0 = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|x86.ActiveCfg = Release|x86
+		{649DE040-99C6-4838-ADA3-533D0DBD4325}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

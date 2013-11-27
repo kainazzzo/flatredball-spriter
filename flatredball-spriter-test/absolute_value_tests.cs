@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Xml.Serialization;
 using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Telerik.JustMock;
 
 namespace flatredball_spriter_test
 {
@@ -87,7 +89,15 @@ namespace flatredball_spriter_test
             #endregion
 
             var sos = TestSerializationUtility.DeserializeFromXml<SpriterObjectSave>(xml);
-            
+            sos.TextureLoader = Mock.Create<ITextureLoader>();
+            sos.Directory = "C:\\";
+            sos.FileName = "test.scml";
+
+            var spriterObject = sos.ToRuntime();
+            var keyFrame = spriterObject.Animations.First().Value.KeyFrames[0];
+
+            Assert.AreEqual(200f, keyFrame.Values.ElementAt(1).Value.AbsolutePosition.X);
+            Assert.AreEqual(200f, keyFrame.Values.ElementAt(1).Value.AbsolutePosition.Y);
         }
     }
 }

@@ -194,9 +194,9 @@ namespace FlatRedBall_Spriter
                 }
 
                 // Position
-                // In a single dimension, if the spriterobject is on x = 5, and the position to move a subobject to is x=8, then it should actually move to x=3, because you subtract the spriterobject's position from the subobject's interpolated value
+                // In a single dimension, if the spriterobject is on x = 5, and the position to move a subobject to is x=8, then it should actually move to x=13, because we add the spriterobject's position to the subobject's interpolated value, since while positions are absolute, they are "absolute" relative to the container
                 currentObject.Position = Vector3.Lerp(currentValues.Position, nextValues.Position,
-                                                              percentage) - Position;
+                                                              percentage) + Position;
 
 
                 // Now the scale can happen
@@ -267,7 +267,7 @@ namespace FlatRedBall_Spriter
             foreach (var pair in CurrentKeyFrame.Values)
             {
                 pair.Key.AttachTo(pair.Value.Parent, true);
-                pair.Key.Position = pair.Value.Position - Position;
+                pair.Key.Position = pair.Value.Position + Position;
                 pair.Key.Position.X *= this.ScaleX;
                 pair.Key.Position.Y *= this.ScaleY;
 

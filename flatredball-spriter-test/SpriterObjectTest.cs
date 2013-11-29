@@ -67,6 +67,33 @@ namespace flatredball_spriter_test
         }
 
         [TestMethod]
+        public void PositionIsOffsetFromMainObject()
+        {
+            var so = GetSimpleSpriterObject();
+            so.Position.X = 100;
+            so.Position.Y = 200;
+
+            var sprite = (Sprite)so.ObjectList.Single(o => o.Name == "sprite");
+            var pivot = so.ObjectList.Single(o => o.Name == "pivot");
+
+            so.StartAnimation();
+
+            Assert.IsTrue(Math.Abs(sprite.Position.X - 130f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Position.Y - 230f) < Single.Epsilon);
+
+            so.TimedActivity(.5f, 0f, 0f);
+
+            Assert.IsTrue(Math.Abs(sprite.Position.X - 115f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Position.Y - 215f) < Single.Epsilon);
+
+            so.TimedActivity(.5f, 0f, 0f);
+
+            Assert.IsTrue(Math.Abs(sprite.Position.X - 100f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Position.Y - 200f) < Single.Epsilon);
+
+        }
+
+        [TestMethod]
         public void SpriterObjectScaleTest()
         {
             var so = GetSimpleSpriterObject();
@@ -75,21 +102,21 @@ namespace flatredball_spriter_test
             so.ScaleX = .5f;
             so.ScaleY = .25f;
             so.StartAnimation();
-            Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < .00001f);
-            Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.Position.Y - 7.5f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.Position.X - 15f) < .00001f);
+            Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 7.5f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 15f) < Single.Epsilon);
 
             so.TimedActivity(.5f, 0f, 0f);
-            Assert.IsTrue(Math.Abs(pivot.Position.Y - 3.75f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.Position.X - 7.5f) < .00001f);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 3.75f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 7.5f) < Single.Epsilon);
 
             so.TimedActivity(.5f, 0f, 0f);
 
-            Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < .00001f);
-            Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.Position.Y - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(pivot.Position.X - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 0.0f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 0.0f) < Single.Epsilon);
             
         }
 
@@ -149,22 +176,22 @@ namespace flatredball_spriter_test
             so.StartAnimation();
             Assert.IsTrue(so.Looping);
             so.TimedActivity(1.0f, 0f, 0f);
-            Assert.IsTrue(Math.Abs(so.ObjectList[1].RelativePosition.X - 0.0f) < .0001f);
-            Assert.IsTrue(Math.Abs(so.ObjectList[1].RelativePosition.Y - 0.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[1].Position.X - 0.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[1].Position.Y - 0.0f) < .0001f);
 
             so.TimedActivity(.5f, 0f, 0f);
-            Assert.IsTrue(Math.Abs(so.ObjectList[1].RelativePosition.X - 15.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[1].Position.X - 15.0f) < .0001f);
 
 
             so = GetSimpleSpriterObject(false);
             so.StartAnimation();
             Assert.IsFalse(so.Looping);
             so.TimedActivity(1.0f, 0f, 0f);
-            Assert.IsTrue(Math.Abs(so.ObjectList[0].RelativePosition.X - 0.0f) < .0001f);
-            Assert.IsTrue(Math.Abs(so.ObjectList[0].RelativePosition.Y - 0.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[0].Position.X - 0.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[0].Position.Y - 0.0f) < .0001f);
 
             so.TimedActivity(.5f, 0f, 0f);
-            Assert.IsTrue(Math.Abs(so.ObjectList[0].RelativePosition.X) < .0001f);
+            Assert.IsTrue(Math.Abs(so.ObjectList[0].Position.X) < .0001f);
         }
 
         private static SpriterObject GetSimpleSpriterObject(bool loops=false)
@@ -233,17 +260,64 @@ namespace flatredball_spriter_test
         [TestMethod]
         public void Test2Objects()
         {
-            var so = GetSimpleSpriterObjectWithTwoObjects(true);
+            var so = new SpriterObject("Global", false);
+
+            var sprite = new Sprite();
+            var pivot = new PositionedObject();
+            var sprite2 = new Sprite();
+            var pivot2 = new PositionedObject();
+
+            pivot.AttachTo(so, true);
+            sprite.AttachTo(pivot, true);
+
+            pivot2.AttachTo(so, true);
+            sprite2.AttachTo(pivot2, true);
+            so.Animations.Add("", new SpriterObjectAnimation("", true, 2.0f, new List<KeyFrame>()));
+
+            var keyFrame = new KeyFrame
+            {
+                Time = 0
+            };
+            keyFrame.Values[pivot] = new KeyFrameValues
+            {
+                Position = Vector3.Zero
+            };
+            keyFrame.Values[pivot2] = new KeyFrameValues
+            {
+                Position = Vector3.Zero
+            };
+
+            so.Animations[""].KeyFrames.Add(keyFrame);
+
+            keyFrame = new KeyFrame
+            {
+                Time = 1.0f
+            };
+            keyFrame.Values[pivot] = new KeyFrameValues
+            {
+                Position = new Vector3(0f, 10f, 0f)
+            };
+            keyFrame.Values[pivot2] = new KeyFrameValues
+            {
+                Position = new Vector3(10f, 0f, 0f)
+            };
+
+            so.Animations[""].KeyFrames.Add(keyFrame);
+
+            so.ObjectList.Add(sprite);
+            so.ObjectList.Add(pivot);
+            so.ObjectList.Add(sprite2);
+            so.ObjectList.Add(pivot2);
 
             so.StartAnimation();
             so.TimedActivity(.5f, 0f, 0f);
 
-            Assert.AreEqual(5f, so.ObjectList[1].RelativePosition.Y);
-            Assert.AreEqual(5f, so.ObjectList[3].RelativePosition.X);
+            Assert.AreEqual(5f, so.ObjectList[1].Position.Y);
+            Assert.AreEqual(5f, so.ObjectList[3].Position.X);
 
             so.TimedActivity(.25f, 0f, 0f);
-            Assert.AreEqual(7.5f, so.ObjectList[1].RelativePosition.Y);
-            Assert.AreEqual(7.5f, so.ObjectList[3].RelativePosition.X);
+            Assert.AreEqual(7.5f, so.ObjectList[1].Position.Y);
+            Assert.AreEqual(7.5f, so.ObjectList[3].Position.X);
         }
 
         [TestMethod]
@@ -294,62 +368,6 @@ namespace flatredball_spriter_test
             Assert.AreSame(so, so.ObjectList[1].Parent);
             Assert.AreSame(so, so.ObjectList[0].Parent);
         }
-
-        private static SpriterObject GetSimpleSpriterObjectWithTwoObjects(bool loops = false)
-        {
-
-            var so = new SpriterObject("Global", false);
-
-            var sprite = new Sprite();
-            var pivot = new PositionedObject();
-            var sprite2 = new Sprite();
-            var pivot2 = new PositionedObject();
-
-            pivot.AttachTo(so, true);
-            sprite.AttachTo(pivot, true);
-
-            pivot2.AttachTo(so, true);
-            sprite2.AttachTo(pivot2, true);
-            so.Animations.Add("", new SpriterObjectAnimation("", loops, 2.0f, new List<KeyFrame>()));
-
-            var keyFrame = new KeyFrame
-            {
-                Time = 0
-            };
-            keyFrame.Values[pivot] = new KeyFrameValues
-            {
-                Position = Vector3.Zero
-            };
-            keyFrame.Values[pivot2] = new KeyFrameValues
-            {
-                Position = Vector3.Zero
-            };
-
-            so.Animations[""].KeyFrames.Add(keyFrame);
-
-            keyFrame = new KeyFrame
-            {
-                Time = 1.0f
-            };
-            keyFrame.Values[pivot] = new KeyFrameValues
-            {
-                Position = new Vector3(0f, 10f, 0f)
-            };
-            keyFrame.Values[pivot2] = new KeyFrameValues
-            {
-                Position = new Vector3(10f, 0f, 0f)
-            };
-
-            so.Animations[""].KeyFrames.Add(keyFrame);
-
-            so.ObjectList.Add(sprite);
-            so.ObjectList.Add(pivot);
-            so.ObjectList.Add(sprite2);
-            so.ObjectList.Add(pivot2);
-
-            return so;
-        }
-
 
         /// <summary>
         ///A test for GetPercentageIntoFrame

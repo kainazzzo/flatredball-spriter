@@ -5,7 +5,6 @@ using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace flatredball_spriter_test
 {
@@ -15,22 +14,21 @@ namespace flatredball_spriter_test
     ///This is a test class for SpriterObjectTest and is intended
     ///to contain all SpriterObjectTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestClass]
     public class SpriterObjectTest
     {
         /// <summary>
         ///A test for GetPercentageIntoFrame
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetPercentageIntoFrameTest()
         {
-            float secondsIntoAnimation = 1.99F; // TODO: Initialize to an appropriate value
-            float currentKeyFrameTime = 1.0F; // TODO: Initialize to an appropriate value
-            float nextKeyFrameTime = 2.0F; // TODO: Initialize to an appropriate value
-            float expected = .99F; // TODO: Initialize to an appropriate value
-            float actual;
+            const float secondsIntoAnimation = 1.99F;
+            const float currentKeyFrameTime = 1.0F;
+            const float nextKeyFrameTime = 2.0F;
+            const float expected = .99F;
 
-            actual = SpriterObject.GetPercentageIntoFrame(secondsIntoAnimation, currentKeyFrameTime, nextKeyFrameTime);
+            float actual = SpriterObject.GetPercentageIntoFrame(secondsIntoAnimation, currentKeyFrameTime, nextKeyFrameTime);
             Assert.AreEqual(expected, actual);
 
         }
@@ -80,16 +78,22 @@ namespace flatredball_spriter_test
 
             Assert.IsTrue(Math.Abs(sprite.Position.X - 130f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(sprite.Position.Y - 230f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 130f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 230f) < Single.Epsilon);
 
             so.TimedActivity(.5f, 0f, 0f);
 
             Assert.IsTrue(Math.Abs(sprite.Position.X - 115f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(sprite.Position.Y - 215f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 115f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 215f) < Single.Epsilon);
 
             so.TimedActivity(.5f, 0f, 0f);
 
             Assert.IsTrue(Math.Abs(sprite.Position.X - 100f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(sprite.Position.Y - 200f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 100f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 200f) < Single.Epsilon);
 
         }
 
@@ -372,7 +376,7 @@ namespace flatredball_spriter_test
         /// <summary>
         ///A test for GetPercentageIntoFrame
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetPercentageIntoFrameTestInfinity()
         {
             float secondsIntoAnimation = 1.733335f; // TODO: Initialize to an appropriate value
@@ -387,7 +391,7 @@ namespace flatredball_spriter_test
         /// <summary>
         ///A test for GetPercentageIntoFrame
         ///</summary>
-        [TestMethod()]
+        [TestMethod]
         public void GetPercentageIntoFrameTestNaN()
         {
             float secondsIntoAnimation = 0F; // TODO: Initialize to an appropriate value

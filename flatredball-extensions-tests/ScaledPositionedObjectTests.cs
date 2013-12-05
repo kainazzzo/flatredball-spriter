@@ -55,5 +55,77 @@ namespace flatredball_extensions_tests
             Assert.IsTrue(Math.Abs(spo.Position.Y - 210f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(spo.Position.Z - 315f) < Single.Epsilon);
         }
+
+        [TestMethod]
+        public void RotationTest()
+        {
+            var parent = new ScaledPositionedObject
+            {
+                Position = Vector3.Zero,
+                ScaleX = 1.0f,
+                ScaleY = 1.0f,
+                ScaleZ = 1.0f
+            };
+
+            var spo = new ScaledPositionedObject();
+            spo.AttachTo(parent, true);
+            spo.RelativePosition = new Vector3(10f, 0f, 0f);
+
+            parent.RotationZ += MathHelper.ToRadians(90f);
+
+            spo.UpdateDependencies(0);
+
+            Assert.IsTrue(Math.Abs(spo.Position.X - 10f) >= Single.Epsilon);
+            Assert.IsTrue(Math.Abs(spo.Position.Y - 10f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(spo.Position.Z - 0f) < Single.Epsilon);
+        }
+
+        [TestMethod]
+        public void ScaledRotation()
+        {
+            var parent = new ScaledPositionedObject
+            {
+                Position = Vector3.Zero,
+                ScaleX = .5f,
+                ScaleY = 1.0f,
+                ScaleZ = 1f
+            };
+
+            var spo = new ScaledPositionedObject();
+            spo.AttachTo(parent, true);
+            spo.RelativePosition = new Vector3(10f, 0f, 0f);
+
+            parent.RotationZ += MathHelper.ToRadians(90f);
+
+            spo.UpdateDependencies(0);
+
+            Assert.IsTrue(Math.Abs(spo.Position.X - 5f) >= Single.Epsilon);
+            Assert.IsTrue(Math.Abs(spo.Position.Y - 5f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(spo.Position.Z - 0f) < Single.Epsilon);
+        }
+
+        [TestMethod]
+        public void ScaledRotationOffOrigin()
+        {
+            var parent = new ScaledPositionedObject
+            {
+                Position = new Vector3(100f, 100f, 100f),
+                ScaleX = .5f,
+                ScaleY = 1.0f,
+                ScaleZ = 1f
+            };
+
+            var spo = new ScaledPositionedObject();
+            spo.AttachTo(parent, true);
+            spo.RelativePosition = new Vector3(10f, 0f, 0f);
+
+            parent.RotationZ += MathHelper.ToRadians(90f);
+
+            spo.UpdateDependencies(0);
+
+            Assert.IsTrue(Math.Abs(spo.Position.X - 105f) >= Single.Epsilon);
+            Assert.IsTrue(Math.Abs(spo.Position.Y - 105f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(spo.Position.Z - 100f) < Single.Epsilon);
+        }
     }
 }

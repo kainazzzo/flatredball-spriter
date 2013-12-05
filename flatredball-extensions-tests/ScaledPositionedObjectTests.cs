@@ -81,7 +81,7 @@ namespace flatredball_extensions_tests
         }
 
         [TestMethod]
-        public void ScaledRotation()
+        public void ScaledRotatedPosition()
         {
             var parent = new ScaledPositionedObject
             {
@@ -105,7 +105,7 @@ namespace flatredball_extensions_tests
         }
 
         [TestMethod]
-        public void ScaledRotationOffOrigin()
+        public void ScaledRotationPositionOffOrigin()
         {
             var parent = new ScaledPositionedObject
             {
@@ -126,6 +126,101 @@ namespace flatredball_extensions_tests
             Assert.IsTrue(Math.Abs(spo.Position.X - 105f) >= Single.Epsilon);
             Assert.IsTrue(Math.Abs(spo.Position.Y - 105f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(spo.Position.Z - 100f) < Single.Epsilon);
+        }
+
+        [TestMethod]
+        public void RelativeRotationTest()
+        {
+            var parent = new ScaledPositionedObject
+            {
+                Position = new Vector3(100f, 100f, 100f),
+            };
+            
+            var spo = new ScaledPositionedObject();
+            spo.AttachTo(parent, true);
+            spo.RelativePosition = new Vector3(10f, 0f, 0f);
+            spo.RelativeRotationZ = MathHelper.ToRadians(90f);
+            parent.RotationZ += MathHelper.ToRadians(90f);
+
+            spo.UpdateDependencies(1);
+
+            var rotationZ = MathHelper.ToDegrees(spo.RotationZ);
+            Assert.IsTrue(Math.Abs(rotationZ - 180f) < .0001f);
+        }
+
+        [TestMethod]
+        public void RelativeRotationScaledPositionTest()
+        {
+            var parent1 = new ScaledPositionedObject
+            {
+                Position = new Vector3(100f, 100f, 100f)
+            };
+
+            var parent2 = new ScaledPositionedObject
+            {
+                ScaleX = .5f,
+                Position = new Vector3(100f, 100f, 100f)
+            };
+
+            var spo = new ScaledPositionedObject();
+            parent2.AttachTo(parent1, true);
+            spo.AttachTo(parent2, true);
+
+            spo.RelativePosition = new Vector3(10f, 10f, 0f);
+            parent2.RelativeRotationZ = MathHelper.ToRadians(90f);
+            parent1.RotationZ += MathHelper.ToRadians(90f);
+
+            spo.UpdateDependencies(1);
+
+            var rotationZ = MathHelper.ToDegrees(spo.RotationZ);
+            Assert.IsTrue(Math.Abs(rotationZ - 180f) < .0001f);
+            Assert.IsTrue(Math.Abs(spo.Position.X - 95f) < .0001f);
+            Assert.IsTrue(Math.Abs(spo.Position.Y - 90f) < .0001f);
+        }
+
+        [TestMethod]
+        public void ScaleDefaultsTo1()
+        {
+            var spo = new ScaledPositionedObject();
+            Assert.AreEqual(1.0f, spo.ScaleX);
+            Assert.AreEqual(1.0f, spo.ScaleY);
+            Assert.AreEqual(1.0f, spo.ScaleZ);
+        }
+
+        [TestMethod]
+        public void ThreeChainTest()
+        {
+            var parent1 = new ScaledPositionedObject
+            {
+                Position = new Vector3(0f, 0f, 0f)
+            };
+
+            var parent2 = new ScaledPositionedObject
+            {
+                Position = new Vector3(200f, 0f, 0f)
+            };
+
+            var parent3 = new ScaledPositionedObject
+            {
+                Position = new Vector3(300f, 0f, 0f)
+            };
+
+            var spo = new ScaledPositionedObject();
+            parent3.AttachTo(parent2, true);
+            parent2.AttachTo(parent1, true);
+            spo.AttachTo(parent3, true);
+
+            spo.RelativePosition = new Vector3(10f, 0f, 0f);
+            parent1.RotationZ += MathHelper.ToRadians(90f);
+            parent2.RelativeRotationZ = MathHelper.ToRadians(90f);
+
+            spo.UpdateDependencies(1);
+
+            var rotationZ = MathHelper.ToDegrees(spo.RotationZ);
+
+            Assert.IsTrue(Math.Abs(rotationZ - 180f) < .0001f);
+            Assert.IsTrue(Math.Abs(spo.Position.X - -110f) < .0001f);
+            Assert.IsTrue(Math.Abs(spo.Position.Y - 200f) < .0001f);
         }
     }
 }

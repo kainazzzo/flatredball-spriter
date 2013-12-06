@@ -111,8 +111,8 @@ namespace spritertestgame.Screens
 		{
 			bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
-			SpriteInstance.TextureScale = 1f;
 			SpriteInstance.Texture = square;
+			SpriteInstance.TextureScale = 1f;
 			if (SpriteInstance.Parent == null)
 			{
 				SpriteInstance.X = 0f;
@@ -135,8 +135,8 @@ namespace spritertestgame.Screens
 		{
 			CameraSetup.ResetCamera(SpriteManager.Camera);
 			SpriteManager.AddSprite(SpriteInstance);
-			SpriteInstance.TextureScale = 1f;
 			SpriteInstance.Texture = square;
+			SpriteInstance.TextureScale = 1f;
 			if (SpriteInstance.Parent == null)
 			{
 				SpriteInstance.X = 0f;

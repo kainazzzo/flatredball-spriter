@@ -31,10 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FlatRedBall">
-      <HintPath>..\spritertestgame\spritertestgame\Libraries\Xna4Pc\FlatRedBall.dll</HintPath>
+    <Reference Include="FlatRedBall, Version=2013.1.1.187, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\spritertestgame\spritertestgame\spritertestgame\Libraries\Xna4Pc\FlatRedBall.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +49,7 @@
     <Compile Include="ScaledPositionedObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScaledPositionedObjectExtensions.cs" />
+    <Compile Include="ScaledSprite.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

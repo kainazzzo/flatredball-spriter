@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>JustMock</id>
+    <version>2013.3.1015</version>
+    <title>Telerik JustMock Lite</title>
+    <authors>Telerik AD</authors>
+    <owners>Telerik AD</owners>
+    <licenseUrl>http://www.telerik.com/purchase/license-agreement/justmocklite.aspx</licenseUrl>
+    <projectUrl>http://www.telerik.com/freemocking.aspx</projectUrl>
+    <iconUrl>http://www.telerik.com/libraries/justmock/jmlogo32x32.sflb</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The most powerful free mocking library available for .NET developers.</description>
+    <summary>The most powerful free mocking library available for .NET developers.</summary>
+    <releaseNotes>New: Obsolete APIs from last Q are removed 
+              - {expectation}.DoInstead (TDelegate @delegate)
+              - NonPublic.Initialize(string methodName, params object[] args)
+              - NonPublic.Initialize(Type targetType, string methodName, params object[] args)
+              - Mock.DoNotUseProfiler()
+              - Mock.Initialize(...)
+              - Mock.Replace(...)
+              - Mock.Partial(...)
+              - class MockClassAttribute
+
+        New: Added new behavior - Behavior.RecursiveLoose and this is the default behavior 
+        New: "Create Mock" code generation command in JustCode Visual Aid 
+        New: "Arrange Mock" code generation command in JustCode Visual Aid 
+        New: DebugView: Inspect and trace all calls made while debugging 
+        New: Improved exception messages for failing tests 
+        New: Create mocks of delegate types
+        New: Mock.Raise and .Raises() raise non-mocked events
+        New: ReturnsMany - a method for returning multiple values with configurable behavior
+        New: Fluent Syntax: ArrangeLike
+        New: .When() - a generalized way for determining whether an arrangement should be considered
+
+
+
+      Fixed: Fluent Assert ignores Occurs expectation set in Arrange 
+      Fixed: Arranges from one ClassInitialize may spill over to the test methods in an unrelated class 
+      Fixed: Recursive mocking for Arrange expressions beginning with field access doesn't work correctly
+      Fixed: Running test with Visual Studio 2012 test runner fails if there are TestSettings attached 
+      Fixed: DynamicProxy cannot work with signatures with more than about 128 arguments 
+      Fixed: JustMock leaks thread objects which for large test runs eventually leads to an Out Of Memory due to leaked handles 
+      Fixed: TestInitialize context not respected when the method is in a generic base class 
+      Fixed: Cannot arrange the members of additionally implemented interfaces</releaseNotes>
+    <copyright>Copyright (c) 2010-2013 Telerik AD</copyright>
+    <language>en-US</language>
+    <tags>tdd mocking mocks mock aaa unittest unittesting unit-testing testing fake faking stub stubbing isolation</tags>
+    <dependencies>
+      <dependency id="CommonServiceLocator" version="1.0" />
+      <dependency id="Unity" version="2.1.505.2" />
+    </dependencies>
+  </metadata>
+</package>

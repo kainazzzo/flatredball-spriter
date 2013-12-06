@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<GlueProjectSave xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Screens>
+    <ScreenSave>
+      <Tags>
+        <string>GLUE</string>
+      </Tags>
+      <Source>GLUE</Source>
+      <Name>Screens\test</Name>
+      <ReferencedFiles>
+        <ReferencedFileSave>
+          <Name>Screens/test/square.png</Name>
+          <IsSharedStatic>true</IsSharedStatic>
+          <RuntimeType>Microsoft.Xna.Framework.Graphics.Texture2D</RuntimeType>
+        </ReferencedFileSave>
+      </ReferencedFiles>
+      <NamedObjects>
+        <NamedObjectSave>
+          <CustomProperty>
+            <Type>float</Type>
+            <Member>TextureScale</Member>
+            <ValueAsFloat>1</ValueAsFloat>
+          </CustomProperty>
+          <CustomProperty>
+            <Type>Texture2D</Type>
+            <Member>Texture</Member>
+            <ValueAsString>square</ValueAsString>
+          </CustomProperty>
+          <CustomProperty>
+            <Type>float</Type>
+            <Member>X</Member>
+            <ValueAsFloat>0</ValueAsFloat>
+          </CustomProperty>
+          <CustomProperty>
+            <Type>float</Type>
+            <Member>Y</Member>
+            <ValueAsFloat>0</ValueAsFloat>
+          </CustomProperty>
+          <SourceType>FlatRedBallType</SourceType>
+          <SourceFile />
+          <SourceClassType>Sprite</SourceClassType>
+          <InstanceName>SpriteInstance</InstanceName>
+          <AttachToContainer>true</AttachToContainer>
+          <IndependentOfCamera>true</IndependentOfCamera>
+        </NamedObjectSave>
+      </NamedObjects>
+    </ScreenSave>
+  </Screens>
+  <Entities />
+  <GlobalFiles />
+  <GlobalContentSettingsSave>
+    <LoadAsynchronously>false</LoadAsynchronously>
+    <RecordLockContention>false</RecordLockContention>
+  </GlobalContentSettingsSave>
+  <SyncedProjects />
+  <StartUpScreen>Screens\test</StartUpScreen>
+  <In2D>true</In2D>
+  <SetResolution>false</SetResolution>
+  <ResolutionWidth>800</ResolutionWidth>
+  <ResolutionHeight>600</ResolutionHeight>
+  <SetOrthogonalResolution>false</SetOrthogonalResolution>
+  <OrthogonalWidth>800</OrthogonalWidth>
+  <OrthogonalHeight>600</OrthogonalHeight>
+  <ResolutionPresets />
+  <PerformanceSettingsSave>
+    <ThrowExceptionOnPostInitializeContentLoad>false</ThrowExceptionOnPostInitializeContentLoad>
+    <RecordInitializeSegments>false</RecordInitializeSegments>
+  </PerformanceSettingsSave>
+  <IgnoredDirectories />
+  <CustomClasses />
+  <TranslatedFiles />
+  <ApplyToFixedResolutionPlatforms>true</ApplyToFixedResolutionPlatforms>
+  <ExternallyBuiltFileDirectory>../../</ExternallyBuiltFileDirectory>
+</GlueProjectSave>

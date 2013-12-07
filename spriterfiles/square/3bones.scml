@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b5">
+    <folder id="0">
+        <file id="0" name="square.png" width="32" height="32" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <folder id="1">
+        <file id="0" name="/square.png" width="32" height="32" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <animation id="0" name="NewAnimation" length="1000">
+            <mainline>
+                <key id="0">
+                    <bone_ref id="0" timeline="0" key="0"/>
+                    <bone_ref id="1" parent="0" timeline="1" key="0"/>
+                    <bone_ref id="2" parent="1" timeline="2" key="0"/>
+                    <object_ref id="0" parent="0" name="square" folder="0" file="0" abs_x="0" abs_y="0" abs_pivot_x="0" abs_pivot_y="1" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="3" key="0" z_index="0"/>
+                    <object_ref id="1" parent="2" name="square_000" folder="0" file="0" abs_x="0" abs_y="-0" abs_pivot_x="0" abs_pivot_y="1" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="4" key="0" z_index="1"/>
+                    <object_ref id="2" parent="1" name="square_001" folder="0" file="0" abs_x="0" abs_y="-0" abs_pivot_x="0" abs_pivot_y="1" abs_angle="0" abs_scale_x="1" abs_scale_y="1" abs_a="1" timeline="5" key="0" z_index="2"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="bone_000" object_type="bone">
+                <key id="0" spin="0">
+                    <bone angle="0"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="bone_001" object_type="bone">
+                <key id="0" spin="0">
+                    <bone x="200" y="-0" scale_x="0.5"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="bone_002" object_type="bone">
+                <key id="0" spin="0">
+                    <bone x="200" y="-0"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="square">
+                <key id="0" spin="0">
+                    <object folder="0" file="0"/>
+                </key>
+            </timeline>
+            <timeline id="4" name="square_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="-600" y="0" scale_x="2"/>
+                </key>
+            </timeline>
+            <timeline id="5" name="square_001">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="-400" y="0" scale_x="2"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

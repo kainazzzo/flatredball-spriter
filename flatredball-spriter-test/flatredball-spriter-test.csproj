@@ -35,7 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FlatRedBall">
+    <Reference Include="FlatRedBall, Version=2013.11.27.487, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\spritertestgame\spritertestgame\spritertestgame\Libraries\Xna4Pc\FlatRedBall.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />

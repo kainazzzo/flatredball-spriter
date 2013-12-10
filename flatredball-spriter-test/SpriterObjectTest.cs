@@ -203,8 +203,8 @@ namespace flatredball_spriter_test
         {
             var so = new SpriterObject("Global", false);
 
-            var sprite = new Sprite();
-            var pivot = new PositionedObject();
+            var sprite = new ScaledSprite();
+            var pivot = new ScaledPositionedObject();
             pivot.AttachTo(so, true);
             sprite.AttachTo(pivot, true);
             sprite.Name = "sprite";
@@ -259,7 +259,7 @@ namespace flatredball_spriter_test
             so.ObjectList.Add(sprite);
             so.ObjectList.Add(pivot);
 
-            so.AddToManagers(null);
+            //so.AddToManagers(null);
             return so;
         }
 
@@ -268,10 +268,10 @@ namespace flatredball_spriter_test
         {
             var so = new SpriterObject("Global", false);
 
-            var sprite = new Sprite();
-            var pivot = new PositionedObject();
-            var sprite2 = new Sprite();
-            var pivot2 = new PositionedObject();
+            var sprite = new ScaledSprite();
+            var pivot = new ScaledPositionedObject();
+            var sprite2 = new ScaledSprite();
+            var pivot2 = new ScaledPositionedObject();
 
             pivot.AttachTo(so, true);
             sprite.AttachTo(pivot, true);
@@ -330,8 +330,8 @@ namespace flatredball_spriter_test
         public void BoneReparenting()
         {
             var so = new SpriterObject("Global", false);
-            var bone1 = new PositionedObject();
-            var bone2 = new PositionedObject();
+            var bone1 = new ScaledPositionedObject();
+            var bone2 = new ScaledPositionedObject();
 
             so.Animations.Add("", new SpriterObjectAnimation("", false, 2.0f, new List<KeyFrame>()));
 

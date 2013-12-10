@@ -72,15 +72,17 @@ namespace flatredball_spriter_test
             so.Position.X = 100;
             so.Position.Y = 200;
 
-            var sprite = (Sprite)so.ObjectList.Single(o => o.Name == "sprite");
+            var sprite = (ScaledSprite)so.ObjectList.Single(o => o.Name == "sprite");
             var pivot = so.ObjectList.Single(o => o.Name == "pivot");
 
             so.StartAnimation();
+            so.TimedActivity(0, 0, 0);
 
             Assert.IsTrue(Math.Abs(sprite.Position.X - 130f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(sprite.Position.Y - 230f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.X - 130f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.Y - 230f) < Single.Epsilon);
+            TimeManager.CurrentTime += .5;
 
             so.TimedActivity(.5f, 0f, 0f);
 
@@ -229,8 +231,7 @@ namespace flatredball_spriter_test
                     Alpha = 1.0f,
                     Parent = pivot,
                     RelativeScaleX = 1.0f,
-                    RelativeScaleY = 1.0f,
-                    RelativePosition = new Vector3(30f, 30f, 0f)
+                    RelativeScaleY = 1.0f
                 };
 
             so.Animations[""].KeyFrames.Add(keyFrame);

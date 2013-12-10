@@ -124,6 +124,8 @@ namespace FlatRedBall_Spriter
 
         public override void TimedActivity(float secondDifference, double secondDifferenceSquaredDividedByTwo, float secondsPassedLastFrame)
         {
+            base.TimedActivity(secondDifference, secondDifferenceSquaredDividedByTwo, secondsPassedLastFrame);
+
             if (Animating)
             {
                 SecondsIn += secondDifference;
@@ -173,6 +175,11 @@ namespace FlatRedBall_Spriter
                     }
 
 
+                }
+
+                foreach (var obj in ObjectList)
+                {
+                    obj.UpdateDependencies(TimeManager.CurrentTime);
                 }
             }
         }
@@ -240,8 +247,6 @@ namespace FlatRedBall_Spriter
                     sprite.ScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY, percentage);
                     sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
                 }
-
-                currentObject.UpdateDependencies(TimeManager.CurrentTime);
             }
         }
 

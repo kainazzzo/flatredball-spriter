@@ -28,9 +28,23 @@ namespace FlatRedBallExtensions
                 if (!scaledPositionedObject.IgnoreParentPosition)
                 {
                     var scaledParent = scaledPositionedObject.Parent as ScaledPositionedObject;
-                    var scaleX = scaledParent == null ? 1.0f : scaledParent.ScaleX;
-                    var scaleY = scaledParent == null ? 1.0f : scaledParent.ScaleY;
-                    var scaleZ = scaledParent == null ? 1.0f : scaledParent.ScaleZ;
+
+                    var thisAsScaledPositionedObject = scaledPositionedObject as ScaledPositionedObject;
+                    var thisAsScaledSprite = scaledPositionedObject as ScaledSprite;
+
+                    var thisScaleX = thisAsScaledPositionedObject == null
+                        ? (thisAsScaledSprite == null ? 1.0f : thisAsScaledSprite.ScaleY)
+                        : thisAsScaledPositionedObject.ScaleY;
+
+                    var thisScaleY = thisAsScaledPositionedObject == null
+                        ? (thisAsScaledSprite == null ? 1.0f : thisAsScaledSprite.ScaleY)
+                        : thisAsScaledPositionedObject.ScaleY;
+
+                    var thisScaleZ = thisAsScaledPositionedObject == null ? 1.0f : thisAsScaledPositionedObject.ScaleZ;
+
+                    var scaleX = scaledParent == null ? 1.0f : scaledParent.ScaleX * thisScaleX;
+                    var scaleY = scaledParent == null ? 1.0f : scaledParent.ScaleY * thisScaleY;
+                    var scaleZ = scaledParent == null ? 1.0f : scaledParent.ScaleZ * thisScaleZ;
 
                     if (scaledPositionedObject.ParentRotationChangesPosition)
                     {

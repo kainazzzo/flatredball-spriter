@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Serialization;
 using FlatRedBall;
 using FlatRedBall.IO;
+using FlatRedBallExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,13 +21,13 @@ namespace FlatRedBall_Spriter
 
         public SpriterObject ToRuntime()
         {
-            var spriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
+            var SpriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
 
             IDictionary<string, string> filenames = new Dictionary<string, string>();
-            IDictionary<int, Sprite> persistentSprites = new Dictionary<int, Sprite>();
-            IDictionary<int, PositionedObject> persistentBones = new Dictionary<int, PositionedObject>();
+            IDictionary<int, ScaledSprite> persistentScaledSprites = new Dictionary<int, ScaledSprite>();
+            IDictionary<int, ScaledPositionedObject> persistentBones = new Dictionary<int, ScaledPositionedObject>();
             IDictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-            IDictionary<int, PositionedObject> boneRefDic = new Dictionary<int, PositionedObject>();
+            IDictionary<int, ScaledPositionedObject> boneRefDic = new Dictionary<int, ScaledPositionedObject>();
             IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary = new Dictionary<KeyFrameValues, int>();
 
             string oldDir = FileManager.RelativeDirectory;
@@ -53,25 +54,25 @@ namespace FlatRedBall_Spriter
 
                     var keyFrame = new KeyFrame { Time = key.Time / 1000.0f };
 
-                    // If it's a sprite (not a bone)
+                    // If it's a ScaledSprite (not a bone)
                     if (key.ObjectRef != null)
                     {
-                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentSprites, spriterObject, animation, textures, keyFrame, keyFrameValuesParentDictionary);
+                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentScaledSprites, SpriterObject, animation, textures, keyFrame, keyFrameValuesParentDictionary);
                     }
                     
-                    // If it's a bone (not a sprite)
+                    // If it's a bone (not a ScaledSprite)
                     if (key.BoneRef != null)
                     {
-                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame, boneRefDic, keyFrameValuesParentDictionary);
+                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, SpriterObject, animation, keyFrame, boneRefDic, keyFrameValuesParentDictionary);
                     }
 
                     keyFrameList.Add(keyFrame);
                 }
 
-                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic);
+                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, SpriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic);
 
                 // find all the keyframevalues, and look up the bone id, then take that bone id and 
-                // set the parent in the keyframevalues variable to the positionedobject in the boneRefDic
+                // set the parent in the keyframevalues variable to the ScaledPositionedObject in the boneRefDic
                 foreach (var pair in keyFrameList.SelectMany(keyFrame => keyFrame.Values))
                 {
                     if (keyFrameValuesParentDictionary.ContainsKey(pair.Value))
@@ -80,24 +81,24 @@ namespace FlatRedBall_Spriter
                         var parent = boneRefDic[boneId];
                         pair.Value.Parent = parent;
                     }
-                    else if (pair.Key.GetType() != typeof(Sprite))
+                    else if (pair.Key.GetType() != typeof(ScaledSprite))
                     {
-                        pair.Value.Parent = spriterObject;
+                        pair.Value.Parent = SpriterObject;
                     }
                 }
 
-                var spriterObjectAnimation = new SpriterObjectAnimation(animation.Name,
+                var SpriterObjectAnimation = new SpriterObjectAnimation(animation.Name,
                                                                         animation.Looping, animation.Length / 1000.0f,
                                                                         keyFrameList);
-                spriterObject.Animations[animation.Name] = spriterObjectAnimation;
+                SpriterObject.Animations[animation.Name] = SpriterObjectAnimation;
             }
-            return spriterObject;
+            return SpriterObject;
         }
 
         private void HandleUnreferencedTimelinekeys(SpriterDataEntityAnimation animation, SpriterDataEntityAnimationMainline mainline,
-                                         List<KeyFrame> keyFrameList, IDictionary<int, Sprite> persistentSprites, SpriterObject spriterObject,
+                                         List<KeyFrame> keyFrameList, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject,
                                          IDictionary<string, Texture2D> textures, IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary,
-                                         IDictionary<int, PositionedObject> persistentBones, IDictionary<int, PositionedObject> boneRefDic)
+                                         IDictionary<int, ScaledPositionedObject> persistentBones, IDictionary<int, ScaledPositionedObject> boneRefDic)
         {
             foreach (var timeline in animation.Timeline)
             {
@@ -118,14 +119,14 @@ namespace FlatRedBall_Spriter
                             var mainlineKey = mainline.Keys.Single(k => k.Time == timelineKey.Time);
                             if (mainlineKey.ObjectRef != null && timelineKey.Object != null)
                             {
-                                CreateRuntimeObjectsForSpriterObjectRef(mainlineKey, persistentSprites,
-                                                                        spriterObject, animation, textures, keyFrame,
+                                CreateRuntimeObjectsForSpriterObjectRef(mainlineKey, persistentScaledSprites,
+                                                                        SpriterObject, animation, textures, keyFrame,
                                                                         keyFrameValuesParentDictionary, timelineKey);
                             }
 
                             if (mainlineKey.BoneRef != null && timelineKey.Bone != null)
                             {
-                                CreateRuntimeObjectsForSpriterBoneRef(mainlineKey, persistentBones, spriterObject,
+                                CreateRuntimeObjectsForSpriterBoneRef(mainlineKey, persistentBones, SpriterObject,
                                                                       animation, keyFrame, boneRefDic,
                                                                       keyFrameValuesParentDictionary, timelineKey);
                             }
@@ -136,49 +137,43 @@ namespace FlatRedBall_Spriter
             }
         }
 
-        private static void CreateRuntimeObjectsForSpriterBoneRef(Key key, IDictionary<int, PositionedObject> persistentBones,
-                                                                  SpriterObject spriterObject,
+        private static void CreateRuntimeObjectsForSpriterBoneRef(Key key, IDictionary<int, ScaledPositionedObject> persistentBones,
+                                                                  SpriterObject SpriterObject,
                                                                   SpriterDataEntityAnimation animation, KeyFrame keyFrame,
-                                                                  IDictionary<int, PositionedObject> boneRefDic, IDictionary<KeyFrameValues, int> boneRefParentDic,
+                                                                  IDictionary<int, ScaledPositionedObject> boneRefDic, IDictionary<KeyFrameValues, int> boneRefParentDic,
                                                                   Key timelineKeyOverride = null)
         {
             IDictionary<int, KeyBone> bones = new Dictionary<int, KeyBone>();
 
             foreach (var boneRef in key.BoneRef)
             {
-                PositionedObject bone;
+                ScaledPositionedObject bone;
                 if (persistentBones.ContainsKey(boneRef.Id))
                 {
                     bone = persistentBones[boneRef.Id];
                 }
                 else
                 {
-                    bone = new PositionedObject() {Name = "bone" + boneRef.Id};
-                    bone.AttachTo(spriterObject, true);
+                    bone = new ScaledPositionedObject() {Name = "bone" + boneRef.Id};
+                    bone.AttachTo(SpriterObject, true);
 
                     persistentBones[boneRef.Id] = bone;
-                    spriterObject.ObjectList.Add(bone);
+                    SpriterObject.ObjectList.Add(bone);
                 }
 
                 var timeline = animation.Timeline.Single(t => t.Id == boneRef.Timeline);
                 var timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == boneRef.Key);
 
                 var timelineKeyBone = new KeyBone(timelineKey.Bone);
-                if (boneRef.Parent.HasValue)
-                {
-                    var parentBone = bones[boneRef.Parent.Value];
-                    timelineKeyBone.X *= parentBone.ScaleX;
-                    timelineKeyBone.Y *= parentBone.ScaleY;
-                    timelineKeyBone.X += parentBone.X;
-                    timelineKeyBone.Y += parentBone.Y;
-                }
 
                 bones[boneRef.Id] = timelineKeyBone;
 
                 keyFrame.Values[bone] = new KeyFrameValues
                     {
-                        AbsolutePosition = new Vector3(timelineKeyBone.X, timelineKeyBone.Y, 0.0f),
-                        Rotation = new Vector3(0.0f, 0.0f, timelineKeyBone.Angle),
+                        RelativePosition = new Vector3(timelineKeyBone.X, timelineKeyBone.Y, 0.0f),
+                        RelativeRotation = new Vector3(0.0f, 0.0f, timelineKeyBone.Angle),
+                        RelativeScaleX = timelineKeyBone.ScaleX,
+                        RelativeScaleY = timelineKeyBone.ScaleY,
                         Spin = timelineKey.Spin
                     };
 
@@ -192,15 +187,15 @@ namespace FlatRedBall_Spriter
 
         
 
-        private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, Sprite> persistentSprites, SpriterObject spriterObject,
+        private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject,
                                                              SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures,
-                                                             KeyFrame keyFrame, IDictionary<KeyFrameValues, int> spriteRefParentDic,
+                                                             KeyFrame keyFrame, IDictionary<KeyFrameValues, int> SpriterefParentDic,
                                                              Key timelineKeyOverride = null)
         {
             foreach (var objectRef in key.ObjectRef)
             {
-                Sprite sprite;
-                PositionedObject pivot;
+                ScaledSprite ScaledSprite;
+                ScaledPositionedObject pivot;
 
                 var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
                 Key timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == objectRef.Key);
@@ -211,111 +206,56 @@ namespace FlatRedBall_Spriter
                         .File.First(f => f.Id == timelineKey.Object.File);
 
 
-                if (persistentSprites.ContainsKey(objectRef.Id))
+                if (persistentScaledSprites.ContainsKey(objectRef.Id))
                 {
-                    sprite = persistentSprites[objectRef.Id];
-                    pivot = sprite.Parent;
+                    ScaledSprite = persistentScaledSprites[objectRef.Id];
+                    pivot = (ScaledPositionedObject)ScaledSprite.Parent;
                 }
                 else
                 {
-                    pivot = new PositionedObject {Name = "pivot"};
+                    pivot = new ScaledPositionedObject {Name = "pivot"};
 
-                    sprite = new Sprite {Name = "sprite", ScaleX =  file.Width / 2.0f, ScaleY = file.Height / 2.0f};
+                    ScaledSprite = new ScaledSprite {Name = "sprite", ScaleX =  file.Width / 2.0f, ScaleY = file.Height / 2.0f};
 
-                    sprite.AttachTo(pivot, true);
-                    pivot.AttachTo(spriterObject, true);
+                    ScaledSprite.AttachTo(pivot, true);
+                    pivot.AttachTo(SpriterObject, true);
 
-                    persistentSprites[objectRef.Id] = sprite;
-                    spriterObject.ObjectList.Add(sprite);
-                    spriterObject.ObjectList.Add(pivot);
+                    persistentScaledSprites[objectRef.Id] = ScaledSprite;
+                    SpriterObject.ObjectList.Add(ScaledSprite);
+                    SpriterObject.ObjectList.Add(pivot);
                 }
 
                 var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef);
 
-                values.Sprite.Parent = pivot;
+                values.ScaledSprite.Parent = pivot;
                 if (objectRef.Parent.HasValue)
                 {
-                    spriteRefParentDic[values.Pivot] = objectRef.Parent.Value;
-                    CalculateRelativeScaleValues(values, objectRef, animation, key);
+                    SpriterefParentDic[values.Pivot] = objectRef.Parent.Value;
                 }
                 else
                 {
-                    values.Pivot.Parent = spriterObject;
+                    values.Pivot.Parent = SpriterObject;
                 }
 
                 keyFrame.Values[pivot] = values.Pivot;
-                keyFrame.Values[sprite] = values.Sprite;
+                keyFrame.Values[ScaledSprite] = values.ScaledSprite;
             }
         }
 
-        private void CalculateRelativeScaleValues(KeyFramePivotSpriteValues keyFrameValues, KeyObjectRef objectRef, SpriterDataEntityAnimation animation, Key currentKey)
-        {
-            if (objectRef.AbsoluteX.HasValue 
-                && objectRef.AbsoluteY.HasValue
-                && objectRef.AbsoluteAngle.HasValue
-                && objectRef.AbsoluteAlpha.HasValue
-                && objectRef.AbsolutePivotX.HasValue
-                && objectRef.AbsolutePivotY.HasValue
-                && objectRef.AbsoluteScaleX.HasValue
-                && objectRef.AbsoluteScaleY.HasValue)
-            {
-                //  use the absolute values provided
-                keyFrameValues.Sprite.AbsolutePosition = new Vector3(objectRef.AbsoluteX.Value, objectRef.AbsoluteY.Value, 0f);
-                keyFrameValues.Sprite.ScaleX *= objectRef.AbsoluteScaleX.Value;
-                keyFrameValues.Sprite.ScaleY *= objectRef.AbsoluteScaleY.Value;
-            }
-            else if (objectRef.Parent.HasValue)
-            {
-                // Find the bone reference in the current key
-                var boneRef = currentKey.BoneRef.SingleOrDefault(br => br.Id == objectRef.Parent.Value);
-                float x, y;
-                while (boneRef != null)
-                {
-                    KeyBoneRef @ref = boneRef;
-                    var bone = animation.Timeline.Where(t => t.Id == @ref.Timeline).SelectMany(t => t.Key).Single(k => k.Id == @ref.Key).Bone;
-                    keyFrameValues.Sprite.ScaleX *= bone.ScaleX;
-                    keyFrameValues.Sprite.ScaleY *= bone.ScaleY;
-                    x = keyFrameValues.Sprite.Position.X * bone.ScaleX;
-                    y = keyFrameValues.Sprite.Position.Y * bone.ScaleY;
-                    keyFrameValues.Sprite.Position = new Vector3(x, y, 0.0f);
-
-                    x = keyFrameValues.Pivot.Position.X*bone.ScaleX;
-                    y = keyFrameValues.Pivot.Position.Y*bone.ScaleY;
-                    keyFrameValues.Pivot.Position = new Vector3(x, y, 0.0f);
-
-                    boneRef = !boneRef.Parent.HasValue ? null : currentKey.BoneRef.SingleOrDefault(br => br.Id == boneRef.Parent.Value);
-                }
-
-                var obj =
-                    animation.Timeline.Where(t => t.Id == objectRef.Timeline)
-                             .SelectMany(t => t.Key)
-                             .Single(k => k.Id == objectRef.Key)
-                             .Object;
-                keyFrameValues.Sprite.ScaleX *= obj.ScaleX;
-                keyFrameValues.Sprite.ScaleY *= obj.ScaleY;
-                x = keyFrameValues.Sprite.Position.X*obj.ScaleX;
-                y = keyFrameValues.Sprite.Position.Y*obj.ScaleY;
-                keyFrameValues.Sprite.Position = new Vector3(x, y, 0f);
-
-                //x = keyFrameValues.Pivot.RelativePosition.X*obj.ScaleX;
-                //y = keyFrameValues.Pivot.RelativePosition.Y*obj.ScaleY;
-                //keyFrameValues.Pivot.RelativePosition = new Vector3(x, y, 0f);
-            }
-        }
 
         public Texture2D LoadTexture(SpriterDataFolderFile file)
         {
             return TextureLoader.FromFile(file.Name);
         }
 
-        private static KeyFramePivotSpriteValues GetKeyFrameValues(Key timelineKey, SpriterDataFolderFile file, IDictionary<string, Texture2D> textures, string folderFileId, KeyObjectRef objectRef)
+        private static KeyFramePivotScaledSpriteValues GetKeyFrameValues(Key timelineKey, SpriterDataFolderFile file, IDictionary<string, Texture2D> textures, string folderFileId, KeyObjectRef objectRef)
         {
             var pivotValue = new KeyFrameValues
                 {
-                    Position = new Vector3(timelineKey.Object.X,
+                    RelativePosition = new Vector3(timelineKey.Object.X,
                                            timelineKey.Object.Y,
                                            0.0f),
-                    Rotation = new Vector3
+                    RelativeRotation = new Vector3
                         {
                             Z = timelineKey.Object.Angle
                         },
@@ -330,26 +270,26 @@ namespace FlatRedBall_Spriter
                 height = textures[folderFileId].Height;
             }
 
-            var spriteValue = new KeyFrameValues
+            var ScaledSpriteValue = new KeyFrameValues
                 {
                     Texture = textures[folderFileId],
-                    ScaleX = (width / 2.0f * timelineKey.Object.ScaleX),
-                    ScaleY = (height / 2.0f * timelineKey.Object.ScaleY),
-                    Position = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
+                    RelativeScaleX = (width / 2.0f * timelineKey.Object.ScaleX),
+                    RelativeScaleY = (height / 2.0f * timelineKey.Object.ScaleY),
+                    RelativePosition = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
                                                          timelineKey.Object.PivotY, objectRef.ZIndex),
                     Alpha = timelineKey.Object.Alpha
                 };
-            return new KeyFramePivotSpriteValues { Pivot = pivotValue, Sprite = spriteValue };
+            return new KeyFramePivotScaledSpriteValues { Pivot = pivotValue, ScaledSprite = ScaledSpriteValue };
         }
 
         public static Vector3 GetSpriteRelativePosition(float width, float height, float pivotX, float pivotY, int zIndex)
         {
             return new Vector3(-width * (pivotX - .5f), -height * (pivotY - .5f), zIndex * 0.0001f);
         }
-        private class KeyFramePivotSpriteValues
+        private class KeyFramePivotScaledSpriteValues
         {
             public KeyFrameValues Pivot { get; set; }
-            public KeyFrameValues Sprite { get; set; }
+            public KeyFrameValues ScaledSprite { get; set; }
             public KeyFrameValues Bone { get; set; }
         }
 

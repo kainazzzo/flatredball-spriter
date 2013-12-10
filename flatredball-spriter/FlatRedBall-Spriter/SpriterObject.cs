@@ -8,14 +8,15 @@ using FlatRedBall.IO;
 using FlatRedBall.Input;
 using FlatRedBall.Instructions;
 using FlatRedBall.Math;
+using FlatRedBallExtensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace FlatRedBall_Spriter
 {
-    public sealed class SpriterObject : PositionedObject
+    public sealed class SpriterObject : ScaledPositionedObject
     {
-        public PositionedObjectList<PositionedObject> ObjectList { get; private set; }
+        public List<PositionedObject> ObjectList { get; private set; }
         public List<KeyFrame> KeyFrameList { get { return CurrentAnimation != null ? CurrentAnimation.KeyFrames : null; } }
 
         public Dictionary<string, SpriterObjectAnimation> Animations { get; private set; }
@@ -123,8 +124,6 @@ namespace FlatRedBall_Spriter
 
         public override void TimedActivity(float secondDifference, double secondDifferenceSquaredDividedByTwo, float secondsPassedLastFrame)
         {
-            base.TimedActivity(secondDifference, secondDifferenceSquaredDividedByTwo, secondsPassedLastFrame);
-
             if (Animating)
             {
                 SecondsIn += secondDifference;
@@ -175,8 +174,6 @@ namespace FlatRedBall_Spriter
 
 
                 }
-
-
             }
         }
 
@@ -188,26 +185,20 @@ namespace FlatRedBall_Spriter
                 var nextValues = NextKeyFrame.Values[currentPair.Key];
                 var currentObject = currentPair.Key;
 
-                if (currentObject.Parent != currentValues.Parent)
+                if (currentValues.Parent == null)
                 {
-                    currentObject.AttachTo(currentValues.Parent, false);
+                    currentObject.AttachTo(this, true);
+                }
+                else if (currentObject.Parent != currentValues.Parent)
+                {
+                    currentObject.AttachTo(currentValues.Parent, true);
                 }
 
                 // Position
                 // In a single dimension, if the spriterobject is on x = 5, and the position to move a subobject to is x=8, then it should actually move to x=13, because we add the spriterobject's position to the subobject's interpolated value, since while positions are absolute, they are "absolute" relative to the container
-                currentObject.Position = Vector3.Lerp(currentValues.Position, nextValues.Position,
-                                                              percentage) + Position;
+                currentObject.RelativePosition = Vector3.Lerp(currentValues.RelativePosition, nextValues.RelativePosition,
+                                                              percentage);
 
-
-                // Now the scale can happen
-                currentObject.Position.X *= this.ScaleX;
-                currentObject.Position.Y *= this.ScaleY;
-
-                // Set relative values based on the absolute value set above
-                if (currentObject.Parent != null)
-                {
-                    currentObject.SetRelativeFromAbsolute();
-                }
 
                 if (float.IsNaN(currentObject.RelativePosition.X) ||
                     float.IsNaN(currentObject.RelativePosition.Y)
@@ -220,8 +211,8 @@ namespace FlatRedBall_Spriter
 
                 // Angle
                 int spin = currentValues.Spin;
-                float angleA = currentValues.Rotation.Z;
-                float angleB = nextValues.Rotation.Z;
+                float angleA = currentValues.RelativeRotation.Z;
+                float angleB = nextValues.RelativeRotation.Z;
 
                 if (spin == 1 && angleB - angleA < 0)
                 {
@@ -239,19 +230,18 @@ namespace FlatRedBall_Spriter
                 
 
                 // Sprite specific stuff
-                var sprite = currentObject as Sprite;
+                var sprite = currentObject as ScaledSprite;
                 if (sprite != null)
                 {
                     sprite.Texture = currentValues.Texture;
 
                     // Scale
-                    sprite.ScaleX = MathHelper.Lerp(currentValues.ScaleX, nextValues.ScaleX, percentage);
-                    sprite.ScaleY = MathHelper.Lerp(currentValues.ScaleY, nextValues.ScaleY, percentage);
-                    sprite.ScaleX *= this.ScaleX;
-                    sprite.ScaleY *= this.ScaleY;
-
+                    sprite.ScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX, percentage);
+                    sprite.ScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY, percentage);
                     sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
                 }
+
+                currentObject.UpdateDependencies(TimeManager.CurrentTime);
             }
         }
 
@@ -267,7 +257,7 @@ namespace FlatRedBall_Spriter
             foreach (var pair in CurrentKeyFrame.Values)
             {
                 pair.Key.AttachTo(pair.Value.Parent, true);
-                pair.Key.Position = pair.Value.Position + Position;
+                pair.Key.Position = pair.Value.RelativePosition + Position;
                 pair.Key.Position.X *= this.ScaleX;
                 pair.Key.Position.Y *= this.ScaleY;
 
@@ -276,14 +266,14 @@ namespace FlatRedBall_Spriter
                     pair.Key.SetRelativeFromAbsolute();
                 }
 
-                pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.Rotation.Z);
+                pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.RelativeRotation.Z);
 
                 var sprite = pair.Key as Sprite;
                 if (sprite != null)
                 {
                     sprite.Texture = pair.Value.Texture;
-                    sprite.ScaleX = pair.Value.ScaleX;
-                    sprite.ScaleY = pair.Value.ScaleY;
+                    sprite.ScaleX = pair.Value.RelativeScaleX;
+                    sprite.ScaleY = pair.Value.RelativeScaleY;
                     sprite.Alpha = pair.Value.Alpha;
 
                     sprite.ScaleX *= this.ScaleX;
@@ -299,9 +289,9 @@ namespace FlatRedBall_Spriter
             // ReSharper restore ForCanBeConvertedToForeach
             {
                 var positionedObject = ObjectList[index];
-                if (positionedObject.GetType() == typeof(Sprite))
+                if (positionedObject.GetType() == typeof(ScaledSprite))
                 {
-                    ((Sprite)positionedObject).Texture = null;
+                    ((ScaledSprite)positionedObject).Texture = null;
                 }
             }
         }
@@ -370,7 +360,7 @@ namespace FlatRedBall_Spriter
 
             ContentManagerName = contentManagerName;
             InitializeSpriterObject(addToManagers);
-            ObjectList = new PositionedObjectList<PositionedObject>();
+            ObjectList = new List<PositionedObject>();
         }
 
         private void InitializeSpriterObject(bool addToManagers)
@@ -390,14 +380,20 @@ namespace FlatRedBall_Spriter
         public void AddToManagers(Layer layerToAddTo)
         {
             LayerProvidedByContainer = layerToAddTo;
-            SpriteManager.AddPositionedObject(this);
-
-            foreach (var sprite in this.ObjectList.OfType<Sprite>().ToList())
+//            SpriteManager.AddPositionedObject(this);
+            if (ObjectList != null)
             {
-                SpriteManager.AddSprite(sprite);
-                if (sprite.Parent != null && sprite.Parent.GetType() == typeof(PositionedObject))
+                foreach (var currentObject in this.ObjectList)
                 {
-                    SpriteManager.AddPositionedObject(sprite.Parent);
+                    var sprite = currentObject as ScaledSprite;
+                    if (sprite != null)
+                    {
+                        SpriteManager.AddSprite(sprite);
+                    }
+                    else
+                    {
+                        SpriteManager.AddPositionedObject(currentObject);
+                    }
                 }
             }
             AddToManagersBottomUp(layerToAddTo);
@@ -512,10 +508,6 @@ namespace FlatRedBall_Spriter
             InstructionManager.IgnorePausingFor(this);
         }
 
-        public float ScaleX { get; set; }
-
-        public float ScaleY { get; set; }
-
         public SpriterObject Clone()
         {
             var so = (SpriterObject)this.MemberwiseClone();
@@ -538,10 +530,10 @@ namespace FlatRedBall_Spriter
                                 {
                                     Alpha = kfPair.Value.Alpha,
                                     Parent = kfPair.Value.Parent,
-                                    Position = kfPair.Value.Position,
-                                    Rotation = kfPair.Value.Rotation,
-                                    ScaleX = kfPair.Value.ScaleX,
-                                    ScaleY = kfPair.Value.ScaleY,
+                                    RelativePosition = kfPair.Value.RelativePosition,
+                                    RelativeRotation = kfPair.Value.RelativeRotation,
+                                    RelativeScaleX = kfPair.Value.RelativeScaleX,
+                                    RelativeScaleY = kfPair.Value.RelativeScaleY,
                                     Spin = kfPair.Value.Spin,
                                     Texture = kfPair.Value.Texture
                                 };

@@ -55,6 +55,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriterObjectSave.serialization.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\FlatRedBallExtensions\FlatRedBallExtensions.csproj">
+      <Project>{D4D59D5B-C3AE-48C8-9113-7EBD09FD721B}</Project>
+      <Name>FlatRedBallExtensions</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

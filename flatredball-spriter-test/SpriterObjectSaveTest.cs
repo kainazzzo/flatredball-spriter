@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
 using FlatRedBall;
+using FlatRedBallExtensions;
 using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -194,10 +198,10 @@ namespace flatredball_spriter_test
             var sos = GetSimpleSpriterObjectSaveNullTextureWithSingleBone();
             var so = sos.ToRuntime();
             Assert.AreEqual(1, so.ObjectList.Count);
-            CollectionAssert.AllItemsAreInstancesOfType(so.ObjectList, typeof(PositionedObject));
+            CollectionAssert.AllItemsAreInstancesOfType(so.ObjectList, typeof(ScaledPositionedObject));
             Assert.IsNotNull(so.Animations.First().Value.KeyFrames[0].Values.FirstOrDefault());
             var bone = so.ObjectList[0];
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Values[bone].AbsolutePosition.X - 100f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Values[bone].RelativePosition.X - 100f) < .0001f);
         }
 
         [TestMethod]
@@ -271,9 +275,9 @@ namespace flatredball_spriter_test
             var so = sos.ToRuntime();
             so.StartAnimation();
 
-            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.Position.Z);
-            Assert.AreNotEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z);
-            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.Position.Z - .0001f) < .00001);
+            Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.RelativePosition.Z);
+            Assert.AreNotEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(3).Value.RelativePosition.Z);
+            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.ElementAt(3).Value.RelativePosition.Z - .0001f) < .00001);
         }
 
         [TestMethod]
@@ -304,11 +308,11 @@ namespace flatredball_spriter_test
             var so = sos.ToRuntime();
 
             Assert.IsTrue(
-                Math.Abs(0f - so.Animations.First().Value.KeyFrames.ElementAt(0).Values.First().Value.Rotation.Z) < .0001f);
+                Math.Abs(0f - so.Animations.First().Value.KeyFrames.ElementAt(0).Values.First().Value.RelativeRotation.Z) < .0001f);
 
             Assert.IsTrue(
     Math.Abs(45f -
-             so.Animations.First().Value.KeyFrames.ElementAt(1).Values.First().Value.Rotation.Z) < .0001f);
+             so.Animations.First().Value.KeyFrames.ElementAt(1).Values.First().Value.RelativeRotation.Z) < .0001f);
             Assert.AreEqual(1, so.Animations.First().Value.KeyFrames.ElementAt(0).Values.First().Value.Spin);
             Assert.AreEqual(-1, so.Animations.First().Value.KeyFrames.ElementAt(1).Values.First().Value.Spin);
         }
@@ -362,236 +366,103 @@ namespace flatredball_spriter_test
             var pivot = sprite.Parent;
             var pivot2 = sprite2.Parent;
 
-            Assert.IsTrue(so.Animations.First().Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.GetType() != typeof(Sprite))).All(p => Math.Abs(p.Value.ScaleX - 0.0f) < .0001f));
-            Assert.IsTrue(so.Animations.First().Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.GetType() != typeof(Sprite))).All(p => Math.Abs(p.Value.ScaleY - 0.0f) < .0001f));
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleY - 256.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].ScaleX - 144f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleX - 64f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].ScaleY - 64f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.Y + 256.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].Position.X - 144f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.Y - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].Position.X - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].Position.Y - 0.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].Position.X - 0.0f) < .00001f);
+            var bones =
+                so.Animations.First()
+                    .Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.Name.StartsWith("bone"))).ToList();
+
+            Assert.IsTrue(bones.All(p => Math.Abs(p.Value.RelativeScaleX - 1.5f) < .0001f));
+            Assert.IsTrue(bones.All(p => Math.Abs(p.Value.RelativeScaleY - 2.0f) < Single.Epsilon));
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativeScaleY - 64.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativeScaleX - 64f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].RelativeScaleX - 64f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].RelativeScaleY - 64f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativePosition.Y - -64f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativePosition.X - 64f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.X - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].RelativePosition.Y - 0.0f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot2].RelativePosition.X - 0.0f) < .00001f);
 
             Assert.AreSame(sprite2.Parent, so.Animations.First().Value.KeyFrames.First().Values[sprite2].Parent);
         }
 
-        private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWith3ConnectedBonesAndObjectsPositionedTogether()
+        [TestMethod]
+        public void ThreeConnectedBonesAndObjectsPositionedTogether()
         {
-            return new SpriterObjectSave
-            {
-                TextureLoader = Mock.Create<ITextureLoader>(),
-                Directory = "C:\\",
-                Folder = new List<SpriterDataFolder>
-                {
-                    new SpriterDataFolder
-                    {
-                            File = new List<SpriterDataFolderFile>
-                            {
-                                    new SpriterDataFolderFile
-                                    {
-                                            Id=0,
-                                            Name = "",
-                                            Height = 128,
-                                            Width = 128
-                                        }
-                                },
-                                Id = 0,
-                                Name = ""
-                        }
-                },
-                Entity = new List<SpriterDataEntity>
-                {
-                        new SpriterDataEntity
-                        {
-                                Id = 0,
-                                Name = "entity",
-                                Animation = new List<SpriterDataEntityAnimation>
-                                {
-                                        new SpriterDataEntityAnimation
-                                        {
-                                                Id = 0,
-                                                Looping = false,
-                                                Name = "animation",
-                                                Mainline = new SpriterDataEntityAnimationMainline
-                                                {
-                                                        Keys = new List<Key>
-                                                        {
-                                                                new Key
-                                                                {
-                                                                        Id = 0,
-                                                                        BoneRef = new List<KeyBoneRef>
-                                                                        {
-                                                                                new KeyBoneRef
-                                                                                {
-                                                                                        Id = 0,
-                                                                                        Timeline = 0,
-                                                                                        Key = 0
-                                                                                    },
-                                                                                new KeyBoneRef
-                                                                                {
-                                                                                        Id = 1,
-                                                                                        Parent = 0,
-                                                                                        Timeline = 1,
-                                                                                        Key = 0
-                                                                                    },
-                                                                                new KeyBoneRef
-                                                                                {
-                                                                                        Id = 2,
-                                                                                        Parent = 1,
-                                                                                        Timeline = 2,
-                                                                                        Key = 0
-                                                                                    }
-                                                                            },
-                                                                            ObjectRef = new List<KeyObjectRef>
-                                                                            {
-                                                                                    new KeyObjectRef
-                                                                                    {
-                                                                                            Id = 0,
-                                                                                            Parent = 0,
-                                                                                            Timeline = 3,
-                                                                                            Key = 0,
-                                                                                            ZIndex = 0
-                                                                                        },
-                                                                                    new KeyObjectRef
-                                                                                    {
-                                                                                            Id = 1,
-                                                                                            Parent = 1,
-                                                                                            Timeline = 4,
-                                                                                            Key = 0,
-                                                                                            ZIndex = 1
-                                                                                        },
-                                                                                    new KeyObjectRef
-                                                                                    {
-                                                                                            Id = 2,
-                                                                                            Parent = 2,
-                                                                                            Timeline = 5,
-                                                                                            Key = 0,
-                                                                                            ZIndex = 2
-                                                                                        }
-                                                                                }
-                                                                    }
-                                                            }
-                                                    },
-                                                Timeline = new List<SpriterDataEntityAnimationTimeline>
-                                                {
-                                                        new SpriterDataEntityAnimationTimeline
-                                                        {
-                                                                Id = 0,
-                                                                Name = "bone_000",
-                                                                Key = new List<Key>
-                                                                {
-                                                                        new Key
-                                                                        {
-                                                                                Id = 0,
-                                                                                Spin = 0,
-                                                                                Bone = new KeyBone
-                                                                                {
-                                                                                        ScaleX = 0.5f
-                                                                                    }
-                                                                            }
-                                                                    }
-                                                            },
-                                                        new SpriterDataEntityAnimationTimeline
-                                                        {
-                                                                Id = 1,
-                                                                Name = "bone_001",
-                                                                Key = new List<Key>
-                                                                {
-                                                                        new Key
-                                                                        {
-                                                                                Id = 0,
-                                                                                Spin = 0,
-                                                                                Bone = new KeyBone
-                                                                                {
-                                                                                        X = 200f,
-                                                                                        ScaleX = 1.5f
-                                                                                    }
-                                                                            }
-                                                                    }
-                                                            },
-                                                        new SpriterDataEntityAnimationTimeline
-                                                        {
-                                                                Id = 2,
-                                                                Name = "bone_002",
-                                                                Key = new List<Key>
-                                                                {
-                                                                        new Key
-                                                                        {
-                                                                                Id = 0,
-                                                                                Spin = 0,
-                                                                                Bone = new KeyBone
-                                                                                {
-                                                                                        X = 200f,
-                                                                                        ScaleX = 0.5f
-                                                                                    }
-                                                                            }
-                                                                    }
-                                                            },
-                                                        new SpriterDataEntityAnimationTimeline
-                                                        {
-                                                                Id = 3,
-                                                                Key = new List<Key>
-                                                                {
-                                                                        new Key
-                                                                        {
-                                                                                Id = 0,
-                                                                                Spin = 0,
-                                                                                Object = new KeyObject
-                                                                                {
-                                                                                        Folder = 0,
-                                                                                        File = 0,
-                                                                                        ScaleX = 2f
-                                                                                    }
-                                                                            }
-                                                                    }
-                                                            },
-                                                        new SpriterDataEntityAnimationTimeline
-                                                        {
-                                                                Id = 4,
-                                                                Key = new List<Key>
-                                                                {
-                                                                        new Key
-                                                                        {
-                                                                                Id = 0,
-                                                                                Spin = 0,
-                                                                                Object = new KeyObject
-                                                                                {
-                                                                                        Folder = 0,
-                                                                                        File = 0,
-                                                                                        X = -133.333333f,
-                                                                                        ScaleX = 1.333333f
-                                                                                    }
-                                                                            }
-                                                                    }
-                                                            },
-                                                        new SpriterDataEntityAnimationTimeline
-                                                        {
-                                                                Id = 5,
-                                                                Key = new List<Key>
-                                                                {
-                                                                        new Key
-                                                                        {
-                                                                                Id = 0,
-                                                                                Spin = 0,
-                                                                                Object = new KeyObject
-                                                                                {
-                                                                                        Folder = 0,
-                                                                                        File = 0,
-                                                                                        X = -666.666667f,
-                                                                                        ScaleX = 2.666667f
-                                                                                    }
-                                                                            }
-                                                                    }
-                                                            }
-                                                    }
-                                            }
-                                    }
-                            }
-                    }
-            };
+            var sos =
+                TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(
+                    @"<?xml version=""1.0"" encoding=""UTF-8""?>
+<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b5"">
+    <folder id=""0"">
+        <file id=""0"" name=""/square.png"" width=""32"" height=""32"" pivot_x=""0"" pivot_y=""1""/>
+    </folder>
+    <entity id=""0"" name=""entity_000"">
+        <animation id=""0"" name=""NewAnimation"" length=""1000"">
+            <mainline>
+                <key id=""0"">
+                    <bone_ref id=""0"" timeline=""0"" key=""0""/>
+                    <bone_ref id=""1"" parent=""0"" timeline=""1"" key=""0""/>
+                    <bone_ref id=""2"" parent=""1"" timeline=""2"" key=""0""/>
+                    <object_ref id=""0"" parent=""0"" name=""square1"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""3"" key=""0"" z_index=""0""/>
+                    <object_ref id=""1"" parent=""1"" name=""square2"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""4"" key=""0"" z_index=""1""/>
+                    <object_ref id=""2"" parent=""2"" name=""square3"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""5"" key=""0"" z_index=""2""/>
+                </key>
+            </mainline>
+            <timeline id=""0"" name=""bone1"" object_type=""bone"">
+                <key id=""0"" spin=""0"">
+                    <bone x=""100"" angle=""0"" scale_x=""0.5""/>
+                </key>
+            </timeline>
+            <timeline id=""1"" name=""bone2"" object_type=""bone"">
+                <key id=""0"" spin=""0"">
+                    <bone x=""200"" y=""-0""/>
+                </key>
+            </timeline>
+            <timeline id=""2"" name=""bone3"" object_type=""bone"">
+                <key id=""0"" spin=""0"">
+                    <bone x=""200"" y=""-0"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""3"" name=""square1"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-180"" y=""0"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""4"" name=""square2"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-380"" y=""0"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""5"" name=""square3"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-290"" y=""0""/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
+");
+            var so = sos.ToRuntime();
+
+            var pivot1 = so.Animations.First().Value.KeyFrames.First().Values.First();
+            var sprite1 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(1);
+            var pivot2 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(2);
+            var sprite2 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(3);
+            var pivot3 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(4);
+            var sprite3 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(5);
+            var bone1 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(6);
+            var bone2 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(7);
+            var bone3 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(8);
+
+            Assert.IsTrue(Math.Abs(bone1.Value.RelativePosition.X - 100f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(bone2.Value.RelativePosition.X - 200f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(bone3.Value.RelativePosition.X - 200f) < Single.Epsilon);
+
+            Assert.IsTrue(Math.Abs(pivot1.Value.RelativePosition.X - (-180f)) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot2.Value.RelativePosition.X - (-380f)) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot3.Value.RelativePosition.X - (-290f)) < Single.Epsilon);
+
+            Assert.IsTrue(Math.Abs(bone3.Value.RelativeScaleX - 2f) < Single.Epsilon);
         }
 
         private static SpriterObjectSave GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations()
@@ -2029,8 +1900,10 @@ namespace flatredball_spriter_test
                                                                             {
                                                                                     new KeyObjectRef
                                                                                     {
-                                                                                            Id = 0, Key=0,
-                                                                                            Timeline = 0, ZIndex = 0
+                                                                                            Id = 0,
+                                                                                            Key=0,
+                                                                                            Timeline = 0,
+                                                                                            ZIndex = 0
                                                                                         }
                                                                                 },
                                                                             Id=0,
@@ -2043,8 +1916,10 @@ namespace flatredball_spriter_test
                                                                             {
                                                                                     new KeyObjectRef
                                                                                     {
-                                                                                            Id=0, Key=1,
-                                                                                            Timeline = 0,ZIndex = 0
+                                                                                            Id=0,
+                                                                                            Key=1,
+                                                                                            Timeline = 0,
+                                                                                            ZIndex = 0
                                                                                         }
                                                                                 },
                                                                             Id=1,
@@ -2063,15 +1938,17 @@ namespace flatredball_spriter_test
                                                                     {
                                                                             new Key
                                                                             {
-                                                                                    Object = new KeyObject(), Id=0, Spin=1,
+                                                                                    Object = new KeyObject(),
+                                                                                    Id=0, 
+                                                                                    Spin=1,
                                                                                     Time=0
                                                                                 },
                                                                             new Key
                                                                             {
                                                                                     Object = new KeyObject
                                                                                     {
-                                                                                            X = 50f
-                                                                                        },
+                                                                                        X = 50f
+                                                                                    },
                                                                                     Id=1,
                                                                                     Time=500
                                                                                 }
@@ -2092,7 +1969,7 @@ namespace flatredball_spriter_test
             var sos = GetSimpleSpriterObjectSaveNullTextureWithPositionChange();
             var so = sos.ToRuntime();
             so.StartAnimation();
-            Assert.IsTrue(Math.Abs(so.NextKeyFrame.Values[so.ObjectList[1]].Position.X - 50.0f) < .0001f);
+            Assert.IsTrue(Math.Abs(so.NextKeyFrame.Values[so.ObjectList[1]].RelativePosition.X - 50.0f) < Single.Epsilon);
         }
         [TestMethod]
         public void FromFileTest()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FlatRedBall;
+using FlatRedBallExtensions;
 using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -54,12 +55,12 @@ namespace flatredball_spriter_test
             Assert.AreEqual(so.KeyFrameList.Count, clone.KeyFrameList.Count);
 
             Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Time - clone.KeyFrameList[0].Time) < .00001f);
-            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.First().Value.ScaleX - clone.KeyFrameList[0].Values.First().Value.ScaleX) < .00001f);
+            Assert.IsTrue(Math.Abs(so.KeyFrameList[0].Values.First().Value.RelativeScaleX - clone.KeyFrameList[0].Values.First().Value.RelativeScaleX) < .00001f);
             so.KeyFrameList[0].Time = 12345f;
-            so.KeyFrameList[0].Values.First().Value.ScaleX = 12345f;
+            so.KeyFrameList[0].Values.First().Value.RelativeScaleX = 12345f;
 
             Assert.IsFalse(Math.Abs(clone.KeyFrameList[0].Time - 12345f) < .00001f);
-            Assert.IsFalse(Math.Abs(clone.KeyFrameList[0].Values.First().Value.ScaleX - 12345f) < .00001f);
+            Assert.IsFalse(Math.Abs(clone.KeyFrameList[0].Values.First().Value.RelativeScaleX - 12345f) < .00001f);
 
             
         }
@@ -101,7 +102,7 @@ namespace flatredball_spriter_test
         public void SpriterObjectScaleTest()
         {
             var so = GetSimpleSpriterObject();
-            var sprite = (Sprite) so.ObjectList.Single(o => o.Name == "sprite");
+            var sprite = (ScaledSprite) so.ObjectList.Single(o => o.Name == "sprite");
             var pivot = so.ObjectList.Single(o => o.Name == "pivot");
             so.ScaleX = .5f;
             so.ScaleY = .25f;
@@ -200,7 +201,6 @@ namespace flatredball_spriter_test
 
         private static SpriterObject GetSimpleSpriterObject(bool loops=false)
         {
-
             var so = new SpriterObject("Global", false);
 
             var sprite = new Sprite();
@@ -221,16 +221,16 @@ namespace flatredball_spriter_test
             // The pivot is at 30,30
             keyFrame.Values[pivot] = new KeyFrameValues
             {
-                Position = new Vector3(30f, 30f, 0f)
+                RelativePosition = new Vector3(30f, 30f, 0f)
             };
             // Sprite is just there to connect to the pivot
             keyFrame.Values[sprite] = new KeyFrameValues
             {
                     Alpha = 1.0f,
                     Parent = pivot,
-                    ScaleX = 1.0f,
-                    ScaleY = 1.0f,
-                    Position = new Vector3(30f, 30f, 0f)
+                    RelativeScaleX = 1.0f,
+                    RelativeScaleY = 1.0f,
+                    RelativePosition = new Vector3(30f, 30f, 0f)
                 };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
@@ -242,22 +242,24 @@ namespace flatredball_spriter_test
                 };
             keyFrame.Values[pivot] = new KeyFrameValues
             {
-                Position = Vector3.Zero
+                RelativePosition = Vector3.Zero
             };
 
             keyFrame.Values[sprite] = new KeyFrameValues
             {
                     Alpha = 1.0f,
                     Parent = pivot,
-                    ScaleX = 1.0f,
-                    ScaleY = 1.0f,
-                    Position = Vector3.Zero
+                    RelativeScaleX = 1.0f,
+                    RelativeScaleY = 1.0f,
+                    RelativePosition = Vector3.Zero
                 };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
 
             so.ObjectList.Add(sprite);
             so.ObjectList.Add(pivot);
+
+            so.AddToManagers(null);
             return so;
         }
 
@@ -284,11 +286,11 @@ namespace flatredball_spriter_test
             };
             keyFrame.Values[pivot] = new KeyFrameValues
             {
-                Position = Vector3.Zero
+                RelativePosition = Vector3.Zero
             };
             keyFrame.Values[pivot2] = new KeyFrameValues
             {
-                Position = Vector3.Zero
+                RelativePosition = Vector3.Zero
             };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
@@ -299,11 +301,11 @@ namespace flatredball_spriter_test
             };
             keyFrame.Values[pivot] = new KeyFrameValues
             {
-                Position = new Vector3(0f, 10f, 0f)
+                RelativePosition = new Vector3(0f, 10f, 0f)
             };
             keyFrame.Values[pivot2] = new KeyFrameValues
             {
-                Position = new Vector3(10f, 0f, 0f)
+                RelativePosition = new Vector3(10f, 0f, 0f)
             };
 
             so.Animations[""].KeyFrames.Add(keyFrame);
@@ -351,7 +353,7 @@ namespace flatredball_spriter_test
                 Time = 1.0f
             };
 
-            keyFrame.Values[bone1] = new KeyFrameValues { Position = new Vector3(100f, 0f, 0f), Parent = so };
+            keyFrame.Values[bone1] = new KeyFrameValues { RelativePosition = new Vector3(100f, 0f, 0f), Parent = so };
             keyFrame.Values[bone2] = new KeyFrameValues
             {
                 Parent = so
@@ -401,6 +403,83 @@ namespace flatredball_spriter_test
             float actual;
             actual = SpriterObject.GetPercentageIntoFrame(secondsIntoAnimation, currentKeyFrameTime, nextKeyFrameTime);
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void ThreeConnectedBonesAndObjectsPositionedTogether()
+        {
+            #region xml
+            var sos =
+                TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(
+                    @"<?xml version=""1.0"" encoding=""UTF-8""?>
+<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b5"">
+    <folder id=""0"">
+        <file id=""0"" name=""/square.png"" width=""32"" height=""32"" pivot_x=""0"" pivot_y=""1""/>
+    </folder>
+    <entity id=""0"" name=""entity_000"">
+        <animation id=""0"" name=""NewAnimation"" length=""1000"">
+            <mainline>
+                <key id=""0"">
+                    <bone_ref id=""0"" timeline=""0"" key=""0""/>
+                    <bone_ref id=""1"" parent=""0"" timeline=""1"" key=""0""/>
+                    <bone_ref id=""2"" parent=""1"" timeline=""2"" key=""0""/>
+                    <object_ref id=""0"" parent=""0"" name=""square1"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""3"" key=""0"" z_index=""0""/>
+                    <object_ref id=""1"" parent=""1"" name=""square2"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""4"" key=""0"" z_index=""1""/>
+                    <object_ref id=""2"" parent=""2"" name=""square3"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""5"" key=""0"" z_index=""2""/>
+                </key>
+            </mainline>
+            <timeline id=""0"" name=""bone1"" object_type=""bone"">
+                <key id=""0"" spin=""0"">
+                    <bone x=""100"" angle=""0"" scale_x=""0.5""/>
+                </key>
+            </timeline>
+            <timeline id=""1"" name=""bone2"" object_type=""bone"">
+                <key id=""0"" spin=""0"">
+                    <bone x=""200"" y=""-0""/>
+                </key>
+            </timeline>
+            <timeline id=""2"" name=""bone3"" object_type=""bone"">
+                <key id=""0"" spin=""0"">
+                    <bone x=""200"" y=""-0"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""3"" name=""square1"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-180"" y=""0"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""4"" name=""square2"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-380"" y=""0"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""5"" name=""square3"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-290"" y=""0""/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
+");
+#endregion
+            var so = sos.ToRuntime();
+
+            so.StartAnimation();
+
+            so.TimedActivity(.5f, 0.25, .5f);
+
+            var pivot1 = so.ObjectList[1];
+            var pivot2 = so.ObjectList[3];
+            var pivot3 = so.ObjectList[5];
+            var bone1 = so.ObjectList[6];
+            var bone2 = so.ObjectList[7];
+            var bone3 = so.ObjectList[8];
+
+            
+            Assert.IsTrue(Math.Abs(bone1.Position.X - 100f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(bone2.Position.X - 200f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(bone3.Position.X - 300f) < Single.Epsilon);
         }
     }
 }

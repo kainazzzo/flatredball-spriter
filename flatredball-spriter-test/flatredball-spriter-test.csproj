@@ -77,13 +77,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriterObjectSaveTest.cs" />
     <Compile Include="SpriterObjectTest.cs" />
-    <Compile Include="absolute_value_tests.cs" />
     <Compile Include="TestSerializationUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">
       <Project>{1A1A158C-5EDE-4750-8BD0-62FAEB1C21DD}</Project>
       <Name>FlatRedBall-Spriter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlatRedBallExtensions\FlatRedBallExtensions.csproj">
+      <Project>{D4D59D5B-C3AE-48C8-9113-7EBD09FD721B}</Project>
+      <Name>FlatRedBallExtensions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

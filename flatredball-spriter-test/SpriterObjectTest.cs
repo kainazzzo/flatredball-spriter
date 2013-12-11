@@ -182,10 +182,13 @@ namespace flatredball_spriter_test
             var so = GetSimpleSpriterObject(true);
             so.StartAnimation();
             Assert.IsTrue(so.Looping);
+            TimeManager.CurrentTime += 1.0;
             so.TimedActivity(1.0f, 0f, 0f);
             Assert.IsTrue(Math.Abs(so.ObjectList[1].Position.X - 0.0f) < .0001f);
             Assert.IsTrue(Math.Abs(so.ObjectList[1].Position.Y - 0.0f) < .0001f);
 
+
+            TimeManager.CurrentTime += 0.5;
             so.TimedActivity(.5f, 0f, 0f);
             Assert.IsTrue(Math.Abs(so.ObjectList[1].Position.X - 15.0f) < .0001f);
 
@@ -193,10 +196,13 @@ namespace flatredball_spriter_test
             so = GetSimpleSpriterObject(false);
             so.StartAnimation();
             Assert.IsFalse(so.Looping);
+
+            TimeManager.CurrentTime += 1.0;
             so.TimedActivity(1.0f, 0f, 0f);
             Assert.IsTrue(Math.Abs(so.ObjectList[0].Position.X - 0.0f) < .0001f);
             Assert.IsTrue(Math.Abs(so.ObjectList[0].Position.Y - 0.0f) < .0001f);
 
+            TimeManager.CurrentTime += 0.5;
             so.TimedActivity(.5f, 0f, 0f);
             Assert.IsTrue(Math.Abs(so.ObjectList[0].Position.X) < .0001f);
         }
@@ -317,11 +323,13 @@ namespace flatredball_spriter_test
             so.ObjectList.Add(pivot2);
 
             so.StartAnimation();
+            TimeManager.CurrentTime += .5;
             so.TimedActivity(.5f, 0f, 0f);
 
             Assert.AreEqual(5f, so.ObjectList[1].Position.Y);
             Assert.AreEqual(5f, so.ObjectList[3].Position.X);
 
+            TimeManager.CurrentTime += .25;
             so.TimedActivity(.25f, 0f, 0f);
             Assert.AreEqual(7.5f, so.ObjectList[1].Position.Y);
             Assert.AreEqual(7.5f, so.ObjectList[3].Position.X);
@@ -468,6 +476,7 @@ namespace flatredball_spriter_test
 
             so.StartAnimation();
 
+            TimeManager.CurrentTime += .5;
             so.TimedActivity(.5f, 0.25, .5f);
 
             var pivot1 = so.ObjectList[1];

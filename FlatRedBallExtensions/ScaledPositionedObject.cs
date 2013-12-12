@@ -4,6 +4,8 @@ namespace FlatRedBallExtensions
 {
     public class ScaledPositionedObject : PositionedObject, IRelativeScalable
     {
+        private bool _parentScaleChangesPosition = true;
+
         public override void UpdateDependencies(double currentTime)
         {
             // ReSharper disable once CompareOfFloatsByEqualityOperator
@@ -33,6 +35,12 @@ namespace FlatRedBallExtensions
         public float ScaleX { get; set; }
         public float ScaleY { get; set; }
         public float ScaleZ { get; set; }
+
+        public bool ParentScaleChangesPosition
+        {
+            get { return _parentScaleChangesPosition; }
+            set { _parentScaleChangesPosition = value; }
+        }
 
         public float RelativeScaleX { get; set; }
         public float RelativeScaleY { get; set; }

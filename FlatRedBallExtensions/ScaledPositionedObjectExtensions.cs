@@ -48,14 +48,19 @@ namespace FlatRedBallExtensions
 
                     if (thisAsSprite != null)
                     {
-                        thisAsSprite.Height = thisAsSprite.TextureHeight*parentScaleY * thisRelativeScaleY;
-                        thisAsSprite.Width = thisAsSprite.TextureWidth*parentScaleX * thisRelativeScaleX;
+                        thisAsSprite.Height = thisAsSprite.TextureHeight*parentScaleY;
+                        thisAsSprite.Width = thisAsSprite.TextureWidth*parentScaleX;
                     }
                     else if (thisAsIRelativeScalable != null)
                     {
                         thisAsIRelativeScalable.ScaleX = parentScaleX * thisRelativeScaleX;
                         thisAsIRelativeScalable.ScaleY = parentScaleY * thisRelativeScaleY;
-                        thisAsIRelativeScalable.ScaleZ = parentScaleZ * thisRelativeScaleZ; 
+                        thisAsIRelativeScalable.ScaleZ = parentScaleZ * thisRelativeScaleZ;
+                    }
+
+                    if (thisAsIRelativeScalable != null && !thisAsIRelativeScalable.ParentScaleChangesPosition)
+                    {
+                        parentScaleX = parentScaleY = parentScaleZ = 1.0f;
                     }
 
                     if (scaledPositionedObject.ParentRotationChangesPosition)

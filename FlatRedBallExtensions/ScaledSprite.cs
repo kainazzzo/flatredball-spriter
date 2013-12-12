@@ -5,6 +5,7 @@ namespace FlatRedBallExtensions
 {
     public class ScaledSprite : Sprite, IRelativeScalable
     {
+        private bool _parentScaleChangesPosition = true;
         public const int DefaultTextureWidth = 32;
         public const int DefaultTextureHeight = 32;
 
@@ -65,5 +66,11 @@ namespace FlatRedBallExtensions
         public float RelativeScaleY { get; set; }
         public float RelativeScaleZ { get; set; }
         public float ScaleZ { get; set; }
+
+        public bool ParentScaleChangesPosition
+        {
+            get { return _parentScaleChangesPosition; }
+            set { _parentScaleChangesPosition = value; }
+        }
     }
 }

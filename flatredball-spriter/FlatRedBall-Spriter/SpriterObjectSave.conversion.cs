@@ -215,7 +215,7 @@ namespace FlatRedBall_Spriter
                 {
                     pivot = new ScaledPositionedObject {Name = "pivot"};
 
-                    ScaledSprite = new ScaledSprite {Name = "sprite", ScaleX =  file.Width / 2.0f, ScaleY = file.Height / 2.0f};
+                    ScaledSprite = new ScaledSprite {Name = "sprite", Width = file.Width, Height = file.Height, ParentScaleChangesPosition = false};
 
                     ScaledSprite.AttachTo(pivot, true);
                     pivot.AttachTo(SpriterObject, true);

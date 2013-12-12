@@ -94,6 +94,7 @@ namespace spritertestgame.Screens
 		{
 			// Generated Destroy
 			square = null;
+			square3bonetest = null;
 			
 			if (SpriteInstance != null)
 			{
@@ -178,6 +179,18 @@ namespace spritertestgame.Screens
 			{
 			}
 			square = FlatRedBallServices.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/test/square.png", contentManagerName);
+			if (square3bonetest == null)
+			{
+				{
+					// We put the { and } to limit the scope of oldDelimiter
+					char oldDelimiter = CsvFileManager.Delimiter;
+					CsvFileManager.Delimiter = ',';
+					List<square3bonetest> temporaryCsvObject = new List<square3bonetest>();
+					CsvFileManager.CsvDeserializeList(typeof(square3bonetest), "content/screens/test/square3bonetest.scml", temporaryCsvObject);
+					CsvFileManager.Delimiter = oldDelimiter;
+					square3bonetest = temporaryCsvObject;
+				}
+			}
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]
@@ -187,6 +200,8 @@ namespace spritertestgame.Screens
 			{
 				case  "square":
 					return square;
+				case  "square3bonetest":
+					return square3bonetest;
 			}
 			return null;
 		}
@@ -196,6 +211,8 @@ namespace spritertestgame.Screens
 			{
 				case  "square":
 					return square;
+				case  "square3bonetest":
+					return square3bonetest;
 			}
 			return null;
 		}
@@ -205,6 +222,8 @@ namespace spritertestgame.Screens
 			{
 				case  "square":
 					return square;
+				case  "square3bonetest":
+					return square3bonetest;
 			}
 			return null;
 		}

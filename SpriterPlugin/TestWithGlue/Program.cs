@@ -2,7 +2,6 @@ using System;
 using System.Reflection;
 using System.Windows.Forms;
 using FlatRedBall.Glue.Plugins;
-using SpriterPlugin;
 
 namespace TestWithGlue
 {
@@ -15,7 +14,7 @@ namespace TestWithGlue
         static void Main()
         {
             PluginManagerBase.AddGlobalOnInitialize.Add(Assembly.GetAssembly(typeof(Glue.Form1)));
-            PluginManagerBase.AddGlobalOnInitialize.Add(Assembly.GetAssembly(typeof(MyPlugin)));
+            PluginManagerBase.AddGlobalOnInitialize.Add(Assembly.GetAssembly(typeof(SpriterPlugin.SpriterPlugin)));
             PluginManager.HandleExceptions = false;
             Application.Run(new Glue.Form1());
         }

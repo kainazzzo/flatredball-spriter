@@ -27,24 +27,30 @@ namespace FlatRedBallExtensions
 
                 if (!scaledPositionedObject.IgnoreParentPosition)
                 {
-                    var scaledParent = scaledPositionedObject.Parent as ScaledPositionedObject;
+                    var scaledParent = scaledPositionedObject.Parent as IRelativeScalable;
 
-                    var thisAsScaledPositionedObject = scaledPositionedObject as ScaledPositionedObject;
-                    var thisAsScaledSprite = scaledPositionedObject as ScaledSprite;
+                    var thisAsIRelativeScalable = scaledPositionedObject as IRelativeScalable;
 
-                    var thisScaleX = thisAsScaledPositionedObject == null
-                        ? (thisAsScaledSprite == null ? 1.0f : thisAsScaledSprite.ScaleY)
-                        : thisAsScaledPositionedObject.ScaleY;
+                    var thisScaleX = thisAsIRelativeScalable == null
+                        ? 1.0f
+                        : thisAsIRelativeScalable.RelativeScaleX;
 
-                    var thisScaleY = thisAsScaledPositionedObject == null
-                        ? (thisAsScaledSprite == null ? 1.0f : thisAsScaledSprite.ScaleY)
-                        : thisAsScaledPositionedObject.ScaleY;
+                    var thisScaleY = thisAsIRelativeScalable == null ? 
+                        1.0f
+                        : thisAsIRelativeScalable.RelativeScaleY;
 
-                    var thisScaleZ = thisAsScaledPositionedObject == null ? 1.0f : thisAsScaledPositionedObject.ScaleZ;
+                    var thisScaleZ = thisAsIRelativeScalable == null ? 
+                        1.0f : thisAsIRelativeScalable.RelativeScaleZ;
 
-                    var scaleX = scaledParent == null ? 1.0f : scaledParent.ScaleX * thisScaleX;
-                    var scaleY = scaledParent == null ? 1.0f : scaledParent.ScaleY * thisScaleY;
-                    var scaleZ = scaledParent == null ? 1.0f : scaledParent.ScaleZ * thisScaleZ;
+                    var scaleX = scaledParent == null ? 1.0f : scaledParent.ScaleX;
+                    var scaleY = scaledParent == null ? 1.0f : scaledParent.ScaleY;
+                    var scaleZ = scaledParent == null ? 1.0f : scaledParent.ScaleZ;
+                    if (thisAsIRelativeScalable != null)
+                    {
+                        thisAsIRelativeScalable.ScaleX = scaleX * thisScaleX;
+                        thisAsIRelativeScalable.ScaleY = scaleY * thisScaleY;
+                        thisAsIRelativeScalable.ScaleZ = scaleZ * thisScaleZ;
+                    }
 
                     if (scaledPositionedObject.ParentRotationChangesPosition)
                     {

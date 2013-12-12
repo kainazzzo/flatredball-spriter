@@ -3,14 +3,14 @@ using FlatRedBall;
 
 namespace FlatRedBallExtensions
 {
-    public class ScaledSprite : Sprite
+    public class ScaledSprite : Sprite, IRelativeScalable
     {
         public const int DefaultTextureWidth = 32;
         public const int DefaultTextureHeight = 32;
 
         public ScaledSprite()
         {
-            RelativeScaleX = RelativeScaleY = OriginalScaleX = OriginalScaleY = ScaleX = ScaleY = 1.0f;
+            RelativeScaleX = RelativeScaleY = RelativeScaleZ = ScaleX = ScaleY = ScaleZ = 1.0f;
         }
 
         private int TextureWidth
@@ -63,8 +63,7 @@ namespace FlatRedBallExtensions
 
         public float RelativeScaleX { get; set; }
         public float RelativeScaleY { get; set; }
-
-        public float OriginalScaleX { get; set; }
-        public float OriginalScaleY { get; set; }
+        public float RelativeScaleZ { get; set; }
+        public float ScaleZ { get; set; }
     }
 }

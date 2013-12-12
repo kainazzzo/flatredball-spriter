@@ -44,5 +44,15 @@ namespace flatredball_extensions_tests
             Assert.IsTrue(Math.Abs(sprite.Width - .5f * ScaledSprite.DefaultTextureWidth) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(sprite.Height - .5f * ScaledSprite.DefaultTextureHeight) < Single.Epsilon);
         }
+
+        [TestMethod]
+        public void RelativeScaleDefaultsTo1()
+        {
+            var sprite = new ScaledSprite();
+
+            Assert.IsTrue(Math.Abs(sprite.RelativeScaleX - 1.0f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.RelativeScaleY - 1.0f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.RelativeScaleZ - 1.0f) < Single.Epsilon);
+        }
     }
 }

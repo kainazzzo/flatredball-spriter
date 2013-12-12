@@ -158,7 +158,7 @@ namespace flatredball_extensions_tests
 
             var parent2 = new ScaledPositionedObject
             {
-                ScaleX = .5f,
+                RelativeScaleX = .5f,
                 Position = new Vector3(100f, 100f, 100f)
             };
 
@@ -185,6 +185,9 @@ namespace flatredball_extensions_tests
             Assert.AreEqual(1.0f, spo.ScaleX);
             Assert.AreEqual(1.0f, spo.ScaleY);
             Assert.AreEqual(1.0f, spo.ScaleZ);
+            Assert.AreEqual(1.0f, spo.RelativeScaleX);
+            Assert.AreEqual(1.0f, spo.RelativeScaleY);
+            Assert.AreEqual(1.0f, spo.RelativeScaleZ);
         }
 
         [TestMethod]

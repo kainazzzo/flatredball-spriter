@@ -6,6 +6,11 @@ namespace FlatRedBall_Spriter
 {
     public class KeyFrameValues
     {
+        public KeyFrameValues()
+        {
+            RelativeScaleX = RelativeScaleY = 1.0f;
+        }
+
         public Vector3 RelativeRotation { get; set; }
         public Vector3 RelativePosition { get; set; }
         public float RelativeScaleX { get; set; }

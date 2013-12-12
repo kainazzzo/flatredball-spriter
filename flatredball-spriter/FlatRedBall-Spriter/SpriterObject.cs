@@ -243,9 +243,16 @@ namespace FlatRedBall_Spriter
                     sprite.Texture = currentValues.Texture;
 
                     // Scale
-                    sprite.ScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX, percentage);
-                    sprite.ScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY, percentage);
+                    sprite.RelativeScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX, percentage);
+                    sprite.RelativeScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY, percentage);
                     sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
+                }
+
+                var spo = currentObject as ScaledPositionedObject;
+                if (spo != null)
+                {
+                    spo.RelativeScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX, percentage);
+                    spo.RelativeScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY, percentage);
                 }
             }
         }

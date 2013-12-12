@@ -2,7 +2,7 @@
 
 namespace FlatRedBallExtensions
 {
-    public class ScaledPositionedObject : PositionedObject
+    public class ScaledPositionedObject : PositionedObject, IRelativeScalable
     {
         public override void UpdateDependencies(double currentTime)
         {
@@ -21,7 +21,12 @@ namespace FlatRedBallExtensions
 
         public ScaledPositionedObject()
         {
-            ScaleX = ScaleY = ScaleZ = 1.0f;
+            ScaleX =
+                ScaleY =
+                ScaleZ =
+                RelativeScaleX =
+                RelativeScaleY =
+                RelativeScaleZ = 1.0f;
         }
 
 
@@ -29,5 +34,8 @@ namespace FlatRedBallExtensions
         public float ScaleY { get; set; }
         public float ScaleZ { get; set; }
 
+        public float RelativeScaleX { get; set; }
+        public float RelativeScaleY { get; set; }
+        public float RelativeScaleZ { get; set; }
     }
 }

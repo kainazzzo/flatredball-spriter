@@ -491,5 +491,14 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(bone2.Position.X - 200f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(bone3.Position.X - 300f) < Single.Epsilon);
         }
+
+        [TestMethod]
+        public void KeyFrameValuesScaleDefaultsTo1()
+        {
+            var kfv = new KeyFrameValues();
+
+            Assert.IsTrue(Math.Abs(kfv.RelativeScaleX - 1.0f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(kfv.RelativeScaleY - 1.0f) < Single.Epsilon);
+        }
     }
 }

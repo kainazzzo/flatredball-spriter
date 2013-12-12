@@ -268,29 +268,7 @@ namespace FlatRedBall_Spriter
         {
             foreach (var pair in CurrentKeyFrame.Values)
             {
-                pair.Key.AttachTo(pair.Value.Parent, true);
-                pair.Key.Position = pair.Value.RelativePosition + Position;
-                pair.Key.Position.X *= this.ScaleX;
-                pair.Key.Position.Y *= this.ScaleY;
-
-                if (pair.Value.Parent != null)
-                {
-                    pair.Key.SetRelativeFromAbsolute();
-                }
-
-                pair.Key.RelativeRotationZ = MathHelper.ToRadians(pair.Value.RelativeRotation.Z);
-
-                var sprite = pair.Key as Sprite;
-                if (sprite != null)
-                {
-                    sprite.Texture = pair.Value.Texture;
-                    sprite.ScaleX = pair.Value.RelativeScaleX;
-                    sprite.ScaleY = pair.Value.RelativeScaleY;
-                    sprite.Alpha = pair.Value.Alpha;
-
-                    sprite.ScaleX *= this.ScaleX;
-                    sprite.ScaleY *= this.ScaleY;
-                }
+                SetInterpolatedValues(pair, 0);
             }
         }
 
@@ -392,7 +370,7 @@ namespace FlatRedBall_Spriter
         public void AddToManagers(Layer layerToAddTo)
         {
             LayerProvidedByContainer = layerToAddTo;
-//            SpriteManager.AddPositionedObject(this);
+            
             if (ObjectList != null)
             {
                 foreach (var currentObject in this.ObjectList)
@@ -408,6 +386,8 @@ namespace FlatRedBall_Spriter
                     }
                 }
             }
+
+            SpriteManager.AddPositionedObject(this);
             AddToManagersBottomUp(layerToAddTo);
         }
 

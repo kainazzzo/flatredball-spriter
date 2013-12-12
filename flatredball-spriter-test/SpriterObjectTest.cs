@@ -490,6 +490,10 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(bone1.Position.X - 100f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(bone2.Position.X - 200f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(bone3.Position.X - 300f) < Single.Epsilon);
+
+            Assert.IsTrue(Math.Abs(pivot1.Position.X - 10f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot2.Position.X - 10f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot3.Position.X - 10f) < Single.Epsilon);
         }
 
         [TestMethod]

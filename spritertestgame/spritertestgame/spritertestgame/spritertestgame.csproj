@@ -65,6 +65,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\Xna4Pc\FlatRedBall.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -110,6 +119,14 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Telerik.JustMock, Version=2013.3.1015.0, Culture=neutral, PublicKeyToken=721b6c5bc0326b3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\JustMock.2013.3.1015\lib\Net35\Telerik.JustMock.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.JustMock.Container, Version=2013.3.1015.0, Culture=neutral, PublicKeyToken=721b6c5bc0326b3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\JustMock.2013.3.1015\lib\Net35\Telerik.JustMock.Container.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +148,7 @@
     <Content Include="GameThumbnail.png" />
     <Content Include="Libraries\Xna4Pc\FlatRedBall.Content.dll" />
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="redball.BMP">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -165,6 +183,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\flatredball-spriter-test\flatredball-spriter-test.csproj">
+      <Project>{FEB70393-A1C4-433A-AE50-8B16B276EAE3}</Project>
+      <Name>flatredball-spriter-test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">
+      <Project>{1A1A158C-5EDE-4750-8BD0-62FAEB1C21DD}</Project>
+      <Name>FlatRedBall-Spriter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\FlatRedBallExtensions\FlatRedBallExtensions.csproj">
       <Project>{D4D59D5B-C3AE-48C8-9113-7EBD09FD721B}</Project>
       <Name>FlatRedBallExtensions</Name>

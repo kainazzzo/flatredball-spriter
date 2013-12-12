@@ -264,7 +264,7 @@ namespace FlatRedBall_Spriter
             int width = file.Width;
             int height = file.Height;
 
-            if ((width == 0 || height == 0) && textures[folderFileId] != null)
+            if (width != 0 && height != 0 && textures.ContainsKey(folderFileId))
             {
                 width = textures[folderFileId].Width;
                 height = textures[folderFileId].Height;

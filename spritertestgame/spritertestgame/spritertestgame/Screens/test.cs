@@ -90,61 +90,35 @@ namespace spritertestgame.Screens
                     <object_ref id=""1"" parent=""1"" timeline=""4"" key=""0"" z_index=""1""/>
                     <object_ref id=""2"" parent=""2"" timeline=""5"" key=""0"" z_index=""2""/>
                 </key>
-                <key id=""1"" time=""500"">
-                    <bone_ref id=""0"" timeline=""0"" key=""1""/>
-                    <bone_ref id=""1"" parent=""0"" timeline=""1"" key=""1""/>
-                    <bone_ref id=""2"" parent=""1"" timeline=""2"" key=""1""/>
-                    <object_ref id=""0"" parent=""0"" timeline=""3"" key=""1"" z_index=""0""/>
-                    <object_ref id=""1"" parent=""1"" timeline=""4"" key=""1"" z_index=""1""/>
-                    <object_ref id=""2"" parent=""2"" timeline=""5"" key=""1"" z_index=""2""/>
-                </key>
             </mainline>
             <timeline id=""0"" obj=""0"" name=""bone1"" object_type=""bone"">
-                <key id=""0"">
+                <key id=""0"" spin=""0"">
                     <bone x=""100"" angle=""0"" scale_x=""0.5""/>
-                </key>
-                <key id=""1"" time=""500"" spin=""-1"">
-                    <bone x=""100"" angle=""90"" scale_x=""0.5""/>
                 </key>
             </timeline>
             <timeline id=""1"" obj=""1"" name=""bone2"" object_type=""bone"">
                 <key id=""0"" spin=""0"">
-                    <bone x=""200"" angle=""0""/>
-                </key>
-                <key id=""1"" time=""500"" spin=""0"">
-                    <bone x=""200"" angle=""0""/>
+                    <bone x=""200"" y=""-0""/>
                 </key>
             </timeline>
             <timeline id=""2"" obj=""2"" name=""bone3"" object_type=""bone"">
                 <key id=""0"" spin=""0"">
-                    <bone x=""200"" angle=""0"" scale_x=""2""/>
-                </key>
-                <key id=""1"" time=""500"" spin=""0"">
-                    <bone x=""200"" angle=""0"" scale_x=""2""/>
+                    <bone x=""200"" y=""0"" scale_x=""2""/>
                 </key>
             </timeline>
             <timeline id=""3"" name=""square1"">
-                <key id=""0"">
+                <key id=""0"" spin=""0"">
                     <object folder=""0"" file=""0"" x=""-180"" y=""100"" scale_x=""2""/>
-                </key>
-                <key id=""1"" time=""500"">
-                    <object folder=""0"" file=""0"" x=""-180"" angle=""0"" scale_x=""2""/>
                 </key>
             </timeline>
             <timeline id=""4"" name=""square2"">
                 <key id=""0"" spin=""0"">
-                    <object folder=""0"" file=""0"" x=""-380"" angle=""0"" scale_x=""2""/>
-                </key>
-                <key id=""1"" time=""500"" spin=""0"">
-                    <object folder=""0"" file=""0"" x=""-380"" angle=""0"" scale_x=""2""/>
+                    <object folder=""0"" file=""0"" x=""-380"" y=""0"" scale_x=""2""/>
                 </key>
             </timeline>
             <timeline id=""5"" name=""square3"">
-                <key id=""0"">
+                <key id=""0"" spin=""0"">
                     <object folder=""0"" file=""0"" x=""-290"" y=""-100""/>
-                </key>
-                <key id=""1"" time=""500"">
-                    <object folder=""0"" file=""0"" x=""-290"" angle=""0""/>
                 </key>
             </timeline>
         </animation>
@@ -172,7 +146,7 @@ namespace spritertestgame.Screens
 		void CustomActivity(bool firstTimeCalled)
 		{
             Debugger.Write(string.Format("{0}\r\n{1}\r\n{2}",
-                _so.ObjectList[0], _so.ObjectList[2], _so.ObjectList[4]));
+                _so.ObjectList[1], _so.ObjectList[3], _so.ObjectList[5]));
 		    var x = 0;
 		    if (x == 0)
 		    {

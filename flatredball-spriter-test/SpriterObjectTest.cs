@@ -487,6 +487,9 @@ namespace flatredball_spriter_test
             var bone1 = so.ObjectList[6];
             var bone2 = so.ObjectList[7];
             var bone3 = so.ObjectList[8];
+            var sprite1 = so.ObjectList[0];
+            var sprite2 = so.ObjectList[2];
+            var sprite3 = so.ObjectList[4];
 
             
             Assert.IsTrue(Math.Abs(bone1.Position.X - 100f) < Single.Epsilon);
@@ -496,6 +499,10 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(pivot1.Position.X - 10f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot2.Position.X - 10f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot3.Position.X - 10f) < Single.Epsilon);
+
+            Assert.IsTrue(Math.Abs(sprite1.Position.X - 26f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite2.Position.X - 26f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite3.Position.X - 26f) < Single.Epsilon);
         }
 
         [TestMethod]

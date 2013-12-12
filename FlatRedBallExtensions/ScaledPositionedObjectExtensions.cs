@@ -28,41 +28,47 @@ namespace FlatRedBallExtensions
                 if (!scaledPositionedObject.IgnoreParentPosition)
                 {
                     var scaledParent = scaledPositionedObject.Parent as IRelativeScalable;
-
                     var thisAsIRelativeScalable = scaledPositionedObject as IRelativeScalable;
-
-                    var thisScaleX = thisAsIRelativeScalable == null
+                    var thisAsSprite = scaledPositionedObject as ScaledSprite;
+                    
+                    var thisRelativeScaleX = thisAsIRelativeScalable == null
                         ? 1.0f
                         : thisAsIRelativeScalable.RelativeScaleX;
 
-                    var thisScaleY = thisAsIRelativeScalable == null ? 
+                    var thisRelativeScaleY = thisAsIRelativeScalable == null ? 
                         1.0f
                         : thisAsIRelativeScalable.RelativeScaleY;
 
-                    var thisScaleZ = thisAsIRelativeScalable == null ? 
+                    var thisRelativeScaleZ = thisAsIRelativeScalable == null ? 
                         1.0f : thisAsIRelativeScalable.RelativeScaleZ;
 
-                    var scaleX = scaledParent == null ? 1.0f : scaledParent.ScaleX;
-                    var scaleY = scaledParent == null ? 1.0f : scaledParent.ScaleY;
-                    var scaleZ = scaledParent == null ? 1.0f : scaledParent.ScaleZ;
-                    if (thisAsIRelativeScalable != null)
+                    var parentScaleX = scaledParent == null ? 1.0f : scaledParent.ScaleX;
+                    var parentScaleY = scaledParent == null ? 1.0f : scaledParent.ScaleY;
+                    var parentScaleZ = scaledParent == null ? 1.0f : scaledParent.ScaleZ;
+
+                    if (thisAsSprite != null)
                     {
-                        thisAsIRelativeScalable.ScaleX = scaleX * thisScaleX;
-                        thisAsIRelativeScalable.ScaleY = scaleY * thisScaleY;
-                        thisAsIRelativeScalable.ScaleZ = scaleZ * thisScaleZ;
+                        thisAsSprite.Height = thisAsSprite.TextureHeight*parentScaleY * thisRelativeScaleY;
+                        thisAsSprite.Width = thisAsSprite.TextureWidth*parentScaleX * thisRelativeScaleX;
+                    }
+                    else if (thisAsIRelativeScalable != null)
+                    {
+                        thisAsIRelativeScalable.ScaleX = parentScaleX * thisRelativeScaleX;
+                        thisAsIRelativeScalable.ScaleY = parentScaleY * thisRelativeScaleY;
+                        thisAsIRelativeScalable.ScaleZ = parentScaleZ * thisRelativeScaleZ; 
                     }
 
                     if (scaledPositionedObject.ParentRotationChangesPosition)
                     {
-                        scaledPositionedObject.Position.X = scaledPositionedObject.Parent.Position.X + scaledPositionedObject.Parent.RotationMatrix.M11 * scaledPositionedObject.RelativePosition.X * scaleX + scaledPositionedObject.Parent.RotationMatrix.M21 * scaledPositionedObject.RelativePosition.Y * scaleY + scaledPositionedObject.Parent.RotationMatrix.M31 * scaledPositionedObject.RelativePosition.Z * scaleZ;
+                        scaledPositionedObject.Position.X = scaledPositionedObject.Parent.Position.X + scaledPositionedObject.Parent.RotationMatrix.M11 * scaledPositionedObject.RelativePosition.X * parentScaleX + scaledPositionedObject.Parent.RotationMatrix.M21 * scaledPositionedObject.RelativePosition.Y * parentScaleY + scaledPositionedObject.Parent.RotationMatrix.M31 * scaledPositionedObject.RelativePosition.Z * parentScaleZ;
 
-                        scaledPositionedObject.Position.Y = scaledPositionedObject.Parent.Position.Y + scaledPositionedObject.Parent.RotationMatrix.M12 * scaledPositionedObject.RelativePosition.X * scaleX + scaledPositionedObject.Parent.RotationMatrix.M22 * scaledPositionedObject.RelativePosition.Y * scaleY + scaledPositionedObject.Parent.RotationMatrix.M32 * scaledPositionedObject.RelativePosition.Z * scaleZ;
+                        scaledPositionedObject.Position.Y = scaledPositionedObject.Parent.Position.Y + scaledPositionedObject.Parent.RotationMatrix.M12 * scaledPositionedObject.RelativePosition.X * parentScaleX + scaledPositionedObject.Parent.RotationMatrix.M22 * scaledPositionedObject.RelativePosition.Y * parentScaleY + scaledPositionedObject.Parent.RotationMatrix.M32 * scaledPositionedObject.RelativePosition.Z * parentScaleZ;
 
-                        scaledPositionedObject.Position.Z = scaledPositionedObject.Parent.Position.Z + scaledPositionedObject.Parent.RotationMatrix.M13 * scaledPositionedObject.RelativePosition.X * scaleX + scaledPositionedObject.Parent.RotationMatrix.M23 * scaledPositionedObject.RelativePosition.Y * scaleY + scaledPositionedObject.Parent.RotationMatrix.M33 * scaledPositionedObject.RelativePosition.Z * scaleZ;
+                        scaledPositionedObject.Position.Z = scaledPositionedObject.Parent.Position.Z + scaledPositionedObject.Parent.RotationMatrix.M13 * scaledPositionedObject.RelativePosition.X * parentScaleX + scaledPositionedObject.Parent.RotationMatrix.M23 * scaledPositionedObject.RelativePosition.Y * parentScaleY + scaledPositionedObject.Parent.RotationMatrix.M33 * scaledPositionedObject.RelativePosition.Z * parentScaleZ;
                     }
                     else
                     {
-                        scaledPositionedObject.Position = new Vector3(scaledPositionedObject.RelativePosition.X * scaleX, scaledPositionedObject.RelativePosition.Y * scaleY, scaledPositionedObject.RelativePosition.Z * scaleZ) + scaledPositionedObject.Parent.Position;
+                        scaledPositionedObject.Position = new Vector3(scaledPositionedObject.RelativePosition.X * parentScaleX, scaledPositionedObject.RelativePosition.Y * parentScaleY, scaledPositionedObject.RelativePosition.Z * parentScaleZ) + scaledPositionedObject.Parent.Position;
                         scaledPositionedObject.Position = scaledPositionedObject.RelativePosition + scaledPositionedObject.Parent.Position;
                     }
                 }

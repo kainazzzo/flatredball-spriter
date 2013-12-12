@@ -10,10 +10,10 @@ namespace FlatRedBallExtensions
 
         public ScaledSprite()
         {
-            RelativeScaleX = RelativeScaleY = RelativeScaleZ = ScaleX = ScaleY = ScaleZ = 1.0f;
+            RelativeScaleX = RelativeScaleY = RelativeScaleZ = 1.0f;
         }
 
-        private int TextureWidth
+        public int TextureWidth
         {
             get
             {
@@ -21,7 +21,7 @@ namespace FlatRedBallExtensions
             }
         }
 
-        private int TextureHeight
+        public int TextureHeight
         {
             get
             {

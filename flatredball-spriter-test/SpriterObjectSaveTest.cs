@@ -372,10 +372,10 @@ namespace flatredball_spriter_test
 
             Assert.IsTrue(bones.All(p => Math.Abs(p.Value.RelativeScaleX - 1.5f) < .0001f));
             Assert.IsTrue(bones.All(p => Math.Abs(p.Value.RelativeScaleY - 2.0f) < Single.Epsilon));
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativeScaleY - 64.0f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativeScaleX - 64f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].RelativeScaleX - 64f) < .00001f);
-            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].RelativeScaleY - 64f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativeScaleY - 1f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativeScaleX - 1f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].RelativeScaleX - 1f) < .00001f);
+            Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite2].RelativeScaleY - 1f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativePosition.Y - -64f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[sprite].RelativePosition.X - 64f) < .00001f);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.First().Values[pivot].RelativePosition.Y - 0.0f) < .00001f);

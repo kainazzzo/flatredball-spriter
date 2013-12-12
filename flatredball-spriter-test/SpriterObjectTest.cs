@@ -91,6 +91,7 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(pivot.Position.X - 115f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.Y - 215f) < Single.Epsilon);
 
+            TimeManager.CurrentTime += .5f;
             so.TimedActivity(.5f, 0f, 0f);
 
             Assert.IsTrue(Math.Abs(sprite.Position.X - 100f) < Single.Epsilon);
@@ -109,19 +110,22 @@ namespace flatredball_spriter_test
             so.ScaleX = .5f;
             so.ScaleY = .25f;
             so.StartAnimation();
-            Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < Single.Epsilon);
+            
+            Assert.IsTrue(Math.Abs(sprite.Height - 8f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Width - 16f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.Y - 7.5f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.X - 15f) < Single.Epsilon);
 
+            TimeManager.CurrentTime += .5;
             so.TimedActivity(.5f, 0f, 0f);
             Assert.IsTrue(Math.Abs(pivot.Position.Y - 3.75f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.X - 7.5f) < Single.Epsilon);
 
+            TimeManager.CurrentTime += .5;
             so.TimedActivity(.5f, 0f, 0f);
 
-            Assert.IsTrue(Math.Abs(sprite.ScaleX - .5f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(sprite.ScaleY - .25f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Height - 8f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Width - 16f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.Y - 0.0f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.X - 0.0f) < Single.Epsilon);
             
@@ -193,7 +197,7 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.ObjectList[1].Position.X - 15.0f) < .0001f);
 
 
-            so = GetSimpleSpriterObject(false);
+            so = GetSimpleSpriterObject();
             so.StartAnimation();
             Assert.IsFalse(so.Looping);
 
@@ -476,8 +480,6 @@ namespace flatredball_spriter_test
 
             so.StartAnimation();
 
-            TimeManager.CurrentTime += .5;
-            so.TimedActivity(.5f, 0.25, .5f);
 
             var pivot1 = so.ObjectList[1];
             var pivot2 = so.ObjectList[3];
@@ -503,6 +505,130 @@ namespace flatredball_spriter_test
 
             Assert.IsTrue(Math.Abs(kfv.RelativeScaleX - 1.0f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(kfv.RelativeScaleY - 1.0f) < Single.Epsilon);
+        }
+
+        [TestMethod]
+        public void ThreeScaledBonesRotating()
+        {
+            #region xml
+
+            var xml = @"<?xml version=""1.0"" encoding=""UTF-8""?>
+<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b5"">
+    <folder id=""0"">
+        <file id=""0"" name=""square.png"" width=""32"" height=""32"" pivot_x=""0"" pivot_y=""1""/>
+    </folder>
+    <entity id=""0"" name=""entity_000"">
+        <animation id=""0"" name=""NewAnimation"" length=""1000"">
+            <mainline>
+                <key id=""0"">
+                    <bone_ref id=""0"" timeline=""0"" key=""0""/>
+                    <bone_ref id=""1"" parent=""0"" timeline=""1"" key=""0""/>
+                    <bone_ref id=""2"" parent=""1"" timeline=""2"" key=""0""/>
+                    <object_ref id=""0"" parent=""0"" name=""square1"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""-0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""3"" key=""0"" z_index=""0""/>
+                    <object_ref id=""1"" parent=""1"" name=""square2"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""-0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""4"" key=""0"" z_index=""1""/>
+                    <object_ref id=""2"" parent=""2"" name=""square3"" folder=""0"" file=""0"" abs_x=""10"" abs_y=""-0"" abs_pivot_x=""0"" abs_pivot_y=""1"" abs_angle=""0"" abs_scale_x=""1"" abs_scale_y=""1"" abs_a=""1"" timeline=""5"" key=""0"" z_index=""2""/>
+                </key>
+                <key id=""1"" time=""500"">
+                    <bone_ref id=""0"" timeline=""0"" key=""1""/>
+                    <bone_ref id=""1"" parent=""0"" timeline=""1"" key=""1""/>
+                    <bone_ref id=""2"" parent=""1"" timeline=""2"" key=""1""/>
+                    <object_ref id=""0"" parent=""0"" timeline=""3"" key=""1"" z_index=""0""/>
+                    <object_ref id=""1"" parent=""1"" timeline=""4"" key=""1"" z_index=""1""/>
+                    <object_ref id=""2"" parent=""2"" timeline=""5"" key=""1"" z_index=""2""/>
+                </key>
+            </mainline>
+            <timeline id=""0"" name=""bone1"" object_type=""bone"">
+                <key id=""0"">
+                    <bone x=""100"" angle=""0"" scale_x=""0.5""/>
+                </key>
+                <key id=""1"" time=""500"" spin=""-1"">
+                    <bone x=""100"" angle=""90"" scale_x=""0.5""/>
+                </key>
+            </timeline>
+            <timeline id=""1"" name=""bone2"" object_type=""bone"">
+                <key id=""0"">
+                    <bone x=""200"" angle=""0""/>
+                </key>
+                <key id=""1"" time=""500"">
+                    <bone x=""200""/>
+                </key>
+            </timeline>
+            <timeline id=""2"" name=""bone3"" object_type=""bone"">
+                <key id=""0"" spin=""0"">
+                    <bone x=""200"" angle=""0"" scale_x=""2""/>
+                </key>
+                <key id=""1"" time=""500"" spin=""0"">
+                    <bone x=""200"" angle=""0"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""3"" name=""square1"">
+                <key id=""0"">
+                    <object folder=""0"" file=""0"" x=""-180"" angle=""0"" scale_x=""2""/>
+                </key>
+                <key id=""1"" time=""500"">
+                    <object folder=""0"" file=""0"" x=""-180"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""4"" name=""square2"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-380"" angle=""0"" scale_x=""2""/>
+                </key>
+                <key id=""1"" time=""500"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-380"" angle=""0"" scale_x=""2""/>
+                </key>
+            </timeline>
+            <timeline id=""5"" name=""square3"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-290"" angle=""0""/>
+                </key>
+                <key id=""1"" time=""500"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""-290"" angle=""0""/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
+";
+            var sos = TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(xml);
+            var so = sos.ToRuntime();
+
+            so.StartAnimation();
+
+            TimeManager.CurrentTime += .5;
+            so.TimedActivity(.5f, 0.25, .5f);
+
+            var pivot1 = so.ObjectList[1];
+            var pivot2 = so.ObjectList[3];
+            var pivot3 = so.ObjectList[5];
+            var bone1 = so.ObjectList[6];
+            var bone2 = so.ObjectList[7];
+            var bone3 = so.ObjectList[8];
+
+            Assert.IsTrue(Math.Abs(bone1.Position.X - 100f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(bone1.Position.Y) < Single.Epsilon);
+
+            Assert.IsTrue(Math.Abs(bone2.Position.X - 100f) < .00001f);
+            Assert.IsTrue(Math.Abs(bone2.Position.Y - 100f) < Single.Epsilon);
+
+            Assert.IsTrue(Math.Abs(bone3.Position.X - 100f) < .001f);
+            Assert.IsTrue(Math.Abs(bone3.Position.Y - 200f) < .001f);
+
+            Assert.IsTrue(Math.Abs(bone1.RotationZ - MathHelper.ToRadians(90)) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(bone2.RotationZ - MathHelper.ToRadians(90)) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(bone2.RotationZ - MathHelper.ToRadians(90)) < Single.Epsilon);
+
+            Assert.IsTrue(Math.Abs(pivot1.Position.X - 100f) < .001f);
+            Assert.IsTrue(Math.Abs(pivot1.Position.Y - -90f) < .001f);
+            Assert.IsTrue(Math.Abs(pivot2.Position.X - 100f) < .001f);
+            Assert.IsTrue(Math.Abs(pivot2.Position.Y - -90f) < .001f);
+            Assert.IsTrue(Math.Abs(pivot3.Position.X - 100f) < .001f);
+            Assert.IsTrue(Math.Abs(pivot3.Position.Y - -90f) < .001f);
+
+            Assert.IsTrue(Math.Abs(pivot1.RotationZ - MathHelper.ToRadians(90)) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot2.RotationZ - MathHelper.ToRadians(90)) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot2.RotationZ - MathHelper.ToRadians(90)) < Single.Epsilon);
+
+            #endregion
         }
     }
 }

@@ -264,17 +264,12 @@ namespace FlatRedBall_Spriter
             int width = file.Width;
             int height = file.Height;
 
-            if (width != 0 && height != 0 && textures.ContainsKey(folderFileId))
-            {
-                width = textures[folderFileId].Width;
-                height = textures[folderFileId].Height;
-            }
 
             var ScaledSpriteValue = new KeyFrameValues
                 {
                     Texture = textures[folderFileId],
-                    RelativeScaleX = (width / 2.0f * timelineKey.Object.ScaleX),
-                    RelativeScaleY = (height / 2.0f * timelineKey.Object.ScaleY),
+                    RelativeScaleX = timelineKey.Object.ScaleX,
+                    RelativeScaleY = timelineKey.Object.ScaleY,
                     RelativePosition = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
                                                          timelineKey.Object.PivotY, objectRef.ZIndex),
                     Alpha = timelineKey.Object.Alpha

@@ -177,83 +177,93 @@ namespace FlatRedBall_Spriter
 
                 }
 
-                foreach (var obj in ObjectList)
-                {
-                    obj.UpdateDependencies(TimeManager.CurrentTime);
-                }
+                UpdateAllObjectDependencies();
+            }
+        }
+
+        private void UpdateAllObjectDependencies()
+        {
+            foreach (var obj in ObjectList)
+            {
+                obj.UpdateDependencies(TimeManager.CurrentTime);
             }
         }
 
         private void SetInterpolatedValues(KeyValuePair<PositionedObject, KeyFrameValues> currentPair, float percentage)
         {
             var currentValues = currentPair.Value;
-            if (NextKeyFrame.Values.ContainsKey(currentPair.Key))
+            var nextValues = NextKeyFrame == null
+                ? currentValues
+                : NextKeyFrame.Values.ContainsKey(currentPair.Key)
+                    ? NextKeyFrame.Values[currentPair.Key]
+                    : currentValues;
+
+            //var nextValues = NextKeyFrame.Values[currentPair.Key];
+            var currentObject = currentPair.Key;
+
+            if (currentValues.Parent == null)
             {
-                var nextValues = NextKeyFrame.Values[currentPair.Key];
-                var currentObject = currentPair.Key;
+                currentObject.AttachTo(this, true);
+            }
+            else if (currentObject.Parent != currentValues.Parent)
+            {
+                currentObject.AttachTo(currentValues.Parent, true);
+            }
 
-                if (currentValues.Parent == null)
-                {
-                    currentObject.AttachTo(this, true);
-                }
-                else if (currentObject.Parent != currentValues.Parent)
-                {
-                    currentObject.AttachTo(currentValues.Parent, true);
-                }
-
-                // Position
-                // In a single dimension, if the spriterobject is on x = 5, and the position to move a subobject to is x=8, then it should actually move to x=13, because we add the spriterobject's position to the subobject's interpolated value, since while positions are absolute, they are "absolute" relative to the container
-                currentObject.RelativePosition = Vector3.Lerp(currentValues.RelativePosition, nextValues.RelativePosition,
-                                                              percentage);
+            // Position
+            // In a single dimension, if the spriterobject is on x = 5, and the position to move a subobject to is x=8, then it should actually move to x=13, because we add the spriterobject's position to the subobject's interpolated value, since while positions are absolute, they are "absolute" relative to the container
+            currentObject.RelativePosition = Vector3.Lerp(currentValues.RelativePosition, nextValues.RelativePosition,
+                percentage);
 
 
-                if (float.IsNaN(currentObject.RelativePosition.X) ||
-                    float.IsNaN(currentObject.RelativePosition.Y)
-                    || float.IsNaN(currentObject.RelativePosition.Z))
-                {
-                    throw new Exception(string.Format("Float.IsNaN true! Object name {0} RelativePosition: {1}",
-                                                      currentObject.Name, currentObject.RelativePosition));
-                }
+            if (float.IsNaN(currentObject.RelativePosition.X) ||
+                float.IsNaN(currentObject.RelativePosition.Y)
+                || float.IsNaN(currentObject.RelativePosition.Z))
+            {
+                throw new Exception(string.Format("Float.IsNaN true! Object name {0} RelativePosition: {1}",
+                    currentObject.Name, currentObject.RelativePosition));
+            }
 
 
-                // Angle
-                int spin = currentValues.Spin;
-                float angleA = currentValues.RelativeRotation.Z;
-                float angleB = nextValues.RelativeRotation.Z;
+            // Angle
+            int spin = currentValues.Spin;
+            float angleA = currentValues.RelativeRotation.Z;
+            float angleB = nextValues.RelativeRotation.Z;
 
-                if (spin == 1 && angleB - angleA < 0)
-                {
-                    angleB += 360f;
-                }
-                else if (spin == -1 && angleB - angleA >= 0)
-                {
-                    angleB -= 360f;
-                }
+            if (spin == 1 && angleB - angleA < 0)
+            {
+                angleB += 360f;
+            }
+            else if (spin == -1 && angleB - angleA >= 0)
+            {
+                angleB -= 360f;
+            }
 
-                currentObject.RelativeRotationZ =
-                    MathHelper.ToRadians(MathHelper.Lerp(angleA,
-                                                         angleB, percentage));
+            currentObject.RelativeRotationZ =
+                MathHelper.ToRadians(MathHelper.Lerp(angleA,
+                    angleB, percentage));
 
-                
 
-                // Sprite specific stuff
-                var sprite = currentObject as ScaledSprite;
-                if (sprite != null)
-                {
-                    sprite.Texture = currentValues.Texture;
 
-                    // Scale
-                    sprite.RelativeScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX, percentage);
-                    sprite.RelativeScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY, percentage);
-                    sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
-                }
+            // Sprite specific stuff
+            var sprite = currentObject as ScaledSprite;
+            if (sprite != null)
+            {
+                sprite.Texture = currentValues.Texture;
 
-                var spo = currentObject as ScaledPositionedObject;
-                if (spo != null)
-                {
-                    spo.RelativeScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX, percentage);
-                    spo.RelativeScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY, percentage);
-                }
+                // Scale
+                sprite.RelativeScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX,
+                    percentage);
+                sprite.RelativeScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY,
+                    percentage);
+                sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
+            }
+
+            var spo = currentObject as ScaledPositionedObject;
+            if (spo != null)
+            {
+                spo.RelativeScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX, percentage);
+                spo.RelativeScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY, percentage);
             }
         }
 
@@ -270,6 +280,7 @@ namespace FlatRedBall_Spriter
             {
                 SetInterpolatedValues(pair, 0);
             }
+            UpdateAllObjectDependencies();
         }
 
         private void ClearAllTextures()

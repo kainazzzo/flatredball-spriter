@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Media;
 #endif
 
 // Generated Usings
+using spritertestgame.Entities;
 using FlatRedBall;
 using FlatRedBall.Screens;
 using System;
@@ -36,8 +37,7 @@ namespace spritertestgame.Screens
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
 		protected static Microsoft.Xna.Framework.Graphics.Texture2D square;
-		protected static FlatRedBall_Spriter.SpriterObjectSave square3bonetest;
-		protected static FlatRedBall_Spriter.SpriterObjectSave ant;
+		protected static FlatRedBall_Spriter.SpriterObject player;
 		
 		private FlatRedBall.Sprite SpriteInstance;
 
@@ -97,8 +97,8 @@ namespace spritertestgame.Screens
 		{
 			// Generated Destroy
 			square = null;
-			square3bonetest = null;
-			ant = null;
+			player.Destroy();
+			player = null;
 			
 			if (SpriteInstance != null)
 			{
@@ -139,6 +139,7 @@ namespace spritertestgame.Screens
 		public virtual void AddToManagersBottomUp ()
 		{
 			CameraSetup.ResetCamera(SpriteManager.Camera);
+			player.AddToManagers(null);
 			SpriteManager.AddSprite(SpriteInstance);
 			SpriteInstance.Texture = square;
 			SpriteInstance.TextureScale = 1f;
@@ -183,14 +184,10 @@ namespace spritertestgame.Screens
 			{
 			}
 			square = FlatRedBallServices.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/test/square.png", contentManagerName);
-			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObjectSave>(@"content/screens/test/square3bonetest.scml", contentManagerName))
+			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/test/player.scml", contentManagerName))
 			{
 			}
-			square3bonetest = SpriterObjectSave.FromFile("content/screens/test/square3bonetest.scml");
-			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObjectSave>(@"content/screens/test/ant.scml", contentManagerName))
-			{
-			}
-			ant = SpriterObjectSave.FromFile("content/screens/test/ant.scml");
+			player = SpriterObjectSave.FromFile("content/screens/test/player.scml").ToRuntime();
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]
@@ -200,10 +197,8 @@ namespace spritertestgame.Screens
 			{
 				case  "square":
 					return square;
-				case  "square3bonetest":
-					return square3bonetest;
-				case  "ant":
-					return ant;
+				case  "player":
+					return player;
 			}
 			return null;
 		}
@@ -213,10 +208,8 @@ namespace spritertestgame.Screens
 			{
 				case  "square":
 					return square;
-				case  "square3bonetest":
-					return square3bonetest;
-				case  "ant":
-					return ant;
+				case  "player":
+					return player;
 			}
 			return null;
 		}
@@ -226,10 +219,8 @@ namespace spritertestgame.Screens
 			{
 				case  "square":
 					return square;
-				case  "square3bonetest":
-					return square3bonetest;
-				case  "ant":
-					return ant;
+				case  "player":
+					return player;
 			}
 			return null;
 		}

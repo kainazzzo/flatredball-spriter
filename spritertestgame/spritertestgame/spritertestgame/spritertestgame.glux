@@ -14,14 +14,9 @@
           <RuntimeType>Microsoft.Xna.Framework.Graphics.Texture2D</RuntimeType>
         </ReferencedFileSave>
         <ReferencedFileSave>
-          <Name>Screens/test/square3bonetest.scml</Name>
+          <Name>Screens/test/player.scml</Name>
           <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>FlatRedBall_Spriter.SpriterObjectSave</RuntimeType>
-        </ReferencedFileSave>
-        <ReferencedFileSave>
-          <Name>Screens/test/ant.scml</Name>
-          <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>FlatRedBall_Spriter.SpriterObjectSave</RuntimeType>
+          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
         </ReferencedFileSave>
       </ReferencedFiles>
       <NamedObjects>
@@ -56,7 +51,33 @@
       </NamedObjects>
     </ScreenSave>
   </Screens>
-  <Entities />
+  <Entities>
+    <EntitySave>
+      <Tags>
+        <string>GLUE</string>
+      </Tags>
+      <Source>GLUE</Source>
+      <Name>Entities\square</Name>
+      <NamedObjects>
+        <NamedObjectSave>
+          <SourceType>File</SourceType>
+          <SourceFile>Entities/square/square3bonetest.scml</SourceFile>
+          <SourceName>Entire File (SpriterObject)</SourceName>
+          <InstanceName>ObjectInstance</InstanceName>
+          <AttachToContainer>true</AttachToContainer>
+          <IndependentOfCamera>true</IndependentOfCamera>
+        </NamedObjectSave>
+      </NamedObjects>
+      <ReferencedFiles>
+        <ReferencedFileSave>
+          <Name>Entities/square/square3bonetest.scml</Name>
+          <IsSharedStatic>true</IsSharedStatic>
+          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
+        </ReferencedFileSave>
+      </ReferencedFiles>
+      <Is2D>true</Is2D>
+    </EntitySave>
+  </Entities>
   <GlobalFiles />
   <GlobalContentSettingsSave>
     <LoadAsynchronously>false</LoadAsynchronously>
@@ -78,7 +99,12 @@
   </PerformanceSettingsSave>
   <IgnoredDirectories />
   <CustomClasses />
-  <TranslatedFiles />
+  <TranslatedFiles>
+    <TranslatedFileSave>
+      <FileName>Entities/square.cs</FileName>
+      <TranslationStyle>PerformTranslate</TranslationStyle>
+    </TranslatedFileSave>
+  </TranslatedFiles>
   <ApplyToFixedResolutionPlatforms>true</ApplyToFixedResolutionPlatforms>
   <ExternallyBuiltFileDirectory>../../</ExternallyBuiltFileDirectory>
 </GlueProjectSave>

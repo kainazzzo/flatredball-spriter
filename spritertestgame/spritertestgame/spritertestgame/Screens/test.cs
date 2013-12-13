@@ -135,23 +135,18 @@ namespace spritertestgame.Screens
 
             //_so.StartAnimation();
             //_so.AddToManagers(null);
-
-		    _so = ant.ToRuntime();
-            _so.AddToManagers();
-            _so.StartAnimation();
             
+		  
 
             //_sprite.RelativeRotationZVelocity = 10f;
             //_spo1.RotationZVelocity = 10f;
 
             SpriteInstance.Visible = false;
-		    
+            player.StartAnimation();
 		}
 
 		void CustomActivity(bool firstTimeCalled)
 		{
-            Debugger.Write(string.Format("{0}\r\n{1}\r\n{2}",
-                _so.ObjectList[1], _so.ObjectList[3], _so.ObjectList[5]));
 		    var x = 0;
 		    if (x == 0)
 		    {

@@ -296,6 +296,8 @@ namespace FlatRedBall_Spriter
             sos.FileName = FileManager.GetDirectory(filename) + filename.Substring(filename.LastIndexOf("/", StringComparison.Ordinal) + 1);
             sos.Directory = FileManager.GetDirectory(filename);
 
+            sos.TextureLoader = new FlatRedBallTextureLoader();
+
             return sos;
         }
     }

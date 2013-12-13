@@ -18,6 +18,11 @@
           <IsSharedStatic>true</IsSharedStatic>
           <RuntimeType>FlatRedBall_Spriter.SpriterObjectSave</RuntimeType>
         </ReferencedFileSave>
+        <ReferencedFileSave>
+          <Name>Screens/test/ant.scml</Name>
+          <IsSharedStatic>true</IsSharedStatic>
+          <RuntimeType>FlatRedBall_Spriter.SpriterObjectSave</RuntimeType>
+        </ReferencedFileSave>
       </ReferencedFiles>
       <NamedObjects>
         <NamedObjectSave>

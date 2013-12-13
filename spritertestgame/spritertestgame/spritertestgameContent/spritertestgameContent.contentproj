@@ -42,6 +42,34 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Screens\test\ant.scml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>ant</Name>
+    </None>
+    <None Include="Screens\test\fist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>fist</Name>
+    </None>
+    <None Include="Screens\test\head0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>head0</Name>
+    </None>
+    <None Include="Screens\test\innerfist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>innerfist</Name>
+    </None>
+    <None Include="Screens\test\lowerArm180.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>lowerArm180</Name>
+    </None>
+    <None Include="Screens\test\lowerleg0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>lowerleg0</Name>
+    </None>
+    <None Include="Screens\test\shoe0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>shoe0</Name>
+    </None>
     <None Include="Screens\test\square.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>square</Name>
@@ -49,6 +77,22 @@
     <None Include="Screens\test\square3bonetest.scml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>square3bonetest</Name>
+    </None>
+    <None Include="Screens\test\torso0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>torso0</Name>
+    </None>
+    <None Include="Screens\test\upperarm.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>upperarm</Name>
+    </None>
+    <None Include="Screens\test\upperArm180.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>upperArm180</Name>
+    </None>
+    <None Include="Screens\test\upperleg0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>upperleg0</Name>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

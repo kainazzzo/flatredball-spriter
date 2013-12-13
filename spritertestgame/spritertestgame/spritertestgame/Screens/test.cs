@@ -127,14 +127,19 @@ namespace spritertestgame.Screens
 ");
 #endregion
 
-		    sos.TextureLoader = Mock.Create<ITextureLoader>();
-            sos.TextureLoader.Arrange(l => l.FromFile(Arg.AnyString)).Returns(square);
-		    sos.Directory = "C:\\";
+            //sos.TextureLoader = Mock.Create<ITextureLoader>();
+            //sos.TextureLoader.Arrange(l => l.FromFile(Arg.AnyString)).Returns(square);
+            //sos.Directory = "C:\\";
+            
+            //_so = sos.ToRuntime();
 
-            _so = sos.ToRuntime();
+            //_so.StartAnimation();
+            //_so.AddToManagers(null);
 
+		    _so = ant.ToRuntime();
+            _so.AddToManagers();
             _so.StartAnimation();
-            _so.AddToManagers(null);
+            
 
             //_sprite.RelativeRotationZVelocity = 10f;
             //_spo1.RotationZVelocity = 10f;

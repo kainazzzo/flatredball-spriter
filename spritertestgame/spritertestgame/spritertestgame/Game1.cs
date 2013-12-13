@@ -48,7 +48,7 @@ namespace spritertestgame
 			CameraSetup.SetupCamera(SpriteManager.Camera, graphics);
 
 			FlatRedBall.Screens.ScreenManager.Start(typeof(spritertestgame.Screens.test));
-
+            IsMouseVisible = true;
             base.Initialize();
         }
 

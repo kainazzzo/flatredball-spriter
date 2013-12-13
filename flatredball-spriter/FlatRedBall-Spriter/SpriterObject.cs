@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FlatRedBall;
 using FlatRedBall.Graphics;
-using FlatRedBall.IO;
-using FlatRedBall.Input;
 using FlatRedBall.Instructions;
-using FlatRedBall.Math;
+using FlatRedBall.Math.Geometry;
 using FlatRedBallExtensions;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace FlatRedBall_Spriter
 {
@@ -93,7 +89,7 @@ namespace FlatRedBall_Spriter
         {
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
-            if (this.KeyFrameList == null || this.KeyFrameList.Count == 0)
+            if (KeyFrameList == null || KeyFrameList.Count == 0)
             {
                 CurrentAnimation = Animations.Values.FirstOrDefault();
             }
@@ -110,7 +106,7 @@ namespace FlatRedBall_Spriter
 
         public void StartAnimation(string animationName)
         {
-            SpriterObjectAnimation animation = null;
+            SpriterObjectAnimation animation;
             if (Animations.TryGetValue(animationName, out animation))
             {
                 CurrentAnimation = animation;
@@ -139,14 +135,14 @@ namespace FlatRedBall_Spriter
                 if (SecondsIn < AnimationTotalTime && NextKeyFrame != null)
                 {
                     float percentage = GetPercentageIntoFrame(SecondsIn, CurrentKeyFrame.Time, NextKeyFrame.Time);
-                    foreach (var currentPair in this.CurrentKeyFrame.Values)
+                    foreach (var currentPair in CurrentKeyFrame.Values)
                     {
                         SetInterpolatedValues(currentPair, percentage);
                     }
 
-                    if (Math.Abs(this.NextKeyFrame.Time - this.CurrentKeyFrame.Time) < .00001f)
+                    if (Math.Abs(NextKeyFrame.Time - CurrentKeyFrame.Time) < .00001f)
                     {
-                        foreach (var keyFrameValues in this.NextKeyFrame.Values)
+                        foreach (var keyFrameValues in NextKeyFrame.Values)
                         {
                             SetInterpolatedValues(keyFrameValues, percentage);
                         }
@@ -155,7 +151,7 @@ namespace FlatRedBall_Spriter
                 }
                 else
                 {
-                    if (SecondsIn >= this.AnimationTotalTime)
+                    if (SecondsIn >= AnimationTotalTime)
                     {
                         ClearAllTextures();
 
@@ -322,6 +318,8 @@ namespace FlatRedBall_Spriter
 
         // Generated Fields
 #if DEBUG
+// ReSharper disable once InconsistentNaming
+// ReSharper disable once RedundantDefaultFieldInitializer
         static bool HasBeenLoadedWithGlobalContentManager = false;
 #endif
 
@@ -348,8 +346,7 @@ namespace FlatRedBall_Spriter
         }
 
 
-        public SpriterObject(string contentManagerName, bool addToManagers) :
-            base()
+        public SpriterObject(string contentManagerName, bool addToManagers)
         {
             LayerProvidedByContainer = null;
             Animating = false;
@@ -384,7 +381,7 @@ namespace FlatRedBall_Spriter
             
             if (ObjectList != null)
             {
-                foreach (var currentObject in this.ObjectList)
+                foreach (var currentObject in ObjectList)
                 {
                     var sprite = currentObject as ScaledSprite;
                     if (sprite != null)
@@ -404,9 +401,9 @@ namespace FlatRedBall_Spriter
 
         public void PostInitialize()
         {
-            bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
-            FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
-            FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
+            bool oldShapeManagerSuppressAdd = ShapeManager.SuppressAddingOnVisibilityTrue;
+            ShapeManager.SuppressAddingOnVisibilityTrue = true;
+            ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
         }
 
         public void AddToManagersBottomUp(Layer layerToAddTo)
@@ -436,7 +433,7 @@ namespace FlatRedBall_Spriter
 
         public void ConvertToManuallyUpdated()
         {
-            this.ForceUpdateDependenciesDeep();
+            ForceUpdateDependenciesDeep();
             SpriteManager.ConvertToManuallyUpdated(this);
         }
         public static void LoadStaticContent(string contentManagerName)
@@ -469,7 +466,9 @@ namespace FlatRedBall_Spriter
                     }
                 }
             }
+// ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
+// ReSharper disable HeuristicUnreachableCode
             {
                 lock (mLockObject)
                 {
@@ -480,6 +479,7 @@ namespace FlatRedBall_Spriter
                     }
                 }
             }
+// ReSharper restore HeuristicUnreachableCode
         }
         public static void UnloadStaticContent()
         {
@@ -513,13 +513,13 @@ namespace FlatRedBall_Spriter
 
         public SpriterObject Clone()
         {
-            var so = (SpriterObject)this.MemberwiseClone();
+            var so = (SpriterObject)MemberwiseClone();
 
             so.Animations = new Dictionary<string, SpriterObjectAnimation>();
-            foreach (var animationPair in this.Animations)
+            foreach (var animationPair in Animations)
             {
                 var keyframes = new List<KeyFrame>();
-                animationPair.Value.KeyFrames.ForEach((kf) =>
+                animationPair.Value.KeyFrames.ForEach(kf =>
                     {
                         var keyFrame = new KeyFrame
                             {
@@ -529,8 +529,8 @@ namespace FlatRedBall_Spriter
 
                         foreach (var kfPair in kf.Values)
                         {
-                            var kfv = new KeyFrameValues()
-                                {
+                            var kfv = new KeyFrameValues
+                            {
                                     Alpha = kfPair.Value.Alpha,
                                     Parent = kfPair.Value.Parent,
                                     RelativePosition = kfPair.Value.RelativePosition,
@@ -552,6 +552,11 @@ namespace FlatRedBall_Spriter
             }
 
             return so;
+        }
+
+        public void AddToManagers()
+        {
+            AddToManagers(null);
         }
     }
 

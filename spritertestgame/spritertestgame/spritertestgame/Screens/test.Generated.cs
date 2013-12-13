@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using FlatRedBall_Spriter;
 
 namespace spritertestgame.Screens
 {
@@ -35,6 +36,8 @@ namespace spritertestgame.Screens
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
 		protected static Microsoft.Xna.Framework.Graphics.Texture2D square;
+		protected static FlatRedBall_Spriter.SpriterObjectSave square3bonetest;
+		protected static FlatRedBall_Spriter.SpriterObjectSave ant;
 		
 		private FlatRedBall.Sprite SpriteInstance;
 
@@ -95,6 +98,7 @@ namespace spritertestgame.Screens
 			// Generated Destroy
 			square = null;
 			square3bonetest = null;
+			ant = null;
 			
 			if (SpriteInstance != null)
 			{
@@ -179,18 +183,14 @@ namespace spritertestgame.Screens
 			{
 			}
 			square = FlatRedBallServices.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/test/square.png", contentManagerName);
-			if (square3bonetest == null)
+			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObjectSave>(@"content/screens/test/square3bonetest.scml", contentManagerName))
 			{
-				{
-					// We put the { and } to limit the scope of oldDelimiter
-					char oldDelimiter = CsvFileManager.Delimiter;
-					CsvFileManager.Delimiter = ',';
-					List<square3bonetest> temporaryCsvObject = new List<square3bonetest>();
-					CsvFileManager.CsvDeserializeList(typeof(square3bonetest), "content/screens/test/square3bonetest.scml", temporaryCsvObject);
-					CsvFileManager.Delimiter = oldDelimiter;
-					square3bonetest = temporaryCsvObject;
-				}
 			}
+			square3bonetest = SpriterObjectSave.FromFile("content/screens/test/square3bonetest.scml");
+			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObjectSave>(@"content/screens/test/ant.scml", contentManagerName))
+			{
+			}
+			ant = SpriterObjectSave.FromFile("content/screens/test/ant.scml");
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]
@@ -202,6 +202,8 @@ namespace spritertestgame.Screens
 					return square;
 				case  "square3bonetest":
 					return square3bonetest;
+				case  "ant":
+					return ant;
 			}
 			return null;
 		}
@@ -213,6 +215,8 @@ namespace spritertestgame.Screens
 					return square;
 				case  "square3bonetest":
 					return square3bonetest;
+				case  "ant":
+					return ant;
 			}
 			return null;
 		}
@@ -224,6 +228,8 @@ namespace spritertestgame.Screens
 					return square;
 				case  "square3bonetest":
 					return square3bonetest;
+				case  "ant":
+					return ant;
 			}
 			return null;
 		}

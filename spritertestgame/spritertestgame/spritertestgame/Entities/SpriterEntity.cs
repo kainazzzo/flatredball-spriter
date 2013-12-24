@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using FlatRedBall;
+using FlatRedBall.Debugging;
 using FlatRedBall.Input;
 using FlatRedBall.Instructions;
 using FlatRedBall.AI.Pathfinding;
@@ -10,6 +12,7 @@ using FlatRedBall.Graphics.Particle;
 
 using FlatRedBall.Math.Geometry;
 using FlatRedBall.Math.Splines;
+using Microsoft.Xna.Framework;
 using BitmapFont = FlatRedBall.Graphics.BitmapFont;
 using Cursor = FlatRedBall.Gui.Cursor;
 using GuiManager = FlatRedBall.Gui.GuiManager;
@@ -29,12 +32,12 @@ namespace spritertestgame.Entities
 		private void CustomInitialize()
 		{
 
-            SpriterInstance.StartAnimation();
+            SpriterInstance.StartAnimation("walk");
 		}
 
 		private void CustomActivity()
 		{
-
+		    Debugger.Write(MathHelper.ToDegrees(SpriterInstance.ObjectList[26].RotationZ));
 
 		}
 

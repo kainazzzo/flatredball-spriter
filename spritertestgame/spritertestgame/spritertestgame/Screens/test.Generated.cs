@@ -35,7 +35,7 @@ namespace spritertestgame.Screens
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
 		
-		private spritertestgame.Entities.SpriterAnimationEntity SpriterAnimationEntityInstance;
+		private spritertestgame.Entities.SpriterEntity SpriterEntityInstance;
 
 		public test()
 			: base("test")
@@ -46,8 +46,8 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			SpriterAnimationEntityInstance = new spritertestgame.Entities.SpriterAnimationEntity(ContentManagerName, false);
-			SpriterAnimationEntityInstance.Name = "SpriterAnimationEntityInstance";
+			SpriterEntityInstance = new spritertestgame.Entities.SpriterEntity(ContentManagerName, false);
+			SpriterEntityInstance.Name = "SpriterEntityInstance";
 			
 			
 			PostInitialize();
@@ -74,7 +74,7 @@ namespace spritertestgame.Screens
 			if (!IsPaused)
 			{
 				
-				SpriterAnimationEntityInstance.Activity();
+				SpriterEntityInstance.Activity();
 			}
 			else
 			{
@@ -95,10 +95,10 @@ namespace spritertestgame.Screens
 		{
 			// Generated Destroy
 			
-			if (SpriterAnimationEntityInstance != null)
+			if (SpriterEntityInstance != null)
 			{
-				SpriterAnimationEntityInstance.Destroy();
-				SpriterAnimationEntityInstance.Detach();
+				SpriterEntityInstance.Destroy();
+				SpriterEntityInstance.Detach();
 			}
 
 			base.Destroy();
@@ -117,11 +117,11 @@ namespace spritertestgame.Screens
 		public virtual void AddToManagersBottomUp ()
 		{
 			CameraSetup.ResetCamera(SpriteManager.Camera);
-			SpriterAnimationEntityInstance.AddToManagers(mLayer);
+			SpriterEntityInstance.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
-			SpriterAnimationEntityInstance.ConvertToManuallyUpdated();
+			SpriterEntityInstance.ConvertToManuallyUpdated();
 		}
 		public static void LoadStaticContent (string contentManagerName)
 		{
@@ -139,7 +139,7 @@ namespace spritertestgame.Screens
 				throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
 			}
 			#endif
-			spritertestgame.Entities.SpriterAnimationEntity.LoadStaticContent(contentManagerName);
+			spritertestgame.Entities.SpriterEntity.LoadStaticContent(contentManagerName);
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]

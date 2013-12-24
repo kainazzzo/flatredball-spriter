@@ -34,7 +34,7 @@ using Model = Microsoft.Xna.Framework.Graphics.Model;
 
 namespace spritertestgame.Entities
 {
-	public partial class SpriterAnimationEntity : PositionedObject, IDestroyable
+	public partial class SpriterEntity : PositionedObject, IDestroyable
 	{
         // This is made global so that static lazy-loaded content can access it.
         public static string ContentManagerName
@@ -52,22 +52,22 @@ namespace spritertestgame.Entities
 		static List<string> LoadedContentManagers = new List<string>();
 		protected static FlatRedBall_Spriter.SpriterObject player;
 		
-		private FlatRedBall_Spriter.SpriterObject SpriterObjectInstance;
+		private FlatRedBall_Spriter.SpriterObject SpriterInstance;
 		protected Layer LayerProvidedByContainer = null;
 
-        public SpriterAnimationEntity()
+        public SpriterEntity()
             : this(FlatRedBall.Screens.ScreenManager.CurrentScreen.ContentManagerName, true)
         {
 
         }
 
-        public SpriterAnimationEntity(string contentManagerName) :
+        public SpriterEntity(string contentManagerName) :
             this(contentManagerName, true)
         {
         }
 
 
-        public SpriterAnimationEntity(string contentManagerName, bool addToManagers) :
+        public SpriterEntity(string contentManagerName, bool addToManagers) :
 			base()
 		{
 			// Don't delete this:
@@ -80,7 +80,7 @@ namespace spritertestgame.Entities
 		{
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			SpriterObjectInstance = player.Clone();
+			SpriterInstance = player.Clone();
 			
 			PostInitialize();
 			if (addToManagers)
@@ -114,9 +114,9 @@ namespace spritertestgame.Entities
 			// Generated Destroy
 			SpriteManager.RemovePositionedObject(this);
 			
-			if (SpriterObjectInstance != null)
+			if (SpriterInstance != null)
 			{
-				SpriterObjectInstance.Destroy();
+				SpriterInstance.Destroy();
 			}
 
 
@@ -128,10 +128,10 @@ namespace spritertestgame.Entities
 		{
 			bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
-			if (SpriterObjectInstance.Parent == null)
+			if (SpriterInstance.Parent == null)
 			{
-				SpriterObjectInstance.CopyAbsoluteToRelative();
-				SpriterObjectInstance.AttachTo(this, false);
+				SpriterInstance.CopyAbsoluteToRelative();
+				SpriterInstance.AttachTo(this, false);
 			}
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
 		}
@@ -152,7 +152,7 @@ namespace spritertestgame.Entities
 			RotationX = 0;
 			RotationY = 0;
 			RotationZ = 0;
-			SpriterObjectInstance.AddToManagers(layerToAddTo);
+			SpriterInstance.AddToManagers(layerToAddTo);
 			X = oldX;
 			Y = oldY;
 			Z = oldZ;
@@ -190,15 +190,15 @@ namespace spritertestgame.Entities
 				{
 					if (!mRegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 					{
-						FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterAnimationEntityStaticUnload", UnloadStaticContent);
+						FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterEntityStaticUnload", UnloadStaticContent);
 						mRegisteredUnloads.Add(ContentManagerName);
 					}
 				}
-				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/spriteranimationentity/player.scml", ContentManagerName))
+				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/spriterentity/player.scml", ContentManagerName))
 				{
 					registerUnload = true;
 				}
-				player = SpriterObjectSave.FromFile("content/entities/spriteranimationentity/player.scml").ToRuntime();
+				player = SpriterObjectSave.FromFile("content/entities/spriterentity/player.scml").ToRuntime();
 			}
 			if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 			{
@@ -206,7 +206,7 @@ namespace spritertestgame.Entities
 				{
 					if (!mRegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 					{
-						FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterAnimationEntityStaticUnload", UnloadStaticContent);
+						FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterEntityStaticUnload", UnloadStaticContent);
 						mRegisteredUnloads.Add(ContentManagerName);
 					}
 				}

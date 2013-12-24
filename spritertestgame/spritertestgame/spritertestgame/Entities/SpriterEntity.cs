@@ -24,11 +24,12 @@ using Texture2D = Microsoft.Xna.Framework.Graphics.Texture2D;
 
 namespace spritertestgame.Entities
 {
-	public partial class SpriterAnimationEntity
+	public partial class SpriterEntity
 	{
 		private void CustomInitialize()
 		{
-            SpriterObjectInstance.StartAnimation();
+
+            SpriterInstance.StartAnimation();
 		}
 
 		private void CustomActivity()

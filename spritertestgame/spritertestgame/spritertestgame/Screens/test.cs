@@ -146,7 +146,7 @@ namespace spritertestgame.Screens
 		    Camera.Main.Z += InputManager.Mouse.ScrollWheel*-10;
             //squareInstance.Position.X = GuiManager.Cursor.WorldXAt(0);
             //squareInstance.Position.Y = GuiManager.Cursor.WorldYAt(0);
-            Debugger.Write(SpriterAnimationEntityInstance.Position);
+            Debugger.Write(SpriterEntityInstance.Position);
 		    
 		}
 

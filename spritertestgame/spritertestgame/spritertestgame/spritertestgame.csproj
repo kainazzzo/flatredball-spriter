@@ -130,9 +130,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\SpriterAnimationEntity.cs" />
-    <Compile Include="Entities\SpriterAnimationEntity.Generated.cs">
-      <DependentUpon>SpriterAnimationEntity.cs</DependentUpon>
+    <Compile Include="Entities\SpriterEntity.cs" />
+    <Compile Include="Entities\SpriterEntity.Generated.cs">
+      <DependentUpon>SpriterEntity.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalContent.Generated.cs" />
     <Compile Include="Performance\IEntityFactory.Generated.cs" />

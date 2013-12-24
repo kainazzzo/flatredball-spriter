@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using FlatRedBall;
 using FlatRedBallExtensions;
 using FlatRedBall_Spriter;

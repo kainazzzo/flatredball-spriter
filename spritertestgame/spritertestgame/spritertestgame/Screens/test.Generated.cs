@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Media;
 #endif
 
 // Generated Usings
+using spritertestgame.Entities;
 using FlatRedBall;
 using FlatRedBall.Screens;
 using System;
@@ -34,6 +35,7 @@ namespace spritertestgame.Screens
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
 		
+		private spritertestgame.Entities.SpriterAnimationEntity SpriterAnimationEntityInstance;
 
 		public test()
 			: base("test")
@@ -44,6 +46,8 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
+			SpriterAnimationEntityInstance = new spritertestgame.Entities.SpriterAnimationEntity(ContentManagerName, false);
+			SpriterAnimationEntityInstance.Name = "SpriterAnimationEntityInstance";
 			
 			
 			PostInitialize();
@@ -70,6 +74,7 @@ namespace spritertestgame.Screens
 			if (!IsPaused)
 			{
 				
+				SpriterAnimationEntityInstance.Activity();
 			}
 			else
 			{
@@ -90,6 +95,11 @@ namespace spritertestgame.Screens
 		{
 			// Generated Destroy
 			
+			if (SpriterAnimationEntityInstance != null)
+			{
+				SpriterAnimationEntityInstance.Destroy();
+				SpriterAnimationEntityInstance.Detach();
+			}
 
 			base.Destroy();
 
@@ -107,9 +117,11 @@ namespace spritertestgame.Screens
 		public virtual void AddToManagersBottomUp ()
 		{
 			CameraSetup.ResetCamera(SpriteManager.Camera);
+			SpriterAnimationEntityInstance.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
+			SpriterAnimationEntityInstance.ConvertToManuallyUpdated();
 		}
 		public static void LoadStaticContent (string contentManagerName)
 		{
@@ -127,6 +139,7 @@ namespace spritertestgame.Screens
 				throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
 			}
 			#endif
+			spritertestgame.Entities.SpriterAnimationEntity.LoadStaticContent(contentManagerName);
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]

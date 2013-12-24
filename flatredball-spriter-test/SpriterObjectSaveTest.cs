@@ -2919,5 +2919,34 @@ namespace flatredball_spriter_test
             actual = SpriterObjectSave.GetSpriteRelativePosition(width, height, pivotX, pivotY, zIndex);
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void Default_Pivot()
+        {
+            var xml = @"<?xml version=""1.0"" encoding=""UTF-8""?>
+<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
+    <folder id=""0"">
+        <file id=""0"" name=""square.png"" width=""32"" height=""32"" pivot_x=""0.5"" pivot_y=""0.5"" />
+    </folder>
+    <entity id=""0"" name=""entity_000"">
+        <animation id=""0"" name=""NewAnimation"" length=""1000"">
+            <mainline>
+                <key id=""0"">
+                    <object_ref id=""0"" timeline=""0"" key=""0"" z_index=""0""/>
+                </key>
+            </mainline>
+            <timeline id=""0"" name=""square"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""16"" y=""-16"" angle=""0"" />
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>";
+            var sos = TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(xml);
+            var so = sos.ToRuntime();
+
+            var x = 1;
+        }
     }
 }

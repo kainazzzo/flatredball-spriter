@@ -85,9 +85,8 @@ namespace FlatRedBall_Spriter
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "parent")]
-// ReSharper disable InconsistentNaming
+// ReSharper disable once InconsistentNaming
         public int _donotuseParent
-// ReSharper restore InconsistentNaming
         {
             get { return -1; }
             set { this.Parent = value; }
@@ -107,127 +106,6 @@ namespace FlatRedBall_Spriter
         /// <remarks/>
         [XmlAttribute(AttributeName = "z_index")]
         public int ZIndex { get; set; }
-
-        [XmlIgnore]
-        public float? AbsoluteX { get; set; }
-
-        [XmlAttribute(AttributeName = "abs_x")]
-        public float do_notuse_abs_x
-        {
-            get { return AbsoluteX.HasValue ? AbsoluteX.Value : float.MinValue; }
-            set { AbsoluteX = value; }
-        }
-
-        [XmlAttribute(AttributeName = "abs_y")]
-        public float do_not_use_abs_y
-        {
-            get
-            {
-                return AbsoluteY.HasValue ? AbsoluteY.Value : float.MinValue;
-            }
-            set
-            {
-                AbsoluteY = value;
-            }
-        }
-
-        [XmlIgnore]
-        public float? AbsoluteY { get; set; }
-
-        [XmlAttribute(AttributeName = "abs_pivot_x")]
-        public float donotuse_abs_pivot_x
-        {
-            get
-            {
-                return AbsolutePivotX.HasValue ? AbsolutePivotX.Value : float.MinValue;
-            }
-            set
-            {
-                AbsolutePivotX = value;
-            }
-        }
-
-        [XmlIgnore]
-        public float? AbsolutePivotX { get; set; }
-
-        [XmlAttribute(AttributeName = "abs_pivot_y")]
-        public float donotuse_pivot_y
-        {
-            get
-            {
-                return AbsolutePivotY.HasValue ? AbsolutePivotY.Value : float.MinValue;
-            }
-            set
-            {
-                AbsolutePivotY = value;
-            }
-        }
-
-        [XmlIgnore]
-        public float? AbsolutePivotY { get; set; }
-
-        [XmlAttribute(AttributeName = "abs_angle")]
-        public float donotuse_absolute_angle
-        {
-            get
-            {
-                return AbsoluteAngle.HasValue ? AbsoluteAngle.Value : float.MinValue;
-            }
-            set
-            {
-                AbsoluteAngle = value;
-            }
-        }
-
-        [XmlIgnore]
-        public float? AbsoluteAngle { get; set; }
-
-        [XmlAttribute(AttributeName = "abs_scale_x")]
-        public float donotuse_absolute_scale_x
-        {
-            get
-            {
-                return AbsoluteScaleX.HasValue ? AbsoluteScaleX.Value : float.MinValue;
-            }
-            set
-            {
-                AbsoluteScaleX = value;
-            }
-        }
-
-        [XmlIgnore]
-        public float? AbsoluteScaleX { get; set; }
-
-        [XmlAttribute(AttributeName = "abs_scale_y")]
-        public float donotuse_absolute_scale_y {
-            get
-            {
-                return AbsoluteScaleY.HasValue ? AbsoluteScaleY.Value : float.MinValue;
-            }
-            set
-            {
-                AbsoluteScaleY = value;
-            }
-        }
-
-        [XmlIgnore]
-        public float? AbsoluteScaleY { get; set; }
-
-        [XmlAttribute(AttributeName = "abs_a")]
-        public float donotuse_absolute_alpha
-        {
-            get
-            {
-                return AbsoluteAlpha.HasValue ? AbsoluteAlpha.Value : float.MinValue;
-            }
-            set
-            {
-                AbsoluteAlpha = value;
-            }
-        }
-
-        [XmlIgnore]
-        public float? AbsoluteAlpha { get; set; }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]
@@ -236,12 +114,10 @@ namespace FlatRedBall_Spriter
         private float _scalex = 1.0f;
         private float _scaley = 1.0f;
 
-        private float _pivotY = 1.0f;
         private float _alpha = 1.0f;
 
         public KeyObject()
         {
-            PivotX = 0.0f;
         }
 
 
@@ -281,15 +157,29 @@ namespace FlatRedBall_Spriter
             set { _scaley = value; }
         }
 
+        [XmlIgnore]
+        public float? PivotX { get; set; }
+
+        /// <remarks/>
         [XmlAttribute(AttributeName = "pivot_x")]
-        public float PivotX { get; set; }
-
-
-        [XmlAttribute(AttributeName = "pivot_y")]
-        public float PivotY
+        // ReSharper disable once InconsistentNaming
+        public float _donotusePivotX
         {
-            get { return _pivotY; }
-            set { _pivotY = value; }
+            get { return -1; }
+            set { this.PivotX = value; }
+        }
+
+
+        [XmlIgnore]
+        public float? PivotY { get; set; }
+
+        /// <remarks/>
+        [XmlAttribute(AttributeName = "pivot_y")]
+        // ReSharper disable once InconsistentNaming
+        public float _donotusePivotY
+        {
+            get { return -1; }
+            set { this.PivotY = value; }
         }
 
         [XmlAttribute(AttributeName = "a")]
@@ -411,13 +301,29 @@ namespace FlatRedBall_Spriter
         [XmlAttribute(AttributeName = "height")]
         public int Height { get; set; }
 
+        [XmlIgnore]
+        public float? PivotX { get; set; }
+
         /// <remarks/>
         [XmlAttribute(AttributeName = "pivot_x")]
-        public float PivotX { get; set; }
+// ReSharper disable once InconsistentNaming
+        public float _donotusePivotX
+        {
+            get { return -1; }
+            set { this.PivotX = value; }
+        }
+
+        [XmlIgnore]
+        public float? PivotY { get; set; }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "pivot_y")]
-        public float PivotY { get; set; }
+        // ReSharper disable once InconsistentNaming
+        public float _donotusePivotY
+        {
+            get { return -1; }
+            set { this.PivotY = value; }
+        }
 
         /// <remarks/>
         [XmlAttribute(AttributeName = "atlas_x")]

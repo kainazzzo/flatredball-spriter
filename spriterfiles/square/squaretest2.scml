@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b6.1">
+    <folder id="0">
+        <file id="0" name="square.png" width="32" height="32" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <obj_info name="bone_000" type="bone" w="53.0377" h="10"/>
+        <obj_info name="bone_001" type="bone" w="76.0066" h="10"/>
+        <obj_info name="bone_002" type="bone" w="102.044" h="10"/>
+        <obj_info name="bone_003" type="bone" w="81.0987" h="10"/>
+        <animation id="0" name="NewAnimation" length="1000">
+            <mainline>
+                <key id="0">
+                    <bone_ref id="0" timeline="0" key="0"/>
+                    <bone_ref id="1" parent="0" timeline="1" key="0"/>
+                    <bone_ref id="2" parent="1" timeline="2" key="0"/>
+                    <bone_ref id="3" parent="1" timeline="3" key="0"/>
+                    <object_ref id="0" parent="3" timeline="4" key="0" z_index="0"/>
+                    <object_ref id="1" parent="2" timeline="5" key="0" z_index="1"/>
+                    <object_ref id="2" parent="1" timeline="6" key="0" z_index="2"/>
+                </key>
+            </mainline>
+            <timeline id="0" obj="0" name="bone_000" object_type="bone">
+                <key id="0" spin="0">
+                    <bone x="10" y="-10" angle="0"/>
+                </key>
+            </timeline>
+            <timeline id="1" obj="1" name="bone_001" object_type="bone">
+                <key id="0" spin="0">
+                    <bone x="90" y="-0"/>
+                </key>
+            </timeline>
+            <timeline id="2" obj="2" name="bone_002" object_type="bone">
+                <key id="0" spin="0">
+                    <bone x="100" y="-0" angle="270"/>
+                </key>
+            </timeline>
+            <timeline id="3" obj="3" name="bone_003" object_type="bone">
+                <key id="0" spin="0">
+                    <bone x="100" y="20" angle="90"/>
+                </key>
+            </timeline>
+            <timeline id="4" name="square">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="90" y="-0" angle="270"/>
+                </key>
+            </timeline>
+            <timeline id="5" name="square_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="90" y="-0" angle="90"/>
+                </key>
+            </timeline>
+            <timeline id="6" name="square_001">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="100" y="10"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

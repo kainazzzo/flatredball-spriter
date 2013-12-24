@@ -266,14 +266,34 @@ namespace FlatRedBall_Spriter
             int width = file.Width;
             int height = file.Height;
 
+            var pivotY = 1.0f;
+            var pivotX = 0.0f;
+
+            if (timelineKey.Object.PivotX.HasValue)
+            {
+                pivotX = timelineKey.Object.PivotX.Value;
+            }
+            else if (file.PivotX.HasValue)
+            {
+                pivotX = file.PivotX.Value;
+            }
+
+            if (timelineKey.Object.PivotY.HasValue)
+            {
+                pivotY = timelineKey.Object.PivotY.Value;
+            }
+            else if (file.PivotY.HasValue)
+            {
+                pivotY = file.PivotY.Value;
+            }
 
             var ScaledSpriteValue = new KeyFrameValues
                 {
                     Texture = textures[folderFileId],
                     RelativeScaleX = timelineKey.Object.ScaleX,
                     RelativeScaleY = timelineKey.Object.ScaleY,
-                    RelativePosition = GetSpriteRelativePosition(width, height, timelineKey.Object.PivotX,
-                                                         timelineKey.Object.PivotY, objectRef.ZIndex),
+                    RelativePosition = GetSpriteRelativePosition(width, height, pivotX,
+                                                         pivotY, objectRef.ZIndex),
                     Alpha = timelineKey.Object.Alpha
                 };
             return new KeyFramePivotScaledSpriteValues { Pivot = pivotValue, ScaledSprite = ScaledSpriteValue };

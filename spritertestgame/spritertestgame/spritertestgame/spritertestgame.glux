@@ -28,7 +28,7 @@
       <NamedObjects>
         <NamedObjectSave>
           <SourceType>File</SourceType>
-          <SourceFile>Entities/square/pivottest.scml</SourceFile>
+          <SourceFile>Entities/square/player.scml</SourceFile>
           <SourceName>Entire File (SpriterObject)</SourceName>
           <InstanceName>ObjectInstance</InstanceName>
           <AttachToContainer>true</AttachToContainer>
@@ -37,27 +37,7 @@
       </NamedObjects>
       <ReferencedFiles>
         <ReferencedFileSave>
-          <Name>Entities/square/square3bonetest.scml</Name>
-          <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
-        </ReferencedFileSave>
-        <ReferencedFileSave>
-          <Name>Entities/square/ant.scml</Name>
-          <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
-        </ReferencedFileSave>
-        <ReferencedFileSave>
-          <Name>Entities/square/squaretest.scml</Name>
-          <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
-        </ReferencedFileSave>
-        <ReferencedFileSave>
-          <Name>Entities/square/squaretest2.scml</Name>
-          <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
-        </ReferencedFileSave>
-        <ReferencedFileSave>
-          <Name>Entities/square/pivottest.scml</Name>
+          <Name>Entities/square/player.scml</Name>
           <IsSharedStatic>true</IsSharedStatic>
           <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
         </ReferencedFileSave>

@@ -50,11 +50,7 @@ namespace spritertestgame.Entities
 		static object mLockObject = new object();
 		static List<string> mRegisteredUnloads = new List<string>();
 		static List<string> LoadedContentManagers = new List<string>();
-		protected static FlatRedBall_Spriter.SpriterObject square3bonetest;
-		protected static FlatRedBall_Spriter.SpriterObject ant;
-		protected static FlatRedBall_Spriter.SpriterObject squaretest;
-		protected static FlatRedBall_Spriter.SpriterObject squaretest2;
-		protected static FlatRedBall_Spriter.SpriterObject pivottest;
+		protected static FlatRedBall_Spriter.SpriterObject player;
 		
 		private FlatRedBall_Spriter.SpriterObject ObjectInstance;
 		protected Layer LayerProvidedByContainer = null;
@@ -84,7 +80,7 @@ namespace spritertestgame.Entities
 		{
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			ObjectInstance = pivottest.Clone();
+			ObjectInstance = player.Clone();
 			
 			PostInitialize();
 			if (addToManagers)
@@ -198,31 +194,11 @@ namespace spritertestgame.Entities
 						mRegisteredUnloads.Add(ContentManagerName);
 					}
 				}
-				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/square3bonetest.scml", ContentManagerName))
+				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/player.scml", ContentManagerName))
 				{
 					registerUnload = true;
 				}
-				square3bonetest = SpriterObjectSave.FromFile("content/entities/square/square3bonetest.scml").ToRuntime();
-				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/ant.scml", ContentManagerName))
-				{
-					registerUnload = true;
-				}
-				ant = SpriterObjectSave.FromFile("content/entities/square/ant.scml").ToRuntime();
-				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/squaretest.scml", ContentManagerName))
-				{
-					registerUnload = true;
-				}
-				squaretest = SpriterObjectSave.FromFile("content/entities/square/squaretest.scml").ToRuntime();
-				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/squaretest2.scml", ContentManagerName))
-				{
-					registerUnload = true;
-				}
-				squaretest2 = SpriterObjectSave.FromFile("content/entities/square/squaretest2.scml").ToRuntime();
-				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/pivottest.scml", ContentManagerName))
-				{
-					registerUnload = true;
-				}
-				pivottest = SpriterObjectSave.FromFile("content/entities/square/pivottest.scml").ToRuntime();
+				player = SpriterObjectSave.FromFile("content/entities/square/player.scml").ToRuntime();
 			}
 			if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 			{
@@ -246,30 +222,10 @@ namespace spritertestgame.Entities
 			}
 			if (LoadedContentManagers.Count == 0)
 			{
-				if (square3bonetest != null)
+				if (player != null)
 				{
-					square3bonetest.Destroy();
-					square3bonetest= null;
-				}
-				if (ant != null)
-				{
-					ant.Destroy();
-					ant= null;
-				}
-				if (squaretest != null)
-				{
-					squaretest.Destroy();
-					squaretest= null;
-				}
-				if (squaretest2 != null)
-				{
-					squaretest2.Destroy();
-					squaretest2= null;
-				}
-				if (pivottest != null)
-				{
-					pivottest.Destroy();
-					pivottest= null;
+					player.Destroy();
+					player= null;
 				}
 			}
 		}
@@ -278,16 +234,8 @@ namespace spritertestgame.Entities
 		{
 			switch(memberName)
 			{
-				case  "square3bonetest":
-					return square3bonetest;
-				case  "ant":
-					return ant;
-				case  "squaretest":
-					return squaretest;
-				case  "squaretest2":
-					return squaretest2;
-				case  "pivottest":
-					return pivottest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}
@@ -295,16 +243,8 @@ namespace spritertestgame.Entities
 		{
 			switch(memberName)
 			{
-				case  "square3bonetest":
-					return square3bonetest;
-				case  "ant":
-					return ant;
-				case  "squaretest":
-					return squaretest;
-				case  "squaretest2":
-					return squaretest2;
-				case  "pivottest":
-					return pivottest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}
@@ -312,16 +252,8 @@ namespace spritertestgame.Entities
 		{
 			switch(memberName)
 			{
-				case  "square3bonetest":
-					return square3bonetest;
-				case  "ant":
-					return ant;
-				case  "squaretest":
-					return squaretest;
-				case  "squaretest2":
-					return squaretest2;
-				case  "pivottest":
-					return pivottest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}

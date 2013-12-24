@@ -26,7 +26,7 @@ namespace FlatRedBallExtensions
         {
             get
             {
-                return Texture == null ? DefaultTextureHeight : Texture.Width;
+                return Texture == null ? DefaultTextureHeight : Texture.Height;
             }
         }
 

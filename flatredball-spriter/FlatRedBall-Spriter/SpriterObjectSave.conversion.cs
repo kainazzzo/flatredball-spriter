@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
@@ -213,9 +214,10 @@ namespace FlatRedBall_Spriter
                 }
                 else
                 {
-                    pivot = new ScaledPositionedObject {Name = "pivot"};
+                    var name = objectRef.Name ?? objectRef.Id.ToString(CultureInfo.InvariantCulture);
+                    pivot = new ScaledPositionedObject { Name = string.Format("{0}_pivot", name) };
 
-                    ScaledSprite = new ScaledSprite {Name = "sprite", Width = file.Width, Height = file.Height, ParentScaleChangesPosition = false};
+                    ScaledSprite = new ScaledSprite {Name = string.Format("{0}_sprite", name), Width = file.Width, Height = file.Height, ParentScaleChangesPosition = false};
 
                     ScaledSprite.AttachTo(pivot, true);
                     pivot.AttachTo(SpriterObject, true);

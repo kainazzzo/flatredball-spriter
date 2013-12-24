@@ -80,6 +80,9 @@ namespace FlatRedBall_Spriter
         [XmlAttribute(AttributeName = "id")]
         public int Id { get; set; }
 
+        [XmlAttribute(AttributeName = "name")]
+        public string Name { get; set; }
+
         /// <remarks/>
         [XmlAttribute(AttributeName = "parent")]
 // ReSharper disable InconsistentNaming

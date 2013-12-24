@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b6.1">
+    <folder id="0">
+        <file id="0" name="square.png" width="32" height="32" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <obj_info name="bone_000" type="bone" w="118.978" h="10"/>
+        <animation id="0" name="NewAnimation" length="1000">
+            <mainline>
+                <key id="0">
+                    <bone_ref id="0" timeline="0" key="0"/>
+                    <object_ref id="0" parent="0" timeline="1" key="0" z_index="0"/>
+                    <object_ref id="1" parent="0" timeline="2" key="0" z_index="1"/>
+                    <object_ref id="2" timeline="3" key="0" z_index="2"/>
+                </key>
+            </mainline>
+            <timeline id="0" obj="0" name="bone_000" object_type="bone">
+                <key id="0" spin="0">
+                    <bone x="10" y="-10" angle="0" scale_x="0.5" scale_y="0.5"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="square">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="51.138047" y="-52.861953" pivot_x="0.486532" pivot_y="0.486532" scale_x="2" scale_y="2"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="square_000">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="115.030303" y="-115.030303" pivot_x="0.984848" pivot_y="0.015152" scale_x="2" scale_y="2"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="square_001">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="16" y="42.222222"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

@@ -50,6 +50,7 @@ namespace FlatRedBallExtensions
                     {
                         thisAsSprite.Height = thisAsSprite.TextureHeight*parentScaleY;
                         thisAsSprite.Width = thisAsSprite.TextureWidth*parentScaleX;
+                        
                     }
                     else if (thisAsIRelativeScalable != null)
                     {
@@ -58,9 +59,16 @@ namespace FlatRedBallExtensions
                         thisAsIRelativeScalable.ScaleZ = parentScaleZ * thisRelativeScaleZ;
                     }
 
-                    if (thisAsIRelativeScalable != null && !thisAsIRelativeScalable.ParentScaleChangesPosition)
+                    //if (thisAsIRelativeScalable != null && !thisAsIRelativeScalable.ParentScaleChangesPosition)
+                    //{
+                    //    parentScaleX = parentScaleY = parentScaleZ = 1.0f;
+                    //}
+
+                    if (thisAsSprite != null)
                     {
-                        parentScaleX = parentScaleY = parentScaleZ = 1.0f;
+                        parentScaleX *= thisRelativeScaleX;
+                        parentScaleY *= thisRelativeScaleY;
+                        parentScaleZ *= thisRelativeScaleZ;
                     }
 
                     if (scaledPositionedObject.ParentRotationChangesPosition)

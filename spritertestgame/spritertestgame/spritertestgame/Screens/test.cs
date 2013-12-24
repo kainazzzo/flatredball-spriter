@@ -61,101 +61,93 @@ namespace spritertestgame.Screens
 		void CustomInitialize()
 		{
 		    Camera.Main.BackgroundColor = Color.CornflowerBlue;
-		    Camera.Main.Orthogonal = false;
 		    
-            Camera.Main.UsePixelCoordinates();
-            Camera.Main.Z += 1000f;
-		    Camera.Main.FarClipPlane = 1000000f;
+		    //Camera.Main.AttachTo(squareInstance, false);
 
-            #region xml
 
-		    var sos =
-		        TestSerializationUtility.DeserializeFromXml<SpriterObjectSave>(
-                    @"<?xml version=""1.0"" encoding=""UTF-8""?>
-<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
-    <folder id=""0"">
-        <file id=""0"" name=""square.png"" width=""32"" height=""32"" pivot_x=""0"" pivot_y=""1""/>
-    </folder>
-    <entity id=""0"" name=""entity_000"">
-        <obj_info name=""bone1"" type=""bone"" w=""200"" h=""10""/>
-        <obj_info name=""bone2"" type=""bone"" w=""200"" h=""10""/>
-        <obj_info name=""bone3"" type=""bone"" w=""200"" h=""10""/>
-        <animation id=""0"" name=""NewAnimation"" length=""1000"">
-            <mainline>
-                <key id=""0"">
-                    <bone_ref id=""0"" timeline=""0"" key=""0""/>
-                    <bone_ref id=""1"" parent=""0"" timeline=""1"" key=""0""/>
-                    <bone_ref id=""2"" parent=""1"" timeline=""2"" key=""0""/>
-                    <object_ref id=""0"" parent=""0"" timeline=""3"" key=""0"" z_index=""0""/>
-                    <object_ref id=""1"" parent=""1"" timeline=""4"" key=""0"" z_index=""1""/>
-                    <object_ref id=""2"" parent=""2"" timeline=""5"" key=""0"" z_index=""2""/>
-                </key>
-            </mainline>
-            <timeline id=""0"" obj=""0"" name=""bone1"" object_type=""bone"">
-                <key id=""0"" spin=""0"">
-                    <bone x=""100"" angle=""0"" scale_x=""0.5""/>
-                </key>
-            </timeline>
-            <timeline id=""1"" obj=""1"" name=""bone2"" object_type=""bone"">
-                <key id=""0"" spin=""0"">
-                    <bone x=""200"" y=""-0""/>
-                </key>
-            </timeline>
-            <timeline id=""2"" obj=""2"" name=""bone3"" object_type=""bone"">
-                <key id=""0"" spin=""0"">
-                    <bone x=""200"" y=""0"" scale_x=""2""/>
-                </key>
-            </timeline>
-            <timeline id=""3"" name=""square1"">
-                <key id=""0"" spin=""0"">
-                    <object folder=""0"" file=""0"" x=""-180"" y=""100"" scale_x=""2""/>
-                </key>
-            </timeline>
-            <timeline id=""4"" name=""square2"">
-                <key id=""0"" spin=""0"">
-                    <object folder=""0"" file=""0"" x=""-380"" y=""0"" scale_x=""2""/>
-                </key>
-            </timeline>
-            <timeline id=""5"" name=""square3"">
-                <key id=""0"" spin=""0"">
-                    <object folder=""0"" file=""0"" x=""-290"" y=""-100""/>
-                </key>
-            </timeline>
-        </animation>
-    </entity>
-</spriter_data>
-");
-#endregion
 
-            //sos.TextureLoader = Mock.Create<ITextureLoader>();
-            //sos.TextureLoader.Arrange(l => l.FromFile(Arg.AnyString)).Returns(square);
-            //sos.Directory = "C:\\";
-            
-            //_so = sos.ToRuntime();
+		    //#region xml
 
-            //_so.StartAnimation();
-            //_so.AddToManagers(null);
-            
-		  
+//            var sos =
+//                TestSerializationUtility.DeserializeFromXml<SpriterObjectSave>(
+//                    @"<?xml version=""1.0"" encoding=""UTF-8""?>
+//<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
+//    <folder id=""0"">
+//        <file id=""0"" name=""square.png"" width=""32"" height=""32"" pivot_x=""0"" pivot_y=""1""/>
+//    </folder>
+//    <entity id=""0"" name=""entity_000"">
+//        <obj_info name=""bone1"" type=""bone"" w=""200"" h=""10""/>
+//        <obj_info name=""bone2"" type=""bone"" w=""200"" h=""10""/>
+//        <obj_info name=""bone3"" type=""bone"" w=""200"" h=""10""/>
+//        <animation id=""0"" name=""NewAnimation"" length=""1000"">
+//            <mainline>
+//                <key id=""0"">
+//                    <bone_ref id=""0"" timeline=""0"" key=""0""/>
+//                    <bone_ref id=""1"" parent=""0"" timeline=""1"" key=""0""/>
+//                    <bone_ref id=""2"" parent=""1"" timeline=""2"" key=""0""/>
+//                    <object_ref id=""0"" parent=""0"" timeline=""3"" key=""0"" z_index=""0""/>
+//                    <object_ref id=""1"" parent=""1"" timeline=""4"" key=""0"" z_index=""1""/>
+//                    <object_ref id=""2"" parent=""2"" timeline=""5"" key=""0"" z_index=""2""/>
+//                </key>
+//            </mainline>
+//            <timeline id=""0"" obj=""0"" name=""bone1"" object_type=""bone"">
+//                <key id=""0"" spin=""0"">
+//                    <bone x=""100"" angle=""0"" scale_x=""0.5""/>
+//                </key>
+//            </timeline>
+//            <timeline id=""1"" obj=""1"" name=""bone2"" object_type=""bone"">
+//                <key id=""0"" spin=""0"">
+//                    <bone x=""200"" y=""-0""/>
+//                </key>
+//            </timeline>
+//            <timeline id=""2"" obj=""2"" name=""bone3"" object_type=""bone"">
+//                <key id=""0"" spin=""0"">
+//                    <bone x=""200"" y=""0"" scale_x=""2""/>
+//                </key>
+//            </timeline>
+//            <timeline id=""3"" name=""square1"">
+//                <key id=""0"" spin=""0"">
+//                    <object folder=""0"" file=""0"" x=""-180"" y=""100"" scale_x=""2""/>
+//                </key>
+//            </timeline>
+//            <timeline id=""4"" name=""square2"">
+//                <key id=""0"" spin=""0"">
+//                    <object folder=""0"" file=""0"" x=""-380"" y=""0"" scale_x=""2""/>
+//                </key>
+//            </timeline>
+//            <timeline id=""5"" name=""square3"">
+//                <key id=""0"" spin=""0"">
+//                    <object folder=""0"" file=""0"" x=""-290"" y=""-100""/>
+//                </key>
+//            </timeline>
+//        </animation>
+//    </entity>
+//</spriter_data>
+//");
+//#endregion
 
-            //_sprite.RelativeRotationZVelocity = 10f;
-            //_spo1.RotationZVelocity = 10f;
+		    //sos.TextureLoader = Mock.Create<ITextureLoader>();
+		    //sos.TextureLoader.Arrange(l => l.FromFile(Arg.AnyString)).Returns(square);
+		    //sos.Directory = "C:\\";
 
-            SpriteInstance.Visible = false;
-            player.StartAnimation();
+		    //_so = sos.ToRuntime();
+
+		    //_so.StartAnimation();
+		    //_so.AddToManagers(null);
+
+
+
+		    //_sprite.RelativeRotationZVelocity = 10f;
+		    //_spo1.RotationZVelocity = 10f;
 		}
 
 		void CustomActivity(bool firstTimeCalled)
 		{
-		    var x = 0;
-		    if (x == 0)
-		    {
-		        x = 1;
-		    }
-		    else
-		    {
-		        x = 0;
-		    }
+		    Camera.Main.Z += InputManager.Mouse.ScrollWheel*-10;
+            //squareInstance.Position.X = GuiManager.Cursor.WorldXAt(0);
+            //squareInstance.Position.Y = GuiManager.Cursor.WorldYAt(0);
+            Debugger.Write(squareInstance.Position);
+		    
 		}
 
 		void CustomDestroy()

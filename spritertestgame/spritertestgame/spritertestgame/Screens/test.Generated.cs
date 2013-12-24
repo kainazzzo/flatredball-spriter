@@ -25,8 +25,6 @@ using FlatRedBall.Screens;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Xna.Framework.Graphics;
-using FlatRedBall_Spriter;
 
 namespace spritertestgame.Screens
 {
@@ -36,10 +34,8 @@ namespace spritertestgame.Screens
 		#if DEBUG
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
-		protected static Microsoft.Xna.Framework.Graphics.Texture2D square;
-		protected static FlatRedBall_Spriter.SpriterObject player;
 		
-		private FlatRedBall.Sprite SpriteInstance;
+		private spritertestgame.Entities.square squareInstance;
 
 		public test()
 			: base("test")
@@ -50,7 +46,8 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			SpriteInstance = new FlatRedBall.Sprite();
+			squareInstance = new spritertestgame.Entities.square(ContentManagerName, false);
+			squareInstance.Name = "squareInstance";
 			
 			
 			PostInitialize();
@@ -77,6 +74,7 @@ namespace spritertestgame.Screens
 			if (!IsPaused)
 			{
 				
+				squareInstance.Activity();
 			}
 			else
 			{
@@ -96,13 +94,11 @@ namespace spritertestgame.Screens
 		public override void Destroy()
 		{
 			// Generated Destroy
-			square = null;
-			player.Destroy();
-			player = null;
 			
-			if (SpriteInstance != null)
+			if (squareInstance != null)
 			{
-				SpriteInstance.Detach(); SpriteManager.RemoveSprite(SpriteInstance);
+				squareInstance.Destroy();
+				squareInstance.Detach();
 			}
 
 			base.Destroy();
@@ -116,53 +112,16 @@ namespace spritertestgame.Screens
 		{
 			bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
-			SpriteInstance.Texture = square;
-			SpriteInstance.TextureScale = 1f;
-			if (SpriteInstance.Parent == null)
-			{
-				SpriteInstance.X = 0f;
-			}
-			else
-			{
-				SpriteInstance.RelativeX = 0f;
-			}
-			if (SpriteInstance.Parent == null)
-			{
-				SpriteInstance.Y = 0f;
-			}
-			else
-			{
-				SpriteInstance.RelativeY = 0f;
-			}
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
 		}
 		public virtual void AddToManagersBottomUp ()
 		{
 			CameraSetup.ResetCamera(SpriteManager.Camera);
-			player.AddToManagers(null);
-			SpriteManager.AddSprite(SpriteInstance);
-			SpriteInstance.Texture = square;
-			SpriteInstance.TextureScale = 1f;
-			if (SpriteInstance.Parent == null)
-			{
-				SpriteInstance.X = 0f;
-			}
-			else
-			{
-				SpriteInstance.RelativeX = 0f;
-			}
-			if (SpriteInstance.Parent == null)
-			{
-				SpriteInstance.Y = 0f;
-			}
-			else
-			{
-				SpriteInstance.RelativeY = 0f;
-			}
+			squareInstance.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
-			SpriteManager.ConvertToManuallyUpdated(SpriteInstance);
+			squareInstance.ConvertToManuallyUpdated();
 		}
 		public static void LoadStaticContent (string contentManagerName)
 		{
@@ -180,48 +139,20 @@ namespace spritertestgame.Screens
 				throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
 			}
 			#endif
-			if (!FlatRedBallServices.IsLoaded<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/test/square.png", contentManagerName))
-			{
-			}
-			square = FlatRedBallServices.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/test/square.png", contentManagerName);
-			if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/screens/test/player.scml", contentManagerName))
-			{
-			}
-			player = SpriterObjectSave.FromFile("content/screens/test/player.scml").ToRuntime();
+			spritertestgame.Entities.square.LoadStaticContent(contentManagerName);
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]
 		public static object GetStaticMember (string memberName)
 		{
-			switch(memberName)
-			{
-				case  "square":
-					return square;
-				case  "player":
-					return player;
-			}
 			return null;
 		}
 		public static object GetFile (string memberName)
 		{
-			switch(memberName)
-			{
-				case  "square":
-					return square;
-				case  "player":
-					return player;
-			}
 			return null;
 		}
 		object GetMember (string memberName)
 		{
-			switch(memberName)
-			{
-				case  "square":
-					return square;
-				case  "player":
-					return player;
-			}
 			return null;
 		}
 

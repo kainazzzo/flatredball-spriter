@@ -252,7 +252,7 @@ namespace FlatRedBall_Spriter
                     percentage);
                 sprite.RelativeScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY,
                     percentage);
-                sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
+                sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);                
             }
 
             var spo = currentObject as ScaledPositionedObject;
@@ -513,9 +513,22 @@ namespace FlatRedBall_Spriter
 
         public SpriterObject Clone()
         {
-            var so = (SpriterObject)MemberwiseClone();
+            var so = new SpriterObject(FlatRedBallServices.GlobalContentManager, false)
+            {
+                Animations = new Dictionary<string, SpriterObjectAnimation>()
+            };
 
-            so.Animations = new Dictionary<string, SpriterObjectAnimation>();
+            var allObjects =
+                Animations.Select(a => a.Value)
+                    .SelectMany(v => v.KeyFrames)
+                    .SelectMany(kf => kf.Values)
+                    .Select(kfv => kfv.Key)
+                    .GroupBy(k => k.Name)
+                    .Select(g => g.First().Clone<PositionedObject>())
+                    .ToList();
+
+            
+
             foreach (var animationPair in Animations)
             {
                 var keyframes = new List<KeyFrame>();
@@ -529,10 +542,14 @@ namespace FlatRedBall_Spriter
 
                         foreach (var kfPair in kf.Values)
                         {
+                            var parent = kfPair.Value.Parent == null || kfPair.Value.Parent.Name == null
+                                ? null
+                                : allObjects.First(k => k.Name == kfPair.Value.Parent.Name);
+
                             var kfv = new KeyFrameValues
                             {
                                     Alpha = kfPair.Value.Alpha,
-                                    Parent = kfPair.Value.Parent,
+                                    Parent = parent,
                                     RelativePosition = kfPair.Value.RelativePosition,
                                     RelativeRotation = kfPair.Value.RelativeRotation,
                                     RelativeScaleX = kfPair.Value.RelativeScaleX,
@@ -541,7 +558,7 @@ namespace FlatRedBall_Spriter
                                     Texture = kfPair.Value.Texture
                                 };
 
-                            keyFrame.Values[kfPair.Key] = kfv;
+                            keyFrame.Values[allObjects.First(k => k.Name == kfPair.Key.Name)] = kfv;
                         }
                         keyframes.Add(keyFrame);
                     });
@@ -550,6 +567,13 @@ namespace FlatRedBall_Spriter
                                                                               animationPair.Value.TotalTime,
                                                                               keyframes);
             }
+            so.ObjectList = so.Animations.Select(a => a.Value)
+                    .SelectMany(v => v.KeyFrames)
+                    .SelectMany(kf => kf.Values)
+                    .Select(kfv => kfv.Key)
+                    .GroupBy(k => k.Name)
+                    .Select(g => g.First())
+                    .ToList();
 
             return so;
         }

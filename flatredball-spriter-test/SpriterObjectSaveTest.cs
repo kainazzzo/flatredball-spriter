@@ -234,8 +234,8 @@ namespace flatredball_spriter_test
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();
             var so = sos.ToRuntime();
-            var pivot = so.ObjectList.Single(p => p.Name == "pivot");
-            var sprite = (Sprite)so.ObjectList.Single(p => p.Name == "sprite");
+            var pivot = so.ObjectList.Single(p => p.Name.Contains("pivot"));
+            var sprite = (Sprite)so.ObjectList.Single(p => p.Name.Contains("sprite"));
 
             Assert.AreSame(so, so.Animations.First().Value.KeyFrames[0].Values[pivot].Parent);
             Assert.AreSame(pivot, so.Animations.First().Value.KeyFrames[0].Values[sprite].Parent);
@@ -251,7 +251,7 @@ namespace flatredball_spriter_test
 
             Assert.AreEqual(3, so.ObjectList.Count);
 
-            var pivot = so.ObjectList.Single(p => p.Name == "pivot");
+            var pivot = so.ObjectList.Single(p => p.Name.Contains("pivot"));
             var bone = so.ObjectList[2];
 
             Assert.AreSame(bone, so.Animations.First().Value.KeyFrames[0].Values[pivot].Parent);
@@ -286,8 +286,8 @@ namespace flatredball_spriter_test
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefsAndExtraKey();
             var so = sos.ToRuntime();
 
-            var pivot = so.ObjectList.Single(o => o.Name == "pivot");
-            var bone = so.ObjectList.Single(o => o.Name != "pivot" && o.Name != "sprite");
+            var pivot = so.ObjectList.Single(o => o.Name.Contains("pivot"));
+            var bone = so.ObjectList.Single(o => !o.Name.Contains("pivot") && !o.Name.Contains("sprite"));
 
             Assert.AreEqual(4, so.Animations.First().Value.KeyFrames.Count);
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames.ElementAt(1).Time - .207f) < .0001f);
@@ -361,14 +361,14 @@ namespace flatredball_spriter_test
             var sos = GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParentAndOneOrphanObject();
             var so = sos.ToRuntime();
 
-            var sprite = so.ObjectList.First(p => p.Name == "sprite");
-            var sprite2 = so.ObjectList.Where(p => p.Name == "sprite").ElementAt(1);
+            var sprite = so.ObjectList.First(p => p.Name .Contains("sprite"));
+            var sprite2 = so.ObjectList.Where(p => p.Name.Contains("sprite")).ElementAt(1);
             var pivot = sprite.Parent;
             var pivot2 = sprite2.Parent;
 
             var bones =
                 so.Animations.First()
-                    .Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.Name.StartsWith("bone"))).ToList();
+                    .Value.KeyFrames.SelectMany(k => k.Values.Where(p => p.Key.Name.Contains("bone"))).ToList();
 
             Assert.IsTrue(bones.All(p => Math.Abs(p.Value.RelativeScaleX - 1.5f) < .0001f));
             Assert.IsTrue(bones.All(p => Math.Abs(p.Value.RelativeScaleY - 2.0f) < Single.Epsilon));

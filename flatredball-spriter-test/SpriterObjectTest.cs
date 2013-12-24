@@ -62,7 +62,11 @@ namespace flatredball_spriter_test
             Assert.IsFalse(Math.Abs(clone.KeyFrameList[0].Time - 12345f) < .00001f);
             Assert.IsFalse(Math.Abs(clone.KeyFrameList[0].Values.First().Value.RelativeScaleX - 12345f) < .00001f);
 
-            
+            var sokeyframeObjects = so.KeyFrameList.SelectMany(k => k.Values.Keys).ToList();
+            var clonekeyframeObjects = clone.KeyFrameList.SelectMany(k => k.Values.Keys).ToList();
+
+            CollectionAssert.AreNotEquivalent(sokeyframeObjects, clonekeyframeObjects);
+            CollectionAssert.AreNotEquivalent(so.ObjectList, clone.ObjectList);
         }
 
         [TestMethod]
@@ -83,21 +87,24 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(pivot.Position.X - 130f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Position.Y - 230f) < Single.Epsilon);
             TimeManager.CurrentTime += .5;
-
+            so.Position.X += 100;
+            so.Position.Y += 100;
             so.TimedActivity(.5f, 0f, 0f);
 
-            Assert.IsTrue(Math.Abs(sprite.Position.X - 115f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(sprite.Position.Y - 215f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(pivot.Position.X - 115f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(pivot.Position.Y - 215f) < Single.Epsilon);
+            
+
+            Assert.IsTrue(Math.Abs(sprite.Position.X - 215f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Position.Y - 315f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 215f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 315f) < Single.Epsilon);
 
             TimeManager.CurrentTime += .5f;
             so.TimedActivity(.5f, 0f, 0f);
 
-            Assert.IsTrue(Math.Abs(sprite.Position.X - 100f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(sprite.Position.Y - 200f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(pivot.Position.X - 100f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(pivot.Position.Y - 200f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Position.X - 200f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.Position.Y - 300f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.X - 200f) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(pivot.Position.Y - 300f) < Single.Epsilon);
 
         }
 
@@ -477,10 +484,6 @@ namespace flatredball_spriter_test
 ");
 #endregion
             var so = sos.ToRuntime();
-
-            so.StartAnimation();
-
-
             var pivot1 = so.ObjectList[1];
             var pivot2 = so.ObjectList[3];
             var pivot3 = so.ObjectList[5];
@@ -491,6 +494,19 @@ namespace flatredball_spriter_test
             var sprite2 = so.ObjectList[2];
             var sprite3 = so.ObjectList[4];
 
+            pivot1.Name = "pivot1";
+            pivot2.Name = "pivot2";
+            pivot3.Name = "pivot3";
+
+            bone1.Name = "bone1";
+            bone2.Name = "bone2";
+            bone3.Name = "bone3";
+
+            sprite1.Name = "sprite1";
+            sprite2.Name = "sprite2";
+            sprite3.Name = "sprite3";
+
+            so.StartAnimation();
             
             Assert.IsTrue(Math.Abs(bone1.Position.X - 100f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(bone2.Position.X - 200f) < Single.Epsilon);
@@ -636,6 +652,109 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(pivot2.RotationZ - MathHelper.ToRadians(90)) < Single.Epsilon);
 
             #endregion
+        }
+
+        [TestMethod]
+        public void BasicPivotTest()
+        {
+            #region xml
+            var sos =
+                TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(
+                    @"<?xml version=""1.0"" encoding=""UTF-8""?>
+<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
+    <folder id=""0"">
+        <file id=""0"" name=""square.png"" width=""32"" height=""32"" pivot_x=""0"" pivot_y=""1""/>
+    </folder>
+    <entity id=""0"" name=""entity_000"">
+        <animation id=""0"" name=""NewAnimation"" length=""1000"" looping=""false"">
+            <mainline>
+                <key id=""0"">
+                    <object_ref id=""0"" timeline=""0"" key=""0"" z_index=""0""/>
+                    <object_ref id=""1"" timeline=""1"" key=""0"" z_index=""1""/>
+                    <object_ref id=""2"" timeline=""2"" key=""0"" z_index=""2""/>
+                    <object_ref id=""3"" timeline=""3"" key=""0"" z_index=""3""/>
+                </key>
+            </mainline>
+            <timeline id=""0"" name=""square"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" scale_x=""0.25"" scale_y=""0.25""/>
+                </key>
+            </timeline>
+            <timeline id=""1"" name=""square_000"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""8"" scale_x=""0.5"" scale_y=""0.5""/>
+                </key>
+            </timeline>
+            <timeline id=""2"" name=""square_001"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""24"" scale_x=""0.75"" scale_y=""0.75""/>
+                </key>
+            </timeline>
+            <timeline id=""3"" name=""square_002"">
+                <key id=""0"" spin=""0"">
+                    <object folder=""0"" file=""0"" x=""48""/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
+");
+            #endregion
+
+            var so = sos.ToRuntime();
+
+            var x = 0;
+
+            
+            var pivot1Values = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(0).Value;
+            var pivot1 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(0).Key;
+            var sprite1Values = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(1).Value;
+            var sprite1 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(1).Key;
+            var pivot2Values = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(2).Value;
+            var pivot2 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(2).Key;
+            var sprite2Values = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(3).Value;
+            var sprite2 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(3).Key;
+            var pivot3Values = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(4).Value;
+            var pivot3 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(4).Key;
+            var sprite3Values = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(5).Value;
+            var sprite3 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(5).Key;
+            var pivot4Values = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(6).Value;
+            var pivot4 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(6).Key;
+            var sprite4Values = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(7).Value;
+            var sprite4 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(7).Key;
+
+            pivot1.Name = "pivot1";
+            pivot2.Name = "pivot2";
+            pivot3.Name = "pivot3";
+            pivot4.Name = "pivot4";
+            sprite1.Name = "sprite1";
+            sprite2.Name = "sprite2";
+            sprite3.Name = "sprite3";
+            sprite4.Name = "sprite4";
+
+            
+            
+
+            Assert.AreEqual(Vector3.Zero, pivot1Values.RelativePosition);
+            Assert.AreEqual(new Vector3(16, -16, 0), sprite1Values.RelativePosition);
+
+            so.StartAnimation();
+
+            TimeManager.CurrentTime += .5;
+            so.TimedActivity(.5f, 0.25, .5f);
+
+            Assert.AreEqual(Vector3.Zero, pivot1.Position);
+            Assert.AreEqual(new Vector3(4, -4, 0), sprite1.Position);
+
+            Assert.AreEqual(new Vector3(8, 0, 0), pivot2.Position);
+            Assert.AreEqual(new Vector3(16, -8, .0001f), sprite2.Position);
+
+            Assert.AreEqual(new Vector3(24, 0, 0), pivot3.Position);
+            Assert.AreEqual(new Vector3(36, -12, .0002f), sprite3.Position);
+            
+            Assert.AreEqual(new Vector3(48, 0, 0), pivot4.Position);
+            Assert.IsTrue((new Vector3(64, -16, 0.0003f) - sprite4.Position).Length() < .0001f);
+            
         }
     }
 }

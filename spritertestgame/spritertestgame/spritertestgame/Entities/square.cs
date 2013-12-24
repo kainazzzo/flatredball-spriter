@@ -28,13 +28,15 @@ namespace spritertestgame.Entities
 	{
 		private void CustomInitialize()
 		{
-            //ObjectInstance.StartAnimation();
+		    //ObjectInstance.AttachTo(this, false);
+
+            ObjectInstance.StartAnimation();
+		    
 		}
 
 		private void CustomActivity()
 		{
-
-
+		    
 		}
 
 		private void CustomDestroy()

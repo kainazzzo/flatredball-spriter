@@ -51,6 +51,10 @@ namespace spritertestgame.Entities
 		static List<string> mRegisteredUnloads = new List<string>();
 		static List<string> LoadedContentManagers = new List<string>();
 		protected static FlatRedBall_Spriter.SpriterObject square3bonetest;
+		protected static FlatRedBall_Spriter.SpriterObject ant;
+		protected static FlatRedBall_Spriter.SpriterObject squaretest;
+		protected static FlatRedBall_Spriter.SpriterObject squaretest2;
+		protected static FlatRedBall_Spriter.SpriterObject pivottest;
 		
 		private FlatRedBall_Spriter.SpriterObject ObjectInstance;
 		protected Layer LayerProvidedByContainer = null;
@@ -80,7 +84,7 @@ namespace spritertestgame.Entities
 		{
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			ObjectInstance = square3bonetest.Clone();
+			ObjectInstance = pivottest.Clone();
 			
 			PostInitialize();
 			if (addToManagers)
@@ -128,6 +132,11 @@ namespace spritertestgame.Entities
 		{
 			bool oldShapeManagerSuppressAdd = FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue;
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = true;
+			if (ObjectInstance.Parent == null)
+			{
+				ObjectInstance.CopyAbsoluteToRelative();
+				ObjectInstance.AttachTo(this, false);
+			}
 			FlatRedBall.Math.Geometry.ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
 		}
 		public virtual void AddToManagersBottomUp (Layer layerToAddTo)
@@ -194,6 +203,26 @@ namespace spritertestgame.Entities
 					registerUnload = true;
 				}
 				square3bonetest = SpriterObjectSave.FromFile("content/entities/square/square3bonetest.scml").ToRuntime();
+				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/ant.scml", ContentManagerName))
+				{
+					registerUnload = true;
+				}
+				ant = SpriterObjectSave.FromFile("content/entities/square/ant.scml").ToRuntime();
+				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/squaretest.scml", ContentManagerName))
+				{
+					registerUnload = true;
+				}
+				squaretest = SpriterObjectSave.FromFile("content/entities/square/squaretest.scml").ToRuntime();
+				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/squaretest2.scml", ContentManagerName))
+				{
+					registerUnload = true;
+				}
+				squaretest2 = SpriterObjectSave.FromFile("content/entities/square/squaretest2.scml").ToRuntime();
+				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/square/pivottest.scml", ContentManagerName))
+				{
+					registerUnload = true;
+				}
+				pivottest = SpriterObjectSave.FromFile("content/entities/square/pivottest.scml").ToRuntime();
 			}
 			if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 			{
@@ -222,6 +251,26 @@ namespace spritertestgame.Entities
 					square3bonetest.Destroy();
 					square3bonetest= null;
 				}
+				if (ant != null)
+				{
+					ant.Destroy();
+					ant= null;
+				}
+				if (squaretest != null)
+				{
+					squaretest.Destroy();
+					squaretest= null;
+				}
+				if (squaretest2 != null)
+				{
+					squaretest2.Destroy();
+					squaretest2= null;
+				}
+				if (pivottest != null)
+				{
+					pivottest.Destroy();
+					pivottest= null;
+				}
 			}
 		}
 		[System.Obsolete("Use GetFile instead")]
@@ -231,6 +280,14 @@ namespace spritertestgame.Entities
 			{
 				case  "square3bonetest":
 					return square3bonetest;
+				case  "ant":
+					return ant;
+				case  "squaretest":
+					return squaretest;
+				case  "squaretest2":
+					return squaretest2;
+				case  "pivottest":
+					return pivottest;
 			}
 			return null;
 		}
@@ -240,6 +297,14 @@ namespace spritertestgame.Entities
 			{
 				case  "square3bonetest":
 					return square3bonetest;
+				case  "ant":
+					return ant;
+				case  "squaretest":
+					return squaretest;
+				case  "squaretest2":
+					return squaretest2;
+				case  "pivottest":
+					return pivottest;
 			}
 			return null;
 		}
@@ -249,6 +314,14 @@ namespace spritertestgame.Entities
 			{
 				case  "square3bonetest":
 					return square3bonetest;
+				case  "ant":
+					return ant;
+				case  "squaretest":
+					return squaretest;
+				case  "squaretest2":
+					return squaretest2;
+				case  "pivottest":
+					return pivottest;
 			}
 			return null;
 		}

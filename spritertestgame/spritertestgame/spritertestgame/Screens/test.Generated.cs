@@ -19,7 +19,6 @@ using Microsoft.Xna.Framework.Media;
 #endif
 
 // Generated Usings
-using spritertestgame.Entities;
 using FlatRedBall;
 using FlatRedBall.Screens;
 using System;
@@ -35,7 +34,6 @@ namespace spritertestgame.Screens
 		static bool HasBeenLoadedWithGlobalContentManager = false;
 		#endif
 		
-		private spritertestgame.Entities.square squareInstance;
 
 		public test()
 			: base("test")
@@ -46,8 +44,6 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			squareInstance = new spritertestgame.Entities.square(ContentManagerName, false);
-			squareInstance.Name = "squareInstance";
 			
 			
 			PostInitialize();
@@ -74,7 +70,6 @@ namespace spritertestgame.Screens
 			if (!IsPaused)
 			{
 				
-				squareInstance.Activity();
 			}
 			else
 			{
@@ -95,11 +90,6 @@ namespace spritertestgame.Screens
 		{
 			// Generated Destroy
 			
-			if (squareInstance != null)
-			{
-				squareInstance.Destroy();
-				squareInstance.Detach();
-			}
 
 			base.Destroy();
 
@@ -117,11 +107,9 @@ namespace spritertestgame.Screens
 		public virtual void AddToManagersBottomUp ()
 		{
 			CameraSetup.ResetCamera(SpriteManager.Camera);
-			squareInstance.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
-			squareInstance.ConvertToManuallyUpdated();
 		}
 		public static void LoadStaticContent (string contentManagerName)
 		{
@@ -139,7 +127,6 @@ namespace spritertestgame.Screens
 				throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
 			}
 			#endif
-			spritertestgame.Entities.square.LoadStaticContent(contentManagerName);
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]

@@ -62,6 +62,8 @@ Content\Entities\SpriterEntity\legs\p_thigh_a.png
 Content\Entities\SpriterEntity\legs\p_thigh_idle_0.png
 Content\Entities\SpriterEntity\legs\p_thigh_walk_0.png
 Content\Entities\SpriterEntity\player.scml
+Content\Entities\SpriterEntity\rotationtest.scml
+Content\Entities\SpriterEntity\square.png
 Content\Entities\SpriterEntity\torso\p_torso_front.png
 Content\Entities\SpriterEntity\torso\p_torso_idle.png
 Content\Entities\SpriterEntity\torso\p_torso_jump.png

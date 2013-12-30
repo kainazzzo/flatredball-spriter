@@ -298,6 +298,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>player</Name>
     </None>
+    <None Include="Entities\SpriterEntity\rotationtest.scml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>rotationtest</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\square.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>square</Name>
+    </None>
     <None Include="Entities\SpriterEntity\torso\p_torso_front.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>p_torso_front</Name>

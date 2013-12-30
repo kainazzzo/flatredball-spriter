@@ -32,13 +32,17 @@ namespace spritertestgame.Entities
 		private void CustomInitialize()
 		{
 
-            SpriterInstance.StartAnimation("walk");
+            SpriterInstance.StartAnimation();
 		}
 
 		private void CustomActivity()
 		{
-		    Debugger.Write(MathHelper.ToDegrees(SpriterInstance.ObjectList[26].RotationZ));
-
+		    //Debugger.Write(MathHelper.ToDegrees(SpriterInstance.ObjectList[26].RotationZ));
+            Debugger.Write(string.Format("Seconds into animation: {0}", SpriterInstance.SecondsIn));
+		    if (SpriterInstance.SecondsIn > 0f && SpriterInstance.SecondsIn < .01f)
+		    {
+		        var x = 0;
+		    }
 		}
 
 		private void CustomDestroy()

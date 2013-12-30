@@ -419,6 +419,12 @@ namespace FlatRedBall_Spriter
         /// <remarks/>
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
+
+        [XmlAttribute(AttributeName = "object_type")]
+        public string ObjectType { get; set; }
+
+        [XmlAttribute(AttributeName = "obj")]
+        public string ObjectId { get; set; }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]

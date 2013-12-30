@@ -22,7 +22,7 @@ namespace FlatRedBall_Spriter
 
         public SpriterObject ToRuntime()
         {
-            var SpriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
+            var spriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
 
             IDictionary<string, string> filenames = new Dictionary<string, string>();
             IDictionary<int, ScaledSprite> persistentScaledSprites = new Dictionary<int, ScaledSprite>();
@@ -54,23 +54,23 @@ namespace FlatRedBall_Spriter
                 {
 
                     var keyFrame = new KeyFrame { Time = key.Time / 1000.0f };
-
+                    
                     // If it's a ScaledSprite (not a bone)
                     if (key.ObjectRef != null)
                     {
-                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentScaledSprites, SpriterObject, animation, textures, keyFrame, keyFrameValuesParentDictionary);
+                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentScaledSprites, spriterObject, animation, textures, keyFrame, keyFrameValuesParentDictionary);
                     }
                     
                     // If it's a bone (not a ScaledSprite)
                     if (key.BoneRef != null)
                     {
-                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, SpriterObject, animation, keyFrame, boneRefDic, keyFrameValuesParentDictionary);
+                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame, boneRefDic, keyFrameValuesParentDictionary);
                     }
 
                     keyFrameList.Add(keyFrame);
                 }
 
-                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, SpriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic);
+                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic);
 
                 // find all the keyframevalues, and look up the bone id, then take that bone id and 
                 // set the parent in the keyframevalues variable to the ScaledPositionedObject in the boneRefDic
@@ -84,16 +84,16 @@ namespace FlatRedBall_Spriter
                     }
                     else if (pair.Key.GetType() != typeof(ScaledSprite))
                     {
-                        pair.Value.Parent = SpriterObject;
+                        pair.Value.Parent = spriterObject;
                     }
                 }
 
                 var SpriterObjectAnimation = new SpriterObjectAnimation(animation.Name,
                                                                         animation.Looping, animation.Length / 1000.0f,
                                                                         keyFrameList);
-                SpriterObject.Animations[animation.Name] = SpriterObjectAnimation;
+                spriterObject.Animations[animation.Name] = SpriterObjectAnimation;
             }
-            return SpriterObject;
+            return spriterObject;
         }
 
         private void HandleUnreferencedTimelinekeys(SpriterDataEntityAnimation animation, SpriterDataEntityAnimationMainline mainline,
@@ -164,6 +164,14 @@ namespace FlatRedBall_Spriter
 
                 var timeline = animation.Timeline.Single(t => t.Id == boneRef.Timeline);
                 var timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == boneRef.Key);
+                if (timelineKeyOverride == null && key.Time != timelineKey.Time)
+                {
+                    var nextTimelineKey = timeline.Key.FirstOrDefault(k => k.Id == boneRef.Key + 1);
+                    if (nextTimelineKey != null)
+                    {
+                        timelineKey = InterpolateToNewTimelineKey(key.Time, timelineKey, nextTimelineKey);
+                    }
+                }
 
                 var timelineKeyBone = new KeyBone(timelineKey.Bone);
 
@@ -185,8 +193,57 @@ namespace FlatRedBall_Spriter
                 }
             }
         }
+        public static float GetPercentageIntoFrame(int milliSecondsIn, int currentKeyFrameTime, int nextKeyFrameTime)
+        {
 
-        
+            float retVal = (milliSecondsIn - currentKeyFrameTime) / (float)(nextKeyFrameTime - currentKeyFrameTime);
+            if (float.IsInfinity(retVal) || float.IsNaN(retVal))
+            {
+                return 0.0f;
+            }
+            else
+            {
+                return retVal;
+            }
+        }
+
+        private static Key InterpolateToNewTimelineKey(int time, Key timelineKey, Key nextTimelineKey)
+        {
+            var percent = GetPercentageIntoFrame(time, timelineKey.Time, nextTimelineKey.Time);
+            return new Key
+            {
+                Bone = timelineKey.Bone == null
+                    ? null
+                    : new KeyBone
+                    {
+                        Angle = MathHelper.Lerp(timelineKey.Bone.Angle, nextTimelineKey.Bone.Angle, percent),
+                        ScaleX = MathHelper.Lerp(timelineKey.Bone.ScaleX, nextTimelineKey.Bone.ScaleX, percent),
+                        ScaleY = MathHelper.Lerp(timelineKey.Bone.ScaleY, nextTimelineKey.Bone.ScaleY, percent),
+                        X = MathHelper.Lerp(timelineKey.Bone.X, nextTimelineKey.Bone.X, percent),
+                        Y = MathHelper.Lerp(timelineKey.Bone.Y, nextTimelineKey.Bone.Y, percent)
+                    },
+                Spin = timelineKey.Spin,
+                Object = timelineKey.Object == null
+                    ? null
+                    : new KeyObject
+                    {
+                        Alpha = MathHelper.Lerp(timelineKey.Object.Alpha, nextTimelineKey.Object.Alpha, percent),
+                        Angle = MathHelper.Lerp(timelineKey.Object.Alpha, nextTimelineKey.Object.Alpha, percent),
+                        File = timelineKey.Object.File,
+                        Folder = timelineKey.Object.Folder,
+                        PivotX = !timelineKey.Object.PivotX.HasValue || !nextTimelineKey.Object.PivotX.HasValue ? 
+                            (float?)null : MathHelper.Lerp(timelineKey.Object.PivotX.Value, nextTimelineKey.Object.PivotX.Value, percent),
+                        PivotY = !timelineKey.Object.PivotY.HasValue || !nextTimelineKey.Object.PivotY.HasValue ?
+                            (float?)null : MathHelper.Lerp(timelineKey.Object.PivotY.Value, nextTimelineKey.Object.PivotY.Value, percent),
+                        ScaleX = MathHelper.Lerp(timelineKey.Object.ScaleX, nextTimelineKey.Object.ScaleX, percent),
+                        ScaleY = MathHelper.Lerp(timelineKey.Object.ScaleY, nextTimelineKey.Object.ScaleY, percent),
+                        X = MathHelper.Lerp(timelineKey.Object.X, nextTimelineKey.Object.X, percent),
+                        Y = MathHelper.Lerp(timelineKey.Object.Y, nextTimelineKey.Object.Y, percent)
+                    },
+                Time = time
+            };
+        }
+
 
         private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject,
                                                              SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures,

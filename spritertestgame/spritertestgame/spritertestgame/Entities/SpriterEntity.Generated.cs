@@ -81,7 +81,7 @@ namespace spritertestgame.Entities
 		{
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			SpriterInstance = rotationtest.Clone();
+			SpriterInstance = player.Clone();
 			
 			PostInitialize();
 			if (addToManagers)

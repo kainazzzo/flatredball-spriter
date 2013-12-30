@@ -28,7 +28,7 @@
       <NamedObjects>
         <NamedObjectSave>
           <SourceType>File</SourceType>
-          <SourceFile>Entities/SpriterEntity/rotationtest.scml</SourceFile>
+          <SourceFile>Entities/SpriterEntity/player.scml</SourceFile>
           <SourceName>Entire File (SpriterObject)</SourceName>
           <InstanceName>SpriterInstance</InstanceName>
           <AttachToContainer>true</AttachToContainer>

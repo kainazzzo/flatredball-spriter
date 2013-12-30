@@ -31,7 +31,8 @@ namespace spritertestgame.Entities
 	{
 		private void CustomInitialize()
 		{
-
+		    //TimeManager.TimeFactor = .1;
+		    SpriterInstance.RenderBones = true;
             SpriterInstance.StartAnimation();
 		}
 
@@ -39,7 +40,7 @@ namespace spritertestgame.Entities
 		{
 		    //Debugger.Write(MathHelper.ToDegrees(SpriterInstance.ObjectList[26].RotationZ));
             Debugger.Write(string.Format("Seconds into animation: {0}", SpriterInstance.SecondsIn));
-		    if (SpriterInstance.SecondsIn > 0f && SpriterInstance.SecondsIn < .01f)
+		    if (SpriterInstance.SecondsIn > .5f && SpriterInstance.SecondsIn < .55f)
 		    {
 		        var x = 0;
 		    }

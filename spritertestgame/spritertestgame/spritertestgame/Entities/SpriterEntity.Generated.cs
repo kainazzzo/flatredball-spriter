@@ -50,8 +50,8 @@ namespace spritertestgame.Entities
 		static object mLockObject = new object();
 		static List<string> mRegisteredUnloads = new List<string>();
 		static List<string> LoadedContentManagers = new List<string>();
-		protected static FlatRedBall_Spriter.SpriterObject player;
 		protected static FlatRedBall_Spriter.SpriterObject rotationtest;
+		protected static FlatRedBall_Spriter.SpriterObject player;
 		
 		private FlatRedBall_Spriter.SpriterObject SpriterInstance;
 		protected Layer LayerProvidedByContainer = null;
@@ -195,16 +195,16 @@ namespace spritertestgame.Entities
 						mRegisteredUnloads.Add(ContentManagerName);
 					}
 				}
-				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/spriterentity/player.scml", ContentManagerName))
-				{
-					registerUnload = true;
-				}
-				player = SpriterObjectSave.FromFile("content/entities/spriterentity/player.scml").ToRuntime();
 				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/spriterentity/rotationtest.scml", ContentManagerName))
 				{
 					registerUnload = true;
 				}
 				rotationtest = SpriterObjectSave.FromFile("content/entities/spriterentity/rotationtest.scml").ToRuntime();
+				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/spriterentity/player.scml", ContentManagerName))
+				{
+					registerUnload = true;
+				}
+				player = SpriterObjectSave.FromFile("content/entities/spriterentity/player.scml").ToRuntime();
 			}
 			if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 			{
@@ -228,15 +228,15 @@ namespace spritertestgame.Entities
 			}
 			if (LoadedContentManagers.Count == 0)
 			{
-				if (player != null)
-				{
-					player.Destroy();
-					player= null;
-				}
 				if (rotationtest != null)
 				{
 					rotationtest.Destroy();
 					rotationtest= null;
+				}
+				if (player != null)
+				{
+					player.Destroy();
+					player= null;
 				}
 			}
 		}
@@ -245,10 +245,10 @@ namespace spritertestgame.Entities
 		{
 			switch(memberName)
 			{
-				case  "player":
-					return player;
 				case  "rotationtest":
 					return rotationtest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}
@@ -256,10 +256,10 @@ namespace spritertestgame.Entities
 		{
 			switch(memberName)
 			{
-				case  "player":
-					return player;
 				case  "rotationtest":
 					return rotationtest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}
@@ -267,10 +267,10 @@ namespace spritertestgame.Entities
 		{
 			switch(memberName)
 			{
-				case  "player":
-					return player;
 				case  "rotationtest":
 					return rotationtest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}

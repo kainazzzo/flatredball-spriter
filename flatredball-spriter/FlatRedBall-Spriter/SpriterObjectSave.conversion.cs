@@ -221,7 +221,7 @@ namespace FlatRedBall_Spriter
                         X = MathHelper.Lerp(timelineKey.Bone.X, nextTimelineKey.Bone.X, percent),
                         Y = MathHelper.Lerp(timelineKey.Bone.Y, nextTimelineKey.Bone.Y, percent)
                     },
-                Spin = timelineKey.Spin,
+                Spin = 0,
                 Object = timelineKey.Object == null
                     ? null
                     : new KeyObject

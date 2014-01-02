@@ -28,7 +28,7 @@
       <NamedObjects>
         <NamedObjectSave>
           <SourceType>File</SourceType>
-          <SourceFile>Entities/SpriterEntity/rotationtest.scml</SourceFile>
+          <SourceFile>Entities/SpriterEntity/player.scml</SourceFile>
           <SourceName>Entire File (SpriterObject)</SourceName>
           <InstanceName>SpriterInstance</InstanceName>
           <AttachToContainer>true</AttachToContainer>
@@ -38,6 +38,11 @@
       <ReferencedFiles>
         <ReferencedFileSave>
           <Name>Entities/SpriterEntity/rotationtest.scml</Name>
+          <IsSharedStatic>true</IsSharedStatic>
+          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
+        </ReferencedFileSave>
+        <ReferencedFileSave>
+          <Name>Entities/SpriterEntity/player.scml</Name>
           <IsSharedStatic>true</IsSharedStatic>
           <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
         </ReferencedFileSave>

@@ -42,6 +42,262 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Entities\SpriterEntity\arms\p_arm_idle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_arm_idle</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_arm_idle_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_arm_idle_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_arm_slide_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_arm_slide_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_arm_throw_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_arm_throw_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_arm_walk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_arm_walk</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_forarm_idle_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_forarm_idle_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_forarm_idle_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_forarm_idle_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_forarm_jump_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_forarm_jump_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_forarm_side_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_forarm_side_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_forarm_under_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_forarm_under_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\p_forarm_walk_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_forarm_walk_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\arms\throw_blur_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>throw_blur_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\feet\p_foot_hit_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_foot_hit_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\feet\p_foot_hot_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_foot_hot_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\feet\p_foot_idle_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_foot_idle_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\feet\p_foot_jump_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_foot_jump_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\feet\p_foot_walk_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_foot_walk_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\feet\p_foot_walk_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_foot_walk_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_1</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_2</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_a_edge.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_a_edge</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_b</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_c</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_edge_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_edge_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_float_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_float_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_hang_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_hang_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_hang_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_hang_1</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_hang_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_hang_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_hit_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_hit_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_hit_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_hit_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_idle_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_idle_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_jump_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_jump_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_prepunch_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_prepunch_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_prepunch_x.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_prepunch_x</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_punch_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_punch_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_push_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_push_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_push_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_push_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_slide_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_slide_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_hand_throw_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_hand_throw_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\hands\p_punch_blur.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_punch_blur</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_blink_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_blink_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_blink_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_blink_1</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_concern.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_concern</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_concern_blink_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_concern_blink_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_concern_blink_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_concern_blink_1</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_die.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_die</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_hurt.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_hurt</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_idle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_idle</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_idle_blink_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_idle_blink_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_idle_blink_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_idle_blink_1</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_push.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_push</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_turn_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_turn_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\head\p_head_walk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_head_walk</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_leg_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_leg_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_leg_idle_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_leg_idle_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_leg_walk_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_leg_walk_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_pelvis_die.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_pelvis_die</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_pelvis_idle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_pelvis_idle</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_pelvis_walk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_pelvis_walk</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_thigh_a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_thigh_a</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_thigh_idle_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_thigh_idle_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\legs\p_thigh_walk_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_thigh_walk_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\player.scml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>player</Name>
+    </None>
     <None Include="Entities\SpriterEntity\rotationtest.scml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>rotationtest</Name>
@@ -49,6 +305,26 @@
     <None Include="Entities\SpriterEntity\square.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Name>square</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\torso\p_torso_front.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_torso_front</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\torso\p_torso_idle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_torso_idle</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\torso\p_torso_jump.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_torso_jump</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\torso\p_torso_punch_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_torso_punch_0</Name>
+    </None>
+    <None Include="Entities\SpriterEntity\torso\p_torso_walk.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>p_torso_walk</Name>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

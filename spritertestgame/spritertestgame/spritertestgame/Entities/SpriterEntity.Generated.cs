@@ -51,6 +51,7 @@ namespace spritertestgame.Entities
 		static List<string> mRegisteredUnloads = new List<string>();
 		static List<string> LoadedContentManagers = new List<string>();
 		protected static FlatRedBall_Spriter.SpriterObject rotationtest;
+		protected static FlatRedBall_Spriter.SpriterObject player;
 		
 		private FlatRedBall_Spriter.SpriterObject SpriterInstance;
 		protected Layer LayerProvidedByContainer = null;
@@ -80,7 +81,7 @@ namespace spritertestgame.Entities
 		{
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
-			SpriterInstance = rotationtest.Clone();
+			SpriterInstance = player.Clone();
 			
 			PostInitialize();
 			if (addToManagers)
@@ -199,6 +200,11 @@ namespace spritertestgame.Entities
 					registerUnload = true;
 				}
 				rotationtest = SpriterObjectSave.FromFile("content/entities/spriterentity/rotationtest.scml").ToRuntime();
+				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/spriterentity/player.scml", ContentManagerName))
+				{
+					registerUnload = true;
+				}
+				player = SpriterObjectSave.FromFile("content/entities/spriterentity/player.scml").ToRuntime();
 			}
 			if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 			{
@@ -227,6 +233,11 @@ namespace spritertestgame.Entities
 					rotationtest.Destroy();
 					rotationtest= null;
 				}
+				if (player != null)
+				{
+					player.Destroy();
+					player= null;
+				}
 			}
 		}
 		[System.Obsolete("Use GetFile instead")]
@@ -236,6 +247,8 @@ namespace spritertestgame.Entities
 			{
 				case  "rotationtest":
 					return rotationtest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}
@@ -245,6 +258,8 @@ namespace spritertestgame.Entities
 			{
 				case  "rotationtest":
 					return rotationtest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}
@@ -254,6 +269,8 @@ namespace spritertestgame.Entities
 			{
 				case  "rotationtest":
 					return rotationtest;
+				case  "player":
+					return player;
 			}
 			return null;
 		}

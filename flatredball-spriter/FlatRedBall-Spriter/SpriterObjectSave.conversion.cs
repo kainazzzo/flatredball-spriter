@@ -166,11 +166,9 @@ namespace FlatRedBall_Spriter
                 var timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == boneRef.Key);
                 if (timelineKeyOverride == null && key.Time != timelineKey.Time)
                 {
-                    var nextTimelineKey = timeline.Key.FirstOrDefault(k => k.Id == boneRef.Key + 1);
-                    if (nextTimelineKey != null)
-                    {
-                        timelineKey = InterpolateToNewTimelineKey(key.Time, timelineKey, nextTimelineKey);
-                    }
+                    var nextTimelineKey = timeline.Key.FirstOrDefault(k => k.Time > key.Time) ?? new Key(timeline.Key.First()) { Time = animation.Length };
+
+                    timelineKey = InterpolateToNewTimelineKey(key, timelineKey, nextTimelineKey);
                 }
 
                 var timelineKeyBone = new KeyBone(timelineKey.Bone);
@@ -207,8 +205,9 @@ namespace FlatRedBall_Spriter
             }
         }
 
-        private static Key InterpolateToNewTimelineKey(int time, Key timelineKey, Key nextTimelineKey)
+        private static Key InterpolateToNewTimelineKey(Key mainlineKey, Key timelineKey, Key nextTimelineKey)
         {
+            var time = mainlineKey.Time;
             var percent = GetPercentageIntoFrame(time, timelineKey.Time, nextTimelineKey.Time);
             return new Key
             {
@@ -228,7 +227,7 @@ namespace FlatRedBall_Spriter
                     : new KeyObject
                     {
                         Alpha = MathHelper.Lerp(timelineKey.Object.Alpha, nextTimelineKey.Object.Alpha, percent),
-                        Angle = MathHelper.Lerp(timelineKey.Object.Alpha, nextTimelineKey.Object.Alpha, percent),
+                        Angle = MathHelper.Lerp(timelineKey.Object.Angle, nextTimelineKey.Object.Angle, percent),
                         File = timelineKey.Object.File,
                         Folder = timelineKey.Object.Folder,
                         PivotX = !timelineKey.Object.PivotX.HasValue || !nextTimelineKey.Object.PivotX.HasValue ? 
@@ -257,6 +256,13 @@ namespace FlatRedBall_Spriter
 
                 var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
                 Key timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == objectRef.Key);
+                if (timelineKeyOverride == null && key.Time != timelineKey.Time)
+                {
+                    var nextTimelineKey = timeline.Key.FirstOrDefault(k => k.Time > key.Time) ?? new Key(timeline.Key.First()) { Time = animation.Length };
+
+                    timelineKey = InterpolateToNewTimelineKey(key, timelineKey, nextTimelineKey);
+                }
+
                 var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder,
                                                  timelineKey.Object.File);
                 var file =
@@ -378,6 +384,82 @@ namespace FlatRedBall_Spriter
             sos.TextureLoader = new FlatRedBallTextureLoader();
 
             return sos;
+        }
+    }
+
+    public partial class Key
+    {
+        public Key()
+        {
+        }
+
+        public Key(Key that)
+        {
+            if (that.Bone != null)
+            {
+                Bone = new KeyBone
+                {
+                    Angle = that.Bone.Angle,
+                    ScaleX = that.Bone.ScaleX,
+                    ScaleY = that.Bone.ScaleY,
+                    X = that.Bone.X,
+                    Y = that.Bone.Y
+                };
+            }
+
+            if (that.BoneRef != null)
+            {
+                BoneRef = new List<KeyBoneRef>();
+                foreach (var keyBoneRef in that.BoneRef)
+                {
+                    BoneRef.Add(new KeyBoneRef
+                    {
+                        Id = keyBoneRef.Id,
+                        Key = keyBoneRef.Key,
+                        Parent = keyBoneRef.Parent,
+                        Timeline = keyBoneRef.Timeline
+                    });
+                }
+            }
+
+            Id = that.Id;
+
+            if (that.Object != null)
+            {
+                this.Object = new KeyObject
+                {
+                    Alpha = that.Object.Alpha,
+                    Angle = that.Object.Angle,
+                    File = that.Object.File,
+                    Folder = that.Object.Folder,
+                    PivotX = that.Object.PivotX,
+                    PivotY = that.Object.PivotY,
+                    ScaleX = that.Object.ScaleX,
+                    ScaleY = that.Object.ScaleY,
+                    X = that.Object.X,
+                    Y = that.Object.Y
+                };
+            }
+
+            if (that.ObjectRef != null)
+            {
+                ObjectRef = new List<KeyObjectRef>();
+                foreach (var keyObjectRef in that.ObjectRef)
+                {
+                    ObjectRef.Add(new KeyObjectRef
+                    {
+                        Id = keyObjectRef.Id,
+                        Key = keyObjectRef.Key,
+                        Name = keyObjectRef.Name,
+                        Parent = keyObjectRef.Parent,
+                        Timeline = keyObjectRef.Timeline,
+                        ZIndex = keyObjectRef.ZIndex
+                    });
+                }
+            }
+
+            Spin = that.Spin;
+            Time = that.Time;
         }
     }
 }

@@ -28,15 +28,20 @@
                     <bone_ref id="1" parent="0" timeline="1" key="2"/>
                     <object_ref id="0" parent="1" timeline="2" key="2" z_index="0"/>
                 </key>
-                <key id="4" time="2587">
+                <key id="4" time="2352">
                     <bone_ref id="0" timeline="0" key="1"/>
                     <bone_ref id="1" parent="0" timeline="1" key="2"/>
                     <object_ref id="0" parent="1" timeline="2" key="3" z_index="0"/>
                 </key>
-                <key id="5" time="2790">
+                <key id="5" time="2587">
                     <bone_ref id="0" timeline="0" key="1"/>
                     <bone_ref id="1" parent="0" timeline="1" key="2"/>
-                    <object_ref id="0" parent="1" timeline="2" key="3" z_index="0"/>
+                    <object_ref id="0" parent="1" timeline="2" key="4" z_index="0"/>
+                </key>
+                <key id="6" time="2790">
+                    <bone_ref id="0" timeline="0" key="1"/>
+                    <bone_ref id="1" parent="0" timeline="1" key="2"/>
+                    <object_ref id="0" parent="1" timeline="2" key="4" z_index="0"/>
                 </key>
             </mainline>
             <timeline id="0" obj="0" name="bone_000" object_type="bone">
@@ -59,8 +64,8 @@
                 </key>
             </timeline>
             <timeline id="2" name="square">
-                <key id="0" spin="0">
-                    <object folder="0" file="0" x="100" angle="0"/>
+                <key id="0">
+                    <object folder="0" file="0" x="100" angle="326.111"/>
                 </key>
                 <key id="1" time="1000" spin="0">
                     <object folder="0" file="0" x="100" angle="0"/>
@@ -68,7 +73,10 @@
                 <key id="2" time="2000" spin="0">
                     <object folder="0" file="0" x="100" angle="0"/>
                 </key>
-                <key id="3" time="2587" spin="0">
+                <key id="3" time="2352" spin="0">
+                    <object folder="0" file="0" x="100" angle="0"/>
+                </key>
+                <key id="4" time="2587" spin="-1">
                     <object folder="0" file="0" x="100" angle="0"/>
                 </key>
             </timeline>

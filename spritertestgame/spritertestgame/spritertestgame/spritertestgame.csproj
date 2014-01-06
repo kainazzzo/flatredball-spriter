@@ -134,18 +134,6 @@
     <Compile Include="Entities\SpriterEntity.Generated.cs">
       <DependentUpon>SpriterEntity.cs</DependentUpon>
     </Compile>
-    <Compile Include="FRBSpriter\conversion.cs" />
-    <Compile Include="FRBSpriter\FlatRedBallTextureLoader.cs" />
-    <Compile Include="FRBSpriter\IRelativeScalable.cs" />
-    <Compile Include="FRBSpriter\ITextureLoader.cs" />
-    <Compile Include="FRBSpriter\KeyFrame.cs" />
-    <Compile Include="FRBSpriter\KeyFrameValues.cs" />
-    <Compile Include="FRBSpriter\ScaledPositionedObject.cs" />
-    <Compile Include="FRBSpriter\ScaledPositionedObjectExtensions.cs" />
-    <Compile Include="FRBSpriter\ScaledSprite.cs" />
-    <Compile Include="FRBSpriter\serialization.cs" />
-    <Compile Include="FRBSpriter\SpriterObject.cs" />
-    <Compile Include="FRBSpriter\SpriterObjectAnimation.cs" />
     <Compile Include="GlobalContent.Generated.cs" />
     <Compile Include="Performance\IEntityFactory.Generated.cs" />
     <Compile Include="Performance\IPoolable.Generated.cs" />
@@ -158,6 +146,18 @@
       <DependentUpon>test.cs</DependentUpon>
     </Compile>
     <Compile Include="Setup\CameraSetup.cs" />
+    <Compile Include="SpriterPlugin\conversion.cs" />
+    <Compile Include="SpriterPlugin\FlatRedBallTextureLoader.cs" />
+    <Compile Include="SpriterPlugin\IRelativeScalable.cs" />
+    <Compile Include="SpriterPlugin\ITextureLoader.cs" />
+    <Compile Include="SpriterPlugin\KeyFrame.cs" />
+    <Compile Include="SpriterPlugin\KeyFrameValues.cs" />
+    <Compile Include="SpriterPlugin\ScaledPositionedObject.cs" />
+    <Compile Include="SpriterPlugin\ScaledPositionedObjectExtensions.cs" />
+    <Compile Include="SpriterPlugin\ScaledSprite.cs" />
+    <Compile Include="SpriterPlugin\serialization.cs" />
+    <Compile Include="SpriterPlugin\SpriterObject.cs" />
+    <Compile Include="SpriterPlugin\SpriterObjectAnimation.cs" />
     <Compile Include="TileCollisions\TileShapeCollection.cs" />
     <Compile Include="TileGraphics\AnimationChainContainer.cs" />
     <Compile Include="TileGraphics\LayeredTileMap.cs" />
@@ -205,18 +205,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\flatredball-spriter-test\flatredball-spriter-test.csproj">
-      <Project>{FEB70393-A1C4-433A-AE50-8B16B276EAE3}</Project>
-      <Name>flatredball-spriter-test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">
-      <Project>{1A1A158C-5EDE-4750-8BD0-62FAEB1C21DD}</Project>
-      <Name>FlatRedBall-Spriter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\FlatRedBallExtensions\FlatRedBallExtensions.csproj">
-      <Project>{D4D59D5B-C3AE-48C8-9113-7EBD09FD721B}</Project>
-      <Name>FlatRedBallExtensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\spritertestgameContent\spritertestgameContent.contentproj">
       <Project>{64B23BEF-DD26-4B81-AAA6-D9F46B0140B4}</Project>
       <Name>spritertestgameContent %28Content%29</Name>

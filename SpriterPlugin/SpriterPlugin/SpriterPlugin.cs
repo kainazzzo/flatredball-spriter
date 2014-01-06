@@ -72,21 +72,23 @@ namespace SpriterPlugin
                 CanIgnorePausing = false
             });
 
-            _itemAdder = new CodeBuildItemAdder();
-            _itemAdder.Add("FlatRedBallTextureLoader.cs");
-            _itemAdder.Add("ITextureLoader.cs");
-            _itemAdder.Add("KeyFrame.cs");
-            _itemAdder.Add("KeyFrameValues.cs");
-            _itemAdder.Add("SpriterObject.cs");
-            _itemAdder.Add("SpriterObjectAnimation.cs");
-            _itemAdder.Add("SpriterObjectSave.conversion.cs");
-            _itemAdder.Add("SpriterObjectSave.serialization.cs");
-            _itemAdder.Add("IRelativeScalable.cs");
-            _itemAdder.Add("ScaledPositionedObject.cs");
-            _itemAdder.Add("ScaledPositionedObjectExtensions.cs");
-            _itemAdder.Add("ScaledSprite.cs");
+            _itemAdder = new CodeBuildItemAdder {AddFileBehavior = AddFileBehavior.AlwaysCopy};
 
-            _itemAdder.OutputFolderInProject = "FRBSpriter";
+
+            _itemAdder.Add("SpriterPlugin.FlatRedBallTextureLoader.cs");
+            _itemAdder.Add("SpriterPlugin.ITextureLoader.cs");
+            _itemAdder.Add("SpriterPlugin.KeyFrame.cs");
+            _itemAdder.Add("SpriterPlugin.KeyFrameValues.cs");
+            _itemAdder.Add("SpriterPlugin.SpriterObject.cs");
+            _itemAdder.Add("SpriterPlugin.SpriterObjectAnimation.cs");
+            _itemAdder.Add("SpriterPlugin.SpriterObjectSave.conversion.cs");
+            _itemAdder.Add("SpriterPlugin.SpriterObjectSave.serialization.cs");
+            _itemAdder.Add("SpriterPlugin.IRelativeScalable.cs");
+            _itemAdder.Add("SpriterPlugin.ScaledPositionedObject.cs");
+            _itemAdder.Add("SpriterPlugin.ScaledPositionedObjectExtensions.cs");
+            _itemAdder.Add("SpriterPlugin.ScaledSprite.cs");
+
+            _itemAdder.OutputFolderInProject = "SpriterPlugin";
 
             // Add the following code to your StartUp method:
             ReactToLoadedGlux += HandleGluxLoad;

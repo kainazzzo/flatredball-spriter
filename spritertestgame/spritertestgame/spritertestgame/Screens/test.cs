@@ -16,7 +16,7 @@ using FlatRedBall.Math.Geometry;
 using FlatRedBall.Math.Splines;
 using FlatRedBallExtensions;
 using FlatRedBall_Spriter;
-using flatredball_spriter_test;
+
 using Microsoft.Xna.Framework;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;

@@ -207,6 +207,7 @@ namespace FlatRedBall_Spriter
 
         private static Key InterpolateToNewTimelineKey(Key mainlineKey, Key timelineKey, Key nextTimelineKey)
         {
+            
             var time = mainlineKey.Time;
             var percent = GetPercentageIntoFrame(time, timelineKey.Time, nextTimelineKey.Time);
             return new Key
@@ -215,19 +216,19 @@ namespace FlatRedBall_Spriter
                     ? null
                     : new KeyBone
                     {
-                        Angle = MathHelper.Lerp(timelineKey.Bone.Angle, nextTimelineKey.Bone.Angle, percent),
+                        Angle = LinearAngle(timelineKey.Bone.Angle, nextTimelineKey.Bone.Angle, timelineKey.Spin, percent),
                         ScaleX = MathHelper.Lerp(timelineKey.Bone.ScaleX, nextTimelineKey.Bone.ScaleX, percent),
                         ScaleY = MathHelper.Lerp(timelineKey.Bone.ScaleY, nextTimelineKey.Bone.ScaleY, percent),
                         X = MathHelper.Lerp(timelineKey.Bone.X, nextTimelineKey.Bone.X, percent),
                         Y = MathHelper.Lerp(timelineKey.Bone.Y, nextTimelineKey.Bone.Y, percent)
                     },
-                Spin = 0,
+                Spin = timelineKey.Spin,
                 Object = timelineKey.Object == null
                     ? null
                     : new KeyObject
                     {
                         Alpha = MathHelper.Lerp(timelineKey.Object.Alpha, nextTimelineKey.Object.Alpha, percent),
-                        Angle = MathHelper.Lerp(timelineKey.Object.Angle, nextTimelineKey.Object.Angle, percent),
+                        Angle = LinearAngle(timelineKey.Object.Angle, nextTimelineKey.Object.Angle, timelineKey.Spin, percent),
                         File = timelineKey.Object.File,
                         Folder = timelineKey.Object.Folder,
                         PivotX = !timelineKey.Object.PivotX.HasValue || !nextTimelineKey.Object.PivotX.HasValue ? 
@@ -243,6 +244,30 @@ namespace FlatRedBall_Spriter
             };
         }
 
+        private static float LinearAngle(float angleA, float angleB, int spin, float percent)
+        {
+            if (spin == 0)
+            {
+                return angleA;
+            }
+            if (spin > 0)
+            {
+                if ((angleB - angleA) < 0)
+                {
+                    angleB += 360;
+                }
+            }
+            else if (spin < 0)
+            {
+                if ((angleB - angleA) > 0)
+                {
+                    angleB -= 360;
+                }
+            }
+
+            return MathHelper.Lerp(angleA, angleB, percent);
+        }
+
 
         private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject,
                                                              SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures,
@@ -251,7 +276,7 @@ namespace FlatRedBall_Spriter
         {
             foreach (var objectRef in key.ObjectRef)
             {
-                ScaledSprite ScaledSprite;
+                ScaledSprite scaledSprite;
                 ScaledPositionedObject pivot;
 
                 var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
@@ -272,21 +297,21 @@ namespace FlatRedBall_Spriter
 
                 if (persistentScaledSprites.ContainsKey(objectRef.Id))
                 {
-                    ScaledSprite = persistentScaledSprites[objectRef.Id];
-                    pivot = (ScaledPositionedObject)ScaledSprite.Parent;
+                    scaledSprite = persistentScaledSprites[objectRef.Id];
+                    pivot = (ScaledPositionedObject)scaledSprite.Parent;
                 }
                 else
                 {
                     var name = objectRef.Name ?? objectRef.Id.ToString(CultureInfo.InvariantCulture);
                     pivot = new ScaledPositionedObject { Name = string.Format("{0}_pivot", name) };
 
-                    ScaledSprite = new ScaledSprite {Name = string.Format("{0}_sprite", name), Width = file.Width, Height = file.Height, ParentScaleChangesPosition = false};
+                    scaledSprite = new ScaledSprite {Name = string.Format("{0}_sprite", name), Width = file.Width, Height = file.Height, ParentScaleChangesPosition = false};
 
-                    ScaledSprite.AttachTo(pivot, true);
+                    scaledSprite.AttachTo(pivot, true);
                     pivot.AttachTo(SpriterObject, true);
 
-                    persistentScaledSprites[objectRef.Id] = ScaledSprite;
-                    SpriterObject.ObjectList.Add(ScaledSprite);
+                    persistentScaledSprites[objectRef.Id] = scaledSprite;
+                    SpriterObject.ObjectList.Add(scaledSprite);
                     SpriterObject.ObjectList.Add(pivot);
                 }
 
@@ -303,7 +328,7 @@ namespace FlatRedBall_Spriter
                 }
 
                 keyFrame.Values[pivot] = values.Pivot;
-                keyFrame.Values[ScaledSprite] = values.ScaledSprite;
+                keyFrame.Values[scaledSprite] = values.ScaledSprite;
             }
         }
 

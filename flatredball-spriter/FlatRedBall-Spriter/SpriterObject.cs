@@ -261,7 +261,7 @@ namespace FlatRedBall_Spriter
             {
                 angleB += 360f;
             }
-            else if (spin == -1 && angleB - angleA >= 0)
+            else if (spin == -1 && angleB - angleA > 0)
             {
                 angleB -= 360f;
             }

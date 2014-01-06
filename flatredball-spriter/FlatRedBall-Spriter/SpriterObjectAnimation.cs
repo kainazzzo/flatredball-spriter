@@ -13,12 +13,12 @@ namespace FlatRedBall_Spriter
             KeyFrames = new List<KeyFrame>(keyFrameList.ToList());
         }
 
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         public List<KeyFrame> KeyFrames { get; private set; } 
 
-        public bool Looping { get; private set; }
+        public bool Looping { get; set; }
 
-        public float TotalTime { get; private set; }
+        public float TotalTime { get; set; }
     }
 }

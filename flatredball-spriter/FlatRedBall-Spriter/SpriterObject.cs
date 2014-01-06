@@ -536,6 +536,11 @@ namespace FlatRedBall_Spriter
         public bool Looping
         {
             get { return CurrentAnimation != null && CurrentAnimation.Looping; }
+            set {
+                if (CurrentAnimation != null)
+                {
+                    CurrentAnimation.Looping = true;
+                } }
         }
 
         public void SetToIgnorePausing()

@@ -134,6 +134,18 @@
     <Compile Include="Entities\SpriterEntity.Generated.cs">
       <DependentUpon>SpriterEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="FRBSpriter\conversion.cs" />
+    <Compile Include="FRBSpriter\FlatRedBallTextureLoader.cs" />
+    <Compile Include="FRBSpriter\IRelativeScalable.cs" />
+    <Compile Include="FRBSpriter\ITextureLoader.cs" />
+    <Compile Include="FRBSpriter\KeyFrame.cs" />
+    <Compile Include="FRBSpriter\KeyFrameValues.cs" />
+    <Compile Include="FRBSpriter\ScaledPositionedObject.cs" />
+    <Compile Include="FRBSpriter\ScaledPositionedObjectExtensions.cs" />
+    <Compile Include="FRBSpriter\ScaledSprite.cs" />
+    <Compile Include="FRBSpriter\serialization.cs" />
+    <Compile Include="FRBSpriter\SpriterObject.cs" />
+    <Compile Include="FRBSpriter\SpriterObjectAnimation.cs" />
     <Compile Include="GlobalContent.Generated.cs" />
     <Compile Include="Performance\IEntityFactory.Generated.cs" />
     <Compile Include="Performance\IPoolable.Generated.cs" />

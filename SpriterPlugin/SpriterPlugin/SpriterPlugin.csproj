@@ -86,6 +86,18 @@
     <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterObjectSave.serialization.cs">
       <Link>SpriterObjectSave.serialization.cs</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\..\FlatRedBallExtensions\IRelativeScalable.cs">
+      <Link>IRelativeScalable.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\FlatRedBallExtensions\ScaledPositionedObject.cs">
+      <Link>ScaledPositionedObject.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\FlatRedBallExtensions\ScaledPositionedObjectExtensions.cs">
+      <Link>ScaledPositionedObjectExtensions.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\FlatRedBallExtensions\ScaledSprite.cs">
+      <Link>ScaledSprite.cs</Link>
+    </EmbeddedResource>
     <Compile Include="SpriterPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

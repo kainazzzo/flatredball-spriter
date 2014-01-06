@@ -31,9 +31,10 @@ namespace spritertestgame.Entities
 	{
 		private void CustomInitialize()
 		{
-		    TimeManager.TimeFactor = .1;
+		    TimeManager.TimeFactor = 1;
             SpriterInstance.RenderBones = true;
             SpriterInstance.StartAnimation("crouch_down");
+		    SpriterInstance.Looping = true;
 		}
 
 		private void CustomActivity()

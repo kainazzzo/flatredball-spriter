@@ -34,7 +34,8 @@ namespace spritertestgame.Entities
 		    TimeManager.TimeFactor = 1;
             SpriterInstance.RenderBones = true;
             SpriterInstance.StartAnimation("crouch_down");
-		    SpriterInstance.Looping = true;
+		    //SpriterInstance.Looping = true;
+		    SpriterInstance.AnimationFinished += (animation) => { };
 		}
 
 		private void CustomActivity()

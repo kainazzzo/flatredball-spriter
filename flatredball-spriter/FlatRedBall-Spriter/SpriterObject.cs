@@ -117,6 +117,7 @@ namespace FlatRedBall_Spriter
                     var line = Lines[index];
                     ShapeManager.Remove(line);
                 }
+                Lines.Clear();
             }
             else if (Lines.Count == 0)
             {
@@ -184,12 +185,10 @@ namespace FlatRedBall_Spriter
                 {
                     if (SecondsIn >= AnimationTotalTime)
                     {
-                        ClearAllTextures();
-
                         if (!Looping)
                         {
-                            ResetAnimation();
                             Animating = false;
+                            OnAnimationFinished(CurrentAnimation);
                         }
                         else
                         {
@@ -618,6 +617,14 @@ namespace FlatRedBall_Spriter
         public void AddToManagers()
         {
             AddToManagers(null);
+        }
+
+        public event Action<SpriterObjectAnimation> AnimationFinished;
+
+        private void OnAnimationFinished(SpriterObjectAnimation animation)
+        {
+            Action<SpriterObjectAnimation> handler = AnimationFinished;
+            if (handler != null) handler(animation);
         }
     }
 

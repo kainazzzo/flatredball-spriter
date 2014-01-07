@@ -757,5 +757,40 @@ namespace flatredball_spriter_test
             Assert.IsTrue((new Vector3(64, -16, 0.0003f) - sprite4.Position).Length() < .0001f);
             
         }
+
+        [TestMethod]
+        public void AnimationFinishedEventIsFiredForNonLoopingAnimation()
+        {
+            var so = GetSimpleSpriterObject();
+            SpriterObjectAnimation animation = null;
+
+            so.AnimationFinished += (anim) =>
+            {
+                animation = anim;
+            };
+
+            so.StartAnimation();
+            so.TimedActivity(2.0f, 2, 2.0f);
+
+            Assert.IsNotNull(animation);
+            Assert.AreSame(so.CurrentAnimation, animation);
+        }
+
+        [TestMethod]
+        public void AnimationFinishedEventNotFiredForLoopingAnimation()
+        {
+            var so = GetSimpleSpriterObject(true);
+            SpriterObjectAnimation animation = null;
+
+            so.AnimationFinished += (anim) =>
+            {
+                animation = anim;
+            };
+
+            so.StartAnimation();
+            so.TimedActivity(2.0f, 2, 2.0f);
+
+            Assert.IsNull(animation);
+        }
     }
 }

@@ -72,7 +72,7 @@ namespace SpriterPlugin
                 CanIgnorePausing = false
             });
 
-            _itemAdder = new CodeBuildItemAdder {AddFileBehavior = AddFileBehavior.AlwaysCopy};
+            _itemAdder = new CodeBuildItemAdder();
 
 
             _itemAdder.Add("SpriterPlugin.FlatRedBallTextureLoader.cs");

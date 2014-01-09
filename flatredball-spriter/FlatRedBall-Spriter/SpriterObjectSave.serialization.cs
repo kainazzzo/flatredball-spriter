@@ -364,6 +364,30 @@ namespace FlatRedBall_Spriter
         /// <remarks/>
         [XmlAttribute(AttributeName = "name")]
         public string Name { get; set; }
+
+        [XmlElement("obj_info", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public List<ObjectInfo> ObjectInfos { get; set; } 
+    }
+
+    public partial class ObjectInfo
+    {
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+
+        [XmlAttribute("type")]
+        public string Type { get; set; }
+
+        [XmlAttribute("w")]
+        public int Width { get; set; }
+
+        [XmlAttribute("h")]
+        public int Height { get; set; }
+
+        [XmlAttribute("pivot_x")]
+        public float PivotX { get; set; }
+
+        [XmlAttribute("pivot_y")]
+        public float PivotY { get; set; }
     }
 
     public partial class SpriterDataEntityAnimationMainline

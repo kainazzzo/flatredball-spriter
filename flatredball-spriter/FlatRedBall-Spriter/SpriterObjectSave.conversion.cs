@@ -28,6 +28,7 @@ namespace FlatRedBall_Spriter
             IDictionary<int, ScaledSprite> persistentScaledSprites = new Dictionary<int, ScaledSprite>();
             IDictionary<int, ScaledPositionedObject> persistentBones = new Dictionary<int, ScaledPositionedObject>();
             IDictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+            IDictionary<string, ObjectInfo> boxes = new Dictionary<string, ObjectInfo>();
             IDictionary<int, ScaledPositionedObject> boneRefDic = new Dictionary<int, ScaledPositionedObject>();
             IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary = new Dictionary<KeyFrameValues, int>();
 
@@ -44,8 +45,15 @@ namespace FlatRedBall_Spriter
             }
             FileManager.RelativeDirectory = oldDir;
 
+            var entity = Entity[0];
+            if (entity.ObjectInfos != null)
+            {
+                boxes =
+                    entity.ObjectInfos.Where(oi => oi.Type == "box")
+                        .ToDictionary(s => s.Name);
+            }
 
-            foreach (var animation in Entity[0].Animation)
+            foreach (var animation in entity.Animation)
             {
                 var mainline = animation.Mainline;
                 var keyFrameList = new List<KeyFrame>();
@@ -58,7 +66,7 @@ namespace FlatRedBall_Spriter
                     // If it's a ScaledSprite (not a bone)
                     if (key.ObjectRef != null)
                     {
-                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentScaledSprites, spriterObject, animation, textures, keyFrame, keyFrameValuesParentDictionary);
+                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentScaledSprites, spriterObject, animation, textures, keyFrame, keyFrameValuesParentDictionary, boxes);
                     }
                     
                     // If it's a bone (not a ScaledSprite)
@@ -70,7 +78,7 @@ namespace FlatRedBall_Spriter
                     keyFrameList.Add(keyFrame);
                 }
 
-                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic);
+                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic, boxes);
 
                 // find all the keyframevalues, and look up the bone id, then take that bone id and 
                 // set the parent in the keyframevalues variable to the ScaledPositionedObject in the boneRefDic
@@ -99,7 +107,7 @@ namespace FlatRedBall_Spriter
         private void HandleUnreferencedTimelinekeys(SpriterDataEntityAnimation animation, SpriterDataEntityAnimationMainline mainline,
                                          List<KeyFrame> keyFrameList, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject,
                                          IDictionary<string, Texture2D> textures, IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary,
-                                         IDictionary<int, ScaledPositionedObject> persistentBones, IDictionary<int, ScaledPositionedObject> boneRefDic)
+                                         IDictionary<int, ScaledPositionedObject> persistentBones, IDictionary<int, ScaledPositionedObject> boneRefDic, IDictionary<string, ObjectInfo> boxes)
         {
             foreach (var timeline in animation.Timeline)
             {
@@ -122,8 +130,9 @@ namespace FlatRedBall_Spriter
                             {
                                 CreateRuntimeObjectsForSpriterObjectRef(mainlineKey, persistentScaledSprites,
                                                                         SpriterObject, animation, textures, keyFrame,
-                                                                        keyFrameValuesParentDictionary, timelineKey);
+                                                                        keyFrameValuesParentDictionary, boxes, timelineKey);
                             }
+
 
                             if (mainlineKey.BoneRef != null && timelineKey.Bone != null)
                             {
@@ -272,63 +281,76 @@ namespace FlatRedBall_Spriter
         private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject,
                                                              SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures,
                                                              KeyFrame keyFrame, IDictionary<KeyFrameValues, int> SpriterefParentDic,
-                                                             Key timelineKeyOverride = null)
+            IDictionary<string, ObjectInfo> boxes,
+            Key timelineKeyOverride = null)
         {
             foreach (var objectRef in key.ObjectRef)
             {
-                ScaledSprite scaledSprite;
-                ScaledPositionedObject pivot;
-
                 var timeline = animation.Timeline.Single(t => t.Id == objectRef.Timeline);
                 Key timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == objectRef.Key);
                 if (timelineKeyOverride == null && key.Time != timelineKey.Time)
                 {
-                    var nextTimelineKey = timeline.Key.FirstOrDefault(k => k.Time > key.Time) ?? new Key(timeline.Key.First()) { Time = animation.Length };
+                    var nextTimelineKey = timeline.Key.FirstOrDefault(k => k.Time > key.Time) ??
+                                          new Key(timeline.Key.First()) { Time = animation.Length };
 
                     timelineKey = InterpolateToNewTimelineKey(key, timelineKey, nextTimelineKey);
                 }
 
-                var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder,
-                                                 timelineKey.Object.File);
-                var file =
-                    this.Folder.First(f => f.Id == timelineKey.Object.Folder)
-                        .File.First(f => f.Id == timelineKey.Object.File);
-
-
-                if (persistentScaledSprites.ContainsKey(objectRef.Id))
+                if (timeline.ObjectType == "box")
                 {
-                    scaledSprite = persistentScaledSprites[objectRef.Id];
-                    pivot = (ScaledPositionedObject)scaledSprite.Parent;
+                    
                 }
-                else
+                else if (string.IsNullOrEmpty(timeline.ObjectType))
                 {
-                    var name = objectRef.Name ?? objectRef.Id.ToString(CultureInfo.InvariantCulture);
-                    pivot = new ScaledPositionedObject { Name = string.Format("{0}_pivot", name) };
+                    var folderFileId = string.Format("{0}_{1}", timelineKey.Object.Folder,
+                        timelineKey.Object.File);
+                    var file =
+                        this.Folder.First(f => f.Id == timelineKey.Object.Folder)
+                            .File.First(f => f.Id == timelineKey.Object.File);
 
-                    scaledSprite = new ScaledSprite {Name = string.Format("{0}_sprite", name), Width = file.Width, Height = file.Height, ParentScaleChangesPosition = false};
+                    ScaledSprite scaledSprite;
+                    ScaledPositionedObject pivot;
+                    if (persistentScaledSprites.ContainsKey(objectRef.Id))
+                    {
+                        scaledSprite = persistentScaledSprites[objectRef.Id];
+                        pivot = (ScaledPositionedObject) scaledSprite.Parent;
+                    }
+                    else
+                    {
+                        var name = objectRef.Name ?? objectRef.Id.ToString(CultureInfo.InvariantCulture);
+                        pivot = new ScaledPositionedObject {Name = string.Format("{0}_pivot", name)};
 
-                    scaledSprite.AttachTo(pivot, true);
-                    pivot.AttachTo(SpriterObject, true);
+                        scaledSprite = new ScaledSprite
+                        {
+                            Name = string.Format("{0}_sprite", name),
+                            Width = file.Width,
+                            Height = file.Height,
+                            ParentScaleChangesPosition = false
+                        };
 
-                    persistentScaledSprites[objectRef.Id] = scaledSprite;
-                    SpriterObject.ObjectList.Add(scaledSprite);
-                    SpriterObject.ObjectList.Add(pivot);
+                        scaledSprite.AttachTo(pivot, true);
+                        pivot.AttachTo(SpriterObject, true);
+
+                        persistentScaledSprites[objectRef.Id] = scaledSprite;
+                        SpriterObject.ObjectList.Add(scaledSprite);
+                        SpriterObject.ObjectList.Add(pivot);
+                    }
+
+                    var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef);
+
+                    values.ScaledSprite.Parent = pivot;
+                    if (objectRef.Parent.HasValue)
+                    {
+                        SpriterefParentDic[values.Pivot] = objectRef.Parent.Value;
+                    }
+                    else
+                    {
+                        values.Pivot.Parent = SpriterObject;
+                    }
+
+                    keyFrame.Values[pivot] = values.Pivot;
+                    keyFrame.Values[scaledSprite] = values.ScaledSprite;
                 }
-
-                var values = GetKeyFrameValues(timelineKey, file, textures, folderFileId, objectRef);
-
-                values.ScaledSprite.Parent = pivot;
-                if (objectRef.Parent.HasValue)
-                {
-                    SpriterefParentDic[values.Pivot] = objectRef.Parent.Value;
-                }
-                else
-                {
-                    values.Pivot.Parent = SpriterObject;
-                }
-
-                keyFrame.Values[pivot] = values.Pivot;
-                keyFrame.Values[scaledSprite] = values.ScaledSprite;
             }
         }
 

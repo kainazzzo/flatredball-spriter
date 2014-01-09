@@ -57,6 +57,7 @@
     <Compile Include="ScaledPositionedObjectTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScaledSpriteTests.cs" />
+    <Compile Include="ScaledPolygonTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FlatRedBallExtensions\FlatRedBallExtensions.csproj">

@@ -146,12 +146,6 @@
       <DependentUpon>test.cs</DependentUpon>
     </Compile>
     <Compile Include="Setup\CameraSetup.cs" />
-    <Compile Include="TileCollisions\TileShapeCollection.cs" />
-    <Compile Include="TileGraphics\AnimationChainContainer.cs" />
-    <Compile Include="TileGraphics\LayeredTileMap.cs" />
-    <Compile Include="TileGraphics\MapDrawableBatch.cs" />
-    <Compile Include="TileGraphics\ReducedTileMapInfo.cs" />
-    <Compile Include="TileGraphics\Tileset.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

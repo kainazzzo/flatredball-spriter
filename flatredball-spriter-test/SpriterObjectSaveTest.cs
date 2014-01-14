@@ -1985,7 +1985,7 @@ namespace flatredball_spriter_test
             int zIndex = 1;
             Vector3 expected = new Vector3(-32f, 32f, .0001f); // TODO: Initialize to an appropriate value
             Vector3 actual;
-            actual = SpriterObjectSave.GetSpriteRelativePosition(width, height, pivotX, pivotY, zIndex);
+            actual = SpriterObjectSave.GetPivotedRelativePosition(width, height, pivotX, pivotY, zIndex);
             Assert.AreEqual(expected, actual);
         }
 

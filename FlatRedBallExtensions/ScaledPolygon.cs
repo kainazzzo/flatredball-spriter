@@ -104,6 +104,11 @@ namespace FlatRedBallExtensions
             }
         }
 
+        public static ScaledPolygon CreateRectangle(float x, float y, int width, int height)
+        {
+            return CreateRectangleWithPivot(x, y, width, height, .5f, .5f);
+        }
+
         public static ScaledPolygon CreateRectangleWithPivot(float x, float y, int width, int height, float pivotX, float pivotY)
         {
             var points = new Point[5];

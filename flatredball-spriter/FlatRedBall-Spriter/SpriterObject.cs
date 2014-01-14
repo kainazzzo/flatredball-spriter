@@ -276,16 +276,10 @@ namespace FlatRedBall_Spriter
             if (sprite != null)
             {
                 sprite.Texture = currentValues.Texture;
-
-                // Scale
-                sprite.RelativeScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX,
-                    percentage);
-                sprite.RelativeScaleY = MathHelper.Lerp(currentValues.RelativeScaleY, nextValues.RelativeScaleY,
-                    percentage);
                 sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);                
             }
 
-            var spo = currentObject as ScaledPositionedObject;
+            var spo = currentObject as IRelativeScalable;
             if (spo != null)
             {
                 spo.RelativeScaleX = MathHelper.Lerp(currentValues.RelativeScaleX, nextValues.RelativeScaleX, percentage);

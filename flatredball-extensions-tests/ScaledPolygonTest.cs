@@ -113,7 +113,7 @@ namespace flatredball_extensions_tests
         [TestMethod]
         public void CreateRectangleWithCenterPivotTest()
         {
-            var polygon = ScaledPolygon.CreateRectangleWithPivot(0, 0, 32, 32, .5f, .5f);
+            var polygon = ScaledPolygon.CreateRectangle(0, 0, 32, 32);
 
             Assert.IsTrue(Math.Abs(polygon.X) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(polygon.Y) < Single.Epsilon);
@@ -130,36 +130,17 @@ namespace flatredball_extensions_tests
         }
 
         [TestMethod]
-        public void CreateRectangleWithBottomLeftPivotTest()
-        {
-            var polygon = ScaledPolygon.CreateRectangleWithPivot(0, 0, 32, 32, 0, 0);
-
-            Assert.IsTrue(Math.Abs(polygon.X) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Y) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[0].X) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[0].Y - 32f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[1].X - 32f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[1].Y - 32f) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[2].X - 32) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[2].Y) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[3].X) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[3].Y) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[4].X) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(polygon.Points[4].Y - 32f) < Single.Epsilon);
-        }
-
-        [TestMethod]
         public void NegativeHeightWidth()
         {
-            var polygon = ScaledPolygon.CreateRectangleWithPivot(0, 0, -32, -32, 0, 0);
+            var polygon = ScaledPolygon.CreateRectangle(0, 0, -32, -32);
             var absolutePoints = polygon.Points.Select(p => new Point(p.X + polygon.X, p.Y + polygon.Y)).ToList();
             var expectedAbsolutePoints = new[]
             {
-                new Point(0, -32),
-                new Point(-32, -32),
-                new Point(-32, 0),
-                new Point(0, 0),
-                new Point(0, -32)
+                new Point(-16, -48),
+                new Point(-48, -48),
+                new Point(-48, -16),
+                new Point(-16, -16),
+                new Point(-16, -48)
             };
             CollectionAssert.AreEquivalent(expectedAbsolutePoints, absolutePoints);
         }
@@ -167,15 +148,15 @@ namespace flatredball_extensions_tests
         [TestMethod]
         public void NegativeHeightWidthNegativeScale()
         {
-            var polygon = ScaledPolygon.CreateRectangleWithPivot(0, 0, -32, -32, 0, 0);
+            var polygon = ScaledPolygon.CreateRectangle(0, 0, -32, -32);
             
             var expectedAbsolutePoints = new[]
             {
-                new Point(0, 32),
-                new Point(32, 32),
-                new Point(32, 0),
-                new Point(0, 0),
-                new Point(0, 32)
+                new Point(16, 48),
+                new Point(48, 48),
+                new Point(48, 16),
+                new Point(16, 16),
+                new Point(16, 48)
             };
             polygon.ScaleX = -1f;
             polygon.ScaleY = -1f;

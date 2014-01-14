@@ -31,7 +31,10 @@ namespace FlatRedBall_Spriter
             set
             {
                 _renderCollisionBoxes = value;
-                ObjectList.OfType<ScaledPolygon>().ToList().ForEach(polygon => polygon.Visible = value);
+                ObjectList.OfType<ScaledPolygon>().ToList().ForEach(polygon =>
+                {
+                    polygon.Visible = value;
+                });
             }
         }
 

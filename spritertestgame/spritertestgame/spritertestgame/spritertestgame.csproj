@@ -187,6 +187,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\flatredball-spriter-test\flatredball-spriter-test.csproj">
+      <Project>{FEB70393-A1C4-433A-AE50-8B16B276EAE3}</Project>
+      <Name>flatredball-spriter-test</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">
       <Project>{1a1a158c-5ede-4750-8bd0-62faeb1c21dd}</Project>
       <Name>FlatRedBall-Spriter</Name>

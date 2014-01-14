@@ -171,13 +171,14 @@ namespace flatredball_spriter_test
             so.TimedActivity(.25f, 0.03125, .25f);
 
             var pivot = so.ObjectList[1];
-            var box = (IRelativeScalable) so.ObjectList[0];
+            var box = (ScaledPolygon) so.ObjectList[0];
 
             Assert.IsTrue(Math.Abs(pivot.X - 5f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.Y - -5f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(pivot.RelativeRotationZ - MathHelper.ToRadians(45f/2.0f)) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(box.RelativeScaleX - .75f) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(box.RelativeScaleY - .75f) < Single.Epsilon);
+            Assert.IsTrue(box.Parent == pivot);
         }
     }
 }

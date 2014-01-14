@@ -16,7 +16,7 @@ using FlatRedBall.Math.Geometry;
 using FlatRedBall.Math.Splines;
 using FlatRedBallExtensions;
 using FlatRedBall_Spriter;
-
+using flatredball_spriter_test;
 using Microsoft.Xna.Framework;
 using Telerik.JustMock;
 using Telerik.JustMock.Helpers;
@@ -57,88 +57,55 @@ namespace spritertestgame.Screens
         //};
 
 	    private SpriterObject _so;
+	    private SpriterObject so;
+	    private ScaledPolygon polygon;
 
-		void CustomInitialize()
+	    void CustomInitialize()
 		{
 		    Camera.Main.BackgroundColor = Color.CornflowerBlue;
 		    
-		    //Camera.Main.AttachTo(squareInstance, false);
+
+            #region xml
+            const string xml = @"<?xml version=""1.0"" encoding=""UTF-8""?>
+<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
+    <entity id=""0"" name=""entity_000"">
+        <obj_info name=""box_000"" type=""box"" w=""32"" h=""32"" pivot_x=""0"" pivot_y=""0""/>
+        <animation id=""0"" name=""NewAnimation"" length=""1000"">
+            <mainline>
+                <key id=""0"">
+                    <object_ref id=""0"" timeline=""0"" key=""0"" z_index=""0""/>
+                </key>
+                <key id=""1"" time=""500"">
+                    <object_ref id=""0"" timeline=""0"" key=""1"" z_index=""0""/>
+                </key>
+            </mainline>
+            <timeline id=""0"" obj=""0"" name=""box_000"" object_type=""box"">
+                <key id=""0"" spin=""-1"">
+                    <object x=""10"" y=""-10"" pivot_x=""0"" pivot_y=""1"" angle=""45"" scale_x=""0.5"" scale_y=""0.5""/>
+                </key>
+                <key id=""1"" time=""500"">
+                    <object pivot_x=""0"" pivot_y=""1"" angle=""0""/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
+";
+            #endregion
 
 
+            var sos = TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(xml);
+            so = sos.ToRuntime();
+            so.AddToManagers();
+            so.RenderCollisionBoxes = true;
 
-		    //#region xml
+            so.StartAnimation();
+	        polygon = (ScaledPolygon)so.ObjectList[0];
+	        
 
-//            var sos =
-//                TestSerializationUtility.DeserializeFromXml<SpriterObjectSave>(
-//                    @"<?xml version=""1.0"" encoding=""UTF-8""?>
-//<spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
-//    <folder id=""0"">
-//        <file id=""0"" name=""square.png"" width=""32"" height=""32"" pivot_x=""0"" pivot_y=""1""/>
-//    </folder>
-//    <entity id=""0"" name=""entity_000"">
-//        <obj_info name=""bone1"" type=""bone"" w=""200"" h=""10""/>
-//        <obj_info name=""bone2"" type=""bone"" w=""200"" h=""10""/>
-//        <obj_info name=""bone3"" type=""bone"" w=""200"" h=""10""/>
-//        <animation id=""0"" name=""NewAnimation"" length=""1000"">
-//            <mainline>
-//                <key id=""0"">
-//                    <bone_ref id=""0"" timeline=""0"" key=""0""/>
-//                    <bone_ref id=""1"" parent=""0"" timeline=""1"" key=""0""/>
-//                    <bone_ref id=""2"" parent=""1"" timeline=""2"" key=""0""/>
-//                    <object_ref id=""0"" parent=""0"" timeline=""3"" key=""0"" z_index=""0""/>
-//                    <object_ref id=""1"" parent=""1"" timeline=""4"" key=""0"" z_index=""1""/>
-//                    <object_ref id=""2"" parent=""2"" timeline=""5"" key=""0"" z_index=""2""/>
-//                </key>
-//            </mainline>
-//            <timeline id=""0"" obj=""0"" name=""bone1"" object_type=""bone"">
-//                <key id=""0"" spin=""0"">
-//                    <bone x=""100"" angle=""0"" scale_x=""0.5""/>
-//                </key>
-//            </timeline>
-//            <timeline id=""1"" obj=""1"" name=""bone2"" object_type=""bone"">
-//                <key id=""0"" spin=""0"">
-//                    <bone x=""200"" y=""-0""/>
-//                </key>
-//            </timeline>
-//            <timeline id=""2"" obj=""2"" name=""bone3"" object_type=""bone"">
-//                <key id=""0"" spin=""0"">
-//                    <bone x=""200"" y=""0"" scale_x=""2""/>
-//                </key>
-//            </timeline>
-//            <timeline id=""3"" name=""square1"">
-//                <key id=""0"" spin=""0"">
-//                    <object folder=""0"" file=""0"" x=""-180"" y=""100"" scale_x=""2""/>
-//                </key>
-//            </timeline>
-//            <timeline id=""4"" name=""square2"">
-//                <key id=""0"" spin=""0"">
-//                    <object folder=""0"" file=""0"" x=""-380"" y=""0"" scale_x=""2""/>
-//                </key>
-//            </timeline>
-//            <timeline id=""5"" name=""square3"">
-//                <key id=""0"" spin=""0"">
-//                    <object folder=""0"" file=""0"" x=""-290"" y=""-100""/>
-//                </key>
-//            </timeline>
-//        </animation>
-//    </entity>
-//</spriter_data>
-//");
-//#endregion
-
-		    //sos.TextureLoader = Mock.Create<ITextureLoader>();
-		    //sos.TextureLoader.Arrange(l => l.FromFile(Arg.AnyString)).Returns(square);
-		    //sos.Directory = "C:\\";
-
-		    //_so = sos.ToRuntime();
-
-		    //_so.StartAnimation();
-		    //_so.AddToManagers(null);
-
-
-
-		    //_sprite.RelativeRotationZVelocity = 10f;
-		    //_spo1.RotationZVelocity = 10f;
+	        var box = Polygon.CreateRectangle(16f, 16f);
+	        ShapeManager.AddPolygon(box);
+            box.AttachTo(polygon, false);
 		}
 
 		void CustomActivity(bool firstTimeCalled)
@@ -146,8 +113,7 @@ namespace spritertestgame.Screens
 		    Camera.Main.Z += InputManager.Mouse.ScrollWheel*-10;
             //squareInstance.Position.X = GuiManager.Cursor.WorldXAt(0);
             //squareInstance.Position.Y = GuiManager.Cursor.WorldYAt(0);
-            //Debugger.Write(SpriterEntityInstance.Position);
-		    
+            Debugger.Write(polygon.Visible);
 		}
 
 		void CustomDestroy()

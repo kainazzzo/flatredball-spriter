@@ -24,6 +24,17 @@ namespace FlatRedBall_Spriter
         public int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }
 
         public bool RenderBones { get; set; }
+
+        public bool RenderCollisionBoxes
+        {
+            get { return _renderCollisionBoxes; }
+            set
+            {
+                _renderCollisionBoxes = value;
+                ObjectList.OfType<ScaledPolygon>().ToList().ForEach(polygon => polygon.Visible = value);
+            }
+        }
+
         public PositionedObjectList<Line> Lines { get; set; }
 
         public SpriterObjectAnimation CurrentAnimation
@@ -303,20 +314,6 @@ namespace FlatRedBall_Spriter
             UpdateAllObjectDependencies();
         }
 
-        private void ClearAllTextures()
-        {
-            // ReSharper disable ForCanBeConvertedToForeach
-            for (int index = 0; index < ObjectList.Count; index++)
-            // ReSharper restore ForCanBeConvertedToForeach
-            {
-                var positionedObject = ObjectList[index];
-                if (positionedObject.GetType() == typeof(ScaledSprite))
-                {
-                    ((ScaledSprite)positionedObject).Texture = null;
-                }
-            }
-        }
-
         public static float GetPercentageIntoFrame(float secondsIntoAnimation, float currentKeyFrameTime, float nextKeyFrameTime)
         {
 
@@ -358,6 +355,7 @@ namespace FlatRedBall_Spriter
         static List<string> mRegisteredUnloads = new List<string>();
         static List<string> LoadedContentManagers = new List<string>();
         private SpriterObjectAnimation _currentAnimation;
+        private bool _renderCollisionBoxes;
 
         public int Index { get; set; }
         public bool Used { get; set; }
@@ -529,6 +527,7 @@ namespace FlatRedBall_Spriter
         public bool Looping
         {
             get { return CurrentAnimation != null && CurrentAnimation.Looping; }
+// ReSharper disable once ValueParameterNotUsed
             set {
                 if (CurrentAnimation != null)
                 {

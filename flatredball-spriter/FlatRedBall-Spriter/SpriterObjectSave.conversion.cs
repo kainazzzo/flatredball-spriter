@@ -306,6 +306,7 @@ namespace FlatRedBall_Spriter
                         
                         scaledPolygon = ScaledPolygon.CreateRectangle(timelineKey.Object.X, timelineKey.Object.Y, box.Width, box.Height);
                         scaledPolygon.ParentScaleChangesPosition = false;
+                        scaledPolygon.Visible = false;
 
                         var name = objectRef.Name ?? objectRef.Id.ToString(CultureInfo.InvariantCulture);
                         pivot = new ScaledPositionedObject { Name = string.Format("{0}_pivot", name) };

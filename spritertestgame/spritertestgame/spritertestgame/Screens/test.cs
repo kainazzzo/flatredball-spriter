@@ -70,21 +70,32 @@ namespace spritertestgame.Screens
             const string xml = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
     <entity id=""0"" name=""entity_000"">
+        <obj_info name=""bone_000"" type=""bone"" w=""58.7963"" h=""10""/>
         <animation id=""0"" name=""NewAnimation"" length=""1000"">
             <mainline>
                 <key id=""0"">
-                    <object_ref id=""0"" timeline=""0"" key=""0"" z_index=""0""/>
+                    <bone_ref id=""0"" timeline=""1"" key=""0""/>
+                    <object_ref id=""0"" parent=""0"" timeline=""0"" key=""0"" z_index=""0""/>
                 </key>
                 <key id=""1"" time=""500"">
-                    <object_ref id=""0"" timeline=""0"" key=""1"" z_index=""0""/>
+                    <bone_ref id=""0"" timeline=""1"" key=""1""/>
+                    <object_ref id=""0"" parent=""0"" timeline=""0"" key=""1"" z_index=""0""/>
                 </key>
             </mainline>
             <timeline id=""0"" name=""point_000"" object_type=""point"">
                 <key id=""0"">
-                    <object x=""10"" y=""-10"" angle=""0""/>
+                    <object x=""63.235316"" y=""-90.941161"" angle=""41.552613""/>
                 </key>
                 <key id=""1"" time=""500"" spin=""-1"">
-                    <object x=""20"" y=""-20"" angle=""180""/>
+                    <object x=""77.351861"" y=""-91.791555"" angle=""221.552613""/>
+                </key>
+            </timeline>
+            <timeline id=""1"" obj=""0"" name=""bone_000"" object_type=""bone"">
+                <key id=""0"">
+                    <bone x=""23"" y=""100"" angle=""318.447387""/>
+                </key>
+                <key id=""1"" time=""500"" spin=""-1"">
+                    <bone x=""23"" y=""100"" angle=""0.830315""/>
                 </key>
             </timeline>
         </animation>

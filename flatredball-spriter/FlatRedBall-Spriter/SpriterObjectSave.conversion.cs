@@ -304,7 +304,7 @@ namespace FlatRedBall_Spriter
                     }
                     else
                     {
-                        scaledPolygon = ScaledPolygon.CreateRectangle(timelineKey.Object.X, timelineKey.Object.Y, box.Width, box.Height);
+                        scaledPolygon = ScaledPolygon.CreateRectangle(timelineKey.Object.X, timelineKey.Object.Y, (int)box.Width, (int)box.Height);
                         scaledPolygon.ParentScaleChangesPosition = false;
                         scaledPolygon.Visible = false;
 
@@ -457,8 +457,8 @@ namespace FlatRedBall_Spriter
                         },
                     Spin = timelineKey.Spin
                 };
-            int width = box.Width;
-            int height = box.Height;
+            var width = (int)box.Width;
+            var height = (int)box.Height;
 
             float pivotX = timelineKey.Object.PivotX.HasValue ? timelineKey.Object.PivotX.Value : box.PivotX;
 

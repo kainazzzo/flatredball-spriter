@@ -378,10 +378,10 @@ namespace FlatRedBall_Spriter
         public string Type { get; set; }
 
         [XmlAttribute("w")]
-        public int Width { get; set; }
+        public float Width { get; set; }
 
         [XmlAttribute("h")]
-        public int Height { get; set; }
+        public float Height { get; set; }
 
         [XmlAttribute("pivot_x")]
         public float PivotX { get; set; }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b6.1">
+    <entity id="0" name="entity_000">
+        <animation id="0" name="NewAnimation" length="1000">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                </key>
+                <key id="1" time="500">
+                    <object_ref id="0" timeline="0" key="1" z_index="0"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="point_000" object_type="point">
+                <key id="0">
+                    <object x="10" y="-10" angle="0"/>
+                </key>
+                <key id="1" time="500" spin="-1">
+                    <object x="20" y="-20" angle="180"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

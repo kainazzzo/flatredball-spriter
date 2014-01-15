@@ -66,10 +66,10 @@ namespace spritertestgame.Screens
 		    
 
             #region xml
+
             const string xml = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
     <entity id=""0"" name=""entity_000"">
-        <obj_info name=""box_000"" type=""box"" w=""32"" h=""32"" pivot_x=""0"" pivot_y=""0""/>
         <animation id=""0"" name=""NewAnimation"" length=""1000"">
             <mainline>
                 <key id=""0"">
@@ -79,12 +79,12 @@ namespace spritertestgame.Screens
                     <object_ref id=""0"" timeline=""0"" key=""1"" z_index=""0""/>
                 </key>
             </mainline>
-            <timeline id=""0"" obj=""0"" name=""box_000"" object_type=""box"">
-                <key id=""0"" spin=""-1"">
-                    <object x=""10"" y=""-10"" pivot_x=""0"" pivot_y=""1"" angle=""45"" scale_x=""0.5"" scale_y=""0.5""/>
+            <timeline id=""0"" name=""point_000"" object_type=""point"">
+                <key id=""0"">
+                    <object x=""10"" y=""-10"" angle=""0""/>
                 </key>
-                <key id=""1"" time=""500"">
-                    <object pivot_x=""0"" pivot_y=""1"" angle=""0""/>
+                <key id=""1"" time=""500"" spin=""-1"">
+                    <object x=""20"" y=""-20"" angle=""180""/>
                 </key>
             </timeline>
         </animation>
@@ -100,20 +100,17 @@ namespace spritertestgame.Screens
             
 
             so.StartAnimation();
-	        polygon = (ScaledPolygon)so.ObjectList[0];
-
+	        
 		}
 
 		void CustomActivity(bool firstTimeCalled)
 		{
 		    Camera.Main.Z += InputManager.Mouse.ScrollWheel*-10;
-            //squareInstance.Position.X = GuiManager.Cursor.WorldXAt(0);
-            //squareInstance.Position.Y = GuiManager.Cursor.WorldYAt(0);
-            Debugger.Write(polygon.Visible);
+            
 
 		    if (InputManager.Keyboard.KeyPushed(Keys.Space))
 		    {
-		        so.RenderCollisionBoxes = !so.RenderCollisionBoxes;
+		        so.RenderPoints = !so.RenderPoints;
 		    }
 		}
 

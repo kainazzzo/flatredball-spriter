@@ -24,6 +24,7 @@ namespace FlatRedBall_Spriter
         public int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }
 
         public bool RenderBones { get; set; }
+        public bool RenderPoints { get; set; }
 
         public bool RenderCollisionBoxes
         {
@@ -38,7 +39,10 @@ namespace FlatRedBall_Spriter
             }
         }
 
-        public PositionedObjectList<Line> Lines { get; set; }
+        public PositionedObjectList<Line> Bones { get; set; }
+
+        public PositionedObjectList<Line> PointLines { get; set; } 
+        public PositionedObjectList<Circle> PointCircles { get; set; } 
 
         public SpriterObjectAnimation CurrentAnimation
         {
@@ -126,14 +130,14 @@ namespace FlatRedBall_Spriter
         {
             if (!RenderBones)
             {
-                for (int index = Lines.Count - 1; index >= 0; index--)
+                for (int index = Bones.Count - 1; index >= 0; index--)
                 {
-                    var line = Lines[index];
+                    var line = Bones[index];
                     ShapeManager.Remove(line);
                 }
-                Lines.Clear();
+                Bones.Clear();
             }
-            else if (Lines.Count == 0)
+            else if (Bones.Count == 0)
             {
                 // create lines
                 foreach (var bone in ObjectList.Where(o => o.Name.StartsWith("bone", StringComparison.CurrentCultureIgnoreCase)))
@@ -142,7 +146,37 @@ namespace FlatRedBall_Spriter
                     line.AttachTo(bone, false);
                     line.RelativePoint1 = new Point3D(0, 0);
                     line.RelativePoint2 = new Point3D(100, 0);
-                    Lines.Add(line);
+                    Bones.Add(line);
+                }
+            }
+
+            if (!RenderPoints)
+            {
+                for (int index = PointLines.Count - 1; index >= 0; index--)
+                {
+                    var line = PointLines[index];
+                    ShapeManager.Remove(line);
+                }
+
+                for (int index = PointCircles.Count - 1; index >= 0; index--)
+                {
+                    var circle = PointCircles[index];
+                    ShapeManager.Remove(circle);
+                }
+            }
+            else if (PointCircles.Count == 0 && PointLines.Count == 0)
+            {
+                foreach (var point in ObjectList.Where(o => o.Name.StartsWith("point")))
+                {
+                    var line = ShapeManager.AddLine();
+                    var circle = ShapeManager.AddCircle();
+                    circle.Radius = 5f;
+                    circle.AttachTo(point, false);
+                    line.AttachTo(circle, false);
+                    line.RelativePoint1 = new Point3D(0, 0);
+                    line.RelativePoint2 = new Point3D(5, 0);
+                    PointLines.Add(line);
+                    PointCircles.Add(circle);
                 }
             }
         }
@@ -384,7 +418,9 @@ namespace FlatRedBall_Spriter
             ContentManagerName = contentManagerName;
             InitializeSpriterObject(addToManagers);
             ObjectList = new List<PositionedObject>();
-            Lines = new PositionedObjectList<Line>();
+            Bones = new PositionedObjectList<Line>();
+            PointLines = new PositionedObjectList<Line>();
+            PointCircles = new PositionedObjectList<Circle>();
         }
 
         private void InitializeSpriterObject(bool addToManagers)

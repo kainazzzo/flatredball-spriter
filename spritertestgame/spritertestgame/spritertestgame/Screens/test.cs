@@ -97,7 +97,7 @@ namespace spritertestgame.Screens
             var sos = TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(xml);
             so = sos.ToRuntime();
             so.AddToManagers();
-            so.RenderCollisionBoxes = true;
+            
 
             so.StartAnimation();
 	        polygon = (ScaledPolygon)so.ObjectList[0];
@@ -110,6 +110,11 @@ namespace spritertestgame.Screens
             //squareInstance.Position.X = GuiManager.Cursor.WorldXAt(0);
             //squareInstance.Position.Y = GuiManager.Cursor.WorldYAt(0);
             Debugger.Write(polygon.Visible);
+
+		    if (InputManager.Keyboard.KeyPushed(Keys.Space))
+		    {
+		        so.RenderCollisionBoxes = !so.RenderCollisionBoxes;
+		    }
 		}
 
 		void CustomDestroy()

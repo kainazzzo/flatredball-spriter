@@ -303,7 +303,6 @@ namespace FlatRedBall_Spriter
                     }
                     else
                     {
-                        
                         scaledPolygon = ScaledPolygon.CreateRectangle(timelineKey.Object.X, timelineKey.Object.Y, box.Width, box.Height);
                         scaledPolygon.ParentScaleChangesPosition = false;
                         scaledPolygon.Visible = false;

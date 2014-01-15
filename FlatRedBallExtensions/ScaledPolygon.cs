@@ -103,9 +103,12 @@ namespace FlatRedBallExtensions
                 SetUnscaledPoints(Points);
             }
 
-            // I am only calling this so it calls FillVertexArray();
-            // The logic in PositionedObject.UpdateDependencies(double) should mean it doesn't do anything else
-            UpdateDependencies(currentTime, true);
+            if (Visible)
+            {
+                // I am only calling this so it calls FillVertexArray();
+                // The logic in PositionedObject.UpdateDependencies(double) should mean it doesn't do anything else
+                UpdateDependencies(currentTime, true);
+            }
         }
 
         public static ScaledPolygon CreateRectangle(float x, float y, int width, int height)

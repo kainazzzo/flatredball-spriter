@@ -416,7 +416,16 @@ namespace FlatRedBall_Spriter
                     }
                     else
                     {
-                        SpriteManager.AddPositionedObject(currentObject);
+                        var scaledPolygon = currentObject as Polygon;
+                        if (scaledPolygon != null)
+                        {
+                            scaledPolygon.Visible = true;
+                            ShapeManager.AddPolygon(scaledPolygon);
+                        }
+                        else
+                        {
+                            SpriteManager.AddPositionedObject(currentObject);
+                        }
                     }
                 }
             }

@@ -6,6 +6,9 @@
             <mainline>
                 <key id="0">
                     <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="0" z_index="1"/>
+                    <object_ref id="2" timeline="2" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="3" key="0" z_index="3"/>
                 </key>
                 <key id="1" time="500">
                     <object_ref id="0" timeline="0" key="1" z_index="0"/>
@@ -17,6 +20,21 @@
                 </key>
                 <key id="1" time="500">
                     <object pivot_x="0" pivot_y="1" angle="0"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="point_000" object_type="point">
+                <key id="0" spin="0">
+                    <object x="76" y="143" angle="321.581945"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="point_001" object_type="point">
+                <key id="0" spin="0">
+                    <object x="129" y="81" angle="326.032473"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="point_002" object_type="point">
+                <key id="0" spin="0">
+                    <object x="203" y="56" angle="131.099506"/>
                 </key>
             </timeline>
         </animation>

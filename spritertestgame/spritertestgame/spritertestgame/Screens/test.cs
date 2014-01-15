@@ -101,11 +101,7 @@ namespace spritertestgame.Screens
 
             so.StartAnimation();
 	        polygon = (ScaledPolygon)so.ObjectList[0];
-	        
 
-	        var box = Polygon.CreateRectangle(16f, 16f);
-	        ShapeManager.AddPolygon(box);
-            box.AttachTo(polygon, false);
 		}
 
 		void CustomActivity(bool firstTimeCalled)

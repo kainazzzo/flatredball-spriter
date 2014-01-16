@@ -57,7 +57,7 @@ namespace FlatRedBall_Spriter
             get { return _currentAnimation; }
             private set
             {
-                
+
                 _currentAnimation = value;
                 if (_currentAnimation == null || _currentAnimation.KeyFrames.Count == 0)
                 {
@@ -86,7 +86,10 @@ namespace FlatRedBall_Spriter
                     {
                         return FirstKeyFrameWithEndTime;
                     }
-                    else return null;
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
@@ -274,7 +277,7 @@ namespace FlatRedBall_Spriter
             if (sprite != null)
             {
                 sprite.Texture = currentValues.Texture;
-                sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);                
+                sprite.Alpha = MathHelper.Lerp(currentValues.Alpha, nextValues.Alpha, percentage);
             }
 
             var spo = currentObject as IRelativeScalable;
@@ -326,8 +329,8 @@ namespace FlatRedBall_Spriter
 
         // Generated Fields
 #if DEBUG
-// ReSharper disable once InconsistentNaming
-// ReSharper disable once RedundantDefaultFieldInitializer
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once RedundantDefaultFieldInitializer
         static bool HasBeenLoadedWithGlobalContentManager = false;
 #endif
 
@@ -338,9 +341,10 @@ namespace FlatRedBall_Spriter
             set;
         }
 
-        static object mLockObject = new object();
-        static List<string> mRegisteredUnloads = new List<string>();
-        static List<string> LoadedContentManagers = new List<string>();
+        private static readonly object LockObject = new object();
+        private static readonly List<string> RegisteredUnloads = new List<string>();
+        private static readonly List<string> LoadedContentManagers = new List<string>();
+
         private SpriterObjectAnimation _currentAnimation;
         private bool _renderCollisionBoxes;
         private bool _renderBones;
@@ -389,7 +393,7 @@ namespace FlatRedBall_Spriter
         public void AddToManagers(Layer layerToAddTo)
         {
             LayerProvidedByContainer = layerToAddTo;
-            
+
             if (ObjectList != null)
             {
                 foreach (var currentObject in ObjectList)
@@ -474,40 +478,41 @@ namespace FlatRedBall_Spriter
                 throw new Exception("This type has been loaded with a Global content manager, then loaded with a non-global.  This can lead to a lot of bugs");
             }
 #endif
+// ReSharper disable once ConvertToConstant.Local
             bool registerUnload = false;
             if (LoadedContentManagers.Contains(contentManagerName) == false)
             {
                 LoadedContentManagers.Add(contentManagerName);
-                lock (mLockObject)
+                lock (LockObject)
                 {
-                    if (!mRegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
+                    if (!RegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
                     {
                         FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterObjectTestEntityStaticUnload", UnloadStaticContent);
-                        mRegisteredUnloads.Add(ContentManagerName);
+                        RegisteredUnloads.Add(ContentManagerName);
                     }
                 }
             }
-// ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
-// ReSharper disable HeuristicUnreachableCode
+            // ReSharper disable HeuristicUnreachableCode
             {
-                lock (mLockObject)
+                lock (LockObject)
                 {
-                    if (!mRegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
+                    if (!RegisteredUnloads.Contains(ContentManagerName) && ContentManagerName != FlatRedBallServices.GlobalContentManager)
                     {
                         FlatRedBallServices.GetContentManagerByName(ContentManagerName).AddUnloadMethod("SpriterObjectTestEntityStaticUnload", UnloadStaticContent);
-                        mRegisteredUnloads.Add(ContentManagerName);
+                        RegisteredUnloads.Add(ContentManagerName);
                     }
                 }
             }
-// ReSharper restore HeuristicUnreachableCode
+            // ReSharper restore HeuristicUnreachableCode
         }
         public static void UnloadStaticContent()
         {
             if (LoadedContentManagers.Count != 0)
             {
                 LoadedContentManagers.RemoveAt(0);
-                mRegisteredUnloads.RemoveAt(0);
+                RegisteredUnloads.RemoveAt(0);
             }
             if (LoadedContentManagers.Count == 0)
             {
@@ -525,12 +530,14 @@ namespace FlatRedBall_Spriter
         public bool Looping
         {
             get { return CurrentAnimation != null && CurrentAnimation.Looping; }
-// ReSharper disable once ValueParameterNotUsed
-            set {
+            // ReSharper disable once ValueParameterNotUsed
+            set
+            {
                 if (CurrentAnimation != null)
                 {
                     CurrentAnimation.Looping = true;
-                } }
+                }
+            }
         }
 
         public void SetToIgnorePausing()
@@ -554,7 +561,7 @@ namespace FlatRedBall_Spriter
                     .Select(g => g.First().Clone<PositionedObject>())
                     .ToList();
 
-            
+
 
             foreach (var animationPair in Animations)
             {
@@ -575,15 +582,15 @@ namespace FlatRedBall_Spriter
 
                             var kfv = new KeyFrameValues
                             {
-                                    Alpha = kfPair.Value.Alpha,
-                                    Parent = parent,
-                                    RelativePosition = kfPair.Value.RelativePosition,
-                                    RelativeRotation = kfPair.Value.RelativeRotation,
-                                    RelativeScaleX = kfPair.Value.RelativeScaleX,
-                                    RelativeScaleY = kfPair.Value.RelativeScaleY,
-                                    Spin = kfPair.Value.Spin,
-                                    Texture = kfPair.Value.Texture
-                                };
+                                Alpha = kfPair.Value.Alpha,
+                                Parent = parent,
+                                RelativePosition = kfPair.Value.RelativePosition,
+                                RelativeRotation = kfPair.Value.RelativeRotation,
+                                RelativeScaleX = kfPair.Value.RelativeScaleX,
+                                RelativeScaleY = kfPair.Value.RelativeScaleY,
+                                Spin = kfPair.Value.Spin,
+                                Texture = kfPair.Value.Texture
+                            };
 
                             keyFrame.Values[allObjects.First(k => k.Name == kfPair.Key.Name)] = kfv;
                         }

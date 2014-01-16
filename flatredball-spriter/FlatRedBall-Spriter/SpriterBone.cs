@@ -28,7 +28,7 @@ namespace FlatRedBall_Spriter
                     _line = new Line();
                     _line.AttachTo(this, false);
                     _line.RelativePoint1 = new Point3D(0, 0);
-                    _line.RelativePoint2 = new Point3D(Length, 0);
+                    _line.RelativePoint2 = new Point3D(Length * ScaleX, 0);
                 }
 
                 if (!_added)
@@ -36,7 +36,7 @@ namespace FlatRedBall_Spriter
                     ShapeManager.AddLine(_line);
                     _added = true;
                 }
-                if (Math.Abs(_line.RelativePoint2.X - Length) > Double.Epsilon)
+                if (Math.Abs(_line.RelativePoint2.X - Length * ScaleX) > Double.Epsilon)
                 {
                     _line.RelativePoint2.X = Length;
                 }

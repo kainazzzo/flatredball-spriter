@@ -12,7 +12,33 @@ namespace FlatRedBall_Spriter
 {
     public sealed class SpriterObject : ScaledPositionedObject
     {
+        #region Constructor
+        public SpriterObject(string contentManagerName) :
+            this(contentManagerName, true)
+        {
+        }
+
+
+        public SpriterObject(string contentManagerName, bool addToManagers)
+        {
+            LayerProvidedByContainer = null;
+            Animating = false;
+            SecondsIn = 0f;
+            CurrentKeyFrameIndex = 0;
+            ScaleX = 1.0f;
+            ScaleY = 1.0f;
+            Animations = new Dictionary<string, SpriterObjectAnimation>(1);
+
+            ContentManagerName = contentManagerName;
+            InitializeSpriterObject(addToManagers);
+            ObjectList = new List<PositionedObject>();
+            CollisionBoxes = new ShapeCollection();
+        }
+        #endregion
+
         public List<PositionedObject> ObjectList { get; private set; }
+        public ShapeCollection CollisionBoxes { get; private set; } 
+
         public List<KeyFrame> KeyFrameList { get { return CurrentAnimation != null ? CurrentAnimation.KeyFrames : null; } }
 
         public Dictionary<string, SpriterObjectAnimation> Animations { get; private set; }
@@ -127,6 +153,7 @@ namespace FlatRedBall_Spriter
             {
                 CurrentAnimation = Animations.Values.FirstOrDefault();
             }
+            UpdateCollisionBoxes();
 
             SetAllObjectValuesToCurrentFrame();
         }
@@ -162,6 +189,7 @@ namespace FlatRedBall_Spriter
                 if (NextKeyFrame != null && SecondsIn >= NextKeyFrame.Time)
                 {
                     ++CurrentKeyFrameIndex;
+                    UpdateCollisionBoxes();
                 }
 
                 // Interpolate between the current keyframe and next keyframe values based on time difference
@@ -173,13 +201,14 @@ namespace FlatRedBall_Spriter
                         SetInterpolatedValues(currentPair, percentage);
                     }
 
-                    if (Math.Abs(NextKeyFrame.Time - CurrentKeyFrame.Time) < .00001f)
+                    if (Math.Abs(NextKeyFrame.Time - CurrentKeyFrame.Time) < .000001f)
                     {
                         foreach (var keyFrameValues in NextKeyFrame.Values)
                         {
                             SetInterpolatedValues(keyFrameValues, percentage);
                         }
                         ++CurrentKeyFrameIndex;
+                        UpdateCollisionBoxes();
                     }
                 }
                 else
@@ -206,6 +235,12 @@ namespace FlatRedBall_Spriter
 
                 UpdateAllObjectDependencies();
             }
+        }
+
+        private void UpdateCollisionBoxes()
+        {
+            CollisionBoxes.Clear();
+            CollisionBoxes.Polygons.AddRange(CurrentKeyFrame.Values.Keys.OfType<ScaledPolygon>());
         }
 
         private void UpdateAllObjectDependencies()
@@ -354,27 +389,6 @@ namespace FlatRedBall_Spriter
         public bool Used { get; set; }
 
         public Layer LayerProvidedByContainer { get; set; }
-
-        public SpriterObject(string contentManagerName) :
-            this(contentManagerName, true)
-        {
-        }
-
-
-        public SpriterObject(string contentManagerName, bool addToManagers)
-        {
-            LayerProvidedByContainer = null;
-            Animating = false;
-            SecondsIn = 0f;
-            CurrentKeyFrameIndex = 0;
-            ScaleX = 1.0f;
-            ScaleY = 1.0f;
-            Animations = new Dictionary<string, SpriterObjectAnimation>(1);
-
-            ContentManagerName = contentManagerName;
-            InitializeSpriterObject(addToManagers);
-            ObjectList = new List<PositionedObject>();
-        }
 
         private void InitializeSpriterObject(bool addToManagers)
         {

@@ -223,8 +223,8 @@ namespace flatredball_spriter_test
 
             //var pivot = so.ObjectList.Single(o => o.Name == "pivot");
             //var sprite = so.ObjectList.Single(o => o.Name == "sprite");
-            var bone1 = so.ObjectList.Single(o => o.Name == "bone0");
-            var bone2 = so.ObjectList.Single(o => o.Name == "bone1");
+            var bone1 = so.ObjectList.Single(o => o.Name == "bone1");
+            var bone2 = so.ObjectList.Single(o => o.Name == "bone2");
 
             Assert.AreSame(bone1, so.Animations.First().Value.KeyFrames.First().Values[bone2].Parent);
         }

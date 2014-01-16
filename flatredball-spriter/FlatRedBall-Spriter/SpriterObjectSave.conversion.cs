@@ -20,7 +20,23 @@ namespace FlatRedBall_Spriter
         public string Directory { get; set; }
         public string FileName { get; set; }
 
-        public SpriterObject ToRuntime()
+        public SpriterObject ToRuntime(int entityId = 0)
+        {
+            var entity = Entity[entityId];
+
+
+            return CreateSpriterObjectFromEntity(entity);
+        }
+
+        public SpriterObjectCollection ToSpriterObjectCollection()
+        {
+            return new SpriterObjectCollection
+            {
+                SpriterEntities = Entity.ToDictionary(e => e.Name, CreateSpriterObjectFromEntity)
+            };
+        }
+
+        private SpriterObject CreateSpriterObjectFromEntity(SpriterDataEntity entity)
         {
             var spriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
 
@@ -47,7 +63,7 @@ namespace FlatRedBall_Spriter
             }
             FileManager.RelativeDirectory = oldDir;
 
-            var entity = Entity[0];
+
             if (entity.ObjectInfos != null)
             {
                 boxes =
@@ -62,25 +78,28 @@ namespace FlatRedBall_Spriter
 
                 foreach (var key in mainline.Keys)
                 {
+                    var keyFrame = new KeyFrame {Time = key.Time/1000.0f};
 
-                    var keyFrame = new KeyFrame { Time = key.Time / 1000.0f };
-                    
                     // If it's a ScaledSprite (not a bone)
                     if (key.ObjectRef != null)
                     {
-                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentScaledSprites, spriterObject, animation, textures, keyFrame, keyFrameValuesParentDictionary, boxes, persistentScaledPolygons, persistentPoints);
+                        CreateRuntimeObjectsForSpriterObjectRef(key, persistentScaledSprites, spriterObject, animation, textures,
+                            keyFrame, keyFrameValuesParentDictionary, boxes, persistentScaledPolygons, persistentPoints);
                     }
 
                     // If it's a bone (not a ScaledSprite)
                     if (key.BoneRef != null)
                     {
-                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame, boneRefDic, keyFrameValuesParentDictionary, entity);
+                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame,
+                            boneRefDic, keyFrameValuesParentDictionary, entity);
                     }
 
                     keyFrameList.Add(keyFrame);
                 }
 
-                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic, boxes, persistentScaledPolygons, persistentPoints, entity);
+                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, spriterObject,
+                    textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic, boxes, persistentScaledPolygons,
+                    persistentPoints, entity);
 
                 // find all the keyframevalues, and look up the bone id, then take that bone id and 
                 // set the parent in the keyframevalues variable to the ScaledPositionedObject in the boneRefDic
@@ -92,15 +111,15 @@ namespace FlatRedBall_Spriter
                         var parent = boneRefDic[boneId];
                         pair.Value.Parent = parent;
                     }
-                    else if (pair.Key.GetType() != typeof(ScaledSprite) && pair.Key.GetType() != typeof(ScaledPolygon))
+                    else if (pair.Key.GetType() != typeof (ScaledSprite) && pair.Key.GetType() != typeof (ScaledPolygon))
                     {
                         pair.Value.Parent = spriterObject;
                     }
                 }
 
                 var SpriterObjectAnimation = new SpriterObjectAnimation(animation.Name,
-                                                                        animation.Looping, animation.Length / 1000.0f,
-                                                                        keyFrameList);
+                    animation.Looping, animation.Length/1000.0f,
+                    keyFrameList);
                 spriterObject.Animations[animation.Name] = SpriterObjectAnimation;
             }
             return spriterObject;
@@ -165,11 +184,11 @@ namespace FlatRedBall_Spriter
                 }
                 else
                 {
-                    var objectInfo = entity.ObjectInfos.First(o => o.Type == "bone" && o.Name == timeline.Name);
+                    var objectInfo = entity.ObjectInfos == null ? (ObjectInfo)null : entity.ObjectInfos.FirstOrDefault(o => o.Type == "bone" && o.Name == timeline.Name);
                     bone = new SpriterBone
                     {
                         Name = timeline.Name,
-                        Length = objectInfo.Width
+                        Length = objectInfo == null ? 200 : objectInfo.Width
                     };
 
                     bone.AttachTo(SpriterObject, true);

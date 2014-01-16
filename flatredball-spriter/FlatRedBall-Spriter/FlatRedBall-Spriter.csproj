@@ -52,6 +52,7 @@
     <Compile Include="SpriterBone.cs" />
     <Compile Include="SpriterObject.cs" />
     <Compile Include="SpriterObjectAnimation.cs" />
+    <Compile Include="SpriterObjectCollection.cs" />
     <Compile Include="SpriterObjectSave.conversion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriterObjectSave.serialization.cs" />

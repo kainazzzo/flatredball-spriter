@@ -80,6 +80,7 @@
     <Compile Include="SpriterObjectTest.cs" />
     <Compile Include="TestSerializationUtility.cs" />
     <Compile Include="BoxTests.cs" />
+    <Compile Include="MultipleEntityTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">

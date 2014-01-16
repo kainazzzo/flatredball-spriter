@@ -26,13 +26,13 @@ namespace FlatRedBall_Spriter
 
             IDictionary<string, string> filenames = new Dictionary<string, string>();
             IDictionary<int, ScaledSprite> persistentScaledSprites = new Dictionary<int, ScaledSprite>();
-            IDictionary<int, ScaledPositionedObject> persistentBones = new Dictionary<int, ScaledPositionedObject>();
+            IDictionary<int, SpriterBone> persistentBones = new Dictionary<int, SpriterBone>();
             IDictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
             IDictionary<string, ObjectInfo> boxes = new Dictionary<string, ObjectInfo>();
             IDictionary<int, ScaledPositionedObject> boneRefDic = new Dictionary<int, ScaledPositionedObject>();
             IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary = new Dictionary<KeyFrameValues, int>();
             IDictionary<int, ScaledPolygon> persistentScaledPolygons = new Dictionary<int, ScaledPolygon>();
-            IDictionary<int, ScaledPositionedObject> persistentPoints = new Dictionary<int, ScaledPositionedObject>();
+            IDictionary<int, SpriterPoint> persistentPoints = new Dictionary<int, SpriterPoint>();
 
             string oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory = this.Directory;
@@ -74,13 +74,13 @@ namespace FlatRedBall_Spriter
                     // If it's a bone (not a ScaledSprite)
                     if (key.BoneRef != null)
                     {
-                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame, boneRefDic, keyFrameValuesParentDictionary);
+                        CreateRuntimeObjectsForSpriterBoneRef(key, persistentBones, spriterObject, animation, keyFrame, boneRefDic, keyFrameValuesParentDictionary, entity);
                     }
 
                     keyFrameList.Add(keyFrame);
                 }
 
-                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic, boxes, persistentScaledPolygons, persistentPoints);
+                HandleUnreferencedTimelinekeys(animation, mainline, keyFrameList, persistentScaledSprites, spriterObject, textures, keyFrameValuesParentDictionary, persistentBones, boneRefDic, boxes, persistentScaledPolygons, persistentPoints, entity);
 
                 // find all the keyframevalues, and look up the bone id, then take that bone id and 
                 // set the parent in the keyframevalues variable to the ScaledPositionedObject in the boneRefDic
@@ -106,7 +106,7 @@ namespace FlatRedBall_Spriter
             return spriterObject;
         }
 
-        private void HandleUnreferencedTimelinekeys(SpriterDataEntityAnimation animation, SpriterDataEntityAnimationMainline mainline, List<KeyFrame> keyFrameList, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject, IDictionary<string, Texture2D> textures, IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary, IDictionary<int, ScaledPositionedObject> persistentBones, IDictionary<int, ScaledPositionedObject> boneRefDic, IDictionary<string, ObjectInfo> boxes, IDictionary<int, ScaledPolygon> persistentScaledPolygons, IDictionary<int, ScaledPositionedObject> persistentPoints)
+        private void HandleUnreferencedTimelinekeys(SpriterDataEntityAnimation animation, SpriterDataEntityAnimationMainline mainline, List<KeyFrame> keyFrameList, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject, IDictionary<string, Texture2D> textures, IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary, IDictionary<int, SpriterBone> persistentBones, IDictionary<int, ScaledPositionedObject> boneRefDic, IDictionary<string, ObjectInfo> boxes, IDictionary<int, ScaledPolygon> persistentScaledPolygons, IDictionary<int, SpriterPoint> persistentPoints, SpriterDataEntity entity)
         {
             foreach (var timeline in animation.Timeline)
             {
@@ -137,7 +137,7 @@ namespace FlatRedBall_Spriter
                             {
                                 CreateRuntimeObjectsForSpriterBoneRef(mainlineKey, persistentBones, SpriterObject,
                                                                       animation, keyFrame, boneRefDic,
-                                                                      keyFrameValuesParentDictionary, timelineKey);
+                                                                      keyFrameValuesParentDictionary, entity, timelineKey);
                             }
                             keyFrameList.Insert(index, keyFrame);
                         }
@@ -146,31 +146,38 @@ namespace FlatRedBall_Spriter
             }
         }
 
-        private static void CreateRuntimeObjectsForSpriterBoneRef(Key key, IDictionary<int, ScaledPositionedObject> persistentBones,
+        private static void CreateRuntimeObjectsForSpriterBoneRef(Key key, IDictionary<int, SpriterBone> persistentBones,
                                                                   SpriterObject SpriterObject,
                                                                   SpriterDataEntityAnimation animation, KeyFrame keyFrame,
-                                                                  IDictionary<int, ScaledPositionedObject> boneRefDic, IDictionary<KeyFrameValues, int> boneRefParentDic,
+                                                                  IDictionary<int, ScaledPositionedObject> boneRefDic, IDictionary<KeyFrameValues, int> boneRefParentDic, SpriterDataEntity entity,
                                                                   Key timelineKeyOverride = null)
         {
             IDictionary<int, KeyBone> bones = new Dictionary<int, KeyBone>();
 
             foreach (var boneRef in key.BoneRef)
             {
-                ScaledPositionedObject bone;
+                SpriterBone bone;
+                var timeline = animation.Timeline.Single(t => t.Id == boneRef.Timeline);
+
                 if (persistentBones.ContainsKey(boneRef.Id))
                 {
                     bone = persistentBones[boneRef.Id];
                 }
                 else
                 {
-                    bone = new ScaledPositionedObject() {Name = "bone" + boneRef.Id};
+                    var objectInfo = entity.ObjectInfos.First(o => o.Type == "bone" && o.Name == timeline.Name);
+                    bone = new SpriterBone
+                    {
+                        Name = timeline.Name,
+                        Length = objectInfo.Width
+                    };
+
                     bone.AttachTo(SpriterObject, true);
 
                     persistentBones[boneRef.Id] = bone;
                     SpriterObject.ObjectList.Add(bone);
                 }
 
-                var timeline = animation.Timeline.Single(t => t.Id == boneRef.Timeline);
                 var timelineKey = timelineKeyOverride ?? timeline.Key.Single(k => k.Id == boneRef.Key);
                 if (timelineKeyOverride == null && key.Time != timelineKey.Time)
                 {
@@ -277,7 +284,7 @@ namespace FlatRedBall_Spriter
         }
 
 
-        private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject, SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures, KeyFrame keyFrame, IDictionary<KeyFrameValues, int> SpriterefParentDic, IDictionary<string, ObjectInfo> boxes, IDictionary<int, ScaledPolygon> persistentScaledPolygons, IDictionary<int, ScaledPositionedObject> persistentPoints, Key timelineKeyOverride = null)
+        private void CreateRuntimeObjectsForSpriterObjectRef(Key key, IDictionary<int, ScaledSprite> persistentScaledSprites, SpriterObject SpriterObject, SpriterDataEntityAnimation animation, IDictionary<string, Texture2D> textures, KeyFrame keyFrame, IDictionary<KeyFrameValues, int> SpriterefParentDic, IDictionary<string, ObjectInfo> boxes, IDictionary<int, ScaledPolygon> persistentScaledPolygons, IDictionary<int, SpriterPoint> persistentPoints, Key timelineKeyOverride = null)
         {
             foreach (var objectRef in key.ObjectRef)
             {
@@ -338,7 +345,7 @@ namespace FlatRedBall_Spriter
                 }
                 else if (timeline.ObjectType == "point")
                 {
-                    ScaledPositionedObject point;
+                    SpriterPoint point;
 
 
                     if (persistentPoints.ContainsKey(objectRef.Id))
@@ -347,7 +354,7 @@ namespace FlatRedBall_Spriter
                     }
                     else
                     {
-                        point = new ScaledPositionedObject
+                        point = new SpriterPoint
                         {
                             X = timelineKey.Object.X,
                             Y = timelineKey.Object.Y,

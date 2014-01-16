@@ -4,7 +4,6 @@ using System.Linq;
 using FlatRedBall;
 using FlatRedBall.Graphics;
 using FlatRedBall.Instructions;
-using FlatRedBall.Math;
 using FlatRedBall.Math.Geometry;
 using FlatRedBallExtensions;
 using Microsoft.Xna.Framework;
@@ -23,8 +22,25 @@ namespace FlatRedBall_Spriter
         public int CurrentKeyFrameIndex { get; private set; }
         public int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }
 
-        public bool RenderBones { get; set; }
-        public bool RenderPoints { get; set; }
+        public bool RenderBones
+        {
+            get { return _renderBones; }
+            set
+            {
+                _renderBones = value;
+                ObjectList.OfType<SpriterBone>().ToList().ForEach(bone => bone.Visible = value);
+            }
+        }
+
+        public bool RenderPoints
+        {
+            get { return _renderPoints; }
+            set
+            {
+                _renderPoints = value;
+                ObjectList.OfType<SpriterPoint>().ToList().ForEach(point => point.Visible = value);
+            }
+        }
 
         public bool RenderCollisionBoxes
         {
@@ -32,17 +48,9 @@ namespace FlatRedBall_Spriter
             set
             {
                 _renderCollisionBoxes = value;
-                ObjectList.OfType<ScaledPolygon>().ToList().ForEach(polygon =>
-                {
-                    polygon.Visible = value;
-                });
+                ObjectList.OfType<ScaledPolygon>().ToList().ForEach(polygon => polygon.Visible = value);
             }
         }
-
-        public PositionedObjectList<Line> Bones { get; set; }
-
-        public PositionedObjectList<Line> PointLines { get; set; } 
-        public PositionedObjectList<Circle> PointCircles { get; set; } 
 
         public SpriterObjectAnimation CurrentAnimation
         {
@@ -126,62 +134,6 @@ namespace FlatRedBall_Spriter
             Animating = true;
         }
 
-        public void UpdateShapes()
-        {
-            if (!RenderBones)
-            {
-                for (int index = Bones.Count - 1; index >= 0; index--)
-                {
-                    var line = Bones[index];
-                    ShapeManager.Remove(line);
-                }
-                Bones.Clear();
-            }
-            else if (Bones.Count == 0)
-            {
-                // create lines
-                foreach (var bone in ObjectList.Where(o => o.Name.StartsWith("bone", StringComparison.CurrentCultureIgnoreCase)))
-                {
-                    var line = ShapeManager.AddLine();
-                    line.AttachTo(bone, false);
-                    line.RelativePoint1 = new Point3D(0, 0);
-                    line.RelativePoint2 = new Point3D(100, 0);
-                    Bones.Add(line);
-                }
-            }
-
-            if (!RenderPoints)
-            {
-                for (int index = PointLines.Count - 1; index >= 0; index--)
-                {
-                    var line = PointLines[index];
-                    ShapeManager.Remove(line);
-                }
-
-                for (int index = PointCircles.Count - 1; index >= 0; index--)
-                {
-                    var circle = PointCircles[index];
-                    ShapeManager.Remove(circle);
-                }
-            }
-            else if (PointCircles.Count == 0 && PointLines.Count == 0)
-            {
-                foreach (var point in ObjectList.Where(o => o.Name.StartsWith("point")))
-                {
-                    var line = ShapeManager.AddLine();
-                    var circle = ShapeManager.AddCircle();
-                    circle.Radius = 5f;
-                    circle.AttachTo(point, false);
-                    line.AttachTo(circle, false);
-                    line.RelativePoint1 = new Point3D(0, 0);
-                    line.RelativePoint2 = new Point3D(5, 0);
-                    PointLines.Add(line);
-                    PointCircles.Add(circle);
-                }
-            }
-        }
-
-
         public void StartAnimation(string animationName)
         {
             SpriterObjectAnimation animation;
@@ -199,8 +151,6 @@ namespace FlatRedBall_Spriter
         public override void TimedActivity(float secondDifference, double secondDifferenceSquaredDividedByTwo, float secondsPassedLastFrame)
         {
             base.TimedActivity(secondDifference, secondDifferenceSquaredDividedByTwo, secondsPassedLastFrame);
-
-            UpdateShapes();
 
             if (Animating)
             {
@@ -393,6 +343,8 @@ namespace FlatRedBall_Spriter
         static List<string> LoadedContentManagers = new List<string>();
         private SpriterObjectAnimation _currentAnimation;
         private bool _renderCollisionBoxes;
+        private bool _renderBones;
+        private bool _renderPoints;
 
         public int Index { get; set; }
         public bool Used { get; set; }
@@ -418,9 +370,6 @@ namespace FlatRedBall_Spriter
             ContentManagerName = contentManagerName;
             InitializeSpriterObject(addToManagers);
             ObjectList = new List<PositionedObject>();
-            Bones = new PositionedObjectList<Line>();
-            PointLines = new PositionedObjectList<Line>();
-            PointCircles = new PositionedObjectList<Circle>();
         }
 
         private void InitializeSpriterObject(bool addToManagers)

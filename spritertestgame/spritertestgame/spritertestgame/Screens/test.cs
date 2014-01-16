@@ -70,16 +70,22 @@ namespace spritertestgame.Screens
             const string xml = @"<?xml version=""1.0"" encoding=""UTF-8""?>
 <spriter_data scml_version=""1.0"" generator=""BrashMonkey Spriter"" generator_version=""b6.1"">
     <entity id=""0"" name=""entity_000"">
-        <obj_info name=""bone_000"" type=""bone"" w=""58.7963"" h=""10""/>
+        <obj_info name=""bone_000"" type=""bone"" w=""200"" h=""10""/>
+        <obj_info name=""bone_001"" type=""bone"" w=""159.214"" h=""10""/>
+        <obj_info name=""box_000"" type=""box"" w=""50"" h=""39"" pivot_x=""0"" pivot_y=""0""/>
         <animation id=""0"" name=""NewAnimation"" length=""1000"">
             <mainline>
                 <key id=""0"">
                     <bone_ref id=""0"" timeline=""1"" key=""0""/>
+                    <bone_ref id=""1"" parent=""0"" timeline=""2"" key=""0""/>
                     <object_ref id=""0"" parent=""0"" timeline=""0"" key=""0"" z_index=""0""/>
+                    <object_ref id=""1"" parent=""1"" timeline=""3"" key=""0"" z_index=""1""/>
                 </key>
                 <key id=""1"" time=""500"">
                     <bone_ref id=""0"" timeline=""1"" key=""1""/>
+                    <bone_ref id=""1"" parent=""0"" timeline=""2"" key=""1""/>
                     <object_ref id=""0"" parent=""0"" timeline=""0"" key=""1"" z_index=""0""/>
+                    <object_ref id=""1"" parent=""1"" timeline=""3"" key=""1"" z_index=""1""/>
                 </key>
             </mainline>
             <timeline id=""0"" name=""point_000"" object_type=""point"">
@@ -96,6 +102,22 @@ namespace spritertestgame.Screens
                 </key>
                 <key id=""1"" time=""500"" spin=""-1"">
                     <bone x=""23"" y=""100"" angle=""0.830315""/>
+                </key>
+            </timeline>
+            <timeline id=""2"" obj=""1"" name=""bone_001"" object_type=""bone"">
+                <key id=""0"" spin=""0"">
+                    <bone x=""202.597926"" y=""-23.538913"" angle=""247.634846"" scale_x=""1""/>
+                </key>
+                <key id=""1"" time=""500"" spin=""0"">
+                    <bone x=""202.597926"" y=""-23.538913"" angle=""247.634846"" scale_x=""1""/>
+                </key>
+            </timeline>
+            <timeline id=""3"" obj=""2"" name=""box_000"" object_type=""box"">
+                <key id=""0"" spin=""0"">
+                    <object x=""205.993589"" y=""-31.80631"" pivot_x=""0"" pivot_y=""1"" angle=""153.917767"" scale_y=""1""/>
+                </key>
+                <key id=""1"" time=""500"" spin=""0"">
+                    <object x=""205.993589"" y=""-31.80631"" pivot_x=""0"" pivot_y=""1"" angle=""153.917767"" scale_y=""1""/>
                 </key>
             </timeline>
         </animation>
@@ -122,6 +144,8 @@ namespace spritertestgame.Screens
 		    if (InputManager.Keyboard.KeyPushed(Keys.Space))
 		    {
 		        so.RenderPoints = !so.RenderPoints;
+		        so.RenderCollisionBoxes = !so.RenderCollisionBoxes;
+		        so.RenderBones = !so.RenderBones;
 		    }
 		}
 

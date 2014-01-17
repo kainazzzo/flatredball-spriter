@@ -8,6 +8,7 @@ using FlatRedBall;
 using FlatRedBall.IO;
 using FlatRedBallExtensions;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace FlatRedBall_Spriter
@@ -16,6 +17,9 @@ namespace FlatRedBall_Spriter
     {
         [XmlIgnore]
         public ITextureLoader TextureLoader { get; set; }
+
+        [XmlIgnore]
+        public ISoundLoader SoundLoader { get; set; }
 
         public string Directory { get; set; }
         public string FileName { get; set; }
@@ -40,25 +44,35 @@ namespace FlatRedBall_Spriter
         {
             var spriterObject = new SpriterObject(FlatRedBallServices.GlobalContentManager, false);
 
-            IDictionary<string, string> filenames = new Dictionary<string, string>();
-            IDictionary<int, ScaledSprite> persistentScaledSprites = new Dictionary<int, ScaledSprite>();
-            IDictionary<int, SpriterBone> persistentBones = new Dictionary<int, SpriterBone>();
-            IDictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
-            IDictionary<string, ObjectInfo> boxes = new Dictionary<string, ObjectInfo>();
-            IDictionary<int, ScaledPositionedObject> boneRefDic = new Dictionary<int, ScaledPositionedObject>();
-            IDictionary<KeyFrameValues, int> keyFrameValuesParentDictionary = new Dictionary<KeyFrameValues, int>();
-            IDictionary<int, ScaledPolygon> persistentScaledPolygons = new Dictionary<int, ScaledPolygon>();
-            IDictionary<int, SpriterPoint> persistentPoints = new Dictionary<int, SpriterPoint>();
+            var filenames = new Dictionary<string, string>();
+            var persistentScaledSprites = new Dictionary<int, ScaledSprite>();
+            var persistentBones = new Dictionary<int, SpriterBone>();
+            var textures = new Dictionary<string, Texture2D>();
+            var boxes = new Dictionary<string, ObjectInfo>();
+            var boneRefDic = new Dictionary<int, ScaledPositionedObject>();
+            var keyFrameValuesParentDictionary = new Dictionary<KeyFrameValues, int>();
+            var persistentScaledPolygons = new Dictionary<int, ScaledPolygon>();
+            var persistentPoints = new Dictionary<int, SpriterPoint>();
 
             string oldDir = FileManager.RelativeDirectory;
             FileManager.RelativeDirectory = this.Directory;
+
+            var soundEffectInstances = new Dictionary<string, SoundEffectInstance>();
+           
             foreach (var folder in this.Folder)
             {
                 foreach (var file in folder.File)
                 {
                     string folderFileId = string.Format("{0}_{1}", folder.Id, file.Id);
-                    filenames[folderFileId] = file.Name;
-                    textures[folderFileId] = LoadTexture(file);
+                    if (string.IsNullOrEmpty(file.Type))
+                    {
+                        filenames[folderFileId] = file.Name;
+                        textures[folderFileId] = LoadTexture(file);
+                    }
+                    else if (file.Type == "sound")
+                    {
+                        soundEffectInstances[folderFileId] = SoundLoader.FromFile(file.Name);
+                    }
                 }
             }
             FileManager.RelativeDirectory = oldDir;

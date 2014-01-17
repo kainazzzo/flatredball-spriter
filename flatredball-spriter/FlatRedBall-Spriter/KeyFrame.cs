@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using FlatRedBall;
+using FlatRedBall.Audio;
+using Microsoft.Xna.Framework.Audio;
 
 namespace FlatRedBall_Spriter
 {
@@ -12,5 +14,6 @@ namespace FlatRedBall_Spriter
 
         public float Time { get; set; }
         public Dictionary<PositionedObject, KeyFrameValues> Values { get; set; }
+        public Dictionary<SoundEffectInstance, SoundEffectFrameValues> SoundEffectValues { get; set; }
     }
 }

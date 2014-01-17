@@ -349,6 +349,9 @@ namespace FlatRedBall_Spriter
         /// <remarks/>
         [XmlAttribute(AttributeName = "original_height")]
         public int OriginalHeight { get; set; }
+
+        [XmlAttribute(AttributeName = "type")]
+        public string Type { get; set; }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]

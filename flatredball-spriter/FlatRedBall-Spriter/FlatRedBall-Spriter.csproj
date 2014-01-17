@@ -45,10 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FlatRedBallSoundLoader.cs" />
     <Compile Include="FlatRedBallTextureLoader.cs" />
+    <Compile Include="ISoundLoader.cs" />
     <Compile Include="ITextureLoader.cs" />
     <Compile Include="KeyFrame.cs" />
     <Compile Include="KeyFrameValues.cs" />
+    <Compile Include="SoundEffectFrameValues.cs" />
     <Compile Include="SpriterBone.cs" />
     <Compile Include="SpriterObject.cs" />
     <Compile Include="SpriterObjectAnimation.cs" />

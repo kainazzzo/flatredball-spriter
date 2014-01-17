@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b6.1">
+    <folder id="0">
+        <file id="0" name="scifi003.wav" type="sound"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <animation id="0" name="NewAnimation" length="1000">
+            <mainline>
+                <key id="0"/>
+            </mainline>
+            <soundline id="0" name="scifi003">
+                <key id="0" time="200">
+                    <object folder="0" file="0"/>
+                </key>
+            </soundline>
+        </animation>
+    </entity>
+</spriter_data>

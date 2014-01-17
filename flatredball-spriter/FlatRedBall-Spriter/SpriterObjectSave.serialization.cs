@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace FlatRedBall_Spriter
@@ -408,7 +409,10 @@ namespace FlatRedBall_Spriter
         [XmlElement("timeline", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
         public List<SpriterDataEntityAnimationTimeline> Timeline { get; set; }
 
-        /// <remarks/>
+        [XmlElement("soundline", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public List<SpriterDataEntityAnimationSoundLine> SoundLines { get; set; }
+
+            /// <remarks/>
         [XmlAttribute(AttributeName = "id")]
         public int Id { get; set; }
 
@@ -427,6 +431,18 @@ namespace FlatRedBall_Spriter
             get { return _looping; }
             set { _looping = value; }
         }
+    }
+
+    public class SpriterDataEntityAnimationSoundLine
+    {
+        [XmlElement(ElementName = "key", Form = XmlSchemaForm.Unqualified)]
+        public List<Key> Keys { get; set; }
+
+        [XmlAttribute(AttributeName = "id")]
+        public int Id { get; set; }
+
+        [XmlAttribute(AttributeName = "name")]
+        public string Name { get; set; }
     }
 
     [XmlTypeAttribute(AnonymousType = true)]

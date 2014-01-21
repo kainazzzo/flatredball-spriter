@@ -87,6 +87,10 @@ namespace SpriterPlugin
             _itemAdder.Add("SpriterPlugin.ScaledPositionedObject.cs");
             _itemAdder.Add("SpriterPlugin.ScaledPositionedObjectExtensions.cs");
             _itemAdder.Add("SpriterPlugin.ScaledSprite.cs");
+            _itemAdder.Add("SpriterPlugin.SpriterPoint.cs");
+            _itemAdder.Add("SpriterPlugin.ScaledPolygon.cs");
+            _itemAdder.Add("SpriterPlugin.SpriterBone.cs");
+            _itemAdder.Add("SpriterPlugin.SpriterObjectCollection.cs");
 
             _itemAdder.OutputFolderInProject = "SpriterPlugin";
 

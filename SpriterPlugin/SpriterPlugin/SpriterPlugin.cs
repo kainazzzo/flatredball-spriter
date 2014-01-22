@@ -8,6 +8,7 @@ using FlatRedBall.Glue.Plugins.ExportedInterfaces;
 using FlatRedBall.Glue.Plugins.Interfaces;
 using FlatRedBall.Glue.Plugins;
 using FlatRedBall.IO;
+using FlatRedBall.Math.Geometry;
 using FlatRedBall_Spriter;
 // add the following using statements:
 using FlatRedBall.Glue.VSHelpers;
@@ -55,21 +56,41 @@ namespace SpriterPlugin
             GetFilesReferencedBy += GetFilesReferencedByFunc;
             AvailableAssetTypes.Self.AddAssetType(new AssetTypeInfo
             {
-                FriendlyName = "SpriterObject (.scml)",
+                FriendlyName = "SpriterObjectCollection (.scml)",
                 CanBeObject = true,
-                QualifiedRuntimeTypeName = new PlatformSpecificType{ Platform = "All", QualifiedType = "FlatRedBall_Spriter.SpriterObject"},
+                QualifiedRuntimeTypeName = new PlatformSpecificType{ Platform = "All", QualifiedType = "FlatRedBall_Spriter.SpriterObjectCollection"},
                 QualifiedSaveTypeName = "FlatRedBall_Spriter.SpriterObjectSave",
                 Extension = "scml",
                 AddToManagersMethod = new List<string>{ "this.AddToManagers()" },
                 LayeredAddToManagersMethod = new List<string>{ "this.AddToManagers(mLayer)" },
-                CustomLoadMethod = "{THIS} = SpriterObjectSave.FromFile(\"{FILE_NAME}\").ToRuntime();",
+                CustomLoadMethod = "{THIS} = SpriterObjectSave.FromFile(\"{FILE_NAME}\").ToSpriterObjectCollection();",
                 DestroyMethod = "this.Destroy()",
                 ShouldAttach = true,
                 MustBeAddedToContentPipeline = false,
                 CanBeCloned = true,
                 HasCursorIsOn = false,
                 HasVisibleProperty = false,
-                CanIgnorePausing = false
+                CanIgnorePausing = false,
+                
+            });
+
+            AvailableAssetTypes.Self.AddAssetType(new AssetTypeInfo
+            {
+                FriendlyName = "SpriterObject",
+                CanBeObject = true,
+                QualifiedRuntimeTypeName = new PlatformSpecificType { Platform = "All", QualifiedType = "FlatRedBall_Spriter.SpriterObject" },
+                QualifiedSaveTypeName = "FlatRedBall_Spriter.SpriterObjectSave",
+                AddToManagersMethod = new List<string> { "this.AddToManagers()" },
+                LayeredAddToManagersMethod = new List<string> { "this.AddToManagers(mLayer)" },
+                CustomLoadMethod = "{THIS} = SpriterObjectSave.FromFile(\"{FILE_NAME}\").ToRunTime();",
+                DestroyMethod = "this.Destroy()",
+                ShouldAttach = true,
+                MustBeAddedToContentPipeline = false,
+                CanBeCloned = true,
+                HasCursorIsOn = false,
+                HasVisibleProperty = false,
+                CanIgnorePausing = false,
+
             });
 
             _itemAdder = new CodeBuildItemAdder();
@@ -96,6 +117,26 @@ namespace SpriterPlugin
 
             // Add the following code to your StartUp method:
             ReactToLoadedGlux += HandleGluxLoad;
+
+            TryAddContainedObjects += OnTryAddContainedObjects;
+        }
+
+        private bool OnTryAddContainedObjects(string absoluteFileName, List<string> objects)
+        {
+            if (!string.IsNullOrEmpty(absoluteFileName) &&
+                FileManager.GetExtension(absoluteFileName).ToLowerInvariant() == "scml")
+            {
+                var oldDir = FileManager.RelativeDirectory;
+                FileManager.RelativeDirectory = FileManager.GetDirectory(absoluteFileName);
+                var sos = SpriterObjectSave.FromFile(absoluteFileName);
+                FileManager.RelativeDirectory = oldDir;
+                foreach (var entity in sos.Entity)
+                {
+                    objects.Add(string.Format("{0} (SpriterObject)", entity.Name));
+                }
+                return true;
+            }
+            return false;
         }
 
         private void HandleGluxLoad()

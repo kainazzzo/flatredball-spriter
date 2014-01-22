@@ -39,7 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\XnaPc\FlatRedBall.dll</HintPath>
     </Reference>
-    <Reference Include="FlatRedBall.Plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="FlatRedBall.Plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\XnaPc\FlatRedBall.Plugin.dll</HintPath>
+    </Reference>
     <Reference Include="FlatRedBall.PropertyGrid, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\XnaPc\FlatRedBall.PropertyGrid.dll</HintPath>

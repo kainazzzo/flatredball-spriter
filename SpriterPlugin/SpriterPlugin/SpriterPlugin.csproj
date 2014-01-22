@@ -98,6 +98,18 @@
     <EmbeddedResource Include="..\..\FlatRedBallExtensions\ScaledSprite.cs">
       <Link>ScaledSprite.cs</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterBone.cs">
+      <Link>SpriterBone.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterObjectCollection.cs">
+      <Link>SpriterObjectCollection.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterPoint.cs">
+      <Link>SpriterPoint.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\FlatRedBallExtensions\ScaledPolygon.cs">
+      <Link>ScaledPolygon.cs</Link>
+    </EmbeddedResource>
     <Compile Include="SpriterPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

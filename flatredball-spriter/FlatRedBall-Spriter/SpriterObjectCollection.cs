@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlatRedBall;
 using FlatRedBall.Graphics;
+using FlatRedBallExtensions;
 
 namespace FlatRedBall_Spriter
 {
-    public class SpriterObjectCollection
+    public class SpriterObjectCollection : ScaledPositionedObject
     {
         public IDictionary<string, SpriterObject> SpriterEntities { get; set; }
 
@@ -19,10 +21,12 @@ namespace FlatRedBall_Spriter
         {
             if (SpriterEntities == null) return;
 
-            foreach (var spriterEntity in SpriterEntities)
+            foreach (var spriterEntity in SpriterEntities.Where(spriterEntity => spriterEntity.Value != null))
             {
-                if (spriterEntity.Value != null) spriterEntity.Value.AddToManagers(layer);
+                spriterEntity.Value.AddToManagers(layer);
             }
+
+            SpriteManager.AddPositionedObject(this);
         }
 
         public SpriterObject FindByName(string name = "")
@@ -41,9 +45,9 @@ namespace FlatRedBall_Spriter
         {
             if (SpriterEntities == null) return;
 
-            foreach (var spriterEntity in SpriterEntities)
+            foreach (var spriterEntity in SpriterEntities.Where(spriterEntity => spriterEntity.Value != null))
             {
-                if (spriterEntity.Value != null) spriterEntity.Value.Destroy();
+                spriterEntity.Value.Destroy();
             }
         }
 
@@ -59,11 +63,35 @@ namespace FlatRedBall_Spriter
             soc.SpriterEntities = new Dictionary<string, SpriterObject>();
             foreach (var spriterEntity in SpriterEntities)
             {
-                soc.SpriterEntities.Add(spriterEntity.Key,
-                    spriterEntity.Value != null ? spriterEntity.Value.Clone() : null);
+                if (spriterEntity.Value != null)
+                {
+                    var so = spriterEntity.Value.Clone();
+                    so.AttachTo(soc, false);
+
+                    soc.SpriterEntities.Add(spriterEntity.Key,
+                        so);
+                }
             }
 
+
             return soc;
+        }
+
+        public void StartAnimation(string name = null)
+        {
+            if (SpriterEntities == null) return;
+
+            foreach (var spriterEntity in SpriterEntities.Where(spriterEntity => spriterEntity.Value != null))
+            {
+                if (name == null)
+                {
+                    spriterEntity.Value.StartAnimation();
+                }
+                else
+                {
+                    spriterEntity.Value.StartAnimation(name);
+                }
+            }
         }
     }
 }

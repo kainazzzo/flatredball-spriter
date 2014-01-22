@@ -39,7 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\XnaPc\FlatRedBall.dll</HintPath>
     </Reference>
-    <Reference Include="FlatRedBall.Plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="FlatRedBall.Plugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\XnaPc\FlatRedBall.Plugin.dll</HintPath>
+    </Reference>
     <Reference Include="FlatRedBall.PropertyGrid, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\XnaPc\FlatRedBall.PropertyGrid.dll</HintPath>
@@ -97,6 +100,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="..\..\FlatRedBallExtensions\ScaledSprite.cs">
       <Link>ScaledSprite.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterBone.cs">
+      <Link>SpriterBone.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterObjectCollection.cs">
+      <Link>SpriterObjectCollection.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\flatredball-spriter\FlatRedBall-Spriter\SpriterPoint.cs">
+      <Link>SpriterPoint.cs</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\..\FlatRedBallExtensions\ScaledPolygon.cs">
+      <Link>ScaledPolygon.cs</Link>
     </EmbeddedResource>
     <Compile Include="SpriterPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

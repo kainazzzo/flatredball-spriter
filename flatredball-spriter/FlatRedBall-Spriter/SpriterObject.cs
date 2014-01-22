@@ -145,7 +145,7 @@ namespace FlatRedBall_Spriter
                 }
             }
         }
-        public void ResetAnimation()
+        private void ResetAnimation()
         {
             SecondsIn = 0f;
             CurrentKeyFrameIndex = 0;
@@ -445,7 +445,7 @@ namespace FlatRedBall_Spriter
             ShapeManager.SuppressAddingOnVisibilityTrue = oldShapeManagerSuppressAdd;
         }
 
-        public void AddToManagersBottomUp(Layer layerToAddTo)
+        private void AddToManagersBottomUp(Layer layerToAddTo)
         {
             // We move this back to the origin and unrotate it so that anything attached to it can just use its absolute position
             float oldRotationX = RotationX;
@@ -470,11 +470,7 @@ namespace FlatRedBall_Spriter
             RotationZ = oldRotationZ;
         }
 
-        public void ConvertToManuallyUpdated()
-        {
-            ForceUpdateDependenciesDeep();
-            SpriteManager.ConvertToManuallyUpdated(this);
-        }
+
         public static void LoadStaticContent(string contentManagerName)
         {
             if (string.IsNullOrEmpty(contentManagerName))
@@ -552,11 +548,6 @@ namespace FlatRedBall_Spriter
                     CurrentAnimation.Looping = true;
                 }
             }
-        }
-
-        public void SetToIgnorePausing()
-        {
-            InstructionManager.IgnorePausingFor(this);
         }
 
         public SpriterObject Clone()
@@ -638,11 +629,5 @@ namespace FlatRedBall_Spriter
             Action<SpriterObjectAnimation> handler = AnimationFinished;
             if (handler != null) handler(animation);
         }
-    }
-
-
-    // Extra classes
-    public static class SpriterObjectTestEntityExtensionMethods
-    {
     }
 }

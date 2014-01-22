@@ -24,15 +24,7 @@ namespace FlatRedBall_Spriter
         public string Directory { get; set; }
         public string FileName { get; set; }
 
-        public SpriterObject ToRuntime(int entityId = 0)
-        {
-            var entity = Entity[entityId];
-
-
-            return CreateSpriterObjectFromEntity(entity);
-        }
-
-        public SpriterObjectCollection ToSpriterObjectCollection()
+        public SpriterObjectCollection ToRuntime()
         {
             return new SpriterObjectCollection
             {

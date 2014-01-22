@@ -1,4 +1,5 @@
 
+using System.Linq;
 using BitmapFont = FlatRedBall.Graphics.BitmapFont;
 using Cursor = FlatRedBall.Gui.Cursor;
 using GuiManager = FlatRedBall.Gui.GuiManager;
@@ -199,12 +200,12 @@ namespace spritertestgame.Entities
 				{
 					registerUnload = true;
 				}
-				rotationtest = SpriterObjectSave.FromFile("content/entities/spriterentity/rotationtest.scml").ToRuntime();
+                rotationtest = SpriterObjectSave.FromFile("content/entities/spriterentity/rotationtest.scml").ToRuntime().SpriterEntities.First().Value;
 				if (!FlatRedBallServices.IsLoaded<FlatRedBall_Spriter.SpriterObject>(@"content/entities/spriterentity/player.scml", ContentManagerName))
 				{
 					registerUnload = true;
 				}
-				player = SpriterObjectSave.FromFile("content/entities/spriterentity/player.scml").ToRuntime();
+                player = SpriterObjectSave.FromFile("content/entities/spriterentity/player.scml").ToRuntime().SpriterEntities.First().Value;
 			}
 			if (registerUnload && ContentManagerName != FlatRedBallServices.GlobalContentManager)
 			{

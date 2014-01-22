@@ -484,7 +484,7 @@ namespace flatredball_spriter_test
 </spriter_data>
 ");
 #endregion
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             var pivot1 = so.ObjectList[1];
             var pivot2 = so.ObjectList[3];
             var pivot3 = so.ObjectList[5];
@@ -614,7 +614,7 @@ namespace flatredball_spriter_test
 </spriter_data>
 ";
             var sos = TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(xml);
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             so.StartAnimation();
 
@@ -702,7 +702,7 @@ namespace flatredball_spriter_test
 ");
             #endregion
 
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             var x = 0;
 

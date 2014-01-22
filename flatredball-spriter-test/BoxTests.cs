@@ -116,7 +116,7 @@ namespace flatredball_spriter_test
 
             var sos = TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(xml);
 
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             var values = so.Animations.First().Value.KeyFrames.First().Values;
 
@@ -163,7 +163,7 @@ namespace flatredball_spriter_test
             #endregion
 
             var sos = TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(xml);
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             so.StartAnimation();
 

@@ -25,6 +25,18 @@ namespace FlatRedBall_Spriter
             }
         }
 
+        public SpriterObject FindByName(string name = "")
+        {
+            if (SpriterEntities == null) return null;
+
+            if (SpriterEntities.ContainsKey(name))
+            {
+                return SpriterEntities[name];
+            }
+
+            return null;
+        }
+
         public void Destroy()
         {
             if (SpriterEntities == null) return;

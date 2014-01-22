@@ -73,10 +73,10 @@ namespace flatredball_spriter_test
         public void OpacityConversion()
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames[0].Values.ElementAt(1).Value.Alpha - 1f) < .00001f);
             sos.Entity[0].Animation[0].Timeline[0].Key[0].Object.Alpha = .5f;
-            so = sos.ToRuntime();
+            so = sos.ToRuntime().SpriterEntities.First().Value;
             Assert.IsTrue(Math.Abs(so.Animations.First().Value.KeyFrames[0].Values.ElementAt(1).Value.Alpha - .5f) < .00001f);
         }
 
@@ -84,7 +84,7 @@ namespace flatredball_spriter_test
         public void TestAnimationTotalLength()
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             Assert.IsNotNull(so);
             so.StartAnimation();
             Assert.AreEqual(1, so.KeyFrameList.Count);
@@ -95,7 +95,7 @@ namespace flatredball_spriter_test
         public void MultipleAnimationTotalLength()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             so.StartAnimation("0");
             Assert.AreEqual(1.0f, so.AnimationTotalTime);
@@ -108,7 +108,7 @@ namespace flatredball_spriter_test
         public void TestKeyFrameTime()
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             so.StartAnimation();
             Assert.AreEqual(.3f, so.KeyFrameList[0].Time);
         }
@@ -196,7 +196,7 @@ namespace flatredball_spriter_test
         public void BonesGetAddedToKeyframes()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithSingleBone();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             Assert.AreEqual(1, so.ObjectList.Count);
             CollectionAssert.AllItemsAreInstancesOfType(so.ObjectList, typeof(ScaledPositionedObject));
             Assert.IsNotNull(so.Animations.First().Value.KeyFrames[0].Values.FirstOrDefault());
@@ -208,7 +208,7 @@ namespace flatredball_spriter_test
         public void BoneParenting()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithTwoBones();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             Assert.AreEqual(2, so.ObjectList.Count);
             Assert.AreSame(so, so.Animations.First().Value.KeyFrames[0].Values[so.ObjectList[0]].Parent);
             Assert.AreSame(so.ObjectList[0],
@@ -219,7 +219,7 @@ namespace flatredball_spriter_test
         public void DoubleBoneParenting()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParent();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             //var pivot = so.ObjectList.Single(o => o.Name == "pivot");
             //var sprite = so.ObjectList.Single(o => o.Name == "sprite");
@@ -233,7 +233,7 @@ namespace flatredball_spriter_test
         public void ObjectAttachedToPivotIfNoParentSet()
         {
             var sos = GetSimpleSpriterObjectSaveNullTexture();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             var pivot = so.ObjectList.Single(p => p.Name.Contains("pivot"));
             var sprite = (Sprite)so.ObjectList.Single(p => p.Name.Contains("sprite"));
 
@@ -247,7 +247,7 @@ namespace flatredball_spriter_test
         public void ObjectWithBoneParent()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithSingleBoneAsObjectParent();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             Assert.AreEqual(3, so.ObjectList.Count);
 
@@ -262,7 +262,7 @@ namespace flatredball_spriter_test
         public void ConvertTwoObjects()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             so.StartAnimation();
             Assert.AreEqual(1, so.KeyFrameList.Count);
             Assert.AreEqual(.3f, so.KeyFrameList[0].Time);
@@ -272,7 +272,7 @@ namespace flatredball_spriter_test
         public void ZIndexTest()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefs();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             so.StartAnimation();
 
             Assert.AreEqual(0.0f, so.KeyFrameList[0].Values.ElementAt(0).Value.RelativePosition.Z);
@@ -284,7 +284,7 @@ namespace flatredball_spriter_test
         public void UnreferencedKeysGetAddedStill()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWith2ObjectRefsAndExtraKey();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             var pivot = so.ObjectList.Single(o => o.Name.Contains("pivot"));
             var bone = so.ObjectList.Single(o => !o.Name.Contains("pivot") && !o.Name.Contains("sprite"));
@@ -305,7 +305,7 @@ namespace flatredball_spriter_test
         public void BoneRotation()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithSingleBoneRotated();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             Assert.IsTrue(
                 Math.Abs(0f - so.Animations.First().Value.KeyFrames.ElementAt(0).Values.First().Value.RelativeRotation.Z) < .0001f);
@@ -321,7 +321,7 @@ namespace flatredball_spriter_test
         public void AllAnimationsConvertToRuntimeObject()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithMultipleAnimations();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             Assert.IsNotNull(so.Animations);
             Assert.AreEqual(2, so.Animations.Count);
@@ -359,7 +359,7 @@ namespace flatredball_spriter_test
         public void RelativeScaleWithObjectUnscaled()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithBonesAsObjectParentAndOneOrphanObject();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             var sprite = so.ObjectList.First(p => p.Name .Contains("sprite"));
             var sprite2 = so.ObjectList.Where(p => p.Name.Contains("sprite")).ElementAt(1);
@@ -442,7 +442,7 @@ namespace flatredball_spriter_test
     </entity>
 </spriter_data>
 ");
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
 
             var pivot1 = so.Animations.First().Value.KeyFrames.First().Values.First();
             var sprite1 = so.Animations.First().Value.KeyFrames.First().Values.ElementAt(1);
@@ -1967,7 +1967,7 @@ namespace flatredball_spriter_test
         public void ObjectPosition()
         {
             var sos = GetSimpleSpriterObjectSaveNullTextureWithPositionChange();
-            var so = sos.ToRuntime();
+            var so = sos.ToRuntime().SpriterEntities.First().Value;
             so.StartAnimation();
             Assert.IsTrue(Math.Abs(so.NextKeyFrame.Values[so.ObjectList[1]].RelativePosition.X - 50.0f) < Single.Epsilon);
         }

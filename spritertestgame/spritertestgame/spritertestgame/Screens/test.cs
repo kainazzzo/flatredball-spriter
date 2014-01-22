@@ -128,7 +128,7 @@ namespace spritertestgame.Screens
 
 
             var sos = TestSerializationUtility.DeserializeSpriterObjectSaveFromXml(xml);
-            so = sos.ToRuntime();
+            so = sos.ToRuntime().SpriterEntities.First().Value;
             so.AddToManagers();
             
 

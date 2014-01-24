@@ -10,7 +10,49 @@ namespace FlatRedBall_Spriter
 {
     public class SpriterObjectCollection : ScaledPositionedObject
     {
+        private bool _renderPoints;
+        private bool _renderBones;
+        private bool _renderCollisionBoxes;
         public IDictionary<string, SpriterObject> SpriterEntities { get; set; }
+
+        public bool RenderPoints
+        {
+            get { return _renderPoints; }
+            set
+            {
+                _renderPoints = value;
+                foreach (var spriterEntity in SpriterEntities)
+                {
+                    spriterEntity.Value.RenderPoints = value;
+                }
+            }
+        }
+
+        public bool RenderBones
+        {
+            get { return _renderBones; }
+            set
+            {
+                _renderBones = value;
+                foreach (var spriterEntity in SpriterEntities)
+                {
+                    spriterEntity.Value.RenderBones = value;
+                }
+            }
+        }
+
+        public bool RenderCollisionBoxes
+        {
+            get { return _renderCollisionBoxes; }
+            set
+            {
+                _renderCollisionBoxes = value;
+                foreach (var spriterEntity in SpriterEntities)
+                {
+                    spriterEntity.Value.RenderCollisionBoxes = value;
+                }
+            }
+        }
 
         public void AddToManagers()
         {

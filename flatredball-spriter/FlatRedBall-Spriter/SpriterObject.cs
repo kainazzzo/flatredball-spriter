@@ -43,7 +43,7 @@ namespace FlatRedBall_Spriter
 
         public Dictionary<string, SpriterObjectAnimation> Animations { get; private set; }
 
-        public bool Animating { get; private set; }
+        public bool Animating { get; set; }
         public float SecondsIn { get; private set; }
         public int CurrentKeyFrameIndex { get; private set; }
         public int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }

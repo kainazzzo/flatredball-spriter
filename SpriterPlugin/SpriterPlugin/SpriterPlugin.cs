@@ -71,7 +71,7 @@ namespace SpriterPlugin
                 HasCursorIsOn = false,
                 HasVisibleProperty = false,
                 CanIgnorePausing = false,
-                
+                ExtraVariablesPattern = "float RelativeScaleX; float RelativeScaleY; bool ParentScaleChangesPosition; bool RenderBones; bool RenderPoints; bool RenderCollisionBoxes"
             });
 
             AvailableAssetTypes.Self.AddAssetType(new AssetTypeInfo
@@ -90,7 +90,7 @@ namespace SpriterPlugin
                 HasCursorIsOn = false,
                 HasVisibleProperty = false,
                 CanIgnorePausing = false,
-
+                ExtraVariablesPattern = "bool Animating; float RelativeScaleX; float RelativeScaleY; bool ParentScaleChangesPosition; bool RenderBones; bool RenderPoints; bool RenderCollisionBoxes"
             });
 
             _itemAdder = new CodeBuildItemAdder();

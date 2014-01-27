@@ -119,6 +119,21 @@ namespace SpriterPlugin
             ReactToLoadedGlux += HandleGluxLoad;
 
             TryAddContainedObjects += OnTryAddContainedObjects;
+
+            var assembly = Assembly.GetExecutingAssembly();
+            string whatToSave = "SpriterPlugin.Content.SpriterTemplate.scml";
+
+            string destination = FileManager.UserApplicationData + @"Glue\FilesForAddNewFile\SpriterTemplate.scml";
+
+            try
+            {
+                FileManager.SaveEmbeddedResource(assembly, whatToSave, destination);
+            }
+            catch (Exception e)
+            {
+                PluginManager.ReceiveError("Error trying to save spriter template: [" + e.ToString() + "]");
+            }
+
         }
 
         private bool OnTryAddContainedObjects(string absoluteFileName, List<string> objects)

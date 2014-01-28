@@ -39,7 +39,6 @@
   <ItemGroup>
     <Content Include="_includes\head.html" />
     <Content Include="_layouts\page.html" />
-    <None Include="Gemfile" />
     <Content Include="images\code.png" />
     <Content Include="images\pattern.png" />
     <Content Include="images\tar.png" />

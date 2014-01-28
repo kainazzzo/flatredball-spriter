@@ -37,6 +37,7 @@
     <None Include="_config.yml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sample.html" />
     <Content Include="_includes\head.html" />
     <Content Include="_layouts\page.html" />
     <Content Include="images\code.png" />

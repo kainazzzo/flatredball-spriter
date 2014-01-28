@@ -34,6 +34,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="params.json" />
+    <None Include="_config.yml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\code.png" />

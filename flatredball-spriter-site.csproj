@@ -37,6 +37,7 @@
     <None Include="_config.yml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Gemfile" />
     <Content Include="images\code.png" />
     <Content Include="images\pattern.png" />
     <Content Include="images\tar.png" />

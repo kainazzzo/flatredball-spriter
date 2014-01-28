@@ -89,7 +89,7 @@ h1.title {
     -webkit-box-shadow: 0 0 5px #b1b1b1;
     -ms-box-shadow: 0 0 5px #b1b1b1;
     box-shadow: 0 0 5px #b1b1b1;
-    margin: 5px;
+    margin-top: 25px;
 }
 
 p.tagline {

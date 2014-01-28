@@ -25,7 +25,19 @@
             {% if page.tagline %}
             <p class="tagline">{{ page.tagline }}</p>
             {% endif %}
-            {{ content }}
+            <div id="main" role="main">
+                <div class="download-bar">
+                    <div class="inner">
+                        <a href="https://github.com/kainazzzo/flatredball-spriter/tarball/master" class="download-button tar"><span>Download</span></a>
+                        <a href="https://github.com/kainazzzo/flatredball-spriter/zipball/master" class="download-button zip"><span>Download</span></a>
+                        <a href="https://github.com/kainazzzo/flatredball-spriter" class="code">View FlatRedBall-Spriter on GitHub</a>
+                    </div>
+                    <span class="blc"></span><span class="trc"></span>
+                </div>
+                
+                <article class="markdown-body">
+                    {{ content }}
+                </article>
         </div>
         <footer>
             <div class="owner">

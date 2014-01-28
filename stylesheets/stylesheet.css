@@ -78,6 +78,16 @@ h1.title {
   text-align: center;
 }
 
+h1.tutorialtitle {
+  margin: 30px 20px 10px;
+  font-size: 30px;
+  font-weight: bold;
+  font-style: italic;
+  font-family:Georgia, serif;
+  text-align: center;
+}
+
+
 .wrapper {
   width: 675px;
   margin: 0 auto;

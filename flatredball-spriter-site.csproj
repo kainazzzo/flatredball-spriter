@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sample.html" />
+    <Content Include="Tutorials\HowToLoadExistingSpriterAsset.html" />
     <Content Include="_includes\head.html" />
     <Content Include="_layouts\page.html" />
     <Content Include="images\code.png" />

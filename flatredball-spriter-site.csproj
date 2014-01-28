@@ -50,7 +50,7 @@
     <Content Include="stylesheets\pygment_trac.css" />
     <Content Include="stylesheets\styles.css" />
     <Content Include="stylesheets\stylesheet.css" />
-    <None Include="Tutorials\index.md" />
+    <Content Include="Tutorials\index.html" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

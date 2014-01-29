@@ -17,16 +17,18 @@ description: In this tutorial, you will learn how to take an existing Spriter as
 </p>
 
 <p>In Glue, choose an existing screen or add a screen by right clicking on "Screens" and selecting "Add Screen"</p>
-<p>Right click on Files, and choose add file, existing file:</p>
+<h4>Right click on Files, and choose add file, existing file:</h4>
 <img class="tutorialimg" src="images/addexistingfile.PNG" />
-<p>Navigate to where you unzipped GreyGuy.zip, and find the file called player.scml:</p>
+<h4>Navigate to where you unzipped GreyGuy.zip, and find the file called player.scml:</h4>
 <img class="tutorialimg" src="images/playerscml.PNG" />
-<p>You should see the following in the files area:</p>
+<h4>You should see the following in the files area:</h4>
 <img class="tutorialimg" src="images/files.PNG" />
 <p>This copied the scml and all referenced folders & images into the glue project. The old location is not connected to the project at all, so you can delete the unzipped GreyGuy folder if you want.</p>
 <p><strong>PRO TIP:</strong> From here, you can double click player.scml to open the animations in Spriter.</p>
 <p>The file is now loaded and will load in game, but the animation will not play without adding a line of code to the screen's CustomInitialize function</p>
-<p>Open up the project in Visual Studio (Click Project, View in Visual Studio), and add the following line to your Screen's CustomInitialize function:</p>
+<p>Open up the project in Visual Studio (Click Project, View in Visual Studio)</p>
+
+<h4>Add the following line to your Screen's CustomInitialize function:</h4>
 {% highlight C# %}
 player.StartAnimation();
 {% endhighlight %}

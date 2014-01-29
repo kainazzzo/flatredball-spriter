@@ -47,6 +47,11 @@
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\files.PNG" />
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\playerscml.PNG" />
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\index.html" />
+    <Content Include="Tutorials\WorkingWithEntities\images\addobject.PNG" />
+    <Content Include="Tutorials\WorkingWithEntities\images\entity1.PNG" />
+    <Content Include="Tutorials\WorkingWithEntities\images\entityonscreen.PNG" />
+    <Content Include="Tutorials\WorkingWithEntities\images\sourcename.PNG" />
+    <Content Include="Tutorials\WorkingWithEntities\index.html" />
     <Content Include="_includes\head.html" />
     <Content Include="_layouts\tutorial.html" />
     <Content Include="_layouts\page.html" />

@@ -1,0 +1,49 @@
+---
+title: Working With Glue Entities
+layout: tutorial
+tagline: In this tutorial, you will learn some more practical concepts of working with Spriter animations. We will go through adding the Spriter GreyGuy example to a project and making it walk with keyboard input.
+description: In this tutorial, you will learn some more practical concepts of working with Spriter animations. We will go through adding the Spriter GreyGuy example to a project and making it walk with keyboard input.
+---
+
+<div class="tutorialinstruction">
+    <p>So, we already have the </p>
+    <p>In the <a href="../HowToLoadExistingSpriterAsset/">previous</a> tutorial, you learned how to load an existing Spriter animation into your Glue project. But,
+        we did that into a screen. In this tutorial, we will be loading it into an Entity. This works almost exactly the same way as with Screens.
+    </p>
+    <p>In Glue, choose an existing Entity or add an Entity by right clicking on "Entities" and selecting "Add Entity"</p>
+    <p>Choose a name, and then click ok</p>
+    <p>Right click on Files, and choose add file, new file, navigating to the player.scml file from the prior tutorial.</p>
+    <h4>If you are lost, refer to <a href="../HowToLoadExistingSpriterAsset/">the previous tutorial</a> for how to add an existing file, and do that in this Entity instead.</h4>
+    <p>If you did it right, you should end up with something like this:</p>
+    <img class="tutorialimg" src="images/entity1.PNG" />
+</div>
+
+<div class="tutorialinstruction">
+    <h4>Here is where the really cool stuff comes in!</h4>
+    <p>In order to use a spriter animation in an entity, you have to add an object. Glue Assumes if you're adding a file directly to a screen, you want to see it, so it automatically adds it to the managers. This is not so with an Entity, because it's not clear what your intent is for this file. When you add an object from a file, though, Glue assumes that you want it to be tangible, so it clones the object and adds to managers.</p>
+    <p>That said, here is what you need to do.</p>
+    <h4>Right click on objects, and click Add Object</h4>
+    <p>Select the From File radio button, and select the file in the list:</p>
+    <img class="tutorialimg" src="images/addobject.PNG"/>
+    <p>Click ok.</p>
+</div>
+
+<div class="tutorialinstruction">
+    <p>Now you have an object instance that's tied back to the file, but you have to tell Glue what part of the file to use.</p>
+    <h4>Open the dropdown for SourceName, and choose Player (SpriterObject):</h4>
+    <img class="tutorialimg" src="images/sourcename.PNG"/>
+    <p>Notice how it gives you two options? Most of the time, you will probably be choosing a SpriterObject instead of the SpriterObjectCollection, because it refers to a single Spriter Entity as defined in the Spriter project. If you had multiple Spriter Entities in the Spriter project, they would all show up here in the dropdown, and you could add the project file once while adding objects for the different entities.</p>
+</div>
+
+<div class="tutorialinstruction">
+    <h4>Add the following line to your Entity's CustomInitialize function:</h4>
+    {% highlight C# %}
+    ObjectInstance.StartAnimation("idle");
+    {% endhighlight %}
+</div>
+
+<div class="tutorialinstruction">
+    <h4>Now add your entity to a screen (Right click and drag the Glue Entity to a Screen)</h4>
+    <p>Your project should now look something like this:</p>
+    <img class="tutorialimg" src="images/entityonscreen.PNG" />
+</div>

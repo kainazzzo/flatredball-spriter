@@ -28,14 +28,12 @@ description: In this tutorial, you will learn how to start a new Spriter animati
 <div class="tutorialhint">
     <p><strong>PRO TIP:</strong> From here, you can double click player.scml to open the animations in Spriter.</p>
 </div>
-<p>The file is now loaded and will load in game, but the animation will not play without adding a line of code to the screen's CustomInitialize function</p>
+<p>The file is now added and will load in game, but the animation will not play without adding a line of code to the screen's CustomInitialize function</p>
 <p>Open up the project in Visual Studio (Click Project, View in Visual Studio)</p>
 
 <div class="tutorialinstruction">
     <h4>Add the following line to your Screen's CustomInitialize function:</h4>
-    {% highlight C# %}
-    SpriterObjectCollectionFile.StartAnimation();
-    {% endhighlight %}
+    {% highlight C# %}SpriterObjectCollectionFile.StartAnimation();{% endhighlight %}
     <p>Now when you edit this animation, changes will be reflected in your game.</p>
 </div>
 <p>That's all there is to adding new animation files into screens.</p>

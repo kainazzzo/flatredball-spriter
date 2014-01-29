@@ -23,7 +23,6 @@ description: In this tutorial, you will learn how to start a new Spriter animati
 <div class="tutorialinstruction">
     <h4>You should see the following in the files area:</h4>
     <img class="tutorialimg" src="images/files.PNG" />
-    <p>This copied the scml and all referenced folders & images into the glue project. The old location is not connected to the project at all, so you can delete the unzipped GreyGuy folder if you want.</p>
 </div>
 
 <div class="tutorialhint">
@@ -35,16 +34,11 @@ description: In this tutorial, you will learn how to start a new Spriter animati
 <div class="tutorialinstruction">
     <h4>Add the following line to your Screen's CustomInitialize function:</h4>
     {% highlight C# %}
-    player.StartAnimation();
+    SpriterObjectCollectionFile.StartAnimation();
     {% endhighlight %}
-    <p>This loads and starts the first animation in the file, which happens to be the looping idle animation.</p>
-    <p>Hit F5 to run the game, and you should see the GreyGuy idle animation play!</p>
+    <p>Now when you edit this animation, changes will be reflected in your game.</p>
 </div>
-<p>That's all there is to loading existing animation files into screens.</p>
-<p>You can change the line in CustomInitialize to include an animation name too:</p>
-{% highlight C# %}
-player.StartAnimation("walk");
-{% endhighlight %}
+<p>That's all there is to adding new animation files into screens.</p>
 
 <div class="tutorialhint">
     <p><strong>NOTE:</strong> This method of loading Spriter files generates a SpriterObjectCollection object in your code. While it does work in this case, it only makes sense because the example file has one Spriter entity. If the example had multiple Spriter entities in the SCML file, you would see animations overlapping. </p>

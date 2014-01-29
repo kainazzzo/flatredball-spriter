@@ -639,3 +639,11 @@ footer .owner p a {
 .tutorialimg {
     border: 0;
 }
+
+.tutorialinstruction {
+    margin: 5px 0;
+}
+
+.tutorialhint {
+    background-color: #d1d1d1;
+}

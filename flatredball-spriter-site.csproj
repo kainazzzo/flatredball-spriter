@@ -39,6 +39,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sample.html" />
+    <Content Include="Tutorials\HowToAddNewSpriterAsset\images\addnew.PNG" />
+    <Content Include="Tutorials\HowToAddNewSpriterAsset\images\files.PNG" />
+    <Content Include="Tutorials\HowToAddNewSpriterAsset\images\spriterobjectcollection.PNG" />
+    <Content Include="Tutorials\HowToAddNewSpriterAsset\index.html" />
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\addexistingfile.PNG" />
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\files.PNG" />
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\playerscml.PNG" />

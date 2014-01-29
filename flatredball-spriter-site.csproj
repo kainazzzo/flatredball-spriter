@@ -34,10 +34,14 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="params.json" />
+    <None Include="Tutorials\HowToLoadExistingSpriterAsset\GreyGuy.zip" />
     <None Include="_config.yml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sample.html" />
+    <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\addexistingfile.PNG" />
+    <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\files.PNG" />
+    <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\playerscml.PNG" />
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\index.html" />
     <Content Include="_includes\head.html" />
     <Content Include="_layouts\tutorial.html" />

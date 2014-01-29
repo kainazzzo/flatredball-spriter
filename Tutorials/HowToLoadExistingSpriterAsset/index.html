@@ -5,4 +5,40 @@ tagline: In this tutorial, you will learn how to take an existing Spriter asset 
 description: In this tutorial, you will learn how to take an existing Spriter asset and put it into your FlatRedBall game using Glue.
 ---
 
-<p>TODO: Content!</p>
+
+<h3>First, you will need to download some assets.</h3>
+
+<p>
+    I'm assuming you already have this plugin loaded.<br />
+    <a href="GreyGuy.zip">Here</a> is an example provided by BrashMonkey.
+</p>
+<p>
+    Unzip that into any directory (outside of the project), and now you are ready to get started!
+</p>
+
+<p>In Glue, choose an existing screen or add a screen by right clicking on "Screens" and selecting "Add Screen"</p>
+<p>Right click on Files, and choose add file, existing file:</p>
+<img class="tutorialimg" src="images/addexistingfile.PNG" />
+<p>Navigate to where you unzipped GreyGuy.zip, and find the file called player.scml:</p>
+<img class="tutorialimg" src="images/playerscml.PNG" />
+<p>You should see the following in the files area:</p>
+<img class="tutorialimg" src="images/files.PNG" />
+<p>This copied the scml and all referenced folders & images into the glue project. The old location is not connected to the project at all, so you can delete the unzipped GreyGuy folder if you want.</p>
+<p><strong>PRO TIP:</strong> From here, you can double click player.scml to open the animations in Spriter.</p>
+<p>The file is now loaded and will load in game, but the animation will not play without adding a line of code to the screen's CustomInitialize function</p>
+<p>Open up the project in Visual Studio (Click Project, View in Visual Studio), and add the following line to your Screen's CustomInitialize function:</p>
+{% highlight C# %}
+player.StartAnimation();
+{% endhighlight %}
+<p>This loads and starts the first animation in the file, which happens to be the looping idle animation.</p>
+<p>Hit F5 to run the game, and you should see the GreyGuy idle animation play!</p>
+
+<p>That's all there is to loading existing animation files into screens.</p>
+<p>You can change the line in CustomInitialize to include an animation name too:</p>
+{% highlight C# %}
+player.StartAnimation("walk");
+{% endhighlight %}
+
+<p><strong>NOTE:</strong> This method of loading Spriter files generates a SpriterObjectCollection object in your code. While it does work in this case, it only makes sense because the example file has one Spriter entity. If the example had multiple Spriter entities in the SCML file, you would see animations overlapping. </p>
+<p>The plugin allows for loading single Spriter entities out of a single Spriter file, which I will cover in a later tutorial.</p>
+<p>Happy Animating!</p>

@@ -629,5 +629,22 @@ namespace FlatRedBall_Spriter
             Action<SpriterObjectAnimation> handler = AnimationFinished;
             if (handler != null) handler(animation);
         }
+
+        public void FlipHorizontal()
+        {
+            RotationY = Math.Abs(RotationY - MathHelper.ToRadians(180f)) < Single.Epsilon ? 0 : MathHelper.ToRadians(180f);
+            CopyAbsoluteToRelative();
+
+            foreach (var animation in Animations)
+            {
+                foreach (var keyFrame in animation.Value.KeyFrames)
+                {
+                    foreach (var keyFrameValues in keyFrame.Values)
+                    {
+                        keyFrameValues.Value.RelativePosition = new Vector3(keyFrameValues.Value.RelativePosition.X, keyFrameValues.Value.RelativePosition.Y, keyFrameValues.Value.RelativePosition.Z * -1);
+                    }
+                }
+            }
+        }
     }
 }

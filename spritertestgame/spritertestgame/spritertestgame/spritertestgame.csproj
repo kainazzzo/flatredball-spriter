@@ -130,10 +130,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\SpriterEntity.cs" />
-    <Compile Include="Entities\SpriterEntity.Generated.cs">
-      <DependentUpon>SpriterEntity.cs</DependentUpon>
-    </Compile>
     <Compile Include="GlobalContent.Generated.cs" />
     <Compile Include="Performance\IEntityFactory.Generated.cs" />
     <Compile Include="Performance\IPoolable.Generated.cs" />
@@ -146,6 +142,12 @@
       <DependentUpon>test.cs</DependentUpon>
     </Compile>
     <Compile Include="Setup\CameraSetup.cs" />
+    <Compile Include="TileCollisions\TileShapeCollection.cs" />
+    <Compile Include="TileGraphics\AnimationChainContainer.cs" />
+    <Compile Include="TileGraphics\LayeredTileMap.cs" />
+    <Compile Include="TileGraphics\MapDrawableBatch.cs" />
+    <Compile Include="TileGraphics\ReducedTileMapInfo.cs" />
+    <Compile Include="TileGraphics\Tileset.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
@@ -187,10 +189,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\flatredball-spriter-test\flatredball-spriter-test.csproj">
-      <Project>{FEB70393-A1C4-433A-AE50-8B16B276EAE3}</Project>
-      <Name>flatredball-spriter-test</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">
       <Project>{1a1a158c-5ede-4750-8bd0-62faeb1c21dd}</Project>
       <Name>FlatRedBall-Spriter</Name>

@@ -106,6 +106,32 @@ namespace FlatRedBall_Spriter
         /// <remarks/>
         [XmlAttribute(AttributeName = "z_index")]
         public int ZIndex { get; set; }
+
+        #region unused
+        [XmlAttribute(AttributeName = "abs_x")]
+        public float DonotuseAbsX { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_y")]
+        public float DonotuseAbsY { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_pivot_y")]
+        public float DonotuseAbsPivotY { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_pivot_x")]
+        public float DonotuseAbsPivotX { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_angle")]
+        public float DonotuseAbsAngle { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_scale_x")]
+        public float DonotuseAbsScaleX { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_scale_y")]
+        public float DonotuseAbsScaleY { get; set; }
+
+        [XmlAttribute(AttributeName = "abs_a")]
+        public float DonotuseAbsAlpha { get; set; }
+        #endregion
     }
 
     [XmlTypeAttribute(AnonymousType = true)]

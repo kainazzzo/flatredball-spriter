@@ -7,49 +7,16 @@
       </Tags>
       <Source>GLUE</Source>
       <Name>Screens\test</Name>
-      <NamedObjects>
-        <NamedObjectSave>
-          <SourceType>Entity</SourceType>
-          <SourceClassType>Entities\SpriterEntity</SourceClassType>
-          <InstanceName>SpriterEntityInstance</InstanceName>
-          <AttachToContainer>true</AttachToContainer>
-          <IndependentOfCamera>true</IndependentOfCamera>
-        </NamedObjectSave>
-      </NamedObjects>
-    </ScreenSave>
-  </Screens>
-  <Entities>
-    <EntitySave>
-      <Tags>
-        <string>GLUE</string>
-      </Tags>
-      <Source>GLUE</Source>
-      <Name>Entities\SpriterEntity</Name>
-      <NamedObjects>
-        <NamedObjectSave>
-          <SourceType>File</SourceType>
-          <SourceFile>Entities/SpriterEntity/player.scml</SourceFile>
-          <SourceName>Entire File (SpriterObject)</SourceName>
-          <InstanceName>SpriterInstance</InstanceName>
-          <AttachToContainer>true</AttachToContainer>
-          <IndependentOfCamera>true</IndependentOfCamera>
-        </NamedObjectSave>
-      </NamedObjects>
       <ReferencedFiles>
         <ReferencedFileSave>
-          <Name>Entities/SpriterEntity/rotationtest.scml</Name>
+          <Name>Screens/test/spriterlogo.png</Name>
           <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
-        </ReferencedFileSave>
-        <ReferencedFileSave>
-          <Name>Entities/SpriterEntity/player.scml</Name>
-          <IsSharedStatic>true</IsSharedStatic>
-          <RuntimeType>FlatRedBall_Spriter.SpriterObject</RuntimeType>
+          <RuntimeType>Microsoft.Xna.Framework.Graphics.Texture2D</RuntimeType>
         </ReferencedFileSave>
       </ReferencedFiles>
-      <Is2D>true</Is2D>
-    </EntitySave>
-  </Entities>
+    </ScreenSave>
+  </Screens>
+  <Entities />
   <GlobalFiles />
   <GlobalContentSettingsSave>
     <LoadAsynchronously>false</LoadAsynchronously>

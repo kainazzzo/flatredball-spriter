@@ -804,24 +804,20 @@ namespace flatredball_spriter_test
             var pivot = so.ObjectList[1];
             var firstKeyFrame = so.Animations.First().Value.KeyFrames.First();
 
-            firstKeyFrame.Values[pivot].RelativePosition = new Vector3(firstKeyFrame.Values[pivot].RelativePosition.X, firstKeyFrame.Values[pivot].RelativePosition.Y,
+            firstKeyFrame.Values[sprite].RelativePosition = new Vector3(firstKeyFrame.Values[pivot].RelativePosition.X, firstKeyFrame.Values[pivot].RelativePosition.Y,
                 1f);
 
-            so.FlipHorizontal();
+            so.FlipHorizontal = true;
+            so.StartAnimation();
 
             Assert.IsTrue(Math.Abs(so.RotationY - MathHelper.ToRadians(180f)) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.RelativeZ - (-1f)) < Single.Epsilon);
 
-            Assert.IsTrue(Math.Abs(firstKeyFrame.Values[pivot].RelativePosition.X - (30f)) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(firstKeyFrame.Values[pivot].RelativePosition.Z - (-1f)) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(firstKeyFrame.Values[sprite].RelativePosition.X) < Single.Epsilon);
-
-            so.FlipHorizontal();
+            so.FlipHorizontal = false;
+            so.StartAnimation();
 
             Assert.IsTrue(Math.Abs(so.RotationY) < Single.Epsilon);
-
-            Assert.IsTrue(Math.Abs(firstKeyFrame.Values[pivot].RelativePosition.X - (30f)) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(firstKeyFrame.Values[pivot].RelativePosition.Z - (1f)) < Single.Epsilon);
-            Assert.IsTrue(Math.Abs(firstKeyFrame.Values[sprite].RelativePosition.X) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(sprite.RelativeZ - (1f)) < Single.Epsilon);
         }
     }
 }

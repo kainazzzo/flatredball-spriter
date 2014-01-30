@@ -642,8 +642,7 @@ namespace FlatRedBall_Spriter
             set
             {
                 _flipHorizontal = value;
-                RotationY = value ? MathHelper.ToRadians(180f) : 0f;
-                CopyAbsoluteToRelative();
+                RelativeRotationY = value ? MathHelper.ToRadians(180f) : 0f;
             }
         }
     }

@@ -71,6 +71,14 @@ namespace FlatRedBall_Spriter
             SpriteManager.AddPositionedObject(this);
         }
 
+        public void FlipHorizontal()
+        {
+            foreach (var spriterEntity in SpriterEntities)
+            {
+                spriterEntity.Value.FlipHorizontal();
+            }
+        }
+
         public SpriterObject FindByName(string name = "")
         {
             if (SpriterEntities == null) return null;

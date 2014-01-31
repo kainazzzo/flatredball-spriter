@@ -35,6 +35,7 @@
     <None Include="App.config" />
     <None Include="params.json" />
     <None Include="Tutorials\HowToLoadExistingSpriterAsset\GreyGuy.zip" />
+    <None Include="Tutorials\WorkingWithEntities\SpriterEntityTutorial.zip" />
     <None Include="_config.yml" />
   </ItemGroup>
   <ItemGroup>

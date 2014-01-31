@@ -264,7 +264,11 @@ p.tagline {
         }
 
 a.text, a.text span {
+    width: 30px;
+    height: 21px;
     -ms-opacity: 0.8;
+    display: inline-block;
+    text-indent: -10000px;
     -moz-opacity: 0.8;
     opacity: 0.8;
     -webkit-filter: alpha(opacity=8);
@@ -272,14 +276,6 @@ a.text, a.text span {
     -o-filter: alpha(opacity=8);
     filter: alpha(opacity=8);
     -webkit-transition: opacity ease-in-out 0.3s;
-
-    background-position: 10px 5px;
-    width: auto;
-    height: auto;
-    padding: 5px 10px;
-    display: inline-block;
-    text-indent: 0!important;
-    color: #fff;
 }
 
 a.zip,
@@ -297,25 +293,6 @@ a.zip span {
     -o-filter: alpha(opacity=8);
     filter: alpha(opacity=8);
     -webkit-transition: opacity ease-in-out 0.3s;
-}
-
-a.text {
-    border: 1px solid black;
-    -ms-border-radius: 3px;
-    border-radius: 3px;
-    display: inline-block;
-    text-indent: 0!important;
-    width: auto;
-    float: right;
-    background: #999; /* for non-css3 browsers */
-    -webkit-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#37ADD4', endColorstr='#1B657E');
-    -moz-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#37ADD4', endColorstr='#1B657E');
-    -o-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#37ADD4', endColorstr='#1B657E');
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#37ADD4', endColorstr='#1B657E'); /* for IE */
-    background: -webkit-gradient(linear, left top, left bottom, from(#37ADD4), to(#1B657E)); /* for webkit browsers */
-    background: -moz-linear-gradient(top, #37ADD4, #1B657E); /* for firefox 3.6+ */
-    height: auto;
-    margin-left: 10px;
 }
 
 a.tar,
@@ -364,7 +341,7 @@ a.code {
         filter: alpha(opacity=1);
     }
 
-a.download-button {
+a.download-button, a.download-button-noicon {
     border: 1px solid black;
     -ms-border-radius: 3px;
     border-radius: 3px;
@@ -389,6 +366,16 @@ a.download-button {
         height: auto;
         padding: 5px 10px;
         padding-left: 45px;
+        display: inline-block;
+        text-indent: 0!important;
+        color: #fff;
+    }
+
+    a.download-button-noicon span {
+        background-position: 10px 5px;
+        width: auto;
+        height: auto;
+        padding: 5px 10px;
         display: inline-block;
         text-indent: 0!important;
         color: #fff;

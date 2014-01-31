@@ -48,6 +48,16 @@
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\files.PNG" />
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\images\playerscml.PNG" />
     <Content Include="Tutorials\HowToLoadExistingSpriterAsset\index.html" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\addcategory.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\addevent.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\addstate.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\addvariable.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\createsevent.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\exposeevent.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\fliphorizontalvariable.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\walkleftflip.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\images\walkrightflip.PNG" />
+    <Content Include="Tutorials\UsingStatesInEntities\index.html" />
     <Content Include="Tutorials\WorkingWithEntities\images\addobject.PNG" />
     <Content Include="Tutorials\WorkingWithEntities\images\entity1.PNG" />
     <Content Include="Tutorials\WorkingWithEntities\images\entityonscreen.PNG" />

@@ -295,6 +295,25 @@ a.zip span {
     -webkit-transition: opacity ease-in-out 0.3s;
 }
 
+a.text {
+    border: 1px solid black;
+    -ms-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+    text-indent: 0!important;
+    width: auto;
+    float: right;
+    background: #999; /* for non-css3 browsers */
+    -webkit-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#37ADD4', endColorstr='#1B657E');
+    -moz-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#37ADD4', endColorstr='#1B657E');
+    -o-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#37ADD4', endColorstr='#1B657E');
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#37ADD4', endColorstr='#1B657E'); /* for IE */
+    background: -webkit-gradient(linear, left top, left bottom, from(#37ADD4), to(#1B657E)); /* for webkit browsers */
+    background: -moz-linear-gradient(top, #37ADD4, #1B657E); /* for firefox 3.6+ */
+    height: auto;
+    margin-left: 0;
+}
+
 a.tar,
 a.tar span {
     background: transparent url(../images/tar.png) no-repeat 0 0;

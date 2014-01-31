@@ -263,6 +263,21 @@ p.tagline {
             margin-right: 8px;
         }
 
+a.text, a.text span {
+    width: 30px;
+    height: 21px;
+    -ms-opacity: 0.8;
+    display: inline-block;
+    text-indent: -10000px;
+    -moz-opacity: 0.8;
+    opacity: 0.8;
+    -webkit-filter: alpha(opacity=8);
+    -moz-filter: alpha(opacity=8);
+    -o-filter: alpha(opacity=8);
+    filter: alpha(opacity=8);
+    -webkit-transition: opacity ease-in-out 0.3s;
+}
+
 a.zip,
 a.zip span {
     background: transparent url(../images/zip.png) no-repeat 0 0;

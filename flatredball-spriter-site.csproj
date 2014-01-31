@@ -53,6 +53,7 @@
     <Content Include="Tutorials\WorkingWithEntities\images\sourcename.PNG" />
     <Content Include="Tutorials\WorkingWithEntities\index.html" />
     <Content Include="_includes\head.html" />
+    <Content Include="_layouts\subpage.html" />
     <Content Include="_layouts\tutorial.html" />
     <Content Include="_layouts\page.html" />
     <Content Include="images\code.png" />

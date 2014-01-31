@@ -52,34 +52,34 @@ description: In this tutorial, you will learn some more practical concepts of wo
 <div class="tutorialinstruction">
     <p>All that's left is to make him walk now!</p>
     <h4>Open up your Entity's cs file and paste the following in to the CustomActivity function:</h4>
-    {% highlight C# %}if (!InputManager.Keyboard.KeyDown(Keys.Right) && !InputManager.Keyboard.KeyDown(Keys.Left))
-            {
-                Velocity.X = 0f;
-            }
-		    if (InputManager.Keyboard.KeyPushed(Keys.Right))
-		    {
-		        Velocity.X = 100f;
-                ObjectInstance.FlipHorizontal = false;
-		    }
-		    if (InputManager.Keyboard.KeyPushed(Keys.Left))
-		    {
-		        Velocity.X = -100f;
-                ObjectInstance.FlipHorizontal = true;
-		    }
+{% highlight C# %}if (!InputManager.Keyboard.KeyDown(Keys.Right) && !InputManager.Keyboard.KeyDown(Keys.Left))
+{
+    Velocity.X = 0f;
+}
+if (InputManager.Keyboard.KeyPushed(Keys.Right))
+{
+	Velocity.X = 100f;
+    ObjectInstance.FlipHorizontal = false;
+}
+if (InputManager.Keyboard.KeyPushed(Keys.Left))
+{
+	Velocity.X = -100f;
+    ObjectInstance.FlipHorizontal = true;
+}
 
-            if (Velocity.X == 0f && ObjectInstance.CurrentAnimation.Name != "idle")
-            {
-                ObjectInstance.StartAnimation("idle");
-            }
-            else if (Velocity.X < 0f && ObjectInstance.CurrentAnimation.Name != "walk")
-            {
-                ObjectInstance.StartAnimation("walk");
+if (Velocity.X == 0f && ObjectInstance.CurrentAnimation.Name != "idle")
+{
+    ObjectInstance.StartAnimation("idle");
+}
+else if (Velocity.X < 0f && ObjectInstance.CurrentAnimation.Name != "walk")
+{
+    ObjectInstance.StartAnimation("walk");
                 
-            }
-            else if (Velocity.X > 0f && ObjectInstance.CurrentAnimation.Name != "walk")
-            {
-                ObjectInstance.StartAnimation("walk");
-            }{% endhighlight %}
+}
+else if (Velocity.X > 0f && ObjectInstance.CurrentAnimation.Name != "walk")
+{
+    ObjectInstance.StartAnimation("walk");
+}{% endhighlight %}
     
-    <p>Run the game, and you should now be able to press the right arrow and watch him walk!</p>
+    <p>Run the game, and you should now be able to press the right and left arrows and watch him walk. When you let up on both arrows, the idle animation plays.</p>
 </div>

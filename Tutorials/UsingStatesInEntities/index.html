@@ -1,8 +1,85 @@
 ---
-title: Using States with Glue Entities
+title: Working With Glue Entities
 layout: tutorial
-tagline: This tutorial builds on the previous entities tutorial by making use of an advanced Glue topic: States. In it, you will learn how to apply states to your Glue Entity in order to simplify setting the proper animation for a character.
-description: This tutorial builds on the previous entities tutorial by making use of an advanced Glue topic: States. In it, you will learn how to apply states to your Glue Entity in order to simplify setting the proper animation for a character.
+tagline: In this tutorial, you will learn some more practical concepts of working with Spriter animations. We will go through adding the Spriter GreyGuy example to a project and making it walk with keyboard input.
+description: In this tutorial, you will learn some more practical concepts of working with Spriter animations. We will go through adding the Spriter GreyGuy example to a project and making it walk with keyboard input.
 ---
 
-<p>test</p>
+<div class="tutorialinstruction">
+    <p>So, we already have the </p>
+    <p>In the <a href="../HowToLoadExistingSpriterAsset/">previous</a> tutorial, you learned how to load an existing Spriter animation into your Glue project. But,
+        we did that into a screen. In this tutorial, we will be loading it into an Entity. This works almost exactly the same way as with Screens.
+    </p>
+    <p>In Glue, choose an existing Entity or add an Entity by right clicking on "Entities" and selecting "Add Entity"</p>
+    <p>Choose a name, and then click ok</p>
+    <p>Right click on Files, and choose add file, new file, navigating to the player.scml file from the prior tutorial.</p>
+    <h4>If you are lost, refer to <a href="../HowToLoadExistingSpriterAsset/">the previous tutorial</a> for how to add an existing file, and do that in this Entity instead.</h4>
+    <p>If you did it right, you should end up with something like this:</p>
+    <img class="tutorialimg" src="images/entity1.PNG" />
+</div>
+
+<div class="tutorialinstruction">
+    <h4>Here is where the really cool stuff comes in!</h4>
+    <p>In order to use a spriter animation in an entity, you have to add an object. Glue Assumes if you're adding a file directly to a screen, you want to see it, so it automatically adds it to the managers. This is not so with an Entity, because it's not clear what your intent is for this file. When you add an object from a file, though, Glue assumes that you want it to be tangible, so it clones the object and adds to managers.</p>
+    <p>That said, here is what you need to do.</p>
+    <h4>Right click on objects, and click Add Object</h4>
+    <p>Select the From File radio button, and select the file in the list:</p>
+    <img class="tutorialimg" src="images/addobject.PNG"/>
+    <p>Click ok.</p>
+</div>
+
+<div class="tutorialinstruction">
+    <p>Now you have an object instance that's tied back to the file, but you have to tell Glue what part of the file to use.</p>
+    <h4>Open the dropdown for SourceName, and choose Player (SpriterObject):</h4>
+    <img class="tutorialimg" src="images/sourcename.PNG"/>
+    <p>Notice how it gives you two options? Most of the time, you will probably be choosing a SpriterObject instead of the SpriterObjectCollection, because it refers to a single Spriter Entity as defined in the Spriter project. If you had multiple Spriter Entities in the Spriter project, they would all show up here in the dropdown, and you could add the project file once while adding objects for the different entities.</p>
+</div>
+
+<div class="tutorialinstruction">
+    <h4>Add the following line to your Entity's CustomInitialize function:</h4>
+{% highlight C# %}ObjectInstance.StartAnimation("idle");{% endhighlight %}
+</div>
+
+<div class="tutorialinstruction">
+    <h4>Now add your entity to a screen (Right click and drag the Glue Entity to a Screen)</h4>
+    <p>Your project should now look something like this:</p>
+    <img class="tutorialimg" src="images/entityonscreen.PNG" />
+    <p>Go ahead and run the game now, and you should see the idle animation again. Now you're ready to add game logic, which in this case is just going to be making him walk.</p>
+</div>
+
+<div class="tutorialinstruction">
+    <p>All that's left is to make him walk now!</p>
+    <h4>Open up your Entity's cs file and paste the following in to the CustomActivity function:</h4>
+{% highlight C# %}if (!InputManager.Keyboard.KeyDown(Keys.Right) && !InputManager.Keyboard.KeyDown(Keys.Left))
+{
+    Velocity.X = 0f;
+}
+if (InputManager.Keyboard.KeyPushed(Keys.Right))
+{
+	Velocity.X = 200f;
+    ObjectInstance.FlipHorizontal = false;
+}
+if (InputManager.Keyboard.KeyPushed(Keys.Left))
+{
+	Velocity.X = -200f;
+    ObjectInstance.FlipHorizontal = true;
+}
+
+if (Velocity.X == 0f && ObjectInstance.CurrentAnimation.Name != "idle")
+{
+    ObjectInstance.StartAnimation("idle");
+}
+else if (Velocity.X < 0f && ObjectInstance.CurrentAnimation.Name != "walk")
+{
+    ObjectInstance.StartAnimation("walk");
+                
+}
+else if (Velocity.X > 0f && ObjectInstance.CurrentAnimation.Name != "walk")
+{
+    ObjectInstance.StartAnimation("walk");
+}{% endhighlight %}
+    
+    <p>Run the game, and you should now be able to press the right and left arrows and watch him walk. When you let up on both arrows, the idle animation plays.</p>
+    
+    <p><a href="SpriterEntityTutorial.zip">Click here to download a binary of the tutorial.</a></p>
+</div>

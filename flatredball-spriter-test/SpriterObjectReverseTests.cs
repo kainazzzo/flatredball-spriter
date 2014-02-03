@@ -37,11 +37,11 @@ namespace flatredball_spriter_test
             so.StartAnimation();
             soforward.StartAnimation();
             so.Reverse = true;
-            TimeManager.CurrentTime = .5;
-            so.TimedActivity(.5f, .125, .5f);
+            TimeManager.CurrentTime = .1;
+            so.TimedActivity(.1f, .005, .1f);
 
-            TimeManager.CurrentTime = 1.5;
-            soforward.TimedActivity(1.5f, 1.125, 1.5f);
+            TimeManager.CurrentTime = 1.9;
+            soforward.TimedActivity(1.9f, 1.805, 1.9f);
 
             var pivot = so.ObjectList[1];
             var forwardpivot = soforward.ObjectList[1];

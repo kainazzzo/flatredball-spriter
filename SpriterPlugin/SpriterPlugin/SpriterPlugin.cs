@@ -90,7 +90,7 @@ namespace SpriterPlugin
                 HasCursorIsOn = false,
                 HasVisibleProperty = false,
                 CanIgnorePausing = false,
-                ExtraVariablesPattern = "bool Animating; float RelativeScaleX; float RelativeScaleY; bool ParentScaleChangesPosition; bool RenderBones; bool RenderPoints; bool RenderCollisionBoxes; bool FlipHorizontal"
+                ExtraVariablesPattern = "bool Animating; float RelativeScaleX; float RelativeScaleY; bool ParentScaleChangesPosition; bool RenderBones; bool RenderPoints; bool RenderCollisionBoxes; bool FlipHorizontal; bool Reverse"
             });
 
             _itemAdder = new CodeBuildItemAdder();

@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Media;
 #endif
 
 // Generated Usings
+using spritertestgame.Entities;
 using FlatRedBall;
 using FlatRedBall.Screens;
 using System;
@@ -36,6 +37,7 @@ namespace spritertestgame.Screens
 		#endif
 		protected static Microsoft.Xna.Framework.Graphics.Texture2D spriterlogo;
 		
+		private spritertestgame.Entities.SpriterTest SpriterTestInstance;
 
 		public test()
 			: base("test")
@@ -46,6 +48,8 @@ namespace spritertestgame.Screens
         {
 			// Generated Initialize
 			LoadStaticContent(ContentManagerName);
+			SpriterTestInstance = new spritertestgame.Entities.SpriterTest(ContentManagerName, false);
+			SpriterTestInstance.Name = "SpriterTestInstance";
 			
 			
 			PostInitialize();
@@ -72,6 +76,7 @@ namespace spritertestgame.Screens
 			if (!IsPaused)
 			{
 				
+				SpriterTestInstance.Activity();
 			}
 			else
 			{
@@ -93,6 +98,11 @@ namespace spritertestgame.Screens
 			// Generated Destroy
 			spriterlogo = null;
 			
+			if (SpriterTestInstance != null)
+			{
+				SpriterTestInstance.Destroy();
+				SpriterTestInstance.Detach();
+			}
 
 			base.Destroy();
 
@@ -110,9 +120,11 @@ namespace spritertestgame.Screens
 		public virtual void AddToManagersBottomUp ()
 		{
 			CameraSetup.ResetCamera(SpriteManager.Camera);
+			SpriterTestInstance.AddToManagers(mLayer);
 		}
 		public virtual void ConvertToManuallyUpdated ()
 		{
+			SpriterTestInstance.ConvertToManuallyUpdated();
 		}
 		public static void LoadStaticContent (string contentManagerName)
 		{
@@ -134,6 +146,7 @@ namespace spritertestgame.Screens
 			{
 			}
 			spriterlogo = FlatRedBallServices.Load<Microsoft.Xna.Framework.Graphics.Texture2D>(@"content/screens/test/spriterlogo.png", contentManagerName);
+			spritertestgame.Entities.SpriterTest.LoadStaticContent(contentManagerName);
 			CustomLoadStaticContent(contentManagerName);
 		}
 		[System.Obsolete("Use GetFile instead")]

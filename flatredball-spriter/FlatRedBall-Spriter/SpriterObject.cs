@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FlatRedBall;
 using FlatRedBall.Graphics;
-using FlatRedBall.Instructions;
 using FlatRedBall.Math.Geometry;
 using FlatRedBallExtensions;
 using Microsoft.Xna.Framework;
@@ -349,6 +348,11 @@ namespace FlatRedBall_Spriter
             int spin = currentValues.Spin;
             float angleA = currentValues.RelativeRotation.Z;
             float angleB = nextValues.RelativeRotation.Z;
+
+            if (Reverse)
+            {
+                spin *= -1;
+            }
 
             if (spin == 1 && angleB - angleA < 0)
             {

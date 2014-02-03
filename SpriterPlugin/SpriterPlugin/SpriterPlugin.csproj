@@ -134,6 +134,11 @@
     <EmbeddedResource Include="Content\SpriterTemplate.scml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy /Y "$(TargetDir)SpriterPlugin.dll" "$(SolutionDir)\spritertestgame\spritertestgame\Plugins\SpriterPlugin\"
+copy /Y "$(TargetDir)FlatRedBallExtensions.dll" "$(SolutionDir)\spritertestgame\spritertestgame\Plugins\SpriterPlugin\"
+copy /Y "$(TargetDir)FlatRedBall-Spriter.dll" "$(SolutionDir)\spritertestgame\spritertestgame\Plugins\SpriterPlugin\"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

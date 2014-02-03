@@ -45,7 +45,27 @@ namespace FlatRedBall_Spriter
 
         public bool Animating { get; set; }
         public float SecondsIn { get; private set; }
-        public int CurrentKeyFrameIndex { get; private set; }
+
+        public int CurrentKeyFrameIndex
+        {
+            get { return _currentKeyFrameIndex; }
+            private set
+            {
+                _currentKeyFrameIndex = value;
+                if (KeyFrameList != null)
+                {
+                    if (_currentKeyFrameIndex < 0)
+                    {
+                        _currentKeyFrameIndex = KeyFrameList.Count;
+                    }
+                    else if (_currentKeyFrameIndex > KeyFrameList.Count - 1)
+                    {
+                        _currentKeyFrameIndex = 0;
+                    }
+                }
+            }
+        }
+
         public int NextKeyFrameIndex { get { return CurrentKeyFrameIndex + 1; } }
 
         public bool RenderBones
@@ -128,21 +148,7 @@ namespace FlatRedBall_Spriter
         {
             get
             {
-                if (CurrentKeyFrameIndex > KeyFrameList.Count - 1)
-                {
-                    if (Looping)
-                    {
-                        return KeyFrameList[KeyFrameList.Count - 1];
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                else
-                {
-                    return KeyFrameList[CurrentKeyFrameIndex];
-                }
+                return KeyFrameList[CurrentKeyFrameIndex];
             }
         }
         private void ResetAnimation()
@@ -184,16 +190,23 @@ namespace FlatRedBall_Spriter
 
             if (Animating)
             {
-                SecondsIn += secondDifference;
+                SecondsIn += (secondDifference * AnimationSpeed);
 
-                if (NextKeyFrame != null && SecondsIn >= NextKeyFrame.Time)
+                
+                while (NextKeyFrame != null && NextKeyFrame != FirstKeyFrameWithEndTime && SecondsIn >= NextKeyFrame.Time)
                 {
                     ++CurrentKeyFrameIndex;
                     UpdateCollisionBoxes();
                 }
+                
+                while (CurrentKeyFrameIndex > 0 && SecondsIn < CurrentKeyFrame.Time)
+                {
+                    --CurrentKeyFrameIndex;
+                    UpdateCollisionBoxes();
+                }
 
                 // Interpolate between the current keyframe and next keyframe values based on time difference
-                if (SecondsIn < AnimationTotalTime && NextKeyFrame != null)
+                if (SecondsIn > 0 && SecondsIn < AnimationTotalTime && NextKeyFrame != null)
                 {
                     float percentage = GetPercentageIntoFrame(SecondsIn, CurrentKeyFrame.Time, NextKeyFrame.Time);
                     foreach (var currentPair in CurrentKeyFrame.Values)
@@ -201,6 +214,7 @@ namespace FlatRedBall_Spriter
                         SetInterpolatedValues(currentPair, percentage);
                     }
 
+                    // Process any key frames with the same time that occur after this keyframe
                     if (Math.Abs(NextKeyFrame.Time - CurrentKeyFrame.Time) < .000001f)
                     {
                         foreach (var keyFrameValues in NextKeyFrame.Values)
@@ -210,10 +224,11 @@ namespace FlatRedBall_Spriter
                         ++CurrentKeyFrameIndex;
                         UpdateCollisionBoxes();
                     }
+                    UpdateAllObjectDependencies();
                 }
                 else
                 {
-                    if (SecondsIn >= AnimationTotalTime)
+                    if (SecondsIn < 0 || SecondsIn >= AnimationTotalTime)
                     {
                         if (!Looping)
                         {
@@ -229,11 +244,9 @@ namespace FlatRedBall_Spriter
                     {
                         SetAllObjectValuesToCurrentFrame();
                     }
-
-
                 }
 
-                UpdateAllObjectDependencies();
+                
             }
         }
 
@@ -330,9 +343,19 @@ namespace FlatRedBall_Spriter
 
         private void RestartAnimationWithWrapping()
         {
-            var start = SecondsIn - AnimationTotalTime;
-            StartAnimation();
+            float start = SecondsIn;
+            while (start >= AnimationTotalTime)
+            {
+                start -= AnimationTotalTime;
+            }
+
+            while (start < 0)
+            {
+                start += AnimationTotalTime;
+            }
+            
             SecondsIn = start > 0f ? start : 0f;
+            TimedActivity(0, 0, 0);
         }
 
         private void SetAllObjectValuesToCurrentFrame()
@@ -390,6 +413,8 @@ namespace FlatRedBall_Spriter
         private bool _renderBones;
         private bool _renderPoints;
         private bool _flipHorizontal;
+        private float _animationSpeed = 1.0f;
+        private int _currentKeyFrameIndex;
 
         public int Index { get; set; }
         public bool Used { get; set; }
@@ -644,6 +669,12 @@ namespace FlatRedBall_Spriter
                 _flipHorizontal = value;
                 RelativeRotationY = value ? MathHelper.ToRadians(180f) : 0f;
             }
+        }
+
+        public float AnimationSpeed
+        {
+            get { return _animationSpeed; }
+            set { _animationSpeed = value; }
         }
     }
 }

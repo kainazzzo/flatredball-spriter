@@ -810,7 +810,7 @@ namespace flatredball_spriter_test
             so.FlipHorizontal = true;
             so.StartAnimation();
 
-            Assert.IsTrue(Math.Abs(so.RotationY - MathHelper.ToRadians(180f)) < Single.Epsilon);
+            Assert.IsTrue(Math.Abs(so.RelativeRotationY - MathHelper.ToRadians(180f)) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(sprite.RelativeZ - (-1f)) < Single.Epsilon);
 
             so.FlipHorizontal = false;
@@ -819,5 +819,24 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.RotationY) < Single.Epsilon);
             Assert.IsTrue(Math.Abs(sprite.RelativeZ - (1f)) < Single.Epsilon);
         }
+
+        [TestMethod]
+        public void loop_test()
+        {
+            var so = GetSimpleSpriterObject(true);
+
+            so.StartAnimation();
+
+
+            // 3 seconds
+            TimeManager.CurrentTime += 2.5f;
+            so.TimedActivity(2.5f, 3.125, 2.5f);
+
+            // animation is only 2 seconds long, so it should be like it looped once and ended back at .5 seconds in
+            Assert.AreEqual(.5f, so.SecondsIn);
+            Assert.AreEqual(15f, so.ObjectList[1].X);
+        }
+
+
     }
 }

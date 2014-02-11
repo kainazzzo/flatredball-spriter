@@ -85,6 +85,20 @@ namespace FlatRedBall_Spriter
             }
         }
 
+        private float _animationSpeed = 1.0f;
+        private float AnimationSpeed
+        {
+            get { return _animationSpeed; }
+            set
+            {
+                _animationSpeed = value;
+                foreach (var spriterEntity in SpriterEntities)
+                {
+                    spriterEntity.Value.AnimationSpeed = value;
+                }
+            }
+        }
+
         public SpriterObject FindByName(string name = "")
         {
             if (SpriterEntities == null) return null;

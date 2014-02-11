@@ -52,8 +52,12 @@ namespace SpriterPlugin
 
         public override void StartUp()
         {
-            // Do anything your plugin needs to do when it first starts up
+            CanFileReferenceContent += absoluteFileName => !string.IsNullOrEmpty(absoluteFileName) &&
+                                               FileManager.GetExtension(absoluteFileName).ToLowerInvariant() ==
+                                               "scml";
             GetFilesReferencedBy += GetFilesReferencedByFunc;
+
+
             AvailableAssetTypes.Self.AddAssetType(new AssetTypeInfo
             {
                 FriendlyName = "SpriterObjectCollection (.scml)",
@@ -71,7 +75,7 @@ namespace SpriterPlugin
                 HasCursorIsOn = false,
                 HasVisibleProperty = false,
                 CanIgnorePausing = false,
-                ExtraVariablesPattern = "float RelativeScaleX; float RelativeScaleY; bool ParentScaleChangesPosition; bool RenderBones; bool RenderPoints; bool RenderCollisionBoxes; bool FlipHorizontal"
+                ExtraVariablesPattern = "float RelativeScaleX; float RelativeScaleY; bool ParentScaleChangesPosition; bool RenderBones; bool RenderPoints; bool RenderCollisionBoxes; bool FlipHorizontal; float AnimationSpeed"
             });
 
             AvailableAssetTypes.Self.AddAssetType(new AssetTypeInfo
@@ -90,7 +94,7 @@ namespace SpriterPlugin
                 HasCursorIsOn = false,
                 HasVisibleProperty = false,
                 CanIgnorePausing = false,
-                ExtraVariablesPattern = "bool Animating; float RelativeScaleX; float RelativeScaleY; bool ParentScaleChangesPosition; bool RenderBones; bool RenderPoints; bool RenderCollisionBoxes; bool FlipHorizontal"
+                ExtraVariablesPattern = "float RelativeScaleX; float RelativeScaleY; bool ParentScaleChangesPosition; bool RenderBones; bool RenderPoints; bool RenderCollisionBoxes; bool FlipHorizontal; float AnimationSpeed"
             });
 
             _itemAdder = new CodeBuildItemAdder();

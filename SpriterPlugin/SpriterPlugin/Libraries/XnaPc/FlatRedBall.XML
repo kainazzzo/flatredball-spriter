@@ -5637,6 +5637,21 @@
             Reference to the camera to which the cursor belongs.
             </summary>
         </member>
+        <member name="F:FlatRedBall.Gui.Cursor.CustomUpdate">
+            <summary>
+            Delegate which can be used to apply custom
+            positioning and button state logic.  The argument
+            is the Cursor instance, and the bool indicates whether
+            the internal Cursor logic should apply click and push values.
+            <remarks>
+            If the CustomUpdate delegate assigns Click, Push, and DoubleClick
+            values internally, then it should return false, indicating that the
+            Cursor logic itself shouldn't.  If the CustomUpdate only modifies the
+            down states, then the CustomUpdate delegate should return true so that
+            the Click, Push, and DoubleClick values are 
+            </remarks>
+            </summary>
+        </member>
         <member name="M:FlatRedBall.Gui.Cursor.#ctor(FlatRedBall.Camera)">
             <summary>
             Creates a new Cursor
@@ -5653,7 +5668,7 @@
         </member>
         <member name="M:FlatRedBall.Gui.Cursor.ActualXVelocityAt(System.Single)">
             <summary>
-            Returns the xVelocity of the cursor at a particular Z.
+            Returns the world X Velocity of the Cursor at a particular Z.
             </summary>
             <remarks>
             As the cursor can control objects at various Z values, this method returns the X velocity
@@ -5662,6 +5677,14 @@
             </remarks>
             <param name="z">The z value to measure the velocity at.</param>
             <returns>The X velocity at the particular Z.</returns>
+        </member>
+        <member name="M:FlatRedBall.Gui.Cursor.ActualXVelocityAt(System.Single,FlatRedBall.Graphics.Layer)">
+            <summary>
+            Returns the world X Velocity of the Cursor at a particular Z on a particular Layer.
+            </summary>
+            <param name="z">The Z value to measure the velocity at.</param>
+            <param name="layer">The Layer to use for velocity calculations</param>
+            <returns>The X velocity at the particular Z and Layer.</returns>
         </member>
         <member name="M:FlatRedBall.Gui.Cursor.ActualYVelocityAt(System.Single)">
             <summary>
@@ -5968,24 +5991,6 @@
             This will only be accurate if the object is also 100 units away from the camera and
             if the camera is centered on the origin.  The
             x and y values must be passed to the GetCursorPosition method.
-            </remarks>
-        </member>
-        <member name="P:FlatRedBall.Gui.Cursor.XVelocity">
-            <summary>
-            The change in x since last frame in world units at 100 units away from the camera.
-            </summary>
-            <remarks>
-            Cursor velocity properties do not counsider bounds; that is, a cursor will still have an xVelocity
-            even if it is pressed against the right side of the screen and being moved to the right.
-            </remarks>
-        </member>
-        <member name="P:FlatRedBall.Gui.Cursor.YVelocity">
-            <summary>
-            The change in y since last frame in world units at 100 units away from the camera.
-            </summary>
-            <remarks>
-            Cursor velocity properties do not counsider bounds; that is, a cursor will still have an xVelocity
-            even if it is pressed against the right side of the screen and being moved to the right.
             </remarks>
         </member>
         <member name="P:FlatRedBall.Gui.Cursor.ZVelocity">
@@ -6301,6 +6306,12 @@
             Gets and sets the time that playback started.  Setting this value simulates changing
             when the playback started.
             </summary>
+        </member>
+        <member name="M:FlatRedBall.Input.Xbox360GamePad.AnyButtonPushed">
+            <summary>
+            Returns whether any button was pushed on this Xbox360GamePad.  This considers face buttons, trigger buttons, shoulder buttons, and d pad.
+            </summary>
+            <returns>Whether any button was pushed.</returns>
         </member>
         <member name="M:FlatRedBall.Input.Xbox360GamePad.CreateDefaultButtonMap">
             <summary>
@@ -11567,6 +11578,16 @@
             Checks if the designated 2D point is in the 2D shapes of the shape collection
             </summary>
         </member>
+        <member name="M:FlatRedBall.Math.Geometry.ShapeCollection.CollideAgainstBounceWithoutSnag(FlatRedBall.Math.Geometry.Polygon,System.Boolean,FlatRedBall.Math.Axis,System.Single)">
+            <summary>
+            Performs a "snagless" collision between this and the argument Polygon.
+            </summary>
+            <param name="polygon">The Polygon to perform collision against.</param>
+            <param name="considerPartitioning">Whether to consider spacial partitioning.</param>
+            <param name="axisToUse">If partitioning is used, the axis that the list is already sorted along.</param>
+            <param name="elasticity">The elasticity to use in the collision.</param>
+            <returns>Whether collision has occurred.</returns>
+        </member>
         <member name="T:FlatRedBall.Math.Geometry.ShapeManager">
             <summary>
             Responsible for creating, destroying, and managing shapes (Circle, AxisAlignedRectangle,
@@ -12412,6 +12433,36 @@
         <member name="P:FlatRedBall.Sprite.CurrentChain">
             <summary>
             Gets the current animationChain - retrieved through the CurrentChainIndex property.
+            </summary>
+        </member>
+        <member name="P:FlatRedBall.Sprite.RelativeLeft">
+            <summary>
+            Returns the left edge of the Sprite relative its Parent.  This value uses RelativeX and Width/2 to calculate this value.
+            </summary>
+        </member>
+        <member name="P:FlatRedBall.Sprite.RelativeRight">
+            <summary>
+            Returns the right edge of the Sprite relative its Parent.  This value uses RelativeX and Width/2 to calculate this value.
+            </summary>
+        </member>
+        <member name="P:FlatRedBall.Sprite.RelativeTop">
+            <summary>
+            Returns the top edge of the Sprite relative its Parent.  This value uses RelativeY and Height/2 to calculate this value.
+            </summary>
+        </member>
+        <member name="P:FlatRedBall.Sprite.RelativeBottom">
+            <summary>
+            Returns the bottom edge of the Sprite relative its Parent.  This value uses RelativeY and Height/2 to calculate this value.
+            </summary>
+        </member>
+        <member name="P:FlatRedBall.Sprite.Width">
+            <summary>
+            The Sprite's Width in absolute world coordinates.
+            </summary>
+        </member>
+        <member name="P:FlatRedBall.Sprite.Height">
+            <summary>
+            The Sprite's Height in absolute world coordinates.
             </summary>
         </member>
         <member name="P:FlatRedBall.Sprite.TimeCreated">

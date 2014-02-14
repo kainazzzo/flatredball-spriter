@@ -1,3 +1,4 @@
+
 ---
 title: Working With Glue Entities
 layout: tutorial
@@ -37,7 +38,10 @@ description: In this tutorial, you will learn some more practical concepts of wo
 
 <div class="tutorialinstruction">
     <h4>Add the following line to your Entity's CustomInitialize function:</h4>
-{% highlight C# %}ObjectInstance.StartAnimation("idle");{% endhighlight %}
+    {% highlight C# %}ObjectInstance.StartAnimation("idle");{% endhighlight %}
+</div>
+<div class="tutorialhint">
+    <p><strong>PRO TIP:</strong> if you're following along and using this tutorial as a guide, be sure to use the object instance variable name here as opposed to the object that was created when the file was added. Glue only generates code to add the object instance to managers when adding a Spriter file to an entity, whereas in a screen, the file's associated object itself is just added to managers immediately.</p>
 </div>
 
 <div class="tutorialinstruction">

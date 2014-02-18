@@ -446,7 +446,7 @@ namespace FlatRedBall_Spriter
                     var sprite = currentObject as ScaledSprite;
                     if (sprite != null)
                     {
-                        SpriteManager.AddSprite(sprite);
+                        SpriteManager.AddToLayer(sprite, layerToAddTo);
                     }
                     else
                     {
@@ -454,7 +454,7 @@ namespace FlatRedBall_Spriter
                         if (scaledPolygon != null)
                         {
                             var visible = scaledPolygon.Visible;
-                            ShapeManager.AddPolygon(scaledPolygon);
+                            ShapeManager.AddToLayer(scaledPolygon, layerToAddTo);
                             scaledPolygon.Visible = visible;
                         }
                         else

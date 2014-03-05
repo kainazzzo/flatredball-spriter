@@ -253,7 +253,10 @@ namespace FlatRedBall_Spriter
         private void UpdateCollisionBoxes()
         {
             CollisionBoxes.Clear();
-            CollisionBoxes.Polygons.AddRange(CurrentKeyFrame.Values.Keys.OfType<ScaledPolygon>());
+            foreach (var scaledPolygon in CurrentKeyFrame.Values.Keys.OfType<ScaledPolygon>())
+            {
+                CollisionBoxes.Polygons.Add(scaledPolygon);
+            }
         }
 
         private void UpdateAllObjectDependencies()

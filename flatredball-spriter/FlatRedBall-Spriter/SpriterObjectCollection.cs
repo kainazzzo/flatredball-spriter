@@ -99,7 +99,12 @@ namespace FlatRedBall_Spriter
             }
         }
 
-        public SpriterObject FindByName(string name = "")
+        public SpriterObject FindByName()
+        {
+            return FindByName("");
+        }
+
+        public SpriterObject FindByName(string name)
         {
             if (SpriterEntities == null) return null;
 
@@ -147,7 +152,12 @@ namespace FlatRedBall_Spriter
             return soc;
         }
 
-        public void StartAnimation(string name = null)
+        public void StartAnimation()
+        {
+            StartAnimation(null);
+        }
+
+        public void StartAnimation(string name)
         {
             if (SpriterEntities == null) return;
 

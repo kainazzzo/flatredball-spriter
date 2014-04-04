@@ -386,11 +386,29 @@ namespace FlatRedBall_Spriter
 
         public void Destroy()
         {
-            SpriteManager.RemovePositionedObject(this);
+            
             foreach (var positionedObject in ObjectList)
             {
-                SpriteManager.RemovePositionedObject(positionedObject);
+                var sprite = positionedObject as Sprite;
+                if (sprite != null)
+                {
+                    SpriteManager.RemoveSprite(sprite);
+                }
+                else
+                {
+                    var polygon = positionedObject as Polygon;
+                    if (polygon != null)
+                    {
+                        ShapeManager.Remove(polygon);
+                    }
+                    else
+                    {
+                        SpriteManager.RemovePositionedObject(positionedObject);
+                    }
+                }
             }
+
+            SpriteManager.RemovePositionedObject(this);
         }
 
         // Generated Fields

@@ -124,6 +124,7 @@ namespace FlatRedBall_Spriter
             {
                 spriterEntity.Value.Destroy();
             }
+            SpriteManager.RemovePositionedObject(this);
         }
 
         public SpriterObjectCollection Clone()

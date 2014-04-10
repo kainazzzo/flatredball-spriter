@@ -36,6 +36,20 @@ namespace FlatRedBall_Spriter
         }
         #endregion
 
+        private bool _visible = true;
+        public bool Visible
+        {
+            get { return _visible; }
+            set
+            {
+                _visible = value;
+                foreach (var sprite in ObjectList.OfType<IVisible>())
+                {
+                    sprite.Visible = _visible;
+                }
+            }
+        }
+
         public List<PositionedObject> ObjectList { get; private set; }
         public ShapeCollection CollisionBoxes { get; private set; } 
 
@@ -436,6 +450,7 @@ namespace FlatRedBall_Spriter
         private bool _flipHorizontal;
         private float _animationSpeed = 1.0f;
         private int _currentKeyFrameIndex;
+        
 
         public int Index { get; set; }
         public bool Used { get; set; }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Permissions;
 using FlatRedBall;
+using FlatRedBall.Graphics;
 using FlatRedBallExtensions;
 using FlatRedBall_Spriter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -220,7 +221,7 @@ namespace flatredball_spriter_test
             Assert.IsTrue(Math.Abs(so.ObjectList[0].Position.X) < .0001f);
         }
 
-        private static SpriterObject GetSimpleSpriterObject(bool loops=false)
+        public static SpriterObject GetSimpleSpriterObject(bool loops=false)
         {
             var so = new SpriterObject("Global", false);
 
@@ -837,6 +838,21 @@ namespace flatredball_spriter_test
             Assert.AreEqual(15f, so.ObjectList[1].X);
         }
 
+        [TestMethod]
+        public void visible_sets_sprites_invisible()
+        {
+            var so = GetSimpleSpriterObject();
+            var sprite = so.ObjectList[0] as IVisible;
+            var pivot = so.ObjectList[1] as IVisible;
+
+            Assert.IsNotNull(sprite);
+            Assert.AreEqual(true, sprite.Visible);
+            Assert.IsNull(pivot);
+
+            so.Visible = false;
+
+            Assert.AreEqual(false, sprite.Visible);
+        }
 
     }
 }

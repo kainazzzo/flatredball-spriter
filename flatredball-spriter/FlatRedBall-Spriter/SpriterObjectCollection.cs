@@ -15,6 +15,23 @@ namespace FlatRedBall_Spriter
         private bool _renderCollisionBoxes;
         public IDictionary<string, SpriterObject> SpriterEntities { get; set; }
 
+        private bool _visible = true;
+        public bool Visible
+        {
+            get
+            {
+                return _visible;
+            }
+            set
+            {
+                _visible = value;
+                foreach (var spriterEntity in SpriterEntities)
+                {
+                    spriterEntity.Value.Visible = _visible;
+                }
+            }
+        }
+
         public bool RenderPoints
         {
             get { return _renderPoints; }

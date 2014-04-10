@@ -82,6 +82,7 @@
     <Compile Include="BoxTests.cs" />
     <Compile Include="MultipleEntityTests.cs" />
     <Compile Include="AnimationSpeedTests.cs" />
+    <Compile Include="SpriterObjectCollectionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\flatredball-spriter\FlatRedBall-Spriter\FlatRedBall-Spriter.csproj">

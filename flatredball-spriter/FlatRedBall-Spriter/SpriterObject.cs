@@ -88,7 +88,10 @@ namespace FlatRedBall_Spriter
             set
             {
                 _renderBones = value;
-                ObjectList.OfType<SpriterBone>().ToList().ForEach(bone => bone.Visible = value);
+                foreach (var bone in ObjectList.OfType<SpriterBone>())
+                {
+                    bone.Visible = value;
+                }
             }
         }
 
@@ -98,7 +101,10 @@ namespace FlatRedBall_Spriter
             set
             {
                 _renderPoints = value;
-                ObjectList.OfType<SpriterPoint>().ToList().ForEach(point => point.Visible = value);
+                foreach (var point in ObjectList.OfType<SpriterPoint>())
+                {
+                    point.Visible = value;
+                }
             }
         }
 
@@ -108,7 +114,10 @@ namespace FlatRedBall_Spriter
             set
             {
                 _renderCollisionBoxes = value;
-                ObjectList.OfType<ScaledPolygon>().ToList().ForEach(polygon => polygon.Visible = value);
+                foreach(var polygon in ObjectList.OfType<ScaledPolygon>())
+                {
+                    polygon.Visible = value;
+                }
             }
         }
 
@@ -638,36 +647,36 @@ namespace FlatRedBall_Spriter
             foreach (var animationPair in Animations)
             {
                 var keyframes = new List<KeyFrame>();
-                animationPair.Value.KeyFrames.ForEach(kf =>
+                foreach (var kf in animationPair.Value.KeyFrames)
+                {
+                    var keyFrame = new KeyFrame
                     {
-                        var keyFrame = new KeyFrame
-                            {
-                                Time = kf.Time,
-                                Values = new Dictionary<PositionedObject, KeyFrameValues>(kf.Values.Count)
-                            };
+                        Time = kf.Time,
+                        Values = new Dictionary<PositionedObject, KeyFrameValues>(kf.Values.Count)
+                    };
 
-                        foreach (var kfPair in kf.Values)
+                    foreach (var kfPair in kf.Values)
+                    {
+                        var parent = kfPair.Value.Parent == null || kfPair.Value.Parent.Name == null
+                            ? null
+                            : allObjects.First(k => k.Name == kfPair.Value.Parent.Name);
+
+                        var kfv = new KeyFrameValues
                         {
-                            var parent = kfPair.Value.Parent == null || kfPair.Value.Parent.Name == null
-                                ? null
-                                : allObjects.First(k => k.Name == kfPair.Value.Parent.Name);
+                            Alpha = kfPair.Value.Alpha,
+                            Parent = parent,
+                            RelativePosition = kfPair.Value.RelativePosition,
+                            RelativeRotation = kfPair.Value.RelativeRotation,
+                            RelativeScaleX = kfPair.Value.RelativeScaleX,
+                            RelativeScaleY = kfPair.Value.RelativeScaleY,
+                            Spin = kfPair.Value.Spin,
+                            Texture = kfPair.Value.Texture
+                        };
 
-                            var kfv = new KeyFrameValues
-                            {
-                                Alpha = kfPair.Value.Alpha,
-                                Parent = parent,
-                                RelativePosition = kfPair.Value.RelativePosition,
-                                RelativeRotation = kfPair.Value.RelativeRotation,
-                                RelativeScaleX = kfPair.Value.RelativeScaleX,
-                                RelativeScaleY = kfPair.Value.RelativeScaleY,
-                                Spin = kfPair.Value.Spin,
-                                Texture = kfPair.Value.Texture
-                            };
-
-                            keyFrame.Values[allObjects.First(k => k.Name == kfPair.Key.Name)] = kfv;
-                        }
-                        keyframes.Add(keyFrame);
-                    });
+                        keyFrame.Values[allObjects.First(k => k.Name == kfPair.Key.Name)] = kfv;
+                    }
+                    keyframes.Add(keyFrame);
+                }
                 so.Animations[animationPair.Key] = new SpriterObjectAnimation(animationPair.Value.Name,
                                                                               animationPair.Value.Looping,
                                                                               animationPair.Value.TotalTime,

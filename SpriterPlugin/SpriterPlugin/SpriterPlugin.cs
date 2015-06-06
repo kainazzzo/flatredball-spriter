@@ -67,7 +67,7 @@ namespace SpriterPlugin
                 Extension = "scml",
                 AddToManagersMethod = new List<string>{ "this.AddToManagers()" },
                 LayeredAddToManagersMethod = new List<string>{ "this.AddToManagers(mLayer)" },
-                CustomLoadMethod = "{THIS} = SpriterObjectSave.FromFile(\"{FILE_NAME}\").ToRuntime();",
+                CustomLoadMethod = "{THIS} = FlatRedBall_Spriter.SpriterObjectSave.FromFile(\"{FILE_NAME}\").ToRuntime();",
                 DestroyMethod = "this.Destroy()",
                 ShouldAttach = true,
                 MustBeAddedToContentPipeline = false,
